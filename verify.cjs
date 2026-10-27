@@ -1,0 +1,15 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=__dirname,html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+new Function(html.slice(html.lastIndexOf('<script>')+8,html.lastIndexOf('</script>')));
+const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);
+const references=[...html.matchAll(/(?:src|href)="(assets\/[^\"]+)"/g)].map(m=>m[1]);
+for(const reference of references)assert.ok(fs.statSync(path.join(root,reference)).size>0,reference);
+for(const match of html.matchAll(/href="(#[^"]+)"/g))assert.ok(ids.includes(match[1].slice(1)),match[1]);
+const provenance=JSON.parse(fs.readFileSync(path.join(root,'figma-source.json'),'utf8'));
+assert.equal(provenance.frames.length,19);assert.equal(provenance.assets.length,27);
+for(const asset of provenance.assets)assert.ok(html.includes(asset.localPath),'Missing design asset '+asset.localPath);
+assert.ok(!html.includes('https://www.figma.com/api/mcp/asset/'));
+const voids=new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
+const clean=html.replace(/<!--[\s\S]*?-->/g,'').replace(/<style>[\s\S]*?<\/style>/g,'').replace(/<script>[\s\S]*?<\/script>/g,'');const stack=[];
+for(const m of clean.matchAll(/<(\/?)([a-z][a-z0-9-]*)\b[^>]*>/gi)){const tag=m[2].toLowerCase();if(voids.has(tag))continue;if(m[1])assert.equal(stack.pop(),tag,'HTML nesting');else stack.push(tag);}assert.equal(stack.length,0);
+console.log(JSON.stringify({status:'PASS',frames:19,originalAssets:27,assetReferences:references.length,scriptSyntax:'PASS',anchors:'PASS',htmlNesting:'PASS'},null,2));

@@ -1,0 +1,270 @@
+{
+  "fileKey": "Km3CRMhMnwBl9hw0xiU5Sf",
+  "figmaUrl": "https://www.figma.com/design/Km3CRMhMnwBl9hw0xiU5Sf/?node-id=705-142",
+  "frames": [
+    "705:163",
+    "707:279",
+    "707:328",
+    "708:341",
+    "708:357",
+    "708:374",
+    "708:390",
+    "708:401",
+    "708:449",
+    "709:489",
+    "709:497",
+    "709:505",
+    "709:513",
+    "709:522",
+    "710:572",
+    "710:589",
+    "711:600",
+    "712:619",
+    "712:632"
+  ],
+  "assets": [
+    {
+      "localPath": "assets/history-home.png",
+      "nodes": [
+        "705:163"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "bfda64af572e8ddd67a07253840d3d2ea6ec04b4d7e7fe32be8245b52efab530"
+    },
+    {
+      "localPath": "assets/brand-seal-white.png",
+      "nodes": [
+        "705:163"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "d3a91217cd68f30d119f7936d7da9e504c327f8b4e2f7f1effbbff2efe5d0864"
+    },
+    {
+      "localPath": "assets/brand-wordmark-white.png",
+      "nodes": [
+        "705:163",
+        "707:279",
+        "707:328",
+        "708:341",
+        "708:357",
+        "708:374",
+        "708:390",
+        "708:401",
+        "708:449",
+        "709:489",
+        "709:497",
+        "709:505",
+        "710:572",
+        "710:589",
+        "711:600",
+        "712:619",
+        "712:632"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "f8211d72ea2e5bf0fcf8984c2c1e643e3b54c0f8a3259010cd13491213534c4e"
+    },
+    {
+      "localPath": "assets/intro-divider.svg",
+      "nodes": [
+        "705:163"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "46dc9f13cd4445e2014f6c7ab85b90bba3d11685d00ddee6e26fc60a7592b2aa"
+    },
+    {
+      "localPath": "assets/twiso-front.png",
+      "nodes": [
+        "707:279",
+        "707:328",
+        "710:572"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "21c25339bd49f3ea7566b205fe772d7d631d9cebc8646186b9b81ee6ddfbf80a"
+    },
+    {
+      "localPath": "assets/holding-hand.png",
+      "nodes": [
+        "707:328"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "668dcd38573a86b91a6ecd63ce18e00491942b24696fca6b20aa95b64d028697"
+    },
+    {
+      "localPath": "assets/warm-glow-left.svg",
+      "nodes": [
+        "707:328",
+        "708:341",
+        "708:357",
+        "708:390",
+        "708:401"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "4ceb900d3be5befd773e2e53bea32f4a91ba84befe5f0d25db9043c7a0a38ef3"
+    },
+    {
+      "localPath": "assets/twiso-wrapped.png",
+      "nodes": [
+        "708:341",
+        "708:449"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "aa8ee0dafa8846c0ede16b60d3da6ee89b00490249d8f1ddea6696a7dd75ebc9"
+    },
+    {
+      "localPath": "assets/family-main-store.png",
+      "nodes": [
+        "708:357",
+        "710:589"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "4d336df2ffdd1ea23a106789dcd1435c61ae7e9e4761e202204531c13fbdfdcc"
+    },
+    {
+      "localPath": "assets/family-culture.png",
+      "nodes": [
+        "708:357"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "6ae285d0801484bf1be3bdee055719021de0cf0ff5d1879b7d73322b88d2151f"
+    },
+    {
+      "localPath": "assets/family-building.png",
+      "nodes": [
+        "708:357"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "28cf64300e1fb5da8b7095e80883edb674a89dbcb426cd81197768ec23c7f07c"
+    },
+    {
+      "localPath": "assets/family-shop.png",
+      "nodes": [
+        "708:357"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "59541c2b19ddcfd4b0d0f88805f821386b6b7f87ef80e508d87f23858f992a59"
+    },
+    {
+      "localPath": "assets/history-building.png",
+      "nodes": [
+        "708:374"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "dd0a43ca85f2590cdc1131503cf4e08ad7a48830119a50ec2104171072bac5de"
+    },
+    {
+      "localPath": "assets/history-sketch.png",
+      "nodes": [
+        "708:390"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "ab61abf869a70d68dcb5b0b9d2aa9d46b9a2250d630ae67f78bf48815e6ce0c0"
+    },
+    {
+      "localPath": "assets/wooden-tray.png",
+      "nodes": [
+        "708:449"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "7e4be3032e262da1dfc45bdf5706adf588ee74b39f1c881cb59b297746225b46"
+    },
+    {
+      "localPath": "assets/twiso-on-tray.png",
+      "nodes": [
+        "709:489"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "a869ee18333af384a50d0eb27329e91bc8eba153daf67bb89c46a5368c4ef365"
+    },
+    {
+      "localPath": "assets/twiso-close-up.png",
+      "nodes": [
+        "709:497"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "6312489e3026fbdc21630676e40f33a47a8ca530391e63da0ba4ba7093e1cc32"
+    },
+    {
+      "localPath": "assets/torn-wrapper.png",
+      "nodes": [
+        "709:505"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "ef540f3419be4f1368a3b46bb15865a232490bfb4f9fd069df104553d11667e7"
+    },
+    {
+      "localPath": "assets/brand-wordmark-black.png",
+      "nodes": [
+        "709:513",
+        "709:522"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "8c60c4611fafdb21bda68dbec8fd0d13d7223e5720734776dcf931f3154a9d6e"
+    },
+    {
+      "localPath": "assets/warm-glow-top.svg",
+      "nodes": [
+        "710:572",
+        "710:589",
+        "711:600"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "a796692cea5d8c49abc542743469f7872d40513370646ae136eb86e2c9c3d216"
+    },
+    {
+      "localPath": "assets/twiso-angle.png",
+      "nodes": [
+        "710:589"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "7929d717978c0a3da3b00912d9896c51fe17faeac1e629ff91a55514fbee10b7"
+    },
+    {
+      "localPath": "assets/gallery-roll.png",
+      "nodes": [
+        "711:600"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "b330692a613275a7e3a570540351d32c5cbdbe579762f119204d55b7dc16d1e8"
+    },
+    {
+      "localPath": "assets/gallery-cake.png",
+      "nodes": [
+        "711:600"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "cdcaf8411a7156c26338bd36fe3aedfaa5d90ebb9ca4d0107a562034dd703328"
+    },
+    {
+      "localPath": "assets/gallery-baguette.png",
+      "nodes": [
+        "711:600"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "115ff5a7c9d14d8a54b11af8eaa79b3ae2be6cfb50a7007c11b4e1da2e25f210"
+    },
+    {
+      "localPath": "assets/gallery-gift.png",
+      "nodes": [
+        "711:600"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "9c975efe9de75d5a8ca795574d61ca20c17e6bdab3bf9a94721ee96083d489d2"
+    },
+    {
+      "localPath": "assets/flour-landscape.png",
+      "nodes": [
+        "712:632"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "bfe8c008383ad6e47e21d11b3d20775d33c492a5d73875b9c40294cb8feffb36"
+    },
+    {
+      "localPath": "assets/arrow-right.svg",
+      "nodes": [
+        "712:632"
+      ],
+      "source": "Figma get_design_context original asset",
+      "sha256": "939dd371f70871cc8718c725cd1df46341c6664fda9e09486c587cbc97e6ecc4"
+    }
+  ]
+}

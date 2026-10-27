@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="밀가루 두 포대의 기적, 대전의 문화가 되다. 성심당의 시간을 따라가는 브랜드 이야기.">
+  <title>성심당 — 대전의 문화</title>
+  <link rel="preload" href="assets/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    /* ============================================================
+       수정 안내
+       1. 문구: 아래 HTML에서 한글 문구를 검색해 수정하세요.
+       2. 색상/폰트: 바로 아래 :root 변수를 수정하세요.
+       3. 각 화면: .scene-home, .scene-values 등 화면 이름으로 검색하세요.
+       4. 스크롤 크기/위치: 하단 <script>의 motionTracks를 수정하세요.
+       기준 피그마: 1920 × 1020. 이미지 원본은 assets/에 있습니다.
+       CSS와 JavaScript는 이 index.html 안에만 있습니다.
+       ============================================================ */
+    @font-face {
+      font-family: Pretendard;
+      src: url("assets/PretendardVariable.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+    }
+    :root {
+      --color-black: #000;
+      --color-white: #fff;
+      --color-cream: #ffedd7;
+      --color-culture-title: #fff2da;
+      --color-review-text: #cabbaa;
+      --color-orange: #fb9711;
+      --color-panel: #f6e0c6;
+      --font-family: Pretendard, sans-serif;
+      --frame-width: 1920;
+      --frame-height: 1020;
+      --desktop-stage-scale: 1;
+      --scene-scroll-distance: 100svh;
+      --focus-color: #fb9711;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--color-black); }
+    body { margin: 0; background: var(--color-black); color: var(--color-white); font-family: var(--font-family); font-weight: 600; }
+    h1, h2, h3, p, figure, blockquote { margin: 0; }
+    img { display: block; max-width: 100%; }
+    button, input, a { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    button { color: inherit; cursor: pointer; }
+    a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--focus-color); outline-offset: 7px; }
+    .skip-link { position: fixed; z-index: 100; top: 12px; left: 12px; padding: 16px; background: var(--color-cream); color: #000; transform: translateY(-150%); }
+    .skip-link:focus { transform: none; }
+    .screen-reader-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+    /* 화면 밖 스크롤 레일. 화면 자체는 고정된 stage 안에서 전환합니다. */
+    .scroll-chapters { position: relative; }
+    .scroll-chapter { height: var(--scene-scroll-distance); pointer-events: none; }
+    .scroll-chapter:last-child { height: 100svh; }
+    .scroll-chapter:focus { outline: none; }
+    .story-viewport { position: fixed; inset: 0; overflow: hidden; background: #000; }
+    .design-stage {
+      position: absolute; width: 1920px; height: 1020px;
+      top: 50%; left: 50%; overflow: hidden;
+      transform: translate(-50%, -50%) scale(var(--desktop-stage-scale));
+      transform-origin: center; background: #000; isolation: isolate;
+    }
+    .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; }
+    .scene.is-visible { visibility: visible; }
+    .scene.is-current { pointer-events: auto; }
+    .scene-backdrop { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+    .scene-content { position: absolute; inset: 0; z-index: 3; }
+    .scene-image { position: absolute; overflow: hidden; }
+    .scene-image > img { width: 100%; height: 100%; object-fit: cover; }
+    .scene-heading { font-weight: 600; line-height: 1.2; }
+    .scene-paragraph { font-size: 30px; line-height: 40px; word-break: keep-all; }
+
+    /* 공통 헤더: 화면마다 새로 만들지 않고 하나를 계속 유지합니다. */
+    .site-header { position: absolute; inset: 0 0 auto; height: 105px; z-index: 30; pointer-events: none; }
+    .brand-home-link { position: absolute; top: 47px; left: 54px; width: 415px; height: 167px; pointer-events: auto; }
+    .header-logo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+    .header-logo-black { opacity: 0; }
+    .site-nav { position: absolute; right: 60px; top: 16px; display: flex; align-items: center; gap: 33px; pointer-events: auto; font-size: 15px; }
+    .site-nav a { display: flex; align-items: center; min-height: 44px; border-bottom: 1px solid transparent; }
+    .site-nav a:hover, .site-nav a[aria-current="location"] { border-bottom-color: currentColor; }
+    .brand-side-tab { position: absolute; right: 0; top: 0; width: 45px; height: 150px; background: #fff; color: #000; font-size: 13px; writing-mode: vertical-rl; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .mobile-menu-toggle { display: none; }
+
+    /* 한 객체가 여러 프레임에서 움직이는 공통 레이어들 */
+    .shared-layer { position: absolute; opacity: 0; visibility: hidden; pointer-events: none; transform-origin: 0 0; }
+    .shared-layer > img { width: 100%; height: 100%; object-fit: cover; }
+    .shared-bread { z-index: 12; overflow: hidden; }
+    .shared-bread > img { position: absolute; width: 114.67%; height: 117.39%; left: -5.02%; top: -6.58%; max-width: none; }
+    .shared-wrapped-bread { z-index: 12; overflow: hidden; }
+    .shared-wrapped-bread > img { position: absolute; max-width: none; }
+    .shared-value-title { z-index: 12; font-size: 70px; line-height: 1.2; letter-spacing: 0; }
+    .shared-value-copy { z-index: 12; font-size: 30px; line-height: 40px; width: 489px; }
+    .shared-culture-title { z-index: 8; font-size: 240px; line-height: 286px; white-space: nowrap; color: var(--color-culture-title); }
+    .shared-origin-panel { z-index: 7; width: 698px; height: 1020px; background: rgba(217,217,217,.2); backdrop-filter: blur(18px); }
+    .origin-text { position: absolute; top: 223px; left: 54px; width: 524px; color: rgba(255,255,255,.7); }
+    .origin-text h2 { font-size: 32px; line-height: 38px; margin-bottom: 23px; font-weight: 600; }
+    .origin-text p { font-size: 28px; line-height: 33px; word-break: keep-all; }
+    .shared-large-wordmark { z-index: 9; overflow: hidden; }
+    .shared-large-wordmark > img { max-width: none; }
+    .shared-angle-bread { z-index: 14; }
+    .shared-glow-left { z-index: 2; }
+    .shared-glow-top { z-index: 2; }
+    .shared-glow-left > img, .shared-glow-top > img { width: 100%; height: 100%; }
+    .shared-torn-wrapper { z-index: 18; }
+
+    /* 01 Home — 옛 성심당 사진 / 중앙 엠블럼 / 소개 카드 */
+    .home-history-photo { position: absolute; top: -2px; left: -72px; width: 2064px; height: 1022px; object-fit: cover; }
+    .home-photo-shade { position: absolute; inset: 0; background: rgba(0,0,0,.35); }
+    .home-seal { top: 337px; left: 759px; width: 400px; height: 387px; }
+    .home-introduction { position: absolute; left: 1226px; top: 470px; width: 563px; font-size: 30px; line-height: 40px; }
+    .home-story-card { position: absolute; top: 667px; left: 54px; width: 361px; height: 291px; background: rgba(217,217,217,.2); backdrop-filter: blur(14px); }
+    .home-story-card h1 { position: absolute; left: 23px; top: 23px; font-size: 32px; font-weight: 600; line-height: 45px; }
+    .home-card-divider { position: absolute; top: 173px; left: 18.5px; width: 319px; height: 1px; }
+    .home-story-card p { position: absolute; top: 188px; right: 24px; width: 176px; font-size: 20px; font-weight: 500; line-height: 30px; text-align: right; }
+
+    /* 03 EOC / 04 문화 / 05 패밀리 브랜드 */
+    .powered-title { position: absolute; left: 417px; top: 145px; font-size: 96px; font-weight: 600; line-height: 115px; }
+    .holding-hand { top: 260px; left: 638px; width: 545px; height: 760px; }
+    .product-dashed-frame { position: absolute; left: 707px; top: 258px; width: 505px; height: 505px; border: 1px dashed #fff; }
+    .family-label { position: absolute; left: 54px; top: 205px; color: rgba(255,255,255,.59); font-size: 36px; line-height: 43px; }
+    .family-main-photo { top: 149px; left: 658px; width: 603px; height: 723px; border: 1px dashed #fff; }
+    .family-main-photo::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 50px 40px rgba(0,0,0,.6); }
+    .family-secondary-photo { top: 405px; width: 246px; height: 303px; }
+    .family-secondary-photo::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.4); }
+    .family-culture-photo { left: 1286px; }
+    .family-building-photo { left: 1557px; }
+    .family-shop-photo { left: 1828px; }
+
+    /* 06 옛 건물 사진 / 07 드로잉 */
+    .history-building-photo { position: absolute; top: -303px; left: -72px; width: 2064px; height: 1456px; object-fit: fill; }
+    .history-photo-shade { position: absolute; inset: 0; background: rgba(0,0,0,.2); }
+    .history-building-sketch { position: absolute; left: 144px; top: -163px; width: 1671px; height: 1183px; object-fit: cover; }
+
+    /* 09~12 트레이 / 확대 / 포장지 */
+    .tray-background, .tray-bread-background, .bread-close-up-background { width: 1920px; height: 1022px; left: 0; top: -2px; object-fit: cover; position: absolute; }
+    .close-up-shade { position: absolute; inset: 0; background: rgba(0,0,0,.3); }
+    .scene-word, .scene-panels { background: var(--color-cream); color: #000; }
+    .layout-panel { position: absolute; top: 138px; height: 657px; background: var(--color-panel); }
+    .layout-panel-orange { left: 66px; width: 427px; background: var(--color-orange); }
+    .layout-panel-middle { left: 524px; width: 649px; }
+    .layout-panel-right { left: 1204px; width: 649px; }
+
+    /* 16 Review — 피그마에 있는 참고 영문 카피 그대로 유지 */
+    .reviews-list { position: absolute; left: 54px; top: 149px; width: 1806px; color: var(--color-review-text); }
+    .review-row { display: flex; align-items: center; justify-content: space-between; padding: 19px 0; border-bottom: 1px dashed var(--color-review-text); min-height: 381px; }
+    .review-copy { display: flex; flex-direction: column; gap: 159px; width: 429px; }
+    .review-stars { font-size: 16px; line-height: 24px; margin-bottom: 12px; }
+    .review-stars span { font-size: 20px; }
+    .review-quote { font-size: 32px; line-height: 1.2; letter-spacing: -1.92px; }
+    .review-person { font-size: 15px; line-height: 18px; }
+    .review-place-photo { position: relative; width: 457px; height: 343px; }
+    .review-place-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .review-place-photo::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.2); }
+
+    /* 17 Product gallery — 큰 가로 이미지 스트립 */
+    .product-gallery-strip { position: absolute; top: 139px; left: -368px; display: flex; gap: 15px; }
+    .gallery-photo { flex-shrink: 0; width: 471px; height: 743px; overflow: hidden; }
+    .gallery-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-photo-cake img { object-position: right; }
+    .gallery-photo-baguette { width: 1081px; }
+    .gallery-photo-gift img { object-position: 27% center; }
+
+    /* 19 Contact — 배경·버튼·테두리는 CSS, 사진/SVG는 원본 자산 */
+    .flour-background { position: absolute; top: -2px; left: 0; width: 1920px; height: 1022px; object-fit: cover; }
+    .flour-vignette { position: absolute; inset: 0; box-shadow: inset 0 0 188.1px 220px rgba(0,0,0,.76); }
+    .contact-title { position: absolute; top: 104px; left: 871px; font-size: 52px; line-height: 1; color: var(--color-cream); }
+    .contact-description { position: absolute; top: 248px; right: 63px; text-align: right; font-size: 52px; line-height: 1; color: var(--color-cream); }
+    .contact-website-link { position: absolute; top: 437px; left: 1645px; padding: 23px 66px; border-radius: 47px; background: #382416; color: var(--color-cream); font-size: 16px; font-weight: 700; line-height: 16px; letter-spacing: -.48px; }
+    .contact-share { position: absolute; top: 789px; left: 54px; width: 362px; height: 177px; border: .5px dashed #605d59; font-size: 16px; letter-spacing: -.48px; line-height: 16px; }
+    .contact-credit { position: absolute; top: 28px; left: 25px; color: #dc5000; }
+    .contact-share-caption { position: absolute; top: 74px; right: 175px; white-space: nowrap; text-align: right; color: var(--color-cream); }
+    .copy-url-button { position: absolute; right: 15px; bottom: 28px; border: .5px dashed var(--color-cream); border-radius: 23px; padding: 10px 20px; background: none; color: var(--color-cream); font-size: 12px; font-weight: 400; }
+    .contact-newsletter { position: absolute; top: 793px; left: 656px; width: 484px; }
+    .newsletter-label { display: block; color: #9d9183; font-size: 16px; line-height: 16px; letter-spacing: -.48px; }
+    .newsletter-field { display: flex; justify-content: space-between; gap: 16px; border-bottom: .5px dashed var(--color-cream); padding-bottom: 26px; margin-top: 54px; }
+    .newsletter-email { min-width: 0; width: 100%; padding: 0; border: 0; background: none; color: var(--color-cream); font-size: 18px; font-weight: 400; letter-spacing: .18px; }
+    .newsletter-email::placeholder { color: var(--color-cream); opacity: 1; }
+    .newsletter-submit { background: none; border: 0; padding: 0; width: 24px; height: 24px; flex-shrink: 0; }
+    .newsletter-submit img { width: 24px; height: 24px; }
+    .action-message { position: fixed; z-index: 80; bottom: 24px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 32px); padding: 16px 22px; border: 1px solid #cabbaa; border-radius: 6px; background: #ffedd7; color: #000; font-size: 15px; font-weight: 500; line-height: 1.5; }
+    [hidden] { display: none !important; }
+
+    /* 모바일과 모션 감소: 같은 콘텐츠를 읽기 순서대로 정적으로 표시합니다.
+       좁은 화면에서 데스크탑 프레임을 축소해 글자가 작아지는 것을 방지합니다. */
+    body.reading-mode .scroll-chapters { display: none; }
+    body.reading-mode .story-viewport { position: relative; overflow: clip; }
+    body.reading-mode .design-stage { position: relative; top: auto; left: auto; width: 100%; height: auto; transform: none; overflow: clip; }
+    body.reading-mode .site-header { position: sticky; top: 0; height: 80px; background: rgba(0,0,0,.93); color: #fff !important; }
+    body.reading-mode .brand-home-link { left: 20px !important; top: 18px !important; width: 109px !important; height: 44px !important; }
+    body.reading-mode .header-logo-white { opacity: 1 !important; }
+    body.reading-mode .header-logo-black, body.reading-mode .brand-side-tab { display: none; }
+    body.reading-mode .site-nav { top: 18px; right: 20px; gap: 18px; font-size: 12px; }
+    body.reading-mode .scene { position: relative; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; min-height: 700px; padding: 90px 24px 56px; overflow: hidden; }
+    body.reading-mode .scene-content { position: relative; inset: auto; display: flex; flex-direction: column; gap: 28px; }
+    body.reading-mode .scene-content > *, body.reading-mode .mobile-shared-object { position: relative !important; inset: auto !important; transform: none !important; max-width: 100%; }
+    body.reading-mode .shared-layer { display: none !important; }
+    body.reading-mode .mobile-shared-object { display: block; opacity: 1; visibility: visible; }
+    body.reading-mode .mobile-shared-object > img { max-width: 100%; }
+    body.reading-mode .home-history-photo { left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }
+    body.reading-mode .home-seal { width: min(70%, 320px); height: auto; aspect-ratio: 400/387; margin: 10px auto; }
+    body.reading-mode .home-introduction { width: 100%; font-size: 20px; line-height: 1.6; }
+    body.reading-mode .home-introduction br { display: none; }
+    body.reading-mode .home-story-card { width: min(100%, 361px); height: 291px; }
+    body.reading-mode .home-story-card h1 { font-size: 28px; }
+    body.reading-mode .home-card-divider { width: calc(100% - 37px); }
+    body.reading-mode .shared-value-title { width: 100% !important; height: auto !important; font-size: clamp(32px,7vw,60px) !important; line-height: 1.25 !important; }
+    body.reading-mode .shared-value-copy { width: 100% !important; height: auto !important; font-size: 20px !important; line-height: 1.6 !important; }
+    body.reading-mode .shared-value-copy br { display: none; }
+    body.reading-mode .shared-bread { width: 260px !important; height: 262px !important; margin: 0 auto; }
+    body.reading-mode .shared-wrapped-bread { width: 300px !important; height: 300px !important; margin: auto; }
+    body.reading-mode .shared-culture-title { font-size: clamp(32px,6.9vw,84px) !important; line-height: 1.2 !important; width: auto !important; height: auto !important; white-space: normal; }
+    body.reading-mode .powered-title { font-size: clamp(30px,7.2vw,72px); line-height: 1.1; }
+    body.reading-mode .holding-hand { width: 260px; height: 363px; margin: 0 auto; }
+    body.reading-mode .scene-powered .scene-content { padding-bottom: 0; }
+    body.reading-mode .scene-powered .shared-bread { position: absolute !important; width: 185px !important; height: 187px !important; top: 142px !important; left: calc(50% - 83px) !important; }
+    body.reading-mode .family-label { font-size: 24px; line-height: 1.3; }
+    body.reading-mode .family-main-photo { width: 100%; max-width: 603px; height: auto; aspect-ratio: 603/723; margin: auto; }
+    body.reading-mode .family-secondary-photo { position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 246/303; }
+    body.reading-mode .family-mobile-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    body.reading-mode .family-main-photo::after { box-shadow: inset 0 0 35px 15px rgba(0,0,0,.6); }
+    body.reading-mode .product-dashed-frame { display: none; }
+    body.reading-mode .scene-history, body.reading-mode .scene-sketch { padding: 60px 24px; min-height: 900px; }
+    body.reading-mode .history-building-photo { top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+    body.reading-mode .history-building-sketch { left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }
+    body.reading-mode .shared-origin-panel { width: min(100%, 550px) !important; height: auto !important; padding: 28px; backdrop-filter: blur(20px); }
+    body.reading-mode .origin-text { position: static; width: 100%; }
+    body.reading-mode .origin-text h2 { font-size: 28px; }
+    body.reading-mode .origin-text p { font-size: 19px; line-height: 1.65; }
+    body.reading-mode .origin-text br { display: none; }
+    body.reading-mode .shared-large-wordmark { width: min(100%, 800px) !important; height: auto !important; aspect-ratio: 415/167; margin: 120px auto; }
+    body.reading-mode .shared-large-wordmark img { position: static !important; width: 100% !important; height: 100% !important; }
+    body.reading-mode .scene-name .shared-large-wordmark { opacity: .36; }
+    body.reading-mode .tray-background, body.reading-mode .tray-bread-background, body.reading-mode .bread-close-up-background { width: 100%; height: 100%; object-fit: cover; }
+    body.reading-mode .scene-tray .shared-wrapped-bread { width: 360px !important; height: 360px !important; margin-top: 80px; }
+    body.reading-mode .scene-close-up .shared-large-wordmark { margin-top: 330px; width: 260px !important; }
+    body.reading-mode .scene-tear { min-height: 620px; }
+    body.reading-mode .scene-tear .scene-content { min-height: 450px; justify-content: center; }
+    body.reading-mode .shared-torn-wrapper { position: absolute !important; left: 50% !important; top: 50% !important; width: 1180px !important; max-width: none !important; height: 585px !important; transform: translate(-50%,-50%) !important; }
+    body.reading-mode .scene-word { min-height: 420px; display: grid; align-items: center; }
+    body.reading-mode .scene-panels { min-height: 470px; }
+    body.reading-mode .scene-panels .scene-content { display: grid; grid-template-columns: .66fr 1fr 1fr; gap: 12px; }
+    body.reading-mode .layout-panel { width: auto; height: 300px; }
+    body.reading-mode .reviews-list { width: 100%; transform: none !important; }
+    body.reading-mode .review-row { align-items: start; gap: 22px; padding: 28px 0; }
+    body.reading-mode .review-copy { width: 55%; gap: 60px; }
+    body.reading-mode .review-quote { font-size: 23px; letter-spacing: -.8px; }
+    body.reading-mode .review-person { font-size: 12px; }
+    body.reading-mode .review-place-photo { width: 40%; height: 250px; }
+    body.reading-mode .shared-angle-bread { width: min(80%,400px) !important; height: auto !important; aspect-ratio: 514/386; margin: auto; }
+    body.reading-mode .scene-gallery { padding-left: 0; padding-right: 0; }
+    body.reading-mode .product-gallery-strip { max-width: none; width: 100%; overflow-x: auto; padding: 0 24px 24px; gap: 12px; }
+    body.reading-mode .gallery-photo { width: 70vw; max-width: 460px; height: 480px; }
+    body.reading-mode .gallery-photo-baguette { width: 85vw; max-width: 700px; }
+    body.reading-mode .scene-contact { min-height: 960px; }
+    body.reading-mode .flour-background { width: 100%; height: 100%; }
+    body.reading-mode .flour-vignette { box-shadow: inset 0 0 110px 50px rgba(0,0,0,.76); }
+    body.reading-mode .contact-title, body.reading-mode .contact-description { font-size: clamp(25px,4.3vw,44px); line-height: 1.12; width: 100%; }
+    body.reading-mode .contact-title br, body.reading-mode .contact-description br { display: none; }
+    body.reading-mode .contact-website-link { align-self: flex-end; padding: 23px 45px; }
+    body.reading-mode .contact-share { width: 362px; max-width: 100%; height: 177px; margin-top: 80px; }
+    body.reading-mode .contact-newsletter { width: 100%; margin-top: 20px; }
+    .mobile-shared-object { display: none; }
+    @media (max-width: 600px) {
+      body.reading-mode .mobile-menu-toggle { position: absolute; display: block; top: 18px; right: 20px; min-height: 44px; padding: 8px 12px; border: 1px solid #605d59; background: #000; font-size: 13px; pointer-events: auto; }
+      body.reading-mode .site-nav { display: none; top: 80px; left: 0; right: 0; padding: 24px; background: #000; border-bottom: 1px solid #605d59; }
+      body.reading-mode .site-nav.is-open { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+      body.reading-mode .review-row { display: block; }
+      body.reading-mode .review-copy { width: 100%; gap: 32px; }
+      body.reading-mode .review-place-photo { width: 100%; height: 240px; margin-top: 24px; }
+      body.reading-mode .home-story-card p { font-size: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body class="reading-mode">
+  <a class="skip-link" href="#intro">본문 바로가기</a>
+
+  <!-- 스크롤 목적지: 순서와 data-scene 번호는 피그마 프레임 순서입니다. -->
+  <div class="scroll-chapters" aria-hidden="true">
+    <div class="scroll-chapter" data-chapter="0"></div><div class="scroll-chapter" data-chapter="1"></div>
+    <div class="scroll-chapter" data-chapter="2"></div><div class="scroll-chapter" data-chapter="3"></div>
+    <div class="scroll-chapter" data-chapter="4"></div><div class="scroll-chapter" data-chapter="5"></div>
+    <div class="scroll-chapter" data-chapter="6"></div><div class="scroll-chapter" data-chapter="7"></div>
+    <div class="scroll-chapter" data-chapter="8"></div><div class="scroll-chapter" data-chapter="9"></div>
+    <div class="scroll-chapter" data-chapter="10"></div><div class="scroll-chapter" data-chapter="11"></div>
+    <div class="scroll-chapter" data-chapter="12"></div><div class="scroll-chapter" data-chapter="13"></div>
+    <div class="scroll-chapter" data-chapter="14"></div><div class="scroll-chapter" data-chapter="15"></div>
+    <div class="scroll-chapter" data-chapter="16"></div><div class="scroll-chapter" data-chapter="17"></div>
+    <div class="scroll-chapter" data-chapter="18"></div>
+  </div>
+
+  <div class="story-viewport">
+    <div class="design-stage">
+      <!-- 고정 헤더. 로고는 첫 화면에서만 크고, 다음 화면부터 작아집니다. -->
+      <header class="site-header">
+        <a class="brand-home-link" href="#intro" aria-label="성심당 처음으로">
+          <img class="header-logo header-logo-white" src="assets/brand-wordmark-white.png" alt="성심당" width="415" height="167">
+          <img class="header-logo header-logo-black" src="assets/brand-wordmark-black.png" alt="" aria-hidden="true" width="415" height="167">
+        </a>
+        <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">메뉴</button>
+        <nav class="site-nav" id="site-navigation" aria-label="주요 메뉴">
+          <a href="#intro" data-target-scene="0">INTRO</a>
+          <a href="#features" data-target-scene="1">FEATURES</a>
+          <a href="#product" data-target-scene="8">PRODUCT</a>
+          <a href="#contact" data-target-scene="18">CONTACT</a>
+        </nav>
+        <div class="brand-side-tab" aria-hidden="true">• SUNGSIMDANG</div>
+      </header>
+
+      <!-- 공통 오브젝트: 이 요소들은 복제하지 않고 좌표·크기·색만 바꿉니다. -->
+      <div class="shared-layer shared-glow-left" aria-hidden="true"><img src="assets/warm-glow-left.svg" alt=""></div>
+      <div class="shared-layer shared-glow-top" aria-hidden="true"><img src="assets/warm-glow-top.svg" alt=""></div>
+      <figure class="shared-layer shared-bread"><img src="assets/twiso-front.png" alt="정면에서 본 성심당 튀김소보로"></figure>
+      <figure class="shared-layer shared-wrapped-bread"><img src="assets/twiso-wrapped.png" alt="노란 봉투에 담긴 튀김소보로"></figure>
+      <h2 class="shared-layer shared-value-title">빵과 함께,<br>그 이상의 가치를<br>나눕니다.</h2>
+      <p class="shared-layer shared-value-copy">'모든 이가 다 좋게 여기는 일을<br>하도록 하십시오'라는<br>경영이념을 바탕으로 지역사회에 봉사하는<br>가치 있는 기업이 되겠습니다.</p>
+      <h2 class="shared-layer shared-culture-title">성심당, 대전의 문화</h2>
+      <article class="shared-layer shared-origin-panel">
+        <div class="origin-text">
+          <h2>성심당의 시작</h2>
+          <p>성심당 창업주 故임길순·故한순덕 부부는<br>함경남도 함주 고향으로 1950년 한국전쟁 중<br>흥남부두 철수작전 마지막 피난민을 싣은<br>메러디스빅토리호에 기적적으로 몸을 싣어,<br>잠시 거제도에 머문 뒤 진해에 정착했습니다.<br>이후 서울로 이주하고자 열차를 타고 이동하던 중<br>열차 고장으로 의도치 않게 대전에 머물게 되었고<br>대흥동성당에서 원조 받은 밀가루 두 포대로<br>대전역 앞에서 찐빵집을 시작해<br>오늘날의 성심당이 되었습니다.</p>
+        </div>
+      </article>
+      <figure class="shared-layer shared-large-wordmark"><img src="assets/brand-wordmark-white.png" alt="성심당, 1956 이후 대한민국 대전"></figure>
+      <figure class="shared-layer shared-angle-bread"><img src="assets/twiso-angle.png" alt="비스듬히 바라본 튀김소보로"></figure>
+      <figure class="shared-layer shared-torn-wrapper"><img src="assets/torn-wrapper.png" alt="노란 튀김소보로 포장지의 찢어진 틈"></figure>
+
+      <main id="brand-story">
+        <!-- 01. Home / 피그마 705:163 -->
+        <section class="scene scene-home" id="intro" data-scene="0" aria-label="밀가루 두 포대의 기적" data-figma-node="705:163">
+          <div class="scene-backdrop"><img class="home-history-photo" src="assets/history-home.png" alt="옛 성심당 건물과 거리"><div class="home-photo-shade"></div></div>
+          <div class="scene-content">
+            <figure class="scene-image home-seal"><img src="assets/brand-seal-white.png" alt="성심당 원형 엠블럼" width="400" height="387"></figure>
+            <p class="home-introduction">흥남부두 철수 작전 후 대전에 도착해 대흥동성당<br>오기선신부에게 받은 미군 지원 밀가루 두 포대는<br>성심당의 시작이 되어 오늘의 기적이 되었습니다.</p>
+            <article class="home-story-card"><h1>밀가루 두 포대의 기적,<br>대전의 문화가 되다.</h1><img class="home-card-divider" src="assets/intro-divider.svg" alt=""><p>밀가루 두 포대의 기적,<br>대전의 문화가<br>되다.</p></article>
+          </div>
+        </section>
+        <!-- 02. Thisisnt / 공유: 빵·제목·본문 -->
+        <section class="scene scene-values" id="features" data-scene="1" aria-label="빵과 함께 그 이상의 가치를 나눕니다" data-figma-node="707:279"><div class="scene-content" data-mobile-content="values"></div></section>
+        <!-- 03. EOC -->
+        <section class="scene scene-powered" data-scene="2" aria-label="Powered By DaeJeon" data-figma-node="707:328"><div class="scene-content" data-mobile-content="powered"><h2 class="powered-title" lang="en">Powered By DaeJeon</h2><figure class="scene-image holding-hand"><img src="assets/holding-hand.png" alt="빵을 받쳐 든 손" width="545" height="760"></figure></div></section>
+        <!-- 04. Wearable -->
+        <section class="scene scene-culture" data-scene="3" aria-label="성심당 대전의 문화" data-figma-node="708:341"><div class="scene-content" data-mobile-content="culture"><div class="product-dashed-frame" aria-hidden="true"></div></div></section>
+        <!-- 05. Portable -->
+        <section class="scene scene-family" data-scene="4" aria-label="Family Brand" data-figma-node="708:357"><div class="scene-content" data-mobile-content="family"><p class="family-label" lang="en">Family Brand</p><figure class="scene-image family-main-photo"><img src="assets/family-main-store.png" alt="성심당 본점의 저녁 풍경"></figure><div class="family-mobile-strip"><figure class="scene-image family-secondary-photo family-culture-photo"><img src="assets/family-culture.png" alt="성심당문화원 건물"></figure><figure class="scene-image family-secondary-photo family-building-photo"><img src="assets/family-building.png" alt="성심당 패밀리 브랜드 건물"></figure><figure class="scene-image family-secondary-photo family-shop-photo"><img src="assets/family-shop.png" alt="성심당 패밀리 매장 외관"></figure></div></div></section>
+        <!-- 06. Elevate / 07. Circular: 같은 역사 본문을 그대로 고정 -->
+        <section class="scene scene-history" data-scene="5" aria-label="성심당의 시작, 옛 건물" data-figma-node="708:374"><div class="scene-backdrop"><img class="history-building-photo" src="assets/history-building.png" alt="성심당 초창기 건물 사진"><div class="history-photo-shade"></div></div><div class="scene-content" data-mobile-content="origin"></div></section>
+        <section class="scene scene-sketch" data-scene="6" aria-label="성심당의 시작, 건물 드로잉" data-figma-node="708:390"><div class="scene-backdrop"><img class="history-building-sketch" src="assets/history-sketch.png" alt="성심당 옛 건물을 그린 흰 선 드로잉"></div><div class="scene-content" data-mobile-content="origin"></div></section>
+        <!-- 08. Name -->
+        <section class="scene scene-name" data-scene="7" aria-label="성심당 이름" data-figma-node="708:401"><div class="scene-content" data-mobile-content="wordmark"></div></section>
+        <!-- 09. Shot -->
+        <section class="scene scene-tray" id="product" data-scene="8" aria-label="트레이 위 튀김소보로" data-figma-node="708:449"><div class="scene-backdrop"><img class="tray-background" src="assets/wooden-tray.png" alt="포크와 나이프가 놓인 나무 트레이"></div><div class="scene-content" data-mobile-content="wrapped"></div></section>
+        <!-- 10. Flip -->
+        <section class="scene scene-tray-angle" data-scene="9" aria-label="튀김소보로를 다른 각도에서" data-figma-node="709:489"><div class="scene-backdrop"><img class="tray-bread-background" src="assets/twiso-on-tray.png" alt="나무 트레이 위에 비스듬히 놓인 튀김소보로"></div><h2 class="screen-reader-only">튀김소보로, 다른 시선</h2></section>
+        <!-- 11. Close up -->
+        <section class="scene scene-close-up" data-scene="10" aria-label="튀김소보로 포장 확대" data-figma-node="709:497"><div class="scene-backdrop"><img class="bread-close-up-background" src="assets/twiso-close-up.png" alt="튀김소보로 포장과 트레이를 확대한 흑백 사진"><div class="close-up-shade"></div></div><div class="scene-content" data-mobile-content="wordmark"></div></section>
+        <!-- 12. Tear -->
+        <section class="scene scene-tear" data-scene="11" aria-label="포장지 너머 대전의 문화" data-figma-node="709:505"><div class="scene-content" data-mobile-content="tear"></div></section>
+        <!-- 13. Word -->
+        <section class="scene scene-word" data-scene="12" aria-label="성심당 대전의 문화 선언" data-figma-node="709:513"><div class="scene-content" data-mobile-content="culture-word"></div></section>
+        <!-- 14. Word: 피그마의 미작성 3개 패널을 같은 색과 비율로 유지 -->
+        <section class="scene scene-panels" data-scene="13" aria-label="세 개의 브랜드 컬러 패널" data-figma-node="709:522"><div class="scene-content"><div class="layout-panel layout-panel-orange" aria-hidden="true"></div><div class="layout-panel layout-panel-middle" aria-hidden="true"></div><div class="layout-panel layout-panel-right" aria-hidden="true"></div></div></section>
+        <!-- 15. People -->
+        <section class="scene scene-people" data-scene="14" aria-label="빵과 함께 나누는 가치" data-figma-node="710:572"><div class="scene-content" data-mobile-content="values"></div></section>
+        <!-- 16. Review: 피그마의 영문 샘플 인용입니다. 실제 고객 후기라고 새로 작성하지 않았습니다. -->
+        <section class="scene scene-reviews" data-scene="15" aria-label="피그마 참고 리뷰 레이아웃" data-figma-node="710:589"><div class="scene-content" data-mobile-content="review">
+          <div class="reviews-list">
+            <article class="review-row"><div class="review-copy"><div><p class="review-stars">★★★★★ <span>[5/5]</span></p><blockquote class="review-quote" lang="en">“We are so cooked. Hollywood is not ready for a coaster this cinematic.”</blockquote></div><p class="review-person" lang="en">JAMIE R.<br>AI INFLUENCER, EX-WEB3 INFLUENCER</p></div><figure class="review-place-photo"><img src="assets/family-main-store.png" alt="성심당 본점 외관"></figure></article>
+            <article class="review-row"><div class="review-copy"><div><p class="review-stars">★★★★★ <span>[5/5]</span></p><blockquote class="review-quote" lang="en">“We are so cooked. Hollywood is not ready for a coaster this cinematic.”</blockquote></div><p class="review-person" lang="en">JAMIE R.<br>AI INFLUENCER, EX-WEB3 INFLUENCER</p></div><figure class="review-place-photo"><img src="assets/family-main-store.png" alt="성심당 본점 외관"></figure></article>
+            <article class="review-row"><div class="review-copy"><div><p class="review-stars">★★★★★ <span>[5/5]</span></p><blockquote class="review-quote" lang="en">“We are so cooked. Hollywood is not ready for a coaster this cinematic.”</blockquote></div><p class="review-person" lang="en">JAMIE R.<br>AI INFLUENCER, EX-WEB3 INFLUENCER</p></div><figure class="review-place-photo"><img src="assets/family-main-store.png" alt="성심당 본점 외관"></figure></article>
+          </div>
+        </div></section>
+        <!-- 17. Review / 제품 가로 갤러리 -->
+        <section class="scene scene-gallery" data-scene="16" aria-label="성심당 빵과 케이크" data-figma-node="711:600"><div class="scene-content"><div class="product-gallery-strip" tabindex="0" aria-label="제품 사진 가로 목록"><figure class="gallery-photo gallery-photo-roll"><img src="assets/gallery-roll.png" alt="성심당 롤 빵"></figure><figure class="gallery-photo gallery-photo-cake"><img src="assets/gallery-cake.png" alt="딸기가 올라간 성심당 케이크"></figure><figure class="gallery-photo gallery-photo-baguette"><img src="assets/gallery-baguette.png" alt="김 토핑을 올린 성심당 바게트"></figure><figure class="gallery-photo gallery-photo-gift"><img src="assets/gallery-gift.png" alt="성심당 선물 제품 포장"></figure></div></div></section>
+        <!-- 18. Choose -->
+        <section class="scene scene-brand-end" data-scene="17" aria-label="성심당 브랜드" data-figma-node="712:619"><div class="scene-content" data-mobile-content="wordmark"></div></section>
+        <!-- 19. Contact: 참고 시안 카피. 실제 뉴스레터 서버와는 연결하지 않았습니다. -->
+        <section class="scene scene-contact" id="contact" data-scene="18" aria-label="Contact" data-figma-node="712:632"><div class="scene-backdrop"><img class="flour-background" src="assets/flour-landscape.png" alt="검은 배경 위로 흩날리는 밀가루"><div class="flour-vignette"></div></div><footer class="scene-content">
+          <h2 class="contact-title" lang="en">WE CAUGHT YOUR ATTENTION WITH A<br>NON-EXISTENT PRODUCT.</h2>
+          <p class="contact-description" lang="en">IF WE CAN SELL A COASTER, IMAGINE<br>WHAT WE CAN DO FOR YOUR BRAND.</p>
+          <a class="contact-website-link" href="https://lusion.co/" target="_blank" rel="noopener noreferrer" aria-label="LUSION.CO 새 창 열기">LUSION.CO</a>
+          <div class="contact-share"><p class="contact-credit" lang="en">BUILT BY LUSION<br>WITH LOVE ♥</p><p class="contact-share-caption" lang="en">SHARE WITH FRIENDS<br>IF YOU LIKE IT</p><button class="copy-url-button" type="button">COPY URL</button></div>
+          <form class="contact-newsletter"><label class="newsletter-label" for="newsletter-email" lang="en">SUBSCRIBE TO LUSION’S NEWSLETTER:</label><div class="newsletter-field"><input class="newsletter-email" id="newsletter-email" name="email" type="email" placeholder="YOUR EMAIL" autocomplete="email" required><button class="newsletter-submit" type="submit" aria-label="뉴스레터 안내 확인"><img src="assets/arrow-right.svg" width="24" height="24" alt=""></button></div></form>
+        </footer></section>
+      </main>
+    </div>
+  </div>
+  <p class="action-message" role="status" hidden></p>
+
+  <script>
+    /* ============================================================
+       스크롤 전환 설정 — 외부 라이브러리 없이 동작합니다.
+       [화면 번호, x, y, 너비, 높이, opacity]
+       화면 번호는 0부터 시작하며 위 HTML의 data-scene과 같습니다.
+       같은 객체가 같은 좌표라면 스크롤해도 그대로 고정됩니다.
+       좌표/크기가 달라지면 두 프레임 사이를 부드럽게 보간합니다.
+       ============================================================ */
+    (() => {
+      'use strict';
+      const stage = document.querySelector('.design-stage');
+      const scenes = [...document.querySelectorAll('.scene')];
+      const chapters = [...document.querySelectorAll('.scroll-chapter')];
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+      const narrowScreen = matchMedia('(max-width: 900px)');
+      const pageHeader = document.querySelector('.site-header');
+      const headerLogo = document.querySelector('.brand-home-link');
+      const whiteLogo = document.querySelector('.header-logo-white');
+      const blackLogo = document.querySelector('.header-logo-black');
+      const sideTab = document.querySelector('.brand-side-tab');
+      const nav = document.querySelector('.site-nav');
+      const menuButton = document.querySelector('.mobile-menu-toggle');
+      const clamp = (n, min=0, max=1) => Math.min(max, Math.max(min,n));
+      const lerp = (a,b,t) => a + (b-a)*t;
+      const ease = t => t*t*(3-2*t);
+      let isReadingMode = true, lastScene = -1, scheduled = false;
+
+      const motionTracks = {
+        '.shared-bread': [
+          [0,738,295,428,430,0], [1,738,295,428,430,1],
+          [2,760,346,386,388,1], [3,760,346,386,388,0],
+          [13,686,235,548,550,0], [14,686,235,548,550,1],
+          [15,686,235,548,550,0]
+        ],
+        '.shared-wrapped-bread': [
+          [2,757,324,405,373,0], [3,757,324,405,373,1],
+          [4,757,324,405,373,0], [7,559,109,802,802,0],
+          [8,559,109,802,802,1], [9,559,109,802,802,0]
+        ],
+        '.shared-value-title': [
+          [0,163,358,500,252,0], [1,163,358,500,252,1],
+          [2,163,358,500,252,0], [13,82,146,500,252,0],
+          [14,82,146,500,252,1], [15,82,146,500,252,0]
+        ],
+        '.shared-value-copy': [
+          [0,1278,416,489,160,0], [1,1278,416,489,160,1],
+          [2,1292,604,489,160,1], [3,1292,604,489,160,0],
+          [13,1267,416,489,160,0], [14,1267,416,489,160,1],
+          [15,1267,416,489,160,0]
+        ],
+        '.shared-culture-title': [
+          [2,42,377,1835,286,0], [3,42,377,1835,286,1],
+          [4,54,253,306,48,1], [5,54,253,306,48,0],
+          [10,42,367,1835,286,0], [11,42,367,1835,286,1],
+          [12,42,367,1835,286,1], [13,42,367,1835,286,0]
+        ],
+        '.shared-origin-panel': [
+          [4,0,0,698,1020,0], [5,0,0,698,1020,1],
+          [6,0,0,698,1020,1], [7,0,0,698,1020,0]
+        ],
+        '.shared-large-wordmark': [
+          [6,87,224,1747,571,0], [7,87,224,1747,571,.36],
+          [8,87,224,1747,571,0], [9,753,622,415,167,0],
+          [10,753,622,415,167,1], [11,753,622,415,167,0],
+          [16,569,263,783,315,0], [17,569,263,783,315,1],
+          [18,569,263,783,315,0]
+        ],
+        '.shared-angle-bread': [
+          [14,703,339,514,386,0], [15,703,339,514,386,1],
+          [16,703,339,514,386,0]
+        ],
+        '.shared-torn-wrapper': [
+          [10,-61.086,0,2056.172,1020,0],
+          [11,-61.086,0,2056.172,1020,1],
+          [12,-61.086,0,2056.172,1020,0]
+        ],
+        '.shared-glow-left': [
+          [1,-954.4,-15.4,1928.8,1928.8,0],
+          [2,-954.4,-15.4,1928.8,1928.8,1],
+          [3,-954.4,-15.4,1928.8,1928.8,1],
+          [4,-954.4,-15.4,1928.8,1928.8,1],
+          [5,-954.4,-15.4,1928.8,1928.8,0],
+          [6,-964.4,-29.4,1928.8,1928.8,1],
+          [7,-877.4,-204.4,1928.8,1928.8,1],
+          [8,-877.4,-204.4,1928.8,1928.8,0]
+        ],
+        '.shared-glow-top': [
+          [13,143.63,-765.37,1590.74,1590.74,0],
+          [14,143.63,-765.37,1590.74,1590.74,1],
+          [15,143.63,-765.37,1590.74,1590.74,1],
+          [16,143.63,-765.37,1590.74,1590.74,1],
+          [17,143.63,-765.37,1590.74,1590.74,0]
+        ]
+      };
+      const tracks = Object.entries(motionTracks).map(([selector,keys]) => ({element:document.querySelector(selector),keys}));
+
+      // 모바일/모션 감소에서는 공통 요소를 각 화면의 읽기 순서로 복제합니다.
+      const mobileSlots = {
+        values:['.shared-value-title','.shared-bread','.shared-value-copy'],
+        powered:['.shared-bread','.shared-value-copy'],
+        culture:['.shared-culture-title','.shared-wrapped-bread'],
+        family:['.shared-culture-title'], origin:['.shared-origin-panel'],
+        wordmark:['.shared-large-wordmark'], wrapped:['.shared-wrapped-bread'],
+        tear:['.shared-culture-title','.shared-torn-wrapper'],
+        'culture-word':['.shared-culture-title'], review:['.shared-angle-bread']
+      };
+      document.querySelectorAll('[data-mobile-content]').forEach(slot => {
+        for (const selector of mobileSlots[slot.dataset.mobileContent] || []) {
+          const clone = document.querySelector(selector).cloneNode(true);
+          clone.classList.remove('shared-layer');
+          clone.classList.add('mobile-shared-object');
+          if (selector === '.shared-wrapped-bread') clone.querySelector('img').style.cssText='width:100%;height:100%;left:0;top:0;object-fit:contain';
+          if (selector === '.shared-culture-title' && slot.dataset.mobileContent === 'culture-word') clone.style.color='#000';
+          if (slot.dataset.mobileContent === 'family') slot.insertBefore(clone,slot.querySelector('.family-main-photo'));
+          else slot.append(clone);
+        }
+      });
+
+      function interpolateKeys(keys,position) {
+        if (position <= keys[0][0]) return keys[0].slice(1);
+        if (position >= keys.at(-1)[0]) return keys.at(-1).slice(1);
+        let index=0;
+        while (keys[index+1][0] < position) index++;
+        const a=keys[index], b=keys[index+1], t=ease(clamp((position-a[0])/(b[0]-a[0])));
+        return a.slice(1).map((value,i)=>lerp(value,b[i+1],t));
+      }
+      function applyGeometry(element,values) {
+        const [x,y,w,h,opacity]=values;
+        element.style.left=x+'px'; element.style.top=y+'px';
+        element.style.width=w+'px'; element.style.height=h+'px';
+        element.style.opacity=opacity;
+        element.style.visibility=opacity>.001?'visible':'hidden';
+        element.setAttribute('aria-hidden',String(opacity<.5));
+      }
+      function setMenu(open,restore=false) {
+        nav.classList.toggle('is-open',open);
+        menuButton.setAttribute('aria-expanded',String(open));
+        menuButton.textContent=open?'닫기':'메뉴';
+        if (open) nav.querySelector('a').focus();
+        if (restore) menuButton.focus();
+      }
+      function update() {
+        scheduled=false;
+        if (isReadingMode) return;
+        const max=scenes.length-1;
+        const position=clamp(scrollY/innerHeight,0,max);
+        const current=Math.floor(position), progress=ease(position-current);
+        scenes.forEach((scene,index) => {
+          let opacity=0;
+          if(index===current) opacity=1-progress;
+          if(index===current+1) opacity=progress;
+          if(current===max&&index===max) opacity=1;
+          scene.style.opacity=opacity;
+          scene.classList.toggle('is-visible',opacity>.001);
+          scene.classList.toggle('is-current',index===Math.round(position));
+          scene.inert=index!==Math.round(position);
+          scene.setAttribute('aria-hidden',String(index!==Math.round(position)));
+        });
+        tracks.forEach(({element,keys}) => applyGeometry(element,interpolateKeys(keys,position)));
+
+        // 첫 로고만 415→109px 축소. 이후의 헤더 좌표는 변하지 않습니다.
+        const logoProgress=ease(clamp(position));
+        headerLogo.style.width=lerp(415,109,logoProgress)+'px';
+        headerLogo.style.height=lerp(167,44,logoProgress)+'px';
+        sideTab.style.opacity=1-logoProgress;
+
+        // 검정→크림 배경의 두 프레임에서 로고/메뉴도 함께 색상 전환.
+        const light=position<12?ease(clamp(position-11)):position<=13?1:1-ease(clamp(position-13));
+        pageHeader.style.color=`rgb(${255*(1-light)},${255*(1-light)},${255*(1-light)})`;
+        whiteLogo.style.opacity=1-light; blackLogo.style.opacity=light;
+        const culture=document.querySelector('.shared-layer.shared-culture-title');
+        let cultureSize=240;
+        if(position>=3&&position<=4) cultureSize=lerp(240,40,ease(position-3));
+        else if(position>4&&position<6) cultureSize=40;
+        culture.style.fontSize=cultureSize+'px';
+        culture.style.lineHeight=(cultureSize===240?286:cultureSize*1.2)+'px';
+        const ink=ease(clamp(position-11));
+        culture.style.color=`rgb(${255*(1-ink)},${242*(1-ink)},${218*(1-ink)})`;
+        culture.style.backgroundImage=position>=10&&position<12?'linear-gradient(90deg,rgba(0,0,0,.7) 45%,transparent 100%)':'none';
+        culture.style.backgroundClip=position>=10&&position<12?'text':'border-box';
+
+        // 같은 포장 빵: 앞 장면의 crop에서 트레이 장면의 전체 이미지로 확대.
+        const wrappedImage=document.querySelector('.shared-layer.shared-wrapped-bread img');
+        const fullImage=ease(clamp(position-7));
+        wrappedImage.style.width=lerp(133.33,100,fullImage)+'%';
+        wrappedImage.style.height=lerp(144.93,100,fullImage)+'%';
+        wrappedImage.style.left=lerp(-16.8,0,fullImage)+'%';
+        wrappedImage.style.top=lerp(-24.93,0,fullImage)+'%';
+        const largeLogo=document.querySelector('.shared-layer.shared-large-wordmark img');
+        const cropLogo=position<9?1:0;
+        largeLogo.style.height=(cropLogo?123.06:100)+'%';
+        largeLogo.style.width='100%';
+        largeLogo.style.objectFit='fill';
+
+        // 리뷰 영역은 중앙 빵을 고정한 채 목록만 올라오게 합니다.
+        const reviewTravel=position>=15&&position<=16?ease(clamp((position-15)*2))*380:0;
+        document.querySelector('.reviews-list').style.transform=`translateY(${-reviewTravel}px)`;
+        const active=Math.round(position);
+        if(active!==lastScene){
+          lastScene=active;
+          document.querySelectorAll('[data-target-scene]').forEach(link=>{
+            const target=Number(link.dataset.targetScene);
+            const group=active===18?18:active>=8?8:active>=1?1:0;
+            if(target===group)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');
+          });
+        }
+      }
+      function schedule(){ if(!scheduled){scheduled=true;requestAnimationFrame(update);} }
+      function resize() {
+        const nextMode=narrowScreen.matches||reducedMotion.matches;
+        const previous=isReadingMode;
+        const previousIndex=previous?Math.max(0,scenes.findIndex(scene=>{const r=scene.getBoundingClientRect();return r.bottom>80;})):Math.round(clamp(scrollY/innerHeight,0,18));
+        isReadingMode=nextMode;
+        document.body.classList.toggle('reading-mode',nextMode);
+        document.documentElement.style.setProperty('--desktop-stage-scale',Math.min(innerWidth/1920,innerHeight/1020));
+        scenes.forEach(scene=>{
+          scene.inert=false;scene.removeAttribute('aria-hidden');
+          if(nextMode){scene.style.opacity='';scene.classList.remove('is-current','is-visible');}
+        });
+        setMenu(false);
+        if(previous!==nextMode&&previousIndex>0){
+          if(nextMode)scenes[previousIndex].scrollIntoView({behavior:'instant'});
+          else window.scrollTo({top:previousIndex*innerHeight,behavior:'instant'});
+        }
+        update();
+      }
+      function navigateToScene(index,hash,replace=false) {
+        index=clamp(index,0,scenes.length-1);
+        if(hash){if(replace)history.replaceState(null,'',hash);else history.pushState(null,'',hash);}
+        if(isReadingMode)scenes[index].scrollIntoView({behavior:reducedMotion.matches?'instant':'smooth',block:'start'});
+        else window.scrollTo({top:index*innerHeight,behavior:reducedMotion.matches?'instant':'smooth'});
+        setMenu(false);
+      }
+      document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',event=>{
+        const hash=link.getAttribute('href'),target=document.querySelector(hash);
+        if(!target)return;
+        event.preventDefault();navigateToScene(Number(target.dataset.scene||0),hash);
+      }));
+      window.addEventListener('popstate',()=>{const target=document.querySelector(location.hash||'#intro');if(target?.dataset.scene)navigateToScene(Number(target.dataset.scene));});
+      menuButton.addEventListener('click',()=>setMenu(menuButton.getAttribute('aria-expanded')!=='true'));
+      document.addEventListener('keydown',event=>{
+        if(menuButton.getAttribute('aria-expanded')!=='true')return;
+        if(event.key==='Escape')setMenu(false,true);
+        if(event.key==='Tab'){
+          const links=[menuButton,...nav.querySelectorAll('a')],first=links[0],last=links.at(-1);
+          if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+          else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+        }
+      });
+      let messageTimer;
+      function showMessage(text){const box=document.querySelector('.action-message');box.textContent=text;box.hidden=false;clearTimeout(messageTimer);messageTimer=setTimeout(()=>box.hidden=true,5000);}
+      document.querySelector('.copy-url-button').addEventListener('click',async()=>{
+        try{await navigator.clipboard.writeText(location.href);showMessage('페이지 주소를 복사했습니다.');}
+        catch{showMessage('주소를 복사하지 못했습니다. 브라우저 주소창에서 직접 복사해 주세요.');}
+      });
+      document.querySelector('.contact-newsletter').addEventListener('submit',event=>{
+        event.preventDefault();showMessage('현재는 디자인 시안입니다. 뉴스레터 신청은 전송되지 않았습니다.');
+      });
+      window.addEventListener('scroll',schedule,{passive:true});
+      window.addEventListener('resize',resize);
+      reducedMotion.addEventListener('change',resize);
+      narrowScreen.addEventListener('change',resize);
+      // 이미지와 폰트 로딩에 스크롤 동작을 묶지 않으므로 바로 탐색 가능합니다.
+      resize();
+      if(location.hash){const target=document.querySelector(location.hash);if(target?.dataset.scene)navigateToScene(Number(target.dataset.scene),location.hash,true);}
+    })();
+  </script>
+</body>
+</html>
