@@ -35,7 +35,8 @@
       --font-family: Pretendard, sans-serif;
       --frame-width: 1920;
       --frame-height: 1020;
-      --desktop-stage-scale: 1;
+      --desktop-stage-scale-x: 1;
+      --desktop-stage-scale-y: 1;
       --scene-scroll-distance: 100svh;
       --focus-color: #fb9711;
     }
@@ -61,13 +62,21 @@
     .design-stage {
       position: absolute; width: 1920px; height: 1020px;
       top: 50%; left: 50%; overflow: hidden;
-      transform: translate(-50%, -50%) scale(var(--desktop-stage-scale));
-      transform-origin: center; background: #000; isolation: isolate;
+      /* 프레임 안에 작게 맞추지 않고 화면 가로·세로를 모두 사용합니다. */
+      transform: translate(-50%, -50%) scale(var(--desktop-stage-scale-x), var(--desktop-stage-scale-y));
+      transform-origin: center; background: transparent; isolation: isolate; z-index: 1;
     }
     .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; }
     .scene.is-visible { visibility: visible; }
     .scene.is-current { pointer-events: auto; }
     .scene-backdrop { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+    /* 배경은 고정 크기 무대에서 분리하여 브라우저 전체를 채웁니다.
+       사진 비율은 유지하고, 화면 밖으로 넘어가는 가장자리만 잘라냅니다. */
+    .viewport-background { width: 100%; height: 100%; pointer-events: none; }
+    .viewport-background > img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      max-width: none; object-fit: cover; object-position: center;
+    }
     .scene-content { position: absolute; inset: 0; z-index: 3; }
     .scene-image { position: absolute; overflow: hidden; }
     .scene-image > img { width: 100%; height: 100%; object-fit: cover; }
@@ -402,7 +411,12 @@
     (() => {
       'use strict';
       const stage = document.querySelector('.design-stage');
+      const viewport = document.querySelector('.story-viewport');
       const scenes = [...document.querySelectorAll('.scene')];
+      const backgrounds = scenes.flatMap((scene,index) => {
+        const element=scene.querySelector('.scene-backdrop');
+        return element?[{element,scene,index}]:[];
+      });
       const chapters = [...document.querySelectorAll('.scroll-chapter')];
       const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
       const narrowScreen = matchMedia('(max-width: 900px)');
@@ -549,6 +563,11 @@
           scene.inert=index!==Math.round(position);
           scene.setAttribute('aria-hidden',String(index!==Math.round(position)));
         });
+        backgrounds.forEach(({element,index}) => {
+          const opacity=index===current?1-progress:index===current+1?progress:0;
+          element.style.opacity=current===max&&index===max?1:opacity;
+          element.style.visibility=Number(element.style.opacity)>.001?'visible':'hidden';
+        });
         tracks.forEach(({element,keys}) => applyGeometry(element,interpolateKeys(keys,position)));
 
         // 첫 로고만 415→109px 축소. 이후의 헤더 좌표는 변하지 않습니다.
@@ -559,6 +578,7 @@
 
         // 검정→크림 배경의 두 프레임에서 로고/메뉴도 함께 색상 전환.
         const light=position<12?ease(clamp(position-11)):position<=13?1:1-ease(clamp(position-13));
+        viewport.style.backgroundColor=`rgb(${255*light},${237*light},${215*light})`;
         pageHeader.style.color=`rgb(${255*(1-light)},${255*(1-light)},${255*(1-light)})`;
         whiteLogo.style.opacity=1-light; blackLogo.style.opacity=light;
         const culture=document.querySelector('.shared-layer.shared-culture-title');
@@ -605,7 +625,14 @@
         const previousIndex=previous?Math.max(0,scenes.findIndex(scene=>{const r=scene.getBoundingClientRect();return r.bottom>80;})):Math.round(clamp(scrollY/innerHeight,0,18));
         isReadingMode=nextMode;
         document.body.classList.toggle('reading-mode',nextMode);
-        document.documentElement.style.setProperty('--desktop-stage-scale',Math.min(innerWidth/1920,innerHeight/1020));
+        backgrounds.forEach(({element,scene}) => {
+          element.classList.toggle('viewport-background',!nextMode);
+          if(nextMode){scene.insertBefore(element,scene.children[0]);element.style.opacity='';element.style.visibility='';}
+          else viewport.insertBefore(element,stage);
+        });
+        if(nextMode)viewport.style.backgroundColor='';
+        document.documentElement.style.setProperty('--desktop-stage-scale-x',innerWidth/1920);
+        document.documentElement.style.setProperty('--desktop-stage-scale-y',innerHeight/1020);
         scenes.forEach(scene=>{
           scene.inert=false;scene.removeAttribute('aria-hidden');
           if(nextMode){scene.style.opacity='';scene.classList.remove('is-current','is-visible');}
