@@ -897,7 +897,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   transform: translateY(calc(var(--intro-offset, 0px) + var(--line-y, 0px))); z-index: 15;
 }
 #intro .f02-layer-020 {
-  transform: translateY(calc(var(--intro-offset, 0px) + var(--bread-shift-y, 0px))) rotate(var(--bread-rotation, 0deg));
+  transform: translate(var(--bread-arrival-x, 0px), calc(var(--intro-offset, 0px) + var(--bread-shift-y, 0px) + var(--bread-arrival-y, 0px))) rotate(var(--bread-rotation, 0deg));
+  width: var(--intro-bread-size, 438px); height: var(--intro-bread-size, 438px);
   transform-origin: center;
   z-index: 10; will-change: transform;
 }
@@ -917,3 +918,22 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .persistent-header .header-logo-dark { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: var(--header-light, 0); }
 .persistent-header [data-name="nav"] > a { border-bottom: 1px dashed rgba(var(--header-rgb, 248, 240, 229), var(--active-weight, 0)); }
 .persistent-header [data-name="nav"] p { color: inherit; }
+
+/* History: 빵 전환 → 네 모서리에서 시계방향 점선 생성 → 제목 진입. */
+#history .f03-layer-006 {
+  left: var(--history-bread-x, 1031.5px); top: var(--history-bread-y, 324px);
+  width: var(--history-bread-width, 405px); height: var(--history-bread-height, 373px);
+  z-index: 3;
+}
+#history .f03-layer-005 { transform: translateX(var(--title-shift, 2064px)); opacity: 0; z-index: 1; will-change: transform, opacity; }
+#history .f03-layer-009 {
+  border: 0; z-index: 4;
+  background-image:
+    repeating-linear-gradient(to right, #f8f0e5 0 3px, transparent 3px 6px),
+    repeating-linear-gradient(to bottom, #f8f0e5 0 3px, transparent 3px 6px),
+    repeating-linear-gradient(to left, #f8f0e5 0 3px, transparent 3px 6px),
+    repeating-linear-gradient(to top, #f8f0e5 0 3px, transparent 3px 6px);
+  background-position: left top, right top, right bottom, left bottom;
+  background-size: var(--outline-length, 0%) 1px, 1px var(--outline-length, 0%), var(--outline-length, 0%) 1px, 1px var(--outline-length, 0%);
+  background-repeat: no-repeat;
+}

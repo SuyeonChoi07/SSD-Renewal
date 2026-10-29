@@ -18,15 +18,15 @@ for(let i=1;i<heights.length;i++) {
   }
   // Once the end is reached, both position and opacity stay fixed for 1500px.
   for(const delta of [0,1,500,1000,1499,1500]) {
-    const state=stateAt(segment.start+segment.travel+delta,heights);
+    const state=stateAt(segment.start+segment.travel+segment.motion+delta,heights);
     assert.equal(state.index,i);
     assert.equal(state.offset,segment.travel,'Keep end position: '+source.frames[i].name);
     assert.equal(state.transition,0,'No fade before 1500px hold ends: '+source.frames[i].name);
     assert.equal(transitionWeights(i,state.transition).outgoing,1);
   }
   if(segment.transition) {
-    assert.ok(stateAt(segment.start+segment.travel+1501,heights).transition>0);
-    assert.equal(stateAt(segment.start+segment.travel+1625,heights).transition,.5);
+    assert.ok(stateAt(segment.start+segment.travel+segment.motion+1501,heights).transition>0);
+    assert.equal(stateAt(segment.start+segment.travel+segment.motion+1625,heights).transition,.5);
     assert.equal(stateAt(segments[i+1].start,heights).index,i+1);
   }
 }

@@ -10,8 +10,9 @@
     return heights.map((height, index) => {
       const hold = index === 0 ? 0 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
+      const motion = index === 2 ? 1000 : 0;
       const transition = index === heights.length - 1 ? 0 : TRANSITION_SCROLL_PX;
-      const segment = { start, hold, travel, transition, length: hold + travel + transition };
+      const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
       start += segment.length;
       return segment;
     });
@@ -23,7 +24,7 @@
     const segment = segments[index];
     const local = clamp(scrollPx - segment.start, 0, segment.length);
     const offset = clamp(local, 0, segment.travel);
-    const transition = segment.transition ? clamp((local - segment.hold - segment.travel) / segment.transition) : 0;
+    const transition = segment.transition ? clamp((local - segment.hold - segment.travel - segment.motion) / segment.transition) : 0;
     return { index, local, transition, offset };
   }
   function transitionWeights(index, progress) {
@@ -47,6 +48,12 @@
     const outgoing = exit === null ? 0 : ease(clamp((progress - exit - stagger) / .12));
     return { opacity: incoming * (1 - outgoing), y: (1 - incoming) * 40 - outgoing * 40 };
   }
+  function historyPose(local, arrival = 1) {
+    const morph = ease(clamp(arrival));
+    return { outline: ease(clamp(local / 600)), text: ease(clamp((local - 600) / 400)),
+      breadX: 1035 - 3.5 * morph, breadY: 350 - 26 * morph,
+      breadWidth: 438 - 33 * morph, wrappedHeight: (438 - 33 * morph) * 373 / 405 };
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -55,7 +62,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -89,6 +96,26 @@
     introYear.style.opacity = year.opacity;
     introYear.style.setProperty('--line-y', (reduced.matches ? 0 : year.y) + 'px');
   }
+  const historyScene = scenes[2];
+  const historyBread = historyScene.querySelector('[data-node-id="749:88"]');
+  const historyTitle = historyScene.querySelector('[data-node-id="749:87"]');
+  const historyOutline = historyScene.querySelector('[data-node-id="749:89"]');
+  function renderHistory(state) {
+    const arrival = state.index < 1 ? 0 : state.index === 1 ? state.transition : 1;
+    const local = state.index < 2 ? 0 : state.index === 2 ? state.local : 1000;
+    const pose = historyPose(local, arrival);
+    historyBread.style.setProperty('--history-bread-x', pose.breadX + 'px');
+    historyBread.style.setProperty('--history-bread-y', pose.breadY + 'px');
+    historyBread.style.setProperty('--history-bread-width', pose.breadWidth + 'px');
+    historyBread.style.setProperty('--history-bread-height', pose.wrappedHeight + 'px');
+    historyOutline.style.setProperty('--outline-length', pose.outline * 100 + '%');
+    historyTitle.style.setProperty('--title-shift', (reduced.matches ? 0 : (1 - pose.text) * 2064) + 'px');
+    historyTitle.style.opacity = pose.text;
+    const outgoing = state.index === 1 ? pose : historyPose(0, 0);
+    bread.style.setProperty('--bread-arrival-x', (outgoing.breadX - 1035) + 'px');
+    bread.style.setProperty('--bread-arrival-y', (outgoing.breadY - 350) + 'px');
+    bread.style.setProperty('--intro-bread-size', outgoing.breadWidth + 'px');
+  }
   const header = document.querySelector('.persistent-header');
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
   function renderHeader(state) {
@@ -121,6 +148,7 @@
       scene.querySelector('.frame-art').style.setProperty('--content-offset', `${-offset}px`);
     });
     renderIntro(state.index < 1 ? 0 : state.index === 1 ? state.offset : segments[1].travel);
+    renderHistory(state);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }
