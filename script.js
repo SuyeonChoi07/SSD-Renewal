@@ -1,17 +1,29 @@
-/* 프레임당 스크롤 거리. 화면 크기가 달라져도 1,500px를 유지합니다. */
+/* 전환 완료 후 1,000px 고정. Landing은 유지 구간 없이 Intro로 전환합니다. */
 (() => {
   'use strict';
-  const SCENE_SCROLL_PX = 1500;
   const TRANSITION_SCROLL_PX = 250;
-  const HOLD_SCROLL_PX = SCENE_SCROLL_PX - TRANSITION_SCROLL_PX;
+  const HOLD_SCROLL_PX = 1000;
   const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
   const ease = value => value * value * (3 - 2 * value);
+  function timeline(heights) {
+    let start = 0;
+    return heights.map((height, index) => {
+      const hold = index === 0 ? 0 : HOLD_SCROLL_PX;
+      const travel = Math.max(0, height - 1020);
+      const transition = index === heights.length - 1 ? 0 : TRANSITION_SCROLL_PX;
+      const segment = { start, hold, travel, transition, length: hold + travel + transition };
+      start += segment.length;
+      return segment;
+    });
+  }
   function stateAt(scrollPx, heights) {
-    const index = clamp(Math.floor(Math.max(0, scrollPx) / SCENE_SCROLL_PX), 0, heights.length - 1);
-    const local = clamp(scrollPx - index * SCENE_SCROLL_PX, 0, SCENE_SCROLL_PX);
-    const transition = index === heights.length - 1 ? 0 : clamp((local - HOLD_SCROLL_PX) / TRANSITION_SCROLL_PX);
-    const contentProgress = clamp((local - 150) / (HOLD_SCROLL_PX - 150));
-    const offset = Math.max(0, heights[index] - 1020) * contentProgress;
+    const segments = timeline(heights);
+    let index = segments.findIndex(segment => scrollPx < segment.start + segment.length);
+    if (index < 0) index = segments.length - 1;
+    const segment = segments[index];
+    const local = clamp(scrollPx - segment.start, 0, segment.length);
+    const offset = clamp(local - segment.hold, 0, segment.travel);
+    const transition = segment.transition ? clamp((local - segment.hold - segment.travel) / segment.transition) : 0;
     return { index, local, transition, offset };
   }
   function transitionWeights(index, progress) {
@@ -24,10 +36,12 @@
     }
     return { outgoing: 1 - ease(progress), incoming: ease(progress), black: 0 };
   }
-  if (typeof module !== 'undefined') module.exports = { SCENE_SCROLL_PX, HOLD_SCROLL_PX, stateAt, transitionWeights };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
+  const segments = timeline(heights);
+  document.querySelectorAll('.scroll-chapter').forEach((chapter, index) => { chapter.style.height = segments[index].length + 'px'; });
   const stage = document.querySelector('.design-stage');
   const veil = document.querySelector('.transition-blackout');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -60,7 +74,7 @@
     const target = scenes.find(scene => `#${scene.id}` === hash);
     if (!target) return;
     if (push) history.pushState(null, '', hash);
-    window.scrollTo({ top: Number(target.dataset.scene) * SCENE_SCROLL_PX, behavior: reduced.matches ? 'instant' : 'smooth' });
+    window.scrollTo({ top: segments[Number(target.dataset.scene)].start, behavior: reduced.matches ? 'instant' : 'smooth' });
   }
   document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener('click', event => { event.preventDefault(); navigate(link.getAttribute('href')); }));
   window.addEventListener('scroll', schedule, { passive: true });

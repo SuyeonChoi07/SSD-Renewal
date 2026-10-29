@@ -1174,7 +1174,8 @@
   ],
   "duplicateFrameResolution": "Our Way_start 779:823과 779:890은 같은 위치·이미지·문구이므로 779:823을 사용합니다.",
   "implementation": "프레임별 원본 HTML 레이어, 원본 비율 유지, 요소 복제 없음",
-  "sceneScrollPx": 1500,
-  "holdScrollPx": 1250,
-  "transitionScrollPx": 250
+  "holdScrollPx": 1000,
+  "transitionScrollPx": 250,
+  "landingHoldScrollPx": 0,
+  "longFrameTravel": "after hold, before transition"
 }

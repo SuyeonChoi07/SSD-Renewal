@@ -16,7 +16,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .scene.is-current { pointer-events: auto; }
 .frame-art { position: relative; transform: translateY(var(--content-offset,0px)); }
 .transition-blackout { position: fixed; inset: 0; background: #000; opacity: 0; z-index: 100; pointer-events: none; }
-.scroll-chapter { height: 1500px; }
+.scroll-chapter { height: 0; }
 .scroll-rail { padding-bottom: 100vh; pointer-events: none; }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
 
