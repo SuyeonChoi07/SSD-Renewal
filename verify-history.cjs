@@ -3,15 +3,15 @@ const assert=require('node:assert/strict');
 const {historyPose,timeline,stateAt}=require('./script.js');
 const frames=require('./figma-source.json').frames;
 const heights=frames.map(f=>f.height),segment=timeline(heights)[2];
-assert.equal(segment.motion,1000);
+assert.equal(segment.motion,1400);
 assert.equal(historyPose(0).outline,0);
 assert.equal(historyPose(0).text,0);
 assert.ok(historyPose(300).outline>0&&historyPose(300).outline<1);
 assert.equal(historyPose(600).outline,1);
 assert.equal(historyPose(600).text,0,'Text waits for completed outline');
 assert.ok(historyPose(800).text>0&&historyPose(800).text<1);
-assert.equal(historyPose(1000).text,1);
-for(const distance of [1000,1500,2499,2500]) {
+assert.equal(historyPose(1400).text,1);
+for(const distance of [1400,1900,2899,2900]) {
  const state=stateAt(segment.start+distance,heights);
  assert.equal(state.index,2);
  assert.equal(state.transition,0,'Hold the completed composition for 1500px');
@@ -33,3 +33,5 @@ assert.equal(exitEnd.photoWidth,600);assert.equal(exitEnd.photoHeight,720);
 for(const p of [.1,.25,.5,.75,.9]){const pose=historyExitPose(p);assert.ok(pose.outlineWidth>500&&pose.outlineWidth<610);assert.ok(pose.titleSize<240&&pose.titleSize>36);}
 assert.match(fs.readFileSync(__dirname+'/styles.css','utf8'),/animation: history-title-glow 1\.5s/);
 console.log('History exit geometry, backward flip, title destination and 1.5s glow: PASS');
+
+assert.equal(historyPose(1000).text,0.5,"Title halfway after 400 of 800px");
