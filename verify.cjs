@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const root=__dirname,html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-new Function(html.slice(html.lastIndexOf('<script>')+8,html.lastIndexOf('</script>')));
+new Function(fs.readFileSync(__dirname+'/script.js','utf8'));
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);
 const references=[...html.matchAll(/(?:src|href)="(assets\/[^\"]+)"/g)].map(m=>m[1]);
 for(const reference of references)assert.ok(fs.statSync(path.join(root,reference)).size>0,reference);

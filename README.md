@@ -3,7 +3,10 @@
 2026-10-29 Figma 최신 프레임 기준으로 수정했습니다.
 
 - 실행: index.html을 브라우저에서 엽니다.
-- HTML/CSS/JavaScript: 모두 index.html에 포함되어 있습니다.
+- 문구·요소·링크 수정: index.html
+- 색상·타이포그래피·배치·반응형 수정: styles.css
+- 스크롤 전환·타이밍 수정: script.js의 motionTracks와 transitionWeights
+- 별도 설치나 빌드 없이 실행할 수 있습니다.
 - 원본 이미지와 폰트: assets/
 - Figma 출처·프레임·자산 매핑: figma-source.json
 
@@ -58,4 +61,4 @@ Table_tilt → Our Way_start 전환은 앞 45%에서 페이드 아웃, 가운데
 
 카피와 매장 정보는 제공된 피그마를 따랐습니다. 예전 시안의 Lusion 샘플 카피는 최신 프레임에 따라 교체했습니다. 피그마에 적힌 DDC점 등의 표기는 그대로 보존했습니다. Contact의 링크는 공식 쇼핑몰, 메일, 전화 및 기존 공식 사이트에서 확인했던 소셜 URL로 연결합니다. 정책 링크는 공식 사이트에서 확인하는 방식이며 자체 정책 원문이나 신청 전송을 임의로 만들지 않았습니다.
 
-현재 로컬 수정본입니다. 저장소 원격 브랜치 반영 여부는 별도 업로드 결과를 확인하세요.
+GitHub 저장소: https://github.com/SuyeonChoi07/SSD-Renewal

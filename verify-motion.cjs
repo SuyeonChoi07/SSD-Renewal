@@ -1,7 +1,7 @@
 // DOM fixture 검사입니다. 실제 브라우저 렌더링 검사를 대신하지 않습니다.
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
-const script=html.slice(html.lastIndexOf('<script>')+8,html.lastIndexOf('</script>'));
+const script=fs.readFileSync(__dirname+'/script.js','utf8');
 const listeners={},media={};let context,checks=0;
 class Element{
  constructor(tag,attrs={}){this.tag=tag;this.attrs=attrs;this.children=[];this.dataset={};this.events={};this.style={setProperty(k,v){this[k]=v;}};this.inert=false;for(const[k,v]of Object.entries(attrs))if(k.startsWith('data-'))this.dataset[k.slice(5).replace(/-([a-z])/g,(_,x)=>x.toUpperCase())]=v;this.classes=new Set((attrs.class||'').split(/\s+/).filter(Boolean));this.classList={add:x=>this.classes.add(x),remove:(...xs)=>xs.forEach(x=>this.classes.delete(x)),contains:x=>this.classes.has(x),toggle:(x,on)=>{on??=!this.classes.has(x);on?this.classes.add(x):this.classes.delete(x)}};}
