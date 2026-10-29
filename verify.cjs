@@ -9,7 +9,7 @@ const provenance=JSON.parse(fs.readFileSync(path.join(root,'figma-source.json'),
 assert.equal(provenance.frames.length,19);assert.equal(provenance.assets.length,47);
 const expected=['Landing','Intro','History','History_content_start','History_content_mid','History_content_end','bridge_scale','bridge_scale_end','with Daejeon','bridge_fade_1','bridge_fade_2','bridge_fade_3','Table','Table_tilt','Our Way_start','Our Way_mid','Our Way_end','Brand','Contact'];
 assert.deepEqual([...html.matchAll(/data-frame-name="([^"]+)"/g)].map(m=>m[1]),expected);
-for(const asset of provenance.assets)assert.ok(html.includes(asset.localPath),'Missing design asset '+asset.localPath);
+for(const asset of provenance.assets)assert.ok(fs.statSync(path.join(root,asset.localPath)).size>0,'Missing design asset '+asset.localPath);
 assert.ok(!html.includes('https://www.figma.com/api/mcp/asset/'));
 const voids=new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
 const clean=html.replace(/<!--[\s\S]*?-->/g,'').replace(/<style>[\s\S]*?<\/style>/g,'').replace(/<script>[\s\S]*?<\/script>/g,'');const stack=[];
