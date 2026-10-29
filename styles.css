@@ -937,3 +937,34 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   background-size: var(--outline-length, 0%) 1px, 1px var(--outline-length, 0%), var(--outline-length, 0%) 1px, 1px var(--outline-length, 0%);
   background-repeat: no-repeat;
 }
+
+/* History → History_content_start: 동일 요소의 위치와 크기를 연결합니다. */
+#history .f03-layer-009, #history-content-start .f04-layer-047 {
+  translate: -50% 0;
+  left: var(--history-exit-outlineX, 1029px); top: var(--history-exit-outlineY, 258px);
+  width: var(--history-exit-outlineWidth, 500px); height: var(--history-exit-outlineHeight, 500px);
+}
+#history .f03-layer-005, #history-content-start .f04-layer-049 {
+  left: var(--history-exit-titleX, 114px); top: var(--history-exit-titleY, 377px);
+  font-size: var(--history-exit-titleSize, 240px);
+  color: rgba(248,240,229,var(--history-exit-titleAlpha,1));
+}
+#history .f03-layer-006 {
+  top: var(--history-exit-breadY, 324px);
+  transform: perspective(1200px) rotateX(var(--history-exit-outgoingRotation, 0deg));
+  transform-origin: center; backface-visibility: hidden;
+}
+#history-content-start .f04-layer-006 {
+  width: var(--history-exit-photoWidth, 600px); height: var(--history-exit-photoHeight, 720px);
+  transform: perspective(1200px) translate(var(--history-exit-photoX, 0px), var(--history-exit-photoY, 0px)) rotateX(var(--history-exit-incomingRotation, 0deg));
+  transform-origin: center; backface-visibility: hidden;
+}
+#history .f03-layer-005.is-glowing { animation: history-title-glow 1.5s ease-in-out both; }
+@keyframes history-title-glow {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  35%, 65% { text-shadow: 0 0 18px rgba(255,227,133,.9), 0 0 52px rgba(255,227,133,.6); }
+}
+@media(prefers-reduced-motion:reduce) {
+  #history .f03-layer-006, #history-content-start .f04-layer-006 { transform: none; }
+  #history .f03-layer-005.is-glowing { animation: none; }
+}

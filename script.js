@@ -54,6 +54,14 @@
       breadX: 1035 - 3.5 * morph, breadY: 350 - 26 * morph,
       breadWidth: 438 - 33 * morph, wrappedHeight: (438 - 33 * morph) * 373 / 405 };
   }
+  function historyExitPose(progress) {
+    const t=ease(clamp(progress));
+    const mix=(a,b)=>a+(b-a)*t;
+    return { t, outlineX:mix(1029,1032), outlineY:mix(258,144), outlineWidth:mix(500,610), outlineHeight:mix(500,732),
+      titleX:mix(114,68), titleY:mix(377,252), titleSize:mix(240,36), titleAlpha:mix(1,.59),
+      breadY:mix(324,150), outgoingRotation:-180*t, incomingRotation:180*(1-t),
+      photoWidth:mix(405,600), photoHeight:mix(373,720), photoX:97*(1-t), photoY:174*(1-t) };
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -62,7 +70,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -111,6 +119,12 @@
     historyOutline.style.setProperty('--outline-length', pose.outline * 100 + '%');
     historyTitle.style.setProperty('--title-shift', (reduced.matches ? 0 : (1 - pose.text) * 2064) + 'px');
     historyTitle.style.opacity = pose.text;
+    historyTitle.classList.toggle('is-glowing', state.index === 2 && local >= 1000);
+    const exit = historyExitPose(state.index < 2 ? 0 : state.index === 2 ? state.transition : 1);
+    Object.entries(exit).forEach(([key,value]) => {
+      const unit=key.includes('Rotation')?'deg':['t','titleAlpha'].includes(key)?'':'px';
+      stage.style.setProperty('--history-exit-'+key,value+unit);
+    });
     const outgoing = state.index === 1 ? pose : historyPose(0, 0);
     bread.style.setProperty('--bread-arrival-x', (outgoing.breadX - 1035) + 'px');
     bread.style.setProperty('--bread-arrival-y', (outgoing.breadY - 350) + 'px');
