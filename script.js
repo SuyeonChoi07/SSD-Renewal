@@ -35,7 +35,8 @@
       const black = progress < .45 ? 1 - outgoing : progress > .55 ? 1 - incoming : 1;
       return { outgoing, incoming, black };
     }
-    return { outgoing: 1 - ease(progress), incoming: ease(progress), black: 0 };
+    // 이전 화면은 완전 불투명하게 받치고 다음 화면만 올려 합성 알파를 1로 유지합니다.
+    return { outgoing: 1, incoming: ease(progress), black: 0 };
   }
   function introPose(offset, travel) {
     const progress = clamp(travel ? offset / travel : 0);
@@ -218,7 +219,7 @@
   const historyCommon=[scenes[3].querySelector('.f04-layer-047'),scenes[3].querySelector('.f04-layer-048'),scenes[3].querySelector('.f04-layer-049')];
   function renderHistoryZoom(state) {
     const zoom=historyZoomPose(state.index,state.local,state.transition);
-    const stackOpacity=state.index===5?ease(state.transition):state.index===6?1:state.index===7?1-ease(state.transition):0;
+    const stackOpacity=state.index===5?ease(state.transition):state.index===6?1:state.index===7?1:0;
     bridgeStack.style.opacity=stackOpacity;
     bridgeStack.style.visibility=stackOpacity>0?'visible':'hidden';
     bridgeFront.style.opacity=1-ease(clamp(zoom.progress-1));
@@ -280,9 +281,12 @@
       }
       scene.style.opacity = opacity;
       scene.classList.toggle('is-visible', opacity > 0);
-      scene.classList.toggle('is-current', opacity >= .5);
-      scene.inert = opacity < .5;
-      scene.setAttribute('aria-hidden', String(opacity < .5));
+      const logicalCurrent=state.transition>=.5?Math.min(state.index+1,scenes.length-1):state.index;
+      const visualCurrent=logicalCurrent>=3&&logicalCurrent<=5?3:logicalCurrent;
+      const current=index===visualCurrent&&opacity>0;
+      scene.classList.toggle('is-current',current);
+      scene.inert=!current;
+      scene.setAttribute('aria-hidden',String(!current));
       // 원본 HTML 레이어를 이동합니다. 요소 복제나 별도 화면 재배치는 하지 않습니다.
       const offset = index < state.index ? Math.max(0, heights[index] - 1020) : index === state.index ? state.offset : 0;
       scene.querySelector('.frame-art').style.setProperty('--content-offset', `${-offset}px`);
