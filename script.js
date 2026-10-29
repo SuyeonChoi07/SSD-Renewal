@@ -10,7 +10,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 ? 0 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const motion = index === 2 ? 1000 : 0;
+      const motion = index === 2 ? 1000 : index >= 3 && index <= 5 ? 900 : 0;
       const transition = index === heights.length - 1 ? 0 : TRANSITION_SCROLL_PX;
       const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
       start += segment.length;
@@ -59,8 +59,15 @@
     const mix=(a,b)=>a+(b-a)*t;
     return { t, outlineX:mix(1029,1032), outlineY:mix(258,144), outlineWidth:mix(500,610), outlineHeight:mix(500,732),
       titleX:mix(114,68), titleY:mix(377,252), titleSize:mix(240,36), titleAlpha:mix(1,.59),
-      breadY:mix(324,150), outgoingRotation:-180*t, incomingRotation:180*(1-t),
+      breadY:mix(324,150), outgoingRotation:-180*t, incomingRotation:0,
       photoWidth:mix(405,600), photoHeight:mix(373,720), photoX:97*(1-t), photoY:174*(1-t) };
+  }
+  function historyContentPose(local, transition = 0, order = 0) {
+    const image = ease(clamp(local / 400));
+    const photos = ease(clamp((local - 400 - order * 20) / 300));
+    const captionIn = ease(clamp(local / 350)), captionOut = ease(clamp(transition));
+    return { imageOpacity:image, imageBlur:24*(1-image), photoOpacity:photos, photoX:220*(1-photos),
+      captionOpacity:captionIn*(1-captionOut), captionY:32*(1-captionIn)+32*captionOut };
   }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
@@ -70,7 +77,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -130,6 +137,31 @@
     bread.style.setProperty('--bread-arrival-y', (outgoing.breadY - 350) + 'px');
     bread.style.setProperty('--intro-bread-size', outgoing.breadWidth + 'px');
   }
+  const historyContents = [3,4,5].map((index,i) => {
+    const gallery=scenes[index].querySelector('.f0'+(index+1)+'-layer-005');
+    const photos=Array.from(gallery.children);
+    const focus=photos[[0,3,8][i]];
+    focus.classList.add('history-content-focus');
+    const others=photos.filter(photo=>photo!==focus);
+    others.forEach(photo=>photo.classList.add('history-content-side'));
+    return {index,focus,others,caption:scenes[index].querySelector('.f0'+(index+1)+'-layer-048')};
+  });
+  function renderHistoryContents(state) {
+    historyContents.forEach(group=>{
+      const local=state.index<group.index?0:state.index===group.index?state.local:900;
+      const transition=state.index===group.index?state.transition:state.index>group.index?1:0;
+      const pose=historyContentPose(local,transition);
+      group.focus.style.setProperty('--image-opacity',pose.imageOpacity);
+      group.focus.style.setProperty('--image-blur',pose.imageBlur+'px');
+      group.caption.style.setProperty('--caption-opacity',pose.captionOpacity);
+      group.caption.style.setProperty('--caption-y',(reduced.matches?0:pose.captionY)+'px');
+      group.others.forEach((photo,index)=>{
+        const p=historyContentPose(local,transition,index);
+        photo.style.setProperty('--photo-opacity',p.photoOpacity);
+        photo.style.setProperty('--photo-x',(reduced.matches?0:p.photoX)+'px');
+      });
+    });
+  }
   const header = document.querySelector('.persistent-header');
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
   function renderHeader(state) {
@@ -163,6 +195,7 @@
     });
     renderIntro(state.index < 1 ? 0 : state.index === 1 ? state.offset : segments[1].travel);
     renderHistory(state);
+    renderHistoryContents(state);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }

@@ -27,7 +27,7 @@ const exitStart=historyExitPose(0),exitEnd=historyExitPose(1);
 assert.equal(exitStart.outlineWidth,500);assert.equal(exitStart.outlineHeight,500);
 assert.equal(exitEnd.outlineWidth,610);assert.equal(exitEnd.outlineHeight,732);
 assert.equal(exitEnd.outlineX,1032);assert.equal(exitEnd.outlineY,144);
-assert.equal(exitEnd.outgoingRotation,-180);assert.equal(exitStart.incomingRotation,180);assert.equal(exitEnd.incomingRotation,0);
+assert.equal(exitEnd.outgoingRotation,-180);assert.equal(exitStart.incomingRotation,0);assert.equal(exitEnd.incomingRotation,0);
 assert.equal(exitEnd.titleX,68);assert.equal(exitEnd.titleY,252);assert.equal(exitEnd.titleSize,36);
 assert.equal(exitEnd.photoWidth,600);assert.equal(exitEnd.photoHeight,720);
 for(const p of [.1,.25,.5,.75,.9]){const pose=historyExitPose(p);assert.ok(pose.outlineWidth>500&&pose.outlineWidth<610);assert.ok(pose.titleSize<240&&pose.titleSize>36);}

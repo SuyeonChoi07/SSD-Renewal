@@ -954,11 +954,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   transform: perspective(1200px) rotateX(var(--history-exit-outgoingRotation, 0deg));
   transform-origin: center; backface-visibility: hidden;
 }
-#history-content-start .f04-layer-006 {
-  width: var(--history-exit-photoWidth, 600px); height: var(--history-exit-photoHeight, 720px);
-  transform: perspective(1200px) translate(var(--history-exit-photoX, 0px), var(--history-exit-photoY, 0px)) rotateX(var(--history-exit-incomingRotation, 0deg));
-  transform-origin: center; backface-visibility: hidden;
-}
+/* History_content 중앙 이미지는 점선 전환 후 blur/fade로 표시합니다. */
 #history .f03-layer-005.is-glowing { animation: history-title-glow 1.5s ease-in-out both; }
 @keyframes history-title-glow {
   0%, 100% { text-shadow: 0 0 0 transparent; }
@@ -967,4 +963,17 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 @media(prefers-reduced-motion:reduce) {
   #history .f03-layer-006, #history-content-start .f04-layer-006 { transform: none; }
   #history .f03-layer-005.is-glowing { animation: none; }
+}
+
+.scene .history-content-focus {
+  opacity: var(--image-opacity, 0); filter: blur(var(--image-blur, 24px));
+  transform: none; will-change: opacity, filter;
+}
+.scene .history-content-side {
+  opacity: var(--photo-opacity, 0); transform: translateX(var(--photo-x, 220px));
+  will-change: transform, opacity;
+}
+#history-content-start .f04-layer-048, #history-content-mid .f05-layer-048, #history-content-end .f06-layer-048 {
+  opacity: var(--caption-opacity, 0); transform: translateY(var(--caption-y, 32px));
+  will-change: transform, opacity;
 }
