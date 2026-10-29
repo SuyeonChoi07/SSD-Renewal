@@ -4,3 +4,4 @@ require('./verify-intro.cjs');
 require('./verify-header.cjs');
 require('./verify-history.cjs');
 require('./verify-history-content.cjs');
+require('./verify-carousel.cjs');

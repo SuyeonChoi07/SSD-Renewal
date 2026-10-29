@@ -10,7 +10,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 ? 0 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const motion = index === 2 ? 1000 : index >= 3 && index <= 5 ? 900 : 0;
+      const motion = index === 2 ? 1000 : index === 3 ? 900 : index === 4 ? 2100 : index === 5 ? 3500 : 0;
       const transition = index === heights.length - 1 ? 0 : TRANSITION_SCROLL_PX;
       const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
       start += segment.length;
@@ -69,6 +69,20 @@
     return { imageOpacity:image, imageBlur:24*(1-image), photoOpacity:photos, photoX:220*(1-photos),
       captionOpacity:captionIn*(1-captionOut), captionY:32*(1-captionIn)+32*captionOut };
   }
+  function historyCarouselFocus(index, local) {
+    return index < 4 ? 0 : index === 4 ? clamp(local / 700,0,3) : index === 5 ? 3+clamp(local / 700,0,5) : 8;
+  }
+  function historyCarouselGeometry(focus, index) {
+    const from=Math.min(7,Math.floor(clamp(focus,0,8))), t=ease(clamp(focus-from));
+    function at(active) {
+      const width=index===active?600:250, height=index===active?720:300;
+      const start=732-active*280;
+      const x=start+index*280+(index>active?350:0);
+      return {x,y:(720-height)/2,width,height,opacity:index===active?1:.6};
+    }
+    const a=at(from),b=at(from+1);
+    return Object.fromEntries(Object.keys(a).map(k=>[k,a[k]+(b[k]-a[k])*t]));
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -77,7 +91,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -137,29 +151,29 @@
     bread.style.setProperty('--bread-arrival-y', (outgoing.breadY - 350) + 'px');
     bread.style.setProperty('--intro-bread-size', outgoing.breadWidth + 'px');
   }
-  const historyContents = [3,4,5].map((index,i) => {
-    const gallery=scenes[index].querySelector('.f0'+(index+1)+'-layer-005');
-    const photos=Array.from(gallery.children);
-    const focus=photos[[0,3,8][i]];
-    focus.classList.add('history-content-focus');
-    const others=photos.filter(photo=>photo!==focus);
-    others.forEach(photo=>photo.classList.add('history-content-side'));
-    return {index,focus,others,caption:scenes[index].querySelector('.f0'+(index+1)+'-layer-048')};
-  });
+  // 세 History_content 프레임에서 하나의 원본 갤러리·문구·점선을 계속 사용합니다.
+  const gallery=scenes[3].querySelector('.f04-layer-005');
+  const carouselPhotos=Array.from(gallery.children);
+  carouselPhotos.forEach(photo=>photo.classList.add('history-carousel-photo'));
+  const carouselCaption=scenes[3].querySelector('.f04-layer-048');
   function renderHistoryContents(state) {
-    historyContents.forEach(group=>{
-      const local=state.index<group.index?0:state.index===group.index?state.local:900;
-      const transition=state.index===group.index?state.transition:state.index>group.index?1:0;
-      const pose=historyContentPose(local,transition);
-      group.focus.style.setProperty('--image-opacity',pose.imageOpacity);
-      group.focus.style.setProperty('--image-blur',pose.imageBlur+'px');
-      group.caption.style.setProperty('--caption-opacity',pose.captionOpacity);
-      group.caption.style.setProperty('--caption-y',(reduced.matches?0:pose.captionY)+'px');
-      group.others.forEach((photo,index)=>{
-        const p=historyContentPose(local,transition,index);
-        photo.style.setProperty('--photo-opacity',p.photoOpacity);
-        photo.style.setProperty('--photo-x',(reduced.matches?0:p.photoX)+'px');
-      });
+    const local=state.index<3?0:state.index===3?state.local:900;
+    const transition=state.index===5?state.transition:state.index>5?1:0;
+    const entrance=historyContentPose(local,transition);
+    const focus=historyCarouselFocus(state.index,state.local);
+    carouselCaption.style.setProperty('--caption-opacity',entrance.captionOpacity);
+    carouselCaption.style.setProperty('--caption-y',(reduced.matches?0:entrance.captionY)+'px');
+    carouselPhotos.forEach((photo,index)=>{
+      const geometry=historyCarouselGeometry(focus,index);
+      const entry=index===0?entrance:historyContentPose(local,transition,index-1);
+      const opacity=index===0?entrance.imageOpacity:entry.photoOpacity;
+      const shift=index===0?0:entry.photoX;
+      photo.style.setProperty('--carousel-x',(geometry.x+(reduced.matches?0:shift))+'px');
+      photo.style.setProperty('--carousel-y',geometry.y+'px');
+      photo.style.setProperty('--carousel-width',geometry.width+'px');
+      photo.style.setProperty('--carousel-height',geometry.height+'px');
+      photo.style.setProperty('--carousel-opacity',geometry.opacity*opacity);
+      photo.style.setProperty('--carousel-blur',(index===0?entrance.imageBlur:0)+'px');
     });
   }
   const header = document.querySelector('.persistent-header');
@@ -183,7 +197,11 @@
     veil.style.opacity = weights.black;
     renderHeader(state);
     scenes.forEach((scene, index) => {
-      const opacity = index === state.index ? weights.outgoing : index === state.index + 1 ? weights.incoming : 0;
+      let opacity = index === state.index ? weights.outgoing : index === state.index + 1 ? weights.incoming : 0;
+      if(state.index>=3 && state.index<=5) {
+        if(index===3)opacity=state.index===5?weights.outgoing:1;
+        if(index===4||index===5)opacity=0;
+      }
       scene.style.opacity = opacity;
       scene.classList.toggle('is-visible', opacity > 0);
       scene.classList.toggle('is-current', opacity >= .5);

@@ -977,3 +977,16 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   opacity: var(--caption-opacity, 0); transform: translateY(var(--caption-y, 32px));
   will-change: transform, opacity;
 }
+
+/* History_content 공통 레이어 유지 + 인접 사진의 연속 이동. */
+#history-content-start .f04-layer-005 { display: block; left: 0; width: 2064px; height: 720px; }
+#history-content-start .history-carousel-photo {
+  position: absolute; left: var(--carousel-x, 732px); top: var(--carousel-y, 0px);
+  width: var(--carousel-width, 250px); height: var(--carousel-height, 300px);
+  opacity: var(--carousel-opacity, 0); filter: blur(var(--carousel-blur, 0px)); transform: none;
+  will-change: left, top, width, height, opacity;
+}
+#history-content-start .f04-layer-013, #history-content-start .f04-layer-018,
+#history-content-start .f04-layer-023, #history-content-start .f04-layer-028,
+#history-content-start .f04-layer-033, #history-content-start .f04-layer-037,
+#history-content-start .f04-layer-041, #history-content-start .f04-layer-046 { background: transparent; }
