@@ -1220,23 +1220,19 @@
     "assets/wrapper-tear-frames-v2/step-06.png",
     "assets/wrapper-tear-frames-v2/step-07.png",
     "assets/wrapper-tear-frames-v2/step-08.png",
-    "assets/wrapper-tear-frames-v2/step-09.png",
-    "assets/wrapper-tear-frames-v2/step-10.png",
-    "assets/wrapper-tear-frames-v2/step-11.png",
-    "assets/wrapper-tear-frames-v2/step-12.png",
-    "assets/wrapper-tear-frames-v2/step-13.png",
-    "assets/wrapper-tear-frames-v2/step-14.png",
-    "assets/wrapper-tear-frames-v2/step-15.png"
+    "assets/wrapper-tear-frames-v3/step-09.png",
+    "assets/wrapper-tear-frames-v3/step-10.png",
+    "assets/wrapper-tear-frames-v3/step-11.png",
+    "assets/wrapper-tear-frames-v3/step-12.png",
+    "assets/wrapper-tear-frames-v3/step-13.png",
+    "assets/wrapper-tear-frames-v3/step-14.png",
+    "assets/wrapper-tear-frames-v3/step-15.png"
   ],
   "wrapperTearSteps": 15,
   "wrapperTearScrollPxPerStep": 100,
   "wrapperTearOpacityChanges": false,
   "wrapperTearUsesIndividuallyGeneratedFrames": true,
   "wrapperTearUsesHalfClipping": false,
-  "wrapperTearHorizontalMovement": {
-    "startsAtFrame": 9,
-    "totalLeftPx": 900,
-    "easing": "ease-in-out",
-    "wholeImage": true
-  }
+  "wrapperTearFixedLeftGap": true,
+  "wrapperTearShapeChangeStartsAtFrame": 9
 }

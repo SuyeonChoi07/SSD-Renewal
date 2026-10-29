@@ -9,7 +9,7 @@ for(let i=0;i<15;i++){
  assert.equal(p.frame,i+1);assert.ok(p.opacities.every(v=>v===0||v===1));seen.add(p.frame);
 }
 assert.equal(seen.size,15);assert.ok(pose(16,0).opacities.every(v=>v===0));
-const manifest=require('./assets/wrapper-generation-v2.json');assert.equal(manifest.assets.length,15);
+const manifest=require('./assets/wrapper-generation-v3.json');assert.equal(manifest.assets.length,15);
 const hashes=new Set();let previous=-1;
 for(const asset of manifest.assets){const bytes=fs.readFileSync(__dirname+'/'+asset.path);hashes.add(crypto.createHash('sha256').update(bytes).digest('hex'));assert.ok(asset.transparentFraction>previous);previous=asset.transparentFraction;}
 assert.equal(hashes.size,15,'Fifteen distinct generated images');
@@ -19,8 +19,4 @@ assert.ok(!html.includes('tear-half')&&!css.includes('tear-half')&&!script.inclu
 for(const asset of manifest.assets)assert.ok(html.includes(asset.path));
 console.log('15 individually generated full frames; 100px each; unique files, increasing opening area; no cropping/movement/fade workaround: PASS');
 
-for(let distance=0;distance<=800;distance+=100){const index=distance<700?14:15,progress=index===14?distance/700:(distance-700)/800;assert.equal(Math.abs(pose(index,progress).x),0,'No horizontal motion before frame 9');}
-let previousShift=0;
-for(let distance=825;distance<1500;distance+=25){const p=pose(15,(distance-700)/800);assert.ok(p.x<previousShift,'Whole images move progressively left from frame 9');assert.ok(p.opacities.every(v=>v===0||v===1));previousShift=p.x;}
-assert.ok(pose(15,.999).x<-899);
-console.log('Frames 9–15 move left as complete images; 15 generated files, 100px steps and full opacity preserved: PASS');
+assert.ok(!script.includes('--tear-left')&&!css.includes('--tear-left'),'No whole-image slide');

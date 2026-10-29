@@ -156,8 +156,7 @@
   function wrapperTearPose(index,transition) {
     const distance=index<14?0:index===14?700*clamp(transition):index===15?700+800*clamp(transition):1500;
     const step=index>=16?16:distance<=0?0:Math.min(15,Math.floor((distance+1e-7)/100)+1);
-    const x=-900*ease(clamp((distance-800)/700));
-    return {step,x,frame:step<16?step:-1,opacities:Array.from({length:16},(_,i)=>step<16&&i===step?1:0)};
+    return {step,frame:step<16?step:-1,opacities:Array.from({length:16},(_,i)=>step<16&&i===step?1:0)};
   }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
@@ -319,7 +318,6 @@
     const pose=wrapperTearPose(state.index,state.transition);
     const visible=state.index===13?transitionWeights(13,state.transition).incoming:state.index===14||state.index===15?1:0;
     tearSequence.style.opacity=visible;
-    tearSequence.style.setProperty('--tear-left',(reduced.matches?0:pose.x)+'px');
     tearSequence.style.visibility=visible>0?'visible':'hidden';
     tearFrames.forEach((frame,index)=>{ frame.style.opacity=1; frame.hidden=pose.opacities[index]===0; });
   }
