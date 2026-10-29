@@ -10,7 +10,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 ? 0 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const motion = index === 2 ? 1000 : index === 3 ? 900 : index === 4 ? 2100 : index === 5 ? 3500 : 0;
+      const motion = index === 2 ? 1000 : index === 3 ? 900 : index === 4 ? 5100 : index === 5 ? 9500 : 0;
       const transition = index === heights.length - 1 ? 0 : TRANSITION_SCROLL_PX;
       const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
       start += segment.length;
@@ -70,7 +70,11 @@
       captionOpacity:captionIn*(1-captionOut), captionY:32*(1-captionIn)+32*captionOut };
   }
   function historyCarouselFocus(index, local) {
-    return index < 4 ? 0 : index === 4 ? clamp(local / 700,0,3) : index === 5 ? 3+clamp(local / 700,0,5) : 8;
+    if(index<4)return 0;
+    if(index>5)return 8;
+    const base=index===4?0:3, count=index===4?3:5;
+    const step=Math.min(count,Math.floor(Math.max(0,local)/2200));
+    return base+Math.min(count,step+clamp((local-step*2200)/700));
   }
   function historyCarouselGeometry(focus, index) {
     const from=Math.min(7,Math.floor(clamp(focus,0,8))), t=ease(clamp(focus-from));

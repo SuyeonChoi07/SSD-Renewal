@@ -882,7 +882,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 /* Figma 원본 glass / inner shadow 효과 */
 [data-node-id="736:491"] { backdrop-filter: blur(31.5px); }
 [data-node-id="779:696"] { backdrop-filter: blur(33px); }
-[data-node-id="769:429"], [data-node-id="775:517"], [data-node-id="775:544"] { box-shadow: inset 0 0 50px 40px rgba(0,0,0,.6); }
+[data-node-id="775:517"], [data-node-id="775:544"] { box-shadow: inset 0 0 50px 40px rgba(0,0,0,.6); }
+#history-content-start .f04-layer-047 { box-shadow: none; }
 
 /* Intro: 원본 요소를 복제하지 않고 뷰포트에 고정합니다. */
 #intro .f02-layer-002 { left: 1340px; top: 488px; }
