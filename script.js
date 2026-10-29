@@ -4,14 +4,26 @@
   const TRANSITION_SCROLL_PX = 250;
   const HOLD_SCROLL_PX = 1500;
   const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
-  const ease = value => value * value * (3 - 2 * value);
+  // CSS ease-in-out와 동일한 cubic-bezier(.42, 0, .58, 1).
+  const ease = value => {
+    const x=clamp(value);
+    if(x===0||x===.5||x===1)return x;
+    let low=0,high=1;
+    for(let i=0;i<24;i++){
+      const t=(low+high)/2,u=1-t;
+      const bx=3*u*u*t*.42+3*u*t*t*.58+t*t*t;
+      if(bx<x)low=t;else high=t;
+    }
+    const t=(low+high)/2;
+    return 3*(1-t)*t*t+t*t*t;
+  };
   function timeline(heights) {
     let start = 0;
     return heights.map((height, index) => {
       const hold = index === 0 || index === 6 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2400 : 0;
       const segment = { start, hold, travel, motion, exitMotion, transition, length: hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -42,7 +54,7 @@
   function introPose(offset, travel) {
     const progress = clamp(travel ? offset / travel : 0);
     const settle = ease(clamp((progress - .76) / .24));
-    return { progress, breadX: 1035, breadY: 326 + 24 * settle, breadRotation: 360 * progress };
+    return { progress, breadX: 1035, breadY: 326 + 24 * settle, breadRotation: 360 * ease(progress) };
   }
   function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
     const stagger = line * .025;
@@ -80,7 +92,7 @@
   }
   function historyCarouselGeometry(focus, index) {
     const from=Math.min(7,Math.floor(clamp(focus,0,8))), p=clamp(focus-from);
-    const t=p*p*p*(p*(p*6-15)+10); // 출발·도착의 속도와 가속도를 모두 0으로 연결
+    const t=ease(p); // 공통 ease-in-out 가속·감속
     function at(active) {
       const width=index===active?600:250, height=index===active?720:300;
       const start=732-active*280;
@@ -149,7 +161,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect };
+  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));

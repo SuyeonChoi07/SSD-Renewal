@@ -26,7 +26,7 @@ for(let i=1;i<heights.length;i++) {
   }
   if(segment.transition) {
     assert.ok(stateAt(segment.start+segment.travel+segment.motion+segment.exitMotion+segment.hold+1,heights).transition>0);
-    assert.equal(stateAt(segment.start+segment.travel+segment.motion+segment.exitMotion+segment.hold+125,heights).transition,.5);
+    assert.equal(stateAt(segment.start+segment.travel+segment.motion+segment.exitMotion+segment.hold+segment.transition/2,heights).transition,.5);
     assert.equal(stateAt(segments[i+1].start,heights).index,i+1);
   }
 }
