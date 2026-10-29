@@ -25,7 +25,7 @@
       const entryHold = 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
-      const exitMotion = index === 8 ? 2400 : 0;
+      const exitMotion = index === 8 ? 2750 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
       return segment;
@@ -143,7 +143,7 @@
     const text=ease(clamp((elapsed-(count-1-line)*60)/250));
     const panel=ease(clamp((elapsed-750)/500));
     return {textOpacity:1-text,textY:-32*text,panelOpacity:1-panel,panelX:-702*panel,
-      align:ease(clamp((elapsed-1250)/800)),fade:ease(clamp((elapsed-2050)/350))};
+      align:ease(clamp((elapsed-1250)/800)),fade:ease(clamp((elapsed-2050)/700))};
   }
   function daejeonAlignedCrop(progress) {
     const width=159.93,height=270;
@@ -298,7 +298,7 @@
     const pose=daejeonPose(local);
     daejeonPanel.style.setProperty('--panel-opacity',pose.panelOpacity);
     daejeonPanel.style.setProperty('--panel-x',(reduced.matches?0:pose.panelX)+'px');
-    const elapsed=state.index<8?0:state.index===8?Math.max(0,state.local-segments[8].motion-segments[8].hold):2400;
+    const elapsed=state.index<8?0:state.index===8?Math.max(0,state.local-segments[8].motion-segments[8].hold):segments[8].exitMotion;
     const exit=daejeonExitPose(elapsed);
     daejeonPanel.style.setProperty('--panel-opacity',pose.panelOpacity*exit.panelOpacity);
     daejeonPanel.style.setProperty('--panel-x',((reduced.matches?0:pose.panelX)+(reduced.matches?0:exit.panelX))+'px');
@@ -312,7 +312,7 @@
     });
   }
   function renderDaejeonHandoff(state) {
-    const elapsed=state.index<8?0:state.index===8?Math.max(0,state.local-segments[8].motion-segments[8].hold):2400;
+    const elapsed=state.index<8?0:state.index===8?Math.max(0,state.local-segments[8].motion-segments[8].hold):segments[8].exitMotion;
     const pose=daejeonExitPose(elapsed);
     if(state.index===8){
       Object.entries(daejeonAlignedCrop(pose.align)).forEach(([key,value])=>stage.style.setProperty('--aligned-back-'+key,value+'%'));
