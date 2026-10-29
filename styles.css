@@ -1043,3 +1043,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #bridge-fade-1 .f10-layer-005 { display: none; }
 .daejeon-logo-overlay { position: absolute; inset: 0; z-index: 35; pointer-events: none; opacity: 0; visibility: hidden; }
 .daejeon-logo-overlay .f10-layer-024 { width: var(--handoff-logo-width, 947px); height: var(--handoff-logo-height, 314px); }
+/* 배경의 비율은 고정하고 로고 자체의 균일 배율·위치로 흰 획을 정렬합니다. */
+.daejeon-logo-overlay .f10-layer-024 {
+  translate: 0; left: var(--handoff-logo-x, 574px); top: var(--handoff-logo-y, 383px);
+  width: var(--handoff-logo-width, 947px); height: var(--handoff-logo-height, 314px);
+}

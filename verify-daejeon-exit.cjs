@@ -16,3 +16,9 @@ for(const p of [0,.1,.25,.5,.75,1]){const crop=daejeonAlignedCrop(p);assert.equa
 const startCrop=daejeonAlignedCrop(0),endCrop=daejeonAlignedCrop(1);
 assert.ok(endCrop.left<startCrop.left,'Move background left');
 console.log('Background alignment changes position only; image dimensions and aspect ratio stay fixed: PASS');
+
+const {daejeonAlignedLogoRect}=require('./script.js');
+const rect=daejeonAlignedLogoRect();
+assert.ok(Math.abs(rect.width/415-rect.height*1.2134/167)<1e-10,'Uniform logo scale preserves letter proportions');
+assert.ok(rect.x<574&&rect.y<383,'Correct the former right/down ghost offset');
+console.log('Foreground logo registered to white sign strokes with uniform scale; background stays undeformed: PASS');

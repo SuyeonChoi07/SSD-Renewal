@@ -134,6 +134,13 @@
     const top=(centerY-height/100*1020*847/3417)/1020*100;
     return {width,height,left:-17.2+(left+17.2)*clamp(progress),top:-13.63+(top+13.63)*clamp(progress)};
   }
+  function daejeonAlignedLogoRect() {
+    const crop=daejeonAlignedCrop(1);
+    const sx=crop.width/100*2064/4096,sy=crop.height/100*1020/3417;
+    // 원본 흰 획 마스크와 로고를 균일 배율로 대조한 최적 정렬값.
+    const scale=2.85*sx;
+    return {x:crop.left/100*2064+1530*sx,y:crop.top/100*1020+634*sy,width:415*scale,height:167*scale/1.2134};
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -142,7 +149,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -280,12 +287,13 @@
     if(state.index===8){
       Object.entries(daejeonAlignedCrop(pose.align)).forEach(([key,value])=>stage.style.setProperty('--aligned-back-'+key,value+'%'));
     }
-    daejeon.style.setProperty('--daejeon-bg-opacity',1-pose.fade);
+    const blend=ease(clamp((pose.fade-.25)/.5));
+    daejeon.style.setProperty('--daejeon-bg-opacity',1-blend);
     const next=state.index===9?ease(state.transition):0;
-    daejeonLogo.style.opacity=state.index===8?pose.fade:state.index===9?1-next:0;
+    daejeonLogo.style.opacity=state.index===8?blend:state.index===9?1-next:0;
     daejeonLogo.style.visibility=state.index===8&&pose.fade>0||state.index===9?'visible':'hidden';
-    daejeonLogo.style.setProperty('--handoff-logo-width',(947+(279-947)*next)+'px');
-    daejeonLogo.style.setProperty('--handoff-logo-height',(314+(92-314)*next)+'px');
+    const rect=daejeonAlignedLogoRect(),target={x:908,y:494,width:279,height:92};
+    Object.keys(rect).forEach(key=>daejeonLogo.style.setProperty('--handoff-logo-'+key,(rect[key]+(target[key]-rect[key])*next)+'px'));
   }
   const header = document.querySelector('.persistent-header');
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
