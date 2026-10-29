@@ -30,7 +30,7 @@ assert.equal(exitEnd.outlineX,1032);assert.equal(exitEnd.outlineY,144);
 assert.equal(exitEnd.outgoingRotation,-180);assert.equal(exitStart.incomingRotation,0);assert.equal(exitEnd.incomingRotation,0);
 assert.equal(exitEnd.titleX,68);assert.equal(exitEnd.titleY,252);assert.equal(exitEnd.titleSize,36);
 assert.equal(exitEnd.photoWidth,600);assert.equal(exitEnd.photoHeight,720);
-for(const p of [.1,.25,.5,.75,.9]){const pose=historyExitPose(p);assert.ok(pose.outlineWidth>500&&pose.outlineWidth<610);assert.ok(pose.titleSize<240&&pose.titleSize>36);}
+for(const p of [.1,.25,.5,.75,.9]){const pose=historyExitPose(p);assert.ok(pose.outlineWidth>500&&pose.outlineWidth<610);assert.ok(pose.titleSize<180&&pose.titleSize>36);}
 assert.match(fs.readFileSync(__dirname+'/styles.css','utf8'),/animation: history-title-glow 1\.5s/);
 console.log('History exit geometry, backward flip, title destination and 1.5s glow: PASS');
 
