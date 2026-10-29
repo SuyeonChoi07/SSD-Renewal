@@ -1032,3 +1032,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   width: var(--aligned-back-width, 159.93%); height: var(--aligned-back-height, 270%);
   left: var(--aligned-back-left, -17.2%); top: var(--aligned-back-top, -13.63%);
 }
+
+/* 확대 완료 → 패널 진입(500px) → 300px 대기 → 위에서 줄별 문구 진입. */
+#with-daejeon .f09-layer-008 { transform: translateX(var(--panel-x, -702px)); opacity: var(--panel-opacity, 0); will-change: transform, opacity; }
+#with-daejeon .daejeon-line { display: block; opacity: var(--daejeon-line-opacity, 0); transform: translateY(var(--daejeon-line-y, -32px)); will-change: transform, opacity; }
+#with-daejeon .f09-layer-017 { opacity: 0; }

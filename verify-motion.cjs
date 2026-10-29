@@ -7,3 +7,4 @@ require('./verify-history-content.cjs');
 require('./verify-carousel.cjs');
 require('./verify-history-zoom.cjs');
 require('./verify-image-alignment.cjs');
+require('./verify-daejeon.cjs');

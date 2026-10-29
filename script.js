@@ -10,7 +10,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 || index === 6 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : 0;
+      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : TRANSITION_SCROLL_PX;
       const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
       start += segment.length;
@@ -114,6 +114,11 @@
     const back=progress<=2?alignHigh(front):crop(alignHigh(second),{width:159.93,height:270,left:-17.2,top:-13.63},ease(clamp(progress-2)));
     return {front,history,back};
   }
+  function daejeonPose(local, line=0) {
+    const panel=ease(clamp(local/500));
+    const text=ease(clamp((local-800-line*70)/250));
+    return {panelOpacity:panel,panelX:702*(panel-1),textOpacity:text,textY:32*(text-1),dividerOpacity:ease(clamp((local-1300)/200))};
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -122,7 +127,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -230,6 +235,23 @@
       historyCommon.forEach(element=>element.style.setProperty('--zoom-common-opacity',fade));
     } else historyCommon.forEach(element=>element.style.setProperty('--zoom-common-opacity',1));
   }
+  const daejeon=scenes[8],daejeonPanel=daejeon.querySelector('.f09-layer-008');
+  const daejeonLines=Array.from(daejeon.querySelectorAll('.f09-layer-012 .daejeon-line, .f09-layer-009 .daejeon-line'));
+  // 본문 위쪽 줄부터 읽고 마지막에 아래쪽 결론 두 줄을 표시합니다.
+  daejeonLines.sort((a,b)=>Number(a.closest('.f09-layer-009')!==null)-Number(b.closest('.f09-layer-009')!==null));
+  const daejeonDivider=daejeon.querySelector('.f09-layer-017');
+  function renderDaejeon(state) {
+    const local=state.index<8?0:state.index===8?state.local:1700;
+    const pose=daejeonPose(local);
+    daejeonPanel.style.setProperty('--panel-opacity',pose.panelOpacity);
+    daejeonPanel.style.setProperty('--panel-x',(reduced.matches?0:pose.panelX)+'px');
+    daejeonDivider.style.opacity=pose.dividerOpacity;
+    daejeonLines.forEach((line,index)=>{
+      const p=daejeonPose(local,index);
+      line.style.setProperty('--daejeon-line-opacity',p.textOpacity);
+      line.style.setProperty('--daejeon-line-y',(reduced.matches?0:p.textY)+'px');
+    });
+  }
   const header = document.querySelector('.persistent-header');
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
   function renderHeader(state) {
@@ -269,6 +291,7 @@
     renderHistory(state);
     renderHistoryContents(state);
     renderHistoryZoom(state);
+    renderDaejeon(state);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }
