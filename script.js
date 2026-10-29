@@ -12,7 +12,8 @@
       const travel = Math.max(0, height - 1020);
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : TRANSITION_SCROLL_PX;
-      const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
+      const exitMotion = index === 8 ? 2400 : 0;
+      const segment = { start, hold, travel, motion, exitMotion, transition, length: hold + travel + motion + exitMotion + transition };
       start += segment.length;
       return segment;
     });
@@ -24,7 +25,7 @@
     const segment = segments[index];
     const local = clamp(scrollPx - segment.start, 0, segment.length);
     const offset = clamp(local, 0, segment.travel);
-    const transition = segment.transition ? clamp((local - segment.hold - segment.travel - segment.motion) / segment.transition) : 0;
+    const transition = segment.transition ? clamp((local - segment.hold - segment.travel - segment.motion - segment.exitMotion) / segment.transition) : 0;
     return { index, local, transition, offset };
   }
   function transitionWeights(index, progress) {
@@ -120,6 +121,12 @@
     const text=ease(clamp((local-800-line*70)/250));
     return {panelOpacity:panel,panelX:702*(panel-1),textOpacity:text,textY:32*(text-1),dividerOpacity:ease(clamp((local-1300)/200))};
   }
+  function daejeonExitPose(elapsed,line=0,count=9) {
+    const text=ease(clamp((elapsed-(count-1-line)*60)/250));
+    const panel=ease(clamp((elapsed-750)/500));
+    return {textOpacity:1-text,textY:-32*text,panelOpacity:1-panel,panelX:-702*panel,
+      align:ease(clamp((elapsed-1250)/800)),fade:ease(clamp((elapsed-2050)/350))};
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -128,7 +135,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -241,17 +248,43 @@
   // 본문 위쪽 줄부터 읽고 마지막에 아래쪽 결론 두 줄을 표시합니다.
   daejeonLines.sort((a,b)=>Number(a.closest('.f09-layer-009')!==null)-Number(b.closest('.f09-layer-009')!==null));
   const daejeonDivider=daejeon.querySelector('.f09-layer-017');
+  const daejeonLogo=document.querySelector('.daejeon-logo-overlay');
   function renderDaejeon(state) {
     const local=state.index<8?0:state.index===8?state.local:1700;
     const pose=daejeonPose(local);
     daejeonPanel.style.setProperty('--panel-opacity',pose.panelOpacity);
     daejeonPanel.style.setProperty('--panel-x',(reduced.matches?0:pose.panelX)+'px');
-    daejeonDivider.style.opacity=pose.dividerOpacity;
+    const elapsed=state.index<8?0:state.index===8?Math.max(0,state.local-segments[8].motion-segments[8].hold):2400;
+    const exit=daejeonExitPose(elapsed);
+    daejeonPanel.style.setProperty('--panel-opacity',pose.panelOpacity*exit.panelOpacity);
+    daejeonPanel.style.setProperty('--panel-x',((reduced.matches?0:pose.panelX)+(reduced.matches?0:exit.panelX))+'px');
+    daejeonDivider.style.opacity=pose.dividerOpacity*(1-ease(clamp(elapsed/250)));
     daejeonLines.forEach((line,index)=>{
       const p=daejeonPose(local,index);
+      const out=daejeonExitPose(elapsed,index,daejeonLines.length);
+      p.textOpacity*=out.textOpacity; p.textY+=out.textY;
       line.style.setProperty('--daejeon-line-opacity',p.textOpacity);
       line.style.setProperty('--daejeon-line-y',(reduced.matches?0:p.textY)+'px');
     });
+  }
+  function renderDaejeonHandoff(state) {
+    const elapsed=state.index<8?0:state.index===8?Math.max(0,state.local-segments[8].motion-segments[8].hold):2400;
+    const pose=daejeonExitPose(elapsed);
+    const targetWidth=(947*391/415)/(1202/4096)/2064*100;
+    const targetHeight=(314*1.2134*123/167)/(304/3417)/1020*100;
+    const centerX=574+947*196.5/415,centerY=383+314*1.2134*62.5/167;
+    const targetLeft=(centerX-targetWidth/100*2064*2140/4096)/2064*100;
+    const targetTop=(centerY-targetHeight/100*1020*847/3417)/1020*100;
+    if(state.index===8){
+      const initial={width:159.93,height:270,left:-17.2,top:-13.63},target={width:targetWidth,height:targetHeight,left:targetLeft,top:targetTop};
+      Object.keys(initial).forEach(key=>stage.style.setProperty('--aligned-back-'+key,(initial[key]+(target[key]-initial[key])*pose.align)+'%'));
+    }
+    daejeon.style.setProperty('--daejeon-bg-opacity',1-pose.fade);
+    const next=state.index===9?ease(state.transition):0;
+    daejeonLogo.style.opacity=state.index===8?pose.fade:state.index===9?1-next:0;
+    daejeonLogo.style.visibility=state.index===8&&pose.fade>0||state.index===9?'visible':'hidden';
+    daejeonLogo.style.setProperty('--handoff-logo-width',(947+(279-947)*next)+'px');
+    daejeonLogo.style.setProperty('--handoff-logo-height',(314+(92-314)*next)+'px');
   }
   const header = document.querySelector('.persistent-header');
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
@@ -296,6 +329,7 @@
     renderHistoryContents(state);
     renderHistoryZoom(state);
     renderDaejeon(state);
+    renderDaejeonHandoff(state);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }

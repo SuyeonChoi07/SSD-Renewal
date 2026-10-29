@@ -25,8 +25,8 @@ for(let i=1;i<heights.length;i++) {
     assert.equal(transitionWeights(i,state.transition).outgoing,1);
   }
   if(segment.transition) {
-    assert.ok(stateAt(segment.start+segment.travel+segment.motion+segment.hold+1,heights).transition>0);
-    assert.equal(stateAt(segment.start+segment.travel+segment.motion+segment.hold+125,heights).transition,.5);
+    assert.ok(stateAt(segment.start+segment.travel+segment.motion+segment.exitMotion+segment.hold+1,heights).transition>0);
+    assert.equal(stateAt(segment.start+segment.travel+segment.motion+segment.exitMotion+segment.hold+125,heights).transition,.5);
     assert.equal(stateAt(segments[i+1].start,heights).index,i+1);
   }
 }

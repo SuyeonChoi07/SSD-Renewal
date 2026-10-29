@@ -1037,3 +1037,9 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #with-daejeon .f09-layer-008 { transform: translateX(var(--panel-x, -702px)); opacity: var(--panel-opacity, 0); will-change: transform, opacity; }
 #with-daejeon .daejeon-line { display: block; opacity: var(--daejeon-line-opacity, 0); transform: translateY(var(--daejeon-line-y, -32px)); will-change: transform, opacity; }
 #with-daejeon .f09-layer-017 { opacity: 0; }
+
+/* 패널 역순 퇴장 → 간판 정렬 → 사진에서 원본 로고로 교차 전환. */
+#with-daejeon .f09-layer-005 { opacity: var(--daejeon-bg-opacity, 1); }
+#bridge-fade-1 .f10-layer-005 { display: none; }
+.daejeon-logo-overlay { position: absolute; inset: 0; z-index: 35; pointer-events: none; opacity: 0; visibility: hidden; }
+.daejeon-logo-overlay .f10-layer-024 { width: var(--handoff-logo-width, 947px); height: var(--handoff-logo-height, 314px); }

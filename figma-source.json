@@ -342,13 +342,11 @@
         "779:716",
         "779:717",
         "779:718",
-        "779:719",
-        "779:736"
+        "779:719"
       ],
       "assetSlots": [
         "assets/glow-history.svg",
         "assets/bridge-store-detail.png",
-        "assets/brand-wordmark-white.png",
         "assets/brand-wordmark-white.png"
       ]
     },
@@ -1203,5 +1201,6 @@
   "bridgeScaleTransitionScrollPx": 0,
   "daejeonMotionScrollPx": 1700,
   "daejeonPanelEntranceScrollPx": 500,
-  "daejeonTextDelayAfterPanelScrollPx": 300
+  "daejeonTextDelayAfterPanelScrollPx": 300,
+  "daejeonExitMotionScrollPx": 2400
 }
