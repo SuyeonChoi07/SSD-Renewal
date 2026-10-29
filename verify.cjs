@@ -6,10 +6,12 @@ const references=[...html.matchAll(/(?:src|href)="(assets\/[^\"]+)"/g)].map(m=>m
 for(const reference of references)assert.ok(fs.statSync(path.join(root,reference)).size>0,reference);
 for(const match of html.matchAll(/href="(#[^"]+)"/g))assert.ok(ids.includes(match[1].slice(1)),match[1]);
 const provenance=JSON.parse(fs.readFileSync(path.join(root,'figma-source.json'),'utf8'));
-assert.equal(provenance.frames.length,19);assert.equal(provenance.assets.length,27);
+assert.equal(provenance.frames.length,19);assert.equal(provenance.assets.length,47);
+const expected=['Landing','Intro','History','History_content_start','History_content_mid','History_content_end','bridge_scale','bridge_scale_end','with Daejeon','bridge_fade_1','bridge_fade_2','bridge_fade_3','Table','Table_tilt','Our Way_start','Our Way_mid','Our Way_end','Brand','Contact'];
+assert.deepEqual([...html.matchAll(/data-frame-name="([^"]+)"/g)].map(m=>m[1]),expected);
 for(const asset of provenance.assets)assert.ok(html.includes(asset.localPath),'Missing design asset '+asset.localPath);
 assert.ok(!html.includes('https://www.figma.com/api/mcp/asset/'));
 const voids=new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
 const clean=html.replace(/<!--[\s\S]*?-->/g,'').replace(/<style>[\s\S]*?<\/style>/g,'').replace(/<script>[\s\S]*?<\/script>/g,'');const stack=[];
 for(const m of clean.matchAll(/<(\/?)([a-z][a-z0-9-]*)\b[^>]*>/gi)){const tag=m[2].toLowerCase();if(voids.has(tag))continue;if(m[1])assert.equal(stack.pop(),tag,'HTML nesting');else stack.push(tag);}assert.equal(stack.length,0);
-console.log(JSON.stringify({status:'PASS',frames:19,originalAssets:27,assetReferences:references.length,scriptSyntax:'PASS',anchors:'PASS',htmlNesting:'PASS'},null,2));
+console.log(JSON.stringify({status:'PASS',frames:19,originalAssets:47,assetReferences:references.length,scriptSyntax:'PASS',frameOrder:'PASS',anchors:'PASS',htmlNesting:'PASS'},null,2));
