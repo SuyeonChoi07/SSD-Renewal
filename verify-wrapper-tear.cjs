@@ -18,3 +18,9 @@ assert.equal((html.match(/data-tear-frame=/g)||[]).length,16,'Baseline plus 15 f
 assert.ok(!html.includes('tear-half')&&!css.includes('tear-half')&&!script.includes('tear-retreat'),'No half clipping or artificial paper movement');
 for(const asset of manifest.assets)assert.ok(html.includes(asset.path));
 console.log('15 individually generated full frames; 100px each; unique files, increasing opening area; no cropping/movement/fade workaround: PASS');
+
+for(let distance=0;distance<=800;distance+=100){const index=distance<700?14:15,progress=index===14?distance/700:(distance-700)/800;assert.equal(Math.abs(pose(index,progress).x),0,'No horizontal motion before frame 9');}
+let previousShift=0;
+for(let distance=825;distance<1500;distance+=25){const p=pose(15,(distance-700)/800);assert.ok(p.x<previousShift,'Whole images move progressively left from frame 9');assert.ok(p.opacities.every(v=>v===0||v===1));previousShift=p.x;}
+assert.ok(pose(15,.999).x<-899);
+console.log('Frames 9–15 move left as complete images; 15 generated files, 100px steps and full opacity preserved: PASS');

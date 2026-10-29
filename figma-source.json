@@ -1232,5 +1232,11 @@
   "wrapperTearScrollPxPerStep": 100,
   "wrapperTearOpacityChanges": false,
   "wrapperTearUsesIndividuallyGeneratedFrames": true,
-  "wrapperTearUsesHalfClipping": false
+  "wrapperTearUsesHalfClipping": false,
+  "wrapperTearHorizontalMovement": {
+    "startsAtFrame": 9,
+    "totalLeftPx": 900,
+    "easing": "ease-in-out",
+    "wholeImage": true
+  }
 }
