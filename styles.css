@@ -1,18 +1,885 @@
-/* 수정 안내: 문구는 아래 HTML, 색상은 :root, 스크롤 좌표는 motionTracks에서 수정합니다.
-   기준 프레임 2064×1020. 긴 프레임은 높이를 보존해 스크롤하며 읽습니다. */
-@font-face{font-family:Pretendard;src:url('assets/PretendardVariable.woff2') format('woff2');font-weight:100 900;font-display:swap}
-:root{--black:#131313;--beige:#f8f0e5;--yellow:#ffe385;--orange:#f48621;--brown:#834627;--frame-scale-x:1;--frame-scale-y:1}
-*,*::before,*::after{box-sizing:border-box}html{background:var(--black);scroll-behavior:smooth}body{margin:0;background:var(--black);color:var(--beige);font:600 24px/1.2 Pretendard,sans-serif}h1,h2,h3,p,figure{margin:0}h1,h2,h3{font-weight:600}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}button{font:inherit;color:inherit;cursor:pointer}a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--orange);outline-offset:6px}.skip-link{position:fixed;top:12px;left:12px;z-index:200;background:var(--beige);color:var(--black);padding:12px;transform:translateY(-200%)}.skip-link:focus{transform:none}
-.scroll-rail{position:relative;pointer-events:none}.scroll-chapter{height:100vh}.story-viewport{position:fixed;inset:0;overflow:hidden;background:var(--black)}.design-stage{position:absolute;width:2064px;height:1020px;left:50%;top:50%;transform:translate(-50%,-50%) scale(var(--frame-scale-x),var(--frame-scale-y));transform-origin:center;isolation:isolate;z-index:1;overflow:hidden}.scene{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none}.scene.is-visible{visibility:visible}.scene.is-current{pointer-events:auto}.long-frame-content{position:absolute;left:0;top:0;width:2064px;will-change:transform}.shared-layer{position:absolute;opacity:0;visibility:hidden;pointer-events:none;transform-origin:0 0}.shared-layer>img{width:100%;height:100%;object-fit:cover}.scene-background{position:absolute;inset:0;overflow:hidden}.scene-background>img{width:100%;height:100%;object-fit:cover}.viewport-background{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}.viewport-background>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.photo-shade{position:absolute;inset:0;background:rgba(0,0,0,.35)}.transition-blackout{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:100}
-.site-header{position:absolute;inset:0 0 auto;height:100px;z-index:40;pointer-events:none;color:var(--beige)}.brand-home-link{position:absolute;left:40px;top:30px;width:365.299px;height:147px;pointer-events:auto}.header-logo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.header-logo-black{opacity:0}.site-nav{position:absolute;left:1514px;top:18px;display:flex;align-items:center;gap:40px;font-size:15px;pointer-events:auto;white-space:nowrap}.site-nav a{min-height:42px;display:flex;align-items:center;border-bottom:1px dashed transparent}.site-nav a[aria-current],.site-nav a:hover{border-bottom-color:currentColor}.brand-side-tab{position:absolute;right:0;top:0;width:45px;height:150px;background:#fff;color:#000;writing-mode:vertical-rl;display:flex;align-items:center;justify-content:center;font-size:13px}.menu-toggle{display:none}
-.landing-seal{position:absolute;left:829px;top:314px;width:407px;height:394px}.landing-seal img{width:100%;height:100%}.landing-project-card{position:absolute;left:40px;bottom:40px;width:361px;height:346px;background:rgba(217,217,217,.2);backdrop-filter:blur(14px);padding:20px 22px}.landing-project-card h1{font-size:32px;line-height:45px;margin-left:4.5px}.project-card-divider{position:absolute;left:22px;top:216px;width:319px;height:1px}.landing-project-card p{position:absolute;right:21px;bottom:20px;width:176px;text-align:right;font-size:20px;line-height:30px;font-weight:500}.landing-introduction{position:absolute;left:1340px;top:488px;font-size:30px;line-height:40px}
-.intro-copy-track{height:3060px;color:#fff}.intro-year{position:absolute;left:388px;top:458px;font-size:140px;line-height:140px}.intro-first-copy{position:absolute;left:1354px;top:488px;font-size:30px;line-height:40px}.intro-mission{position:absolute;left:1354px;top:1508px;font-size:30px;line-height:30px;letter-spacing:-.9px}.intro-origin-copy{position:absolute;left:1354px;top:2515px;font-size:30px;line-height:30px;letter-spacing:-.9px}.intro-open-hands{position:absolute;left:280px;top:2465px;width:1469px;height:534px}.intro-open-hands img{width:100%;height:100%;object-fit:cover}.intro-hands-shade{position:absolute;left:1345px;top:2052px;width:719px;height:1008px}.cropped-bread{overflow:hidden}.cropped-bread>img{position:absolute;max-width:none;width:115.53%;height:118.72%;left:-5.48%;top:-6.85%}.shared-front-bread{z-index:14}.shared-wrapped-bread{overflow:hidden;z-index:14}.shared-wrapped-bread>img{position:absolute;max-width:none;width:133.33%;height:144.93%;left:-16.8%;top:-24.93%}.shared-glow-history,.shared-glow-intro{z-index:0}.shared-glow-history>img,.shared-glow-intro>img{width:100%;height:100%}.shared-culture-title{z-index:6;font-size:240px;line-height:286px;white-space:nowrap}.history-product-outline{position:absolute;left:779px;top:258px;width:500px;height:500px;border:1px dashed var(--beige)}.history-caption{position:absolute;left:68px;top:252px;font-size:36px;color:rgba(255,255,255,.59);line-height:43px;z-index:17}.history-caption span{display:block;font-size:40px;line-height:48px;color:var(--beige);margin-top:5px}.history-photo-outline{position:absolute;left:727px;top:144px;width:610px;height:732px;border:1px dashed var(--beige);z-index:17}.shared-history-gallery{z-index:10;overflow:visible}.history-slide{position:absolute;overflow:hidden}.history-slide img{position:absolute;height:100%;max-width:none;object-fit:fill;top:0}.history-slide-shade{position:absolute;inset:0;background:rgba(0,0,0,.4)}.history-slide-1 img{width:113.06%;left:-8.52%}.history-slide-2 img{width:110.58%;left:.09%}.history-slide-3 img{width:178.72%;left:-23%}.history-slide-4 img{width:124.68%;left:-24.68%}.history-slide-5 img{width:202.9%;left:-12.75%}.history-slide-6 img{width:196.26%;left:-56.21%}.history-slide-7 img,.history-slide-8 img{width:100%;left:0;object-fit:cover}.history-slide-9 img{width:174.27%;left:-39.86%}
-.shared-store-photo,.shared-store-detail{overflow:hidden;z-index:4}.shared-store-photo>img,.shared-store-detail>img{position:absolute;max-width:none;object-fit:fill}.daejeon-panel{position:absolute;left:0;top:0;width:702px;height:1020px;background:rgba(217,217,217,.2);backdrop-filter:blur(22px);z-index:9}.daejeon-body{position:absolute;left:75px;top:245px;font-size:24px;line-height:24px;letter-spacing:-.72px;color:#fff}.daejeon-divider{position:absolute;left:94px;top:693px;width:513px;height:1px}.daejeon-panel h2{position:absolute;right:95px;top:776px;text-align:right;font-size:40px;line-height:48px}.shared-center-wordmark{z-index:20;overflow:hidden}.shared-center-wordmark>img{height:121.34%;object-fit:fill}.shared-table-photo{z-index:4}.shared-table-bread{z-index:8}.shared-dimming{background:#000;z-index:15}
-.our-way-quote{position:absolute;left:50%;top:319px;transform:translateX(-50%);font-size:190px;line-height:1.2;white-space:nowrap;text-align:center;z-index:2}.wrapper-image{position:absolute;left:0;top:0;width:2064px;height:1020px;z-index:3}.wrapper-image img{width:100%;height:100%;object-fit:cover}.wrapper-top-shade{position:absolute;left:0;top:0;width:2064px;height:319px;background:linear-gradient(#131313 26.646%,rgba(19,19,19,0));z-index:4}.scene-our-way-end{background:var(--beige);color:var(--black)}.our-way-end-content{height:1878px}.values-projects{position:absolute;left:139px;top:1158px;width:1740px;display:grid;grid-template-columns:650px 500px 500px;gap:45px}.values-projects article{position:relative;height:657px;background:#f6e0c6;color:var(--brown);overflow:hidden}.values-projects h3{position:absolute;left:32px;top:33px;font-size:40px;line-height:48px}.values-projects p{font-size:24px;line-height:29px}.values-projects .project-eoc{background:var(--orange);color:var(--beige)}.project-eoc h3{left:45px;top:43px}.eoc-principles{position:absolute;left:45px;top:232px;width:560px;height:374px;display:grid;grid-template-columns:1fr 1fr;gap:20px;color:var(--brown)}.eoc-principles p{background:var(--beige);display:grid;align-content:center;text-align:center}.eoc-principles p:nth-child(1){border-radius:65px 0 0}.eoc-principles p:nth-child(2){border-radius:0 65px 0 0}.eoc-principles p:nth-child(3){border-radius:0 0 0 65px}.eoc-principles p:nth-child(4){border-radius:0 0 65px}.eoc-center{position:absolute;left:255px;top:347px;width:140px;height:140px;display:grid;place-items:center;background:var(--orange);border-radius:100px}.eoc-center img{width:100px;height:96px}.project-image-circle{position:absolute;left:82px;top:167px;width:350px;height:350px;border-radius:50%;background:var(--beige)}.project-eco .project-image-circle{left:78px;top:180px}.rainbow-image{position:absolute;left:26px;top:224px;width:474px;height:237px;object-fit:cover}.eco-image{position:absolute;left:-25px;top:106px;width:476px;height:476px;object-fit:cover;border-bottom-right-radius:332px}.project-rainbow>p,.project-eco>p{position:absolute;left:32px;bottom:26px}
-.brand-content{height:7149px}.brand-title{position:absolute;left:102px;top:181px;font-size:70px;line-height:84px;color:#ffedd7}.brand-introduction{position:absolute;left:1406px;top:441px;font-size:24px;line-height:24px;letter-spacing:-.72px;white-space:nowrap}.brand-front-bread{position:absolute;left:758px;top:235px;width:548px;height:550px}.brand-store-list{position:absolute;left:129px;top:1045px;width:1806px}.brand-store-row{display:flex;align-items:center;justify-content:space-between;min-height:381px;padding:19px 0;border-bottom:1px dashed #cabbaa;color:#cabbaa}.store-copy{width:429px;display:flex;flex-direction:column;gap:159px}.store-copy h3{font-size:32px;line-height:38px;letter-spacing:-1.92px;white-space:nowrap}.store-copy p{font-size:15px;line-height:18px;white-space:nowrap}.store-photo{position:relative;flex-shrink:0;width:457px;height:343px}.store-photo img{width:100%;height:100%;object-fit:cover}.store-photo-shade{position:absolute;inset:0;background:rgba(0,0,0,.2)}.hall-title{position:absolute;left:129px;top:5248px;font-size:64px;color:#ffedd7}.hall-gallery{position:absolute;left:129px;top:5347px;width:1806px;height:710px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scrollbar-color:var(--orange) transparent}.hall-gallery-track{display:flex;gap:15px;height:683px;width:max-content}.hall-photo{width:471px;height:683px;flex-shrink:0;overflow:hidden}.hall-photo-wide{width:1081px}.hall-photo img{width:100%;height:100%;object-fit:cover}.hall-cake img{object-position:right}.hall-gift img{object-position:27% center}.brand-closing-wordmark{position:absolute;left:640px;top:6433px;width:783px;height:315px}.brand-closing-wordmark img{width:100%;height:100%}
-.contact-content{height:1224px}.contact-top-shade{position:absolute;left:0;top:0;width:2064px;height:319px;background:linear-gradient(#131313 9.404%,transparent)}.contact-bottom-shade{position:absolute;left:0;top:701px;width:2064px;height:523px;background:linear-gradient(transparent,#131313 70%)}.contact-title{position:absolute;right:90px;top:146px;font-size:54px;line-height:54px;letter-spacing:-1.62px;text-align:right}.shopping-link{position:absolute;left:1758px;top:309px;background:var(--orange);border-radius:47px;padding:23px 60px 23px 66px;font-size:16px;line-height:16px;font-weight:700}.contact-inquiry{position:absolute;left:81px;top:789px;width:362px;height:177px;border:.5px dashed var(--beige)}.contact-inquiry h3{position:absolute;left:25px;top:28px;color:var(--orange);font-size:16px;line-height:16px}.contact-inquiry>a{position:absolute;left:251px;top:117px;border-radius:23px;padding:10px 20px;background:var(--orange);font-size:12px;font-weight:400;line-height:12px;white-space:nowrap}.contact-careers{position:absolute;left:683px;top:793px;width:484px;font-size:16px;color:var(--yellow)}.careers-email{display:flex;align-items:center;justify-content:space-between;padding-bottom:26px;margin-top:54px;border-bottom:.5px dashed #ffedd7;font-size:18px;font-weight:400;color:#ffedd7}.careers-email img{width:24px;height:24px}.contact-footer{position:absolute;left:81px;top:1039px;width:1320px;display:flex;align-items:start;font-weight:700;font-size:20px;line-height:20px;letter-spacing:-.6px}.policy-links{display:flex;gap:175px;align-self:end;padding-bottom:6px;width:615px;flex-shrink:0}.business-contact{width:393px;display:flex;flex-direction:column;gap:58px;padding-top:13px}.business-contact span{display:block;color:var(--yellow);font-size:15px;line-height:15px;margin-bottom:5px}.social-links{display:flex;flex-direction:column;gap:24px}.action-message{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:150;background:var(--beige);color:var(--black);padding:16px 24px;font-size:16px;max-width:90%;border-radius:4px}[hidden]{display:none!important}
-/* 모바일·모션 감소에서는 동일 콘텐츠를 겹치지 않게 정적으로 표시합니다. */
-body.reading-mode .scroll-rail{display:none}body.reading-mode .story-viewport{position:relative;overflow:clip}body.reading-mode .design-stage{position:relative;left:auto;top:auto;width:100%;height:auto;transform:none;overflow:clip}body.reading-mode .shared-layer{display:none!important}body.reading-mode .scene{position:relative;opacity:1!important;visibility:visible!important;pointer-events:auto!important;min-height:650px;padding:100px 24px 64px;overflow:hidden}body.reading-mode .scene-background{position:absolute;inset:0}body.reading-mode .site-header{position:sticky;top:0;height:80px;background:rgba(19,19,19,.96);color:var(--beige)!important}body.reading-mode .brand-home-link{left:20px;top:18px;width:109px!important;height:44px!important}body.reading-mode .header-logo-white{opacity:1!important}body.reading-mode .header-logo-black,body.reading-mode .brand-side-tab{display:none}body.reading-mode .site-nav{left:auto;right:20px;top:18px;font-size:12px;gap:20px}body.reading-mode .transition-blackout{display:none!important}body.reading-mode .long-frame-content{position:relative;width:100%;height:auto;transform:none!important}body.reading-mode .scene>figure:not(.scene-background),body.reading-mode .scene>article,body.reading-mode .scene>h2,body.reading-mode .scene>p,body.reading-mode .long-frame-content>p,body.reading-mode .long-frame-content>h2,body.reading-mode .long-frame-content>figure,body.reading-mode .long-frame-content>div{position:relative;inset:auto;transform:none;max-width:100%;margin:0 0 32px}body.reading-mode .landing-seal{width:280px;height:auto;aspect-ratio:407/394;margin:30px auto!important}body.reading-mode .landing-introduction,body.reading-mode .intro-first-copy,body.reading-mode .intro-mission,body.reading-mode .intro-origin-copy{font-size:20px;line-height:1.6;letter-spacing:0}body.reading-mode .landing-introduction br,body.reading-mode .intro-copy-track br{display:none}body.reading-mode .landing-project-card{height:346px;width:361px}body.reading-mode .intro-year{font-size:90px;line-height:1.1}body.reading-mode .intro-hands-shade{display:none}body.reading-mode .intro-open-hands{width:100%;height:auto;aspect-ratio:1469/534}body.reading-mode .mobile-object{position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;margin:30px auto;max-width:100%}body.reading-mode .mobile-object.shared-front-bread{width:280px;height:280px}body.reading-mode .mobile-object.shared-culture-title{font-size:clamp(32px,6.8vw,70px);line-height:1.2;white-space:normal}body.reading-mode .history-product-outline,body.reading-mode .history-photo-outline{display:none}body.reading-mode .history-caption{font-size:24px;line-height:1.4}body.reading-mode .history-caption span{font-size:30px}body.reading-mode .mobile-history-gallery{display:flex;gap:12px;overflow:auto;padding-bottom:20px}body.reading-mode .mobile-history-gallery .history-slide{position:relative;flex-shrink:0;width:220px;height:280px}body.reading-mode .scene-history-content-mid,body.reading-mode .scene-history-content-end{display:none}body.reading-mode .mobile-object.shared-store-photo,body.reading-mode .mobile-object.shared-store-detail{width:100%;height:auto;aspect-ratio:784/1030;overflow:hidden}body.reading-mode .mobile-object.shared-store-photo>img,body.reading-mode .mobile-object.shared-store-detail>img{position:static;width:100%;height:100%;object-fit:cover}body.reading-mode .daejeon-panel{width:100%;height:auto;padding:32px;background:rgba(217,217,217,.2)}body.reading-mode .daejeon-body,body.reading-mode .daejeon-panel h2{position:static;font-size:20px;line-height:1.6;letter-spacing:0}body.reading-mode .daejeon-body br{display:none}body.reading-mode .daejeon-panel h2{margin-top:48px;text-align:right;font-size:26px}body.reading-mode .daejeon-divider{position:static;width:100%;margin:32px 0}body.reading-mode .mobile-object.shared-center-wordmark{width:280px;height:110px;overflow:hidden}body.reading-mode .mobile-object.shared-table-bread{width:320px;height:320px;margin:50px auto}body.reading-mode .scene-table .mobile-table-background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}body.reading-mode .scene-our-way-start,body.reading-mode .scene-our-way-mid{min-height:650px}body.reading-mode .our-way-quote{font-size:clamp(31px,6.7vw,80px);line-height:1.25;white-space:normal;text-align:center;width:100%;z-index:2}body.reading-mode .wrapper-image{position:absolute!important;left:0!important;top:0!important;width:100%;height:650px;max-width:none!important;margin:0!important;object-fit:cover}body.reading-mode .wrapper-top-shade{width:100%}body.reading-mode .our-way-end-content>.our-way-quote{margin-bottom:80px}body.reading-mode .values-projects{width:100%;display:flex;flex-direction:column;gap:24px}body.reading-mode .values-projects article{width:100%;height:auto;min-height:550px;padding:28px}body.reading-mode .values-projects h3{position:relative;inset:auto;font-size:30px;line-height:1.2}body.reading-mode .eoc-principles{position:relative;left:auto;top:auto;width:100%;height:320px;margin-top:28px;gap:12px}body.reading-mode .eoc-principles p{font-size:17px;line-height:1.4}body.reading-mode .eoc-center{width:100px;height:100px;left:calc(50% - 50px);top:265px}body.reading-mode .eoc-center img{width:75px;height:72px}body.reading-mode .project-image-circle{left:calc(50% - 140px);top:110px;width:280px;height:280px}body.reading-mode .rainbow-image{left:calc(50% - 150px);top:170px;width:300px;height:150px}body.reading-mode .eco-image{left:calc(50% - 175px);top:85px;width:350px;height:350px}body.reading-mode .project-rainbow>p,body.reading-mode .project-eco>p{font-size:19px;line-height:1.5;left:28px;bottom:28px;max-width:calc(100% - 56px)}body.reading-mode .brand-title{font-size:44px;line-height:1.2}body.reading-mode .brand-introduction{font-size:19px;line-height:1.6;white-space:normal}body.reading-mode .brand-introduction br{display:none}body.reading-mode .brand-front-bread{width:280px;height:280px;margin:32px auto!important}body.reading-mode .brand-store-list{width:100%}body.reading-mode .brand-store-row{display:block;padding:32px 0}body.reading-mode .store-copy{width:100%;gap:24px}body.reading-mode .store-copy h3{font-size:26px;line-height:1.3;letter-spacing:-.6px;white-space:normal}body.reading-mode .store-copy p{white-space:normal;font-size:15px;line-height:1.6}body.reading-mode .store-photo{width:100%;height:auto;aspect-ratio:457/343;margin-top:24px}body.reading-mode .hall-title{font-size:36px}body.reading-mode .hall-gallery{width:100%;height:420px}body.reading-mode .hall-gallery-track{height:390px}body.reading-mode .hall-photo{height:390px;width:260px}body.reading-mode .hall-photo-wide{width:540px}body.reading-mode .brand-closing-wordmark{width:80%;height:auto;aspect-ratio:783/315;margin:100px auto!important}body.reading-mode .brand-closing-wordmark img{width:100%;height:100%}body.reading-mode .contact-title{font-size:clamp(28px,4vw,44px);line-height:1.2;letter-spacing:-.6px}body.reading-mode .contact-title br{display:none}body.reading-mode .contact-content>.shopping-link{position:relative;left:auto;top:auto;display:table;margin:32px 0 160px auto;padding:22px 40px}body.reading-mode .contact-inquiry{width:362px;height:177px}body.reading-mode .contact-careers{width:100%}body.reading-mode .contact-footer{position:relative;left:auto;top:auto;width:100%;display:flex;flex-wrap:wrap;gap:40px;margin-top:60px;font-size:18px;line-height:1.3}body.reading-mode .policy-links{width:100%;gap:32px;flex-wrap:wrap;order:3}body.reading-mode .business-contact{width:auto;gap:32px;padding:0}body.reading-mode .social-links{gap:20px}body.reading-mode .contact-top-shade,body.reading-mode .contact-bottom-shade{display:none}
-body.reading-mode .scene-table .mobile-table-background{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;margin:0!important;z-index:0}
-@media(max-width:650px){body.reading-mode .menu-toggle{display:block;position:absolute;right:20px;top:18px;min-height:44px;pointer-events:auto;background:var(--black);border:1px solid #605d59;padding:8px 12px;font-size:14px}body.reading-mode .site-nav{display:none;top:80px;left:0;right:0;background:var(--black);padding:24px;gap:16px 24px;flex-wrap:wrap}body.reading-mode .site-nav.is-open{display:flex}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+/* Figma 원본 레이어별 CSS. f01=Landing, f02=Intro ... f19=Contact.
+   요소·문구는 index.html, 스크롤 거리는 script.js의 SCENE_SCROLL_PX에서 수정합니다. */
+@font-face { font-family: Pretendard; src: url('assets/PretendardVariable.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+*,:before,:after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: currentColor; }
+html { background: #131313; scroll-behavior: auto; scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+body { margin: 0; color: #f8f0e5; font-family: Pretendard, sans-serif; line-height: normal; }
+p,h1,h2,h3,figure,ul { margin: 0; padding: 0; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: inherit; }
+a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.story-viewport { position: fixed; inset: 0; overflow: hidden; background: #131313; }
+.design-stage { position: absolute; width: 2064px; height: 1020px; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(var(--frame-scale,1)); transform-origin: center; overflow: hidden; isolation: isolate; }
+.scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; overflow: hidden; }
+.scene.is-visible { visibility: visible; }
+.scene.is-current { pointer-events: auto; }
+.frame-art { position: relative; transform: translateY(var(--content-offset,0px)); }
+.transition-blackout { position: fixed; inset: 0; background: #000; opacity: 0; z-index: 100; pointer-events: none; }
+.scroll-chapter { height: 1500px; }
+.scroll-rail { padding-bottom: 100vh; pointer-events: none; }
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
+
+
+/* 01. Landing — Figma 736:447 */
+.f01-layer-001 { position: relative; width: 100%; height: 100%; }
+.f01-layer-002 { position: absolute; inset: 0; pointer-events: none; }
+.f01-layer-003 { position: absolute; inset: 0; overflow: hidden; }
+.f01-layer-004 { position: absolute; height: 100%; left: 0.08%; max-width: none; top: 0; width: 99.84%; }
+.f01-layer-005 { position: absolute; background-color: rgba(0,0,0,0.35); inset: 0; }
+.f01-layer-006 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f01-layer-007 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f01-layer-008 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f01-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f01-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f01-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f01-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-017 { position: absolute; display: contents; left: 2019px; top: 0; }
+.f01-layer-018 { position: absolute; background-color: #fff; height: 150px; left: 2019px; top: 0; width: 45px; }
+.f01-layer-019 { position: absolute; display: flex; height: 115px; align-items: center; justify-content: center; left: 2034px; top: 14px; width: 16px; }
+.f01-layer-020 { flex: none; rotate: 90deg; }
+.f01-layer-021 { word-break: break-word; display: block; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; font-style: normal; position: relative; font-size: 13px; color: #000; white-space: nowrap; }
+.f01-layer-022 { list-style-type: disc; margin-inline-start: 19.5px; }
+.f01-layer-023 { line-height: normal; }
+.f01-layer-024 { position: absolute; height: 394px; left: 829px; top: 314px; width: 407px; }
+.f01-layer-025 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f01-layer-026 { position: absolute; height: 147px; left: 40px; top: 30px; width: 365.299px; }
+.f01-layer-027 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f01-layer-028 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+.f01-layer-029 { position: absolute; background-color: rgba(217,217,217,0.2); bottom: 40px; align-content: stretch; display: flex; flex-direction: column; height: 346px; align-items: flex-start; left: 40px; padding-inline: 22px; padding-block: 20px; width: 361px; }
+.f01-layer-030 { grid-template-columns: max-content; grid-template-rows: max-content; display: inline-grid; line-height: 0; place-items: start; position: relative; flex-shrink: 0; }
+.f01-layer-031 { word-break: break-word; grid-column-start: 1; font-family: Pretendard, sans-serif; font-weight: 600; height: 162px; margin-left: 4.5px; margin-top: 0; font-style: normal; position: relative; grid-row-start: 1; font-size: 32px; color: #fff; width: 126px; }
+.f01-layer-032 { line-height: 45px; margin-bottom: 0; }
+.f01-layer-033 { line-height: 45px; margin-bottom: 0; }
+.f01-layer-034 { line-height: 45px; }
+.f01-layer-035 { word-break: break-word; grid-column-start: 1; font-family: Pretendard, sans-serif; font-weight: 500; height: 90px; margin-left: 142px; margin-top: 216px; font-style: normal; position: relative; grid-row-start: 1; font-size: 20px; text-align: right; color: #fff; width: 176px; }
+.f01-layer-036 { line-height: 30px; margin-bottom: 0; }
+.f01-layer-037 { line-height: 30px; margin-bottom: 0; }
+.f01-layer-038 { line-height: 30px; }
+.f01-layer-039 { grid-column-start: 1; height: 0; margin-left: 0; margin-top: 196px; position: relative; grid-row-start: 1; width: 319px; }
+.f01-layer-040 { position: absolute; inset: -0.5px 0; }
+.f01-layer-041 { display: block; max-width: none; width: 100%; height: 100%; }
+.f01-layer-042 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1340px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% - 22px); white-space: nowrap; }
+.f01-layer-043 { line-height: 40px; margin-bottom: 0; }
+.f01-layer-044 { line-height: 40px; }
+#landing > .frame-art { width: 2064px; height: 1020px; }
+
+/* 02. Intro — Figma 738:609 */
+.f02-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f02-layer-002 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: calc(50% + 322px); font-style: normal; font-size: 30px; color: #fff; top: 488px; white-space: nowrap; }
+.f02-layer-003 { line-height: 40px; margin-bottom: 0; }
+.f02-layer-004 { line-height: 40px; }
+.f02-layer-005 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 140px; left: calc(50% - 644px); font-style: normal; font-size: 140px; color: #fff; top: 458px; white-space: nowrap; }
+.f02-layer-006 { position: absolute; height: 534px; left: 280px; top: 2465px; width: 1469px; }
+.f02-layer-007 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f02-layer-008 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1354px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% - 22px); letter-spacing: -0.9px; white-space: nowrap; }
+.f02-layer-009 { line-height: 1; margin-bottom: 0; }
+.f02-layer-010 { line-height: 1; margin-bottom: 0; }
+.f02-layer-011 { line-height: 1; margin-bottom: 0; }
+.f02-layer-012 { line-height: 1; }
+.f02-layer-013 { position: absolute; height: 1008px; left: 1345px; top: 2052px; width: 719px; }
+.f02-layer-014 { position: absolute; display: block; inset: 0; max-width: none; width: 100%; height: 100%; }
+.f02-layer-015 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1354px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% + 985px); letter-spacing: -0.9px; white-space: nowrap; }
+.f02-layer-016 { line-height: 1; margin-bottom: 0; }
+.f02-layer-017 { line-height: 1; margin-bottom: 0; }
+.f02-layer-018 { line-height: 1; margin-bottom: 0; }
+.f02-layer-019 { line-height: 1; }
+.f02-layer-020 { translate: -50% 0; position: absolute; left: calc(50% + 3px); width: 438px; height: 438px; top: 326px; }
+.f02-layer-021 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f02-layer-022 { position: absolute; height: 118.72%; left: -5.48%; max-width: none; top: -6.85%; width: 115.53%; }
+.f02-layer-023 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f02-layer-024 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f02-layer-025 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-026 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f02-layer-027 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-028 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f02-layer-029 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-030 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f02-layer-031 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-032 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f02-layer-033 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-034 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f02-layer-035 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f02-layer-036 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+.f02-layer-037 { position: absolute; left: -850px; width: 1402px; height: 1402px; top: 2359px; }
+.f02-layer-038 { position: absolute; inset: -25.1%; }
+.f02-layer-039 { display: block; max-width: none; width: 100%; height: 100%; }
+#intro > .frame-art { width: 2064px; height: 3060px; }
+
+/* 03. History — Figma 749:55 */
+.f03-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f03-layer-002 { position: absolute; left: -751px; width: 1402px; height: 1402px; top: 437px; }
+.f03-layer-003 { position: absolute; inset: -25.1%; }
+.f03-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f03-layer-005 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 918px); font-style: normal; color: #f8f0e5; font-size: 240px; top: 377px; white-space: nowrap; }
+.f03-layer-006 { translate: -50% 0; position: absolute; height: 373px; left: calc(50% - 0.5px); top: 324px; width: 405px; }
+.f03-layer-007 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f03-layer-008 { position: absolute; height: 144.93%; left: -16.8%; max-width: none; top: -24.93%; width: 133.33%; }
+.f03-layer-009 { translate: -50% 0; position: absolute; border-width: 1px; border-color: #f8f0e5; border-style: dashed; left: calc(50% - 3px); width: 500px; height: 500px; top: 258px; }
+.f03-layer-010 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f03-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f03-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-013 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f03-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f03-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f03-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-019 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f03-layer-020 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-021 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f03-layer-022 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f03-layer-023 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#history > .frame-art { width: 2064px; height: 1020px; }
+
+/* 04. History_content_start — Figma 769:417 */
+.f04-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f04-layer-002 { position: absolute; left: -553px; width: 1402px; height: 1402px; top: 823px; }
+.f04-layer-003 { position: absolute; inset: -25.1%; }
+.f04-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f04-layer-005 { position: absolute; align-content: stretch; display: flex; gap: 30px; align-items: center; left: 732px; top: 150px; width: 600px; }
+.f04-layer-006 { height: 720px; position: relative; flex-shrink: 0; width: 600px; }
+.f04-layer-007 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f04-layer-008 { position: absolute; height: 100%; left: -8.52%; max-width: none; top: 0; width: 113.06%; }
+.f04-layer-009 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f04-layer-010 { position: absolute; inset: 0; pointer-events: none; }
+.f04-layer-011 { position: absolute; inset: 0; overflow: hidden; }
+.f04-layer-012 { position: absolute; height: 100%; left: 0.09%; max-width: none; top: 0; width: 110.58%; }
+.f04-layer-013 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f04-layer-014 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f04-layer-015 { position: absolute; inset: 0; pointer-events: none; }
+.f04-layer-016 { position: absolute; inset: 0; overflow: hidden; }
+.f04-layer-017 { position: absolute; height: 100%; left: -23%; max-width: none; top: 0; width: 178.72%; }
+.f04-layer-018 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f04-layer-019 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f04-layer-020 { position: absolute; inset: 0; pointer-events: none; }
+.f04-layer-021 { position: absolute; inset: 0; overflow: hidden; }
+.f04-layer-022 { position: absolute; height: 100%; left: -24.68%; max-width: none; top: 0; width: 124.68%; }
+.f04-layer-023 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f04-layer-024 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f04-layer-025 { position: absolute; inset: 0; pointer-events: none; }
+.f04-layer-026 { position: absolute; inset: 0; overflow: hidden; }
+.f04-layer-027 { position: absolute; height: 100%; left: -12.75%; max-width: none; top: 0; width: 202.9%; }
+.f04-layer-028 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f04-layer-029 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f04-layer-030 { position: absolute; inset: 0; pointer-events: none; }
+.f04-layer-031 { position: absolute; inset: 0; overflow: hidden; }
+.f04-layer-032 { position: absolute; height: 100%; left: -56.21%; max-width: none; top: 0; width: 196.26%; }
+.f04-layer-033 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f04-layer-034 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f04-layer-035 { position: absolute; inset: 0; pointer-events: none; }
+.f04-layer-036 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f04-layer-037 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f04-layer-038 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f04-layer-039 { position: absolute; inset: 0; pointer-events: none; }
+.f04-layer-040 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f04-layer-041 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f04-layer-042 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f04-layer-043 { position: absolute; inset: 0; pointer-events: none; }
+.f04-layer-044 { position: absolute; inset: 0; overflow: hidden; }
+.f04-layer-045 { position: absolute; height: 100%; left: -39.86%; max-width: none; top: 0; width: 174.27%; }
+.f04-layer-046 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f04-layer-047 { translate: -50% -50%; position: absolute; border-width: 1px; border-color: #f8f0e5; border-style: dashed; height: 732px; left: 50%; top: 50%; width: 610px; }
+.f04-layer-048 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; color: #f8f0e5; font-size: 40px; top: 300px; white-space: nowrap; }
+.f04-layer-049 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; font-size: 36px; color: rgba(255,255,255,0.59); top: 252px; white-space: nowrap; }
+.f04-layer-050 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f04-layer-051 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f04-layer-052 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-053 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f04-layer-054 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-055 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f04-layer-056 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-057 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f04-layer-058 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-059 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f04-layer-060 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-061 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f04-layer-062 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f04-layer-063 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#history-content-start > .frame-art { width: 2064px; height: 1020px; }
+
+/* 05. History_content_mid — Figma 775:505 */
+.f05-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f05-layer-002 { position: absolute; left: -553px; width: 1402px; height: 1402px; top: 823px; }
+.f05-layer-003 { position: absolute; inset: -25.1%; }
+.f05-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f05-layer-005 { position: absolute; align-content: stretch; display: flex; gap: 30px; align-items: center; left: -108px; top: 150px; width: 1440px; }
+.f05-layer-006 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f05-layer-007 { position: absolute; inset: 0; pointer-events: none; }
+.f05-layer-008 { position: absolute; inset: 0; overflow: hidden; }
+.f05-layer-009 { position: absolute; height: 100%; left: -8.52%; max-width: none; top: 0; width: 113.06%; }
+.f05-layer-010 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f05-layer-011 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f05-layer-012 { position: absolute; inset: 0; pointer-events: none; }
+.f05-layer-013 { position: absolute; inset: 0; overflow: hidden; }
+.f05-layer-014 { position: absolute; height: 100%; left: 0.09%; max-width: none; top: 0; width: 110.58%; }
+.f05-layer-015 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f05-layer-016 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f05-layer-017 { position: absolute; inset: 0; pointer-events: none; }
+.f05-layer-018 { position: absolute; inset: 0; overflow: hidden; }
+.f05-layer-019 { position: absolute; height: 100%; left: -23%; max-width: none; top: 0; width: 178.72%; }
+.f05-layer-020 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f05-layer-021 { height: 720px; position: relative; flex-shrink: 0; width: 600px; }
+.f05-layer-022 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f05-layer-023 { position: absolute; height: 100%; left: -24.68%; max-width: none; top: 0; width: 124.68%; }
+.f05-layer-024 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f05-layer-025 { position: absolute; inset: 0; pointer-events: none; }
+.f05-layer-026 { position: absolute; inset: 0; overflow: hidden; }
+.f05-layer-027 { position: absolute; height: 100%; left: -12.75%; max-width: none; top: 0; width: 202.9%; }
+.f05-layer-028 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f05-layer-029 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f05-layer-030 { position: absolute; inset: 0; pointer-events: none; }
+.f05-layer-031 { position: absolute; inset: 0; overflow: hidden; }
+.f05-layer-032 { position: absolute; height: 100%; left: -56.21%; max-width: none; top: 0; width: 196.26%; }
+.f05-layer-033 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f05-layer-034 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f05-layer-035 { position: absolute; inset: 0; pointer-events: none; }
+.f05-layer-036 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f05-layer-037 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f05-layer-038 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f05-layer-039 { position: absolute; inset: 0; pointer-events: none; }
+.f05-layer-040 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f05-layer-041 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f05-layer-042 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f05-layer-043 { position: absolute; inset: 0; pointer-events: none; }
+.f05-layer-044 { position: absolute; inset: 0; overflow: hidden; }
+.f05-layer-045 { position: absolute; height: 100%; left: -39.86%; max-width: none; top: 0; width: 174.27%; }
+.f05-layer-046 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f05-layer-047 { translate: -50% -50%; position: absolute; border-width: 1px; border-color: #f8f0e5; border-style: dashed; height: 732px; left: 50%; top: 50%; width: 610px; }
+.f05-layer-048 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; color: #f8f0e5; font-size: 40px; top: 300px; white-space: nowrap; }
+.f05-layer-049 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; font-size: 36px; color: rgba(255,255,255,0.59); top: 252px; white-space: nowrap; }
+.f05-layer-050 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f05-layer-051 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f05-layer-052 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-053 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f05-layer-054 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-055 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f05-layer-056 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-057 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f05-layer-058 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-059 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f05-layer-060 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-061 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f05-layer-062 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f05-layer-063 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#history-content-mid > .frame-art { width: 2064px; height: 1020px; }
+
+/* 06. History_content_end — Figma 775:532 */
+.f06-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f06-layer-002 { position: absolute; left: -553px; width: 1402px; height: 1402px; top: 823px; }
+.f06-layer-003 { position: absolute; inset: -25.1%; }
+.f06-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f06-layer-005 { position: absolute; align-content: stretch; display: flex; gap: 30px; align-items: center; left: -1508px; top: 150px; width: 2845px; }
+.f06-layer-006 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f06-layer-007 { position: absolute; inset: 0; pointer-events: none; }
+.f06-layer-008 { position: absolute; inset: 0; overflow: hidden; }
+.f06-layer-009 { position: absolute; height: 100%; left: -8.52%; max-width: none; top: 0; width: 113.06%; }
+.f06-layer-010 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f06-layer-011 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f06-layer-012 { position: absolute; inset: 0; pointer-events: none; }
+.f06-layer-013 { position: absolute; inset: 0; overflow: hidden; }
+.f06-layer-014 { position: absolute; height: 100%; left: 0.09%; max-width: none; top: 0; width: 110.58%; }
+.f06-layer-015 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f06-layer-016 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f06-layer-017 { position: absolute; inset: 0; pointer-events: none; }
+.f06-layer-018 { position: absolute; inset: 0; overflow: hidden; }
+.f06-layer-019 { position: absolute; height: 100%; left: -23%; max-width: none; top: 0; width: 178.72%; }
+.f06-layer-020 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f06-layer-021 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f06-layer-022 { position: absolute; inset: 0; pointer-events: none; }
+.f06-layer-023 { position: absolute; inset: 0; overflow: hidden; }
+.f06-layer-024 { position: absolute; height: 100%; left: -24.68%; max-width: none; top: 0; width: 124.68%; }
+.f06-layer-025 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f06-layer-026 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f06-layer-027 { position: absolute; inset: 0; pointer-events: none; }
+.f06-layer-028 { position: absolute; inset: 0; overflow: hidden; }
+.f06-layer-029 { position: absolute; height: 100%; left: -12.75%; max-width: none; top: 0; width: 202.9%; }
+.f06-layer-030 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f06-layer-031 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f06-layer-032 { position: absolute; inset: 0; pointer-events: none; }
+.f06-layer-033 { position: absolute; inset: 0; overflow: hidden; }
+.f06-layer-034 { position: absolute; height: 100%; left: -56.21%; max-width: none; top: 0; width: 196.26%; }
+.f06-layer-035 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f06-layer-036 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f06-layer-037 { position: absolute; inset: 0; pointer-events: none; }
+.f06-layer-038 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f06-layer-039 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f06-layer-040 { height: 300px; position: relative; flex-shrink: 0; width: 250px; }
+.f06-layer-041 { position: absolute; inset: 0; pointer-events: none; }
+.f06-layer-042 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f06-layer-043 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
+.f06-layer-044 { height: 720px; position: relative; flex-shrink: 0; width: 600px; }
+.f06-layer-045 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f06-layer-046 { position: absolute; height: 100%; left: -39.86%; max-width: none; top: 0; width: 174.27%; }
+.f06-layer-047 { translate: -50% -50%; position: absolute; border-width: 1px; border-color: #f8f0e5; border-style: dashed; height: 732px; left: 50%; top: 50%; width: 610px; }
+.f06-layer-048 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; color: #f8f0e5; font-size: 40px; top: 300px; white-space: nowrap; }
+.f06-layer-049 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; font-size: 36px; color: rgba(255,255,255,0.59); top: 252px; white-space: nowrap; }
+.f06-layer-050 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f06-layer-051 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f06-layer-052 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-053 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f06-layer-054 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-055 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f06-layer-056 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-057 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f06-layer-058 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-059 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f06-layer-060 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-061 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f06-layer-062 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f06-layer-063 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#history-content-end > .frame-art { width: 2064px; height: 1020px; }
+
+/* 07. bridge_scale — Figma 775:559 */
+.f07-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f07-layer-002 { position: absolute; left: -751px; width: 1402px; height: 1402px; top: 437px; }
+.f07-layer-003 { position: absolute; inset: -25.1%; }
+.f07-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f07-layer-005 { position: absolute; height: 1030px; left: 651px; top: -10px; width: 784px; }
+.f07-layer-006 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f07-layer-007 { position: absolute; height: 100%; left: -31.38%; max-width: none; top: 0.01%; width: 157.47%; }
+.f07-layer-008 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f07-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f07-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-011 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f07-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f07-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f07-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f07-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-019 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f07-layer-020 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f07-layer-021 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#bridge-scale > .frame-art { width: 2064px; height: 1020px; }
+
+/* 08. bridge_scale_end — Figma 779:633 */
+.f08-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f08-layer-002 { position: absolute; left: -751px; width: 1402px; height: 1402px; top: 437px; }
+.f08-layer-003 { position: absolute; inset: -25.1%; }
+.f08-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f08-layer-005 { position: absolute; height: 1020px; left: 391px; top: 0; width: 1582px; }
+.f08-layer-006 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f08-layer-007 { position: absolute; height: 206.75%; left: -31.7%; max-width: none; top: -7.52%; width: 159.79%; }
+.f08-layer-008 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f08-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f08-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-011 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f08-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f08-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f08-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f08-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-019 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f08-layer-020 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f08-layer-021 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#bridge-scale-end > .frame-art { width: 2064px; height: 1020px; }
+
+/* 09. with Daejeon — Figma 779:680 */
+.f09-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f09-layer-002 { position: absolute; left: -751px; width: 1402px; height: 1402px; top: 437px; }
+.f09-layer-003 { position: absolute; inset: -25.1%; }
+.f09-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f09-layer-005 { position: absolute; height: 1020px; left: 0; top: 0; width: 2064px; }
+.f09-layer-006 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f09-layer-007 { position: absolute; height: 270%; left: -17.2%; max-width: none; top: -13.63%; width: 159.93%; }
+.f09-layer-008 { translate: 0 -50%; position: absolute; background-color: rgba(217,217,217,0.2); height: 1020px; left: 0; top: 50%; width: 702px; }
+.f09-layer-009 { translate: -100% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: calc(50% - 425px); font-style: normal; color: #f8f0e5; font-size: 40px; text-align: right; top: 776px; white-space: nowrap; }
+.f09-layer-010 { line-height: normal; margin-bottom: 0; }
+.f09-layer-011 { line-height: normal; }
+.f09-layer-012 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: calc(50% - 957px); font-style: normal; font-size: 24px; color: #fff; top: 245px; letter-spacing: -0.72px; white-space: nowrap; }
+.f09-layer-013 { line-height: 1; margin-bottom: 0; }
+.f09-layer-014 { line-height: 1; margin-bottom: 0; }
+.f09-layer-015 { line-height: 1; margin-bottom: 0; }
+.f09-layer-016 { line-height: 1; }
+.f09-layer-017 { position: absolute; height: 0; left: 94px; top: 693px; width: 513px; }
+.f09-layer-018 { position: absolute; inset: -0.5px 0; }
+.f09-layer-019 { display: block; max-width: none; width: 100%; height: 100%; }
+.f09-layer-020 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f09-layer-021 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f09-layer-022 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-023 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f09-layer-024 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-025 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f09-layer-026 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-027 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f09-layer-028 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-029 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f09-layer-030 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-031 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f09-layer-032 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f09-layer-033 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#with-daejeon > .frame-art { width: 2064px; height: 1020px; }
+
+/* 10. bridge_fade_1 — Figma 779:701 */
+.f10-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f10-layer-002 { position: absolute; left: -751px; width: 1402px; height: 1402px; top: 437px; }
+.f10-layer-003 { position: absolute; inset: -25.1%; }
+.f10-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f10-layer-005 { position: absolute; height: 1020px; left: 0; top: 0; width: 2064px; }
+.f10-layer-006 { position: absolute; inset: 0; pointer-events: none; }
+.f10-layer-007 { position: absolute; inset: 0; overflow: hidden; }
+.f10-layer-008 { position: absolute; height: 270%; left: -32.46%; max-width: none; top: -13.63%; width: 159.93%; }
+.f10-layer-009 { position: absolute; background-color: rgba(0,0,0,0.6); inset: 0; }
+.f10-layer-010 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f10-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f10-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f10-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-015 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f10-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f10-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-019 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f10-layer-020 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-021 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f10-layer-022 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f10-layer-023 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+.f10-layer-024 { translate: -50% -50%; position: absolute; height: 314px; left: calc(50% + 15.5px); top: calc(50% + 30px); width: 947px; }
+.f10-layer-025 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f10-layer-026 { position: absolute; height: 121.34%; left: 0; max-width: none; top: 0; width: 100%; }
+#bridge-fade-1 > .frame-art { width: 2064px; height: 1020px; }
+
+/* 11. bridge_fade_2 — Figma 779:737 */
+.f11-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f11-layer-002 { position: absolute; left: -751px; width: 1402px; height: 1402px; top: 437px; }
+.f11-layer-003 { position: absolute; inset: -25.1%; }
+.f11-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f11-layer-005 { position: absolute; background-color: rgba(0,0,0,0.8); height: 1020px; left: 0; top: 0; width: 2064px; }
+.f11-layer-006 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f11-layer-007 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f11-layer-008 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f11-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-011 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f11-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f11-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f11-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-017 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f11-layer-018 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f11-layer-019 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+.f11-layer-020 { translate: -50% -50%; position: absolute; height: 92px; left: calc(50% + 15.5px); top: calc(50% + 30px); width: 279px; }
+.f11-layer-021 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f11-layer-022 { position: absolute; height: 121.34%; left: 0; max-width: none; top: 0; width: 100%; }
+#bridge-fade-2 > .frame-art { width: 2064px; height: 1020px; }
+
+/* 12. bridge_fade_3 — Figma 779:754 */
+.f12-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f12-layer-002 { position: absolute; left: -751px; width: 1402px; height: 1402px; top: 437px; }
+.f12-layer-003 { position: absolute; inset: -25.1%; }
+.f12-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f12-layer-005 { position: absolute; height: 1020px; left: 0; top: 0; width: 2064px; }
+.f12-layer-006 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f12-layer-007 { position: absolute; left: 623px; width: 850px; height: 850px; top: 12px; }
+.f12-layer-008 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f12-layer-009 { position: absolute; background-color: rgba(0,0,0,0.8); height: 1020px; left: 0; top: 0; width: 2064px; }
+.f12-layer-010 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f12-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f12-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f12-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-015 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f12-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f12-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-019 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f12-layer-020 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-021 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f12-layer-022 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f12-layer-023 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+.f12-layer-024 { translate: -50% -50%; position: absolute; height: 92px; left: calc(50% + 15.5px); top: calc(50% + 30px); width: 279px; }
+.f12-layer-025 { position: absolute; inset: 0; opacity: .8; overflow: hidden; pointer-events: none; }
+.f12-layer-026 { position: absolute; height: 121.34%; left: 0; max-width: none; top: 0; width: 100%; }
+#bridge-fade-3 > .frame-art { width: 2064px; height: 1020px; }
+
+/* 13. Table — Figma 779:789 */
+.f13-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f13-layer-002 { position: absolute; left: -751px; width: 1402px; height: 1402px; top: 437px; }
+.f13-layer-003 { position: absolute; inset: -25.1%; }
+.f13-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
+.f13-layer-005 { position: absolute; height: 1020px; left: 0; top: 0; width: 2064px; }
+.f13-layer-006 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f13-layer-007 { position: absolute; left: 623px; width: 850px; height: 850px; top: 12px; }
+.f13-layer-008 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f13-layer-009 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f13-layer-010 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f13-layer-011 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-012 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f13-layer-013 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-014 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f13-layer-015 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-016 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f13-layer-017 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-018 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f13-layer-019 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-020 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f13-layer-021 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f13-layer-022 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#table > .frame-art { width: 2064px; height: 1020px; }
+
+/* 14. Table_tilt — Figma 779:807 */
+.f14-layer-001 { position: relative; width: 100%; height: 100%; }
+.f14-layer-002 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f14-layer-003 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f14-layer-004 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f14-layer-005 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-006 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f14-layer-007 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-008 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f14-layer-009 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-010 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f14-layer-011 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-012 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f14-layer-013 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-014 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f14-layer-015 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f14-layer-016 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#table-tilt > .frame-art { width: 2064px; height: 1020px; }
+
+/* 15. Our Way_start — Figma 779:823 */
+.f15-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f15-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #f8f0e5; font-size: 190px; text-align: center; top: calc(50% - 191px); white-space: nowrap; }
+.f15-layer-003 { line-height: normal; margin-bottom: 0; }
+.f15-layer-004 { line-height: normal; }
+.f15-layer-005 { position: absolute; height: 1020px; left: 0; top: 0; width: 2062px; }
+.f15-layer-006 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f15-layer-007 { position: absolute; background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 26.646%; height: 319px; left: 0; --gradient-to: rgba(19,19,19,0); top: 0; width: 2064px; --gradient-from: #131313 26.646%; }
+.f15-layer-008 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f15-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f15-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f15-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-013 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f15-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f15-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f15-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-019 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f15-layer-020 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f15-layer-021 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#our-way-start > .frame-art { width: 2064px; height: 1020px; }
+
+/* 16. Our Way_mid — Figma 779:840 */
+.f16-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f16-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #f8f0e5; font-size: 190px; text-align: center; top: calc(50% - 191px); white-space: nowrap; }
+.f16-layer-003 { line-height: normal; margin-bottom: 0; }
+.f16-layer-004 { line-height: normal; }
+.f16-layer-005 { position: absolute; height: 1020px; left: 0; top: 0; width: 2064px; }
+.f16-layer-006 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f16-layer-007 { position: absolute; background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 26.646%; height: 319px; left: 0; --gradient-to: rgba(19,19,19,0); top: 0; width: 2064px; --gradient-from: #131313 26.646%; }
+.f16-layer-008 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f16-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f16-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f16-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-013 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f16-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f16-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f16-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-019 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f16-layer-020 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f16-layer-021 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#our-way-mid > .frame-art { width: 2064px; height: 1020px; }
+
+/* 17. Our Way_end — Figma 779:854 */
+.f17-layer-001 { background-color: #f8f0e5; position: relative; width: 100%; height: 100%; }
+.f17-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #131313; font-size: 190px; text-align: center; top: 319px; white-space: nowrap; }
+.f17-layer-003 { line-height: normal; margin-bottom: 0; }
+.f17-layer-004 { line-height: normal; }
+.f17-layer-005 { translate: -50% 0; position: absolute; align-content: stretch; display: flex; align-items: center; justify-content: space-between; left: calc(50% - 23px); top: 1158px; width: 1740px; }
+.f17-layer-006 { background-color: #f48621; height: 657px; position: relative; flex-shrink: 0; width: 650px; }
+.f17-layer-007 { background-color: #f6e0c6; height: 657px; position: relative; flex-shrink: 0; width: 500px; }
+.f17-layer-008 { background-color: #f6e0c6; height: 657px; position: relative; flex-shrink: 0; width: 500px; }
+.f17-layer-009 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 184px; font-style: normal; color: #f8f0e5; font-size: 40px; top: 1201px; white-space: nowrap; }
+.f17-layer-010 { line-height: normal; margin-bottom: 0; }
+.f17-layer-011 { line-height: normal; }
+.f17-layer-012 { position: absolute; background-color: #f8f0e5; left: 913px; border-radius: 1000px; width: 350px; height: 350px; top: 1325px; }
+.f17-layer-013 { position: absolute; background-color: #f8f0e5; left: 1454px; border-radius: 1000px; width: 350px; height: 350px; top: 1338px; }
+.f17-layer-014 { position: absolute; display: contents; left: 184px; top: 1390px; }
+.f17-layer-015 { position: absolute; column-gap: 20px; row-gap: 20px; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: repeat(2,minmax(0,1fr)); height: 374px; left: 184px; top: 1390px; width: 560px; }
+.f17-layer-016 { background-color: #f8f0e5; justify-self: stretch; position: relative; border-top-left-radius: 65px; align-self: stretch; flex-shrink: 0; }
+.f17-layer-017 { background-color: #f8f0e5; justify-self: stretch; position: relative; border-top-right-radius: 65px; align-self: stretch; flex-shrink: 0; }
+.f17-layer-018 { display: flex; align-items: center; justify-content: center; justify-self: stretch; position: relative; align-self: stretch; flex-shrink: 0; }
+.f17-layer-019 { flex: none; rotate: 180deg; width: 100%; height: 100%; }
+.f17-layer-020 { background-color: #f8f0e5; position: relative; border-top-right-radius: 65px; width: 100%; height: 100%; }
+.f17-layer-021 { display: flex; align-items: center; justify-content: center; justify-self: stretch; position: relative; align-self: stretch; flex-shrink: 0; }
+.f17-layer-022 { flex: none; rotate: 180deg; width: 100%; height: 100%; }
+.f17-layer-023 { background-color: #f8f0e5; position: relative; border-top-left-radius: 65px; width: 100%; height: 100%; }
+.f17-layer-024 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 315px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1455px; white-space: nowrap; }
+.f17-layer-025 { line-height: normal; margin-bottom: 0; }
+.f17-layer-026 { line-height: normal; }
+.f17-layer-027 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 307.5px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1650px; white-space: nowrap; }
+.f17-layer-028 { line-height: normal; margin-bottom: 0; }
+.f17-layer-029 { line-height: normal; }
+.f17-layer-030 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 609.5px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1455px; white-space: nowrap; }
+.f17-layer-031 { line-height: normal; margin-bottom: 0; }
+.f17-layer-032 { line-height: normal; }
+.f17-layer-033 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 601px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1650px; white-space: nowrap; }
+.f17-layer-034 { line-height: normal; margin-bottom: 0; }
+.f17-layer-035 { line-height: normal; }
+.f17-layer-036 { position: absolute; background-color: #f48621; align-content: stretch; display: flex; flex-direction: column; align-items: center; justify-content: center; left: 394px; border-radius: 100px; width: 140px; height: 140px; top: 1505px; }
+.f17-layer-037 { height: 96px; position: relative; flex-shrink: 0; width: 100px; }
+.f17-layer-038 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f17-layer-039 { position: absolute; height: 100%; left: -0.01%; max-width: none; top: 0; width: 100.02%; }
+.f17-layer-040 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: 866px; font-style: normal; color: #834627; font-size: 40px; top: 1191px; white-space: nowrap; }
+.f17-layer-041 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 866px; font-style: normal; color: #834627; font-size: 24px; top: 1732px; white-space: nowrap; }
+.f17-layer-042 { line-height: normal; margin-bottom: 0; }
+.f17-layer-043 { line-height: normal; }
+.f17-layer-044 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: 1411px; font-style: normal; color: #834627; font-size: 24px; top: 1758px; white-space: nowrap; }
+.f17-layer-045 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: 1411px; font-style: normal; color: #834627; font-size: 40px; top: 1191px; white-space: nowrap; }
+.f17-layer-046 { position: absolute; align-content: stretch; display: flex; align-items: center; justify-content: center; left: 1349px; overflow: clip; border-bottom-right-radius: 332px; width: 486px; height: 486px; top: 1264px; }
+.f17-layer-047 { position: relative; flex-shrink: 0; width: 476px; height: 476px; }
+.f17-layer-048 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f17-layer-049 { position: absolute; aspect-ratio: 1774/887; left: 860px; right: 730px; top: 1382px; }
+.f17-layer-050 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f17-layer-051 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f17-layer-052 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f17-layer-053 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-054 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f17-layer-055 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-056 { border-bottom-width: 1px; border-color: #000; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f17-layer-057 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-058 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f17-layer-059 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-060 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f17-layer-061 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-062 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f17-layer-063 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+#our-way-end > .frame-art { width: 2064px; height: 1878px; }
+
+/* 18. Brand — Figma 779:906 */
+.f18-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
+.f18-layer-002 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 102px; font-style: normal; color: #ffedd7; font-size: 70px; top: 181px; white-space: nowrap; }
+.f18-layer-003 { line-height: normal; margin-bottom: 0; }
+.f18-layer-004 { line-height: normal; }
+.f18-layer-005 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: 129px; font-style: normal; color: #ffedd7; font-size: 64px; top: 5248px; white-space: nowrap; }
+.f18-layer-006 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; font-style: normal; right: 658px; color: #f8f0e5; font-size: 24px; top: 441px; letter-spacing: -0.72px; translate: 100% 0; white-space: nowrap; }
+.f18-layer-007 { line-height: 1; margin-bottom: 0; white-space: pre; }
+.f18-layer-008 { line-height: 1; margin-bottom: 0; white-space: pre; }
+.f18-layer-009 { line-height: 1; margin-bottom: 0; white-space: pre; }
+.f18-layer-010 { line-height: 1; margin-bottom: 0; white-space: pre; }
+.f18-layer-011 { line-height: 1; margin-bottom: 0; white-space: pre; }
+.f18-layer-012 { line-height: 1; white-space: pre; }
+.f18-layer-013 { translate: -50% 0; position: absolute; align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; left: 50%; top: 1045px; width: 1806px; }
+.f18-layer-014 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-015 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-016 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-017 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-018 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-019 { position: relative; flex-shrink: 0; width: 318px; }
+.f18-layer-020 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-021 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-022 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-023 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-024 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-025 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-026 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-027 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-028 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-029 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-030 { position: relative; flex-shrink: 0; width: 318px; }
+.f18-layer-031 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-032 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-033 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-034 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-035 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-036 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-037 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-038 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-039 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-040 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-041 { position: relative; flex-shrink: 0; white-space: nowrap; }
+.f18-layer-042 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-043 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-044 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-045 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-046 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-047 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-048 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-049 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-050 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-051 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-052 { position: relative; flex-shrink: 0; white-space: nowrap; }
+.f18-layer-053 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-054 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-055 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-056 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-057 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-058 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-059 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-060 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-061 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; white-space: nowrap; }
+.f18-layer-062 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-063 { position: relative; flex-shrink: 0; white-space: nowrap; }
+.f18-layer-064 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-065 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-066 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-067 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-068 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-069 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-070 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-071 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-072 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-073 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-074 { position: relative; flex-shrink: 0; white-space: nowrap; }
+.f18-layer-075 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-076 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-077 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-078 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-079 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-080 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-081 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-082 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-083 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-084 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-085 { position: relative; flex-shrink: 0; white-space: nowrap; }
+.f18-layer-086 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-087 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-088 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-089 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-090 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-091 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-092 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-093 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-094 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-095 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-096 { position: relative; flex-shrink: 0; white-space: nowrap; }
+.f18-layer-097 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-098 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-099 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-100 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-101 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-102 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-103 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-104 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-105 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-106 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-107 { position: relative; flex-shrink: 0; white-space: nowrap; }
+.f18-layer-108 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-109 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-110 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-111 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-112 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-113 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-114 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
+.f18-layer-115 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
+.f18-layer-116 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-117 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-118 { position: relative; flex-shrink: 0; white-space: nowrap; }
+.f18-layer-119 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
+.f18-layer-120 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
+.f18-layer-121 { position: absolute; inset: 0; pointer-events: none; }
+.f18-layer-122 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
+.f18-layer-123 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
+.f18-layer-124 { position: absolute; align-content: stretch; display: flex; gap: 15px; height: 683px; align-items: center; left: 129px; top: 5347px; width: 1806px; }
+.f18-layer-125 { height: 100%; position: relative; flex-shrink: 0; width: 1081px; }
+.f18-layer-126 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f18-layer-127 { height: 100%; position: relative; flex-shrink: 0; width: 471px; }
+.f18-layer-128 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f18-layer-129 { height: 100%; position: relative; flex-shrink: 0; width: 471px; }
+.f18-layer-130 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f18-layer-131 { position: absolute; height: 100%; left: -57.85%; max-width: none; top: 0; width: 157.75%; }
+.f18-layer-132 { height: 100%; position: relative; flex-shrink: 0; width: 1081px; }
+.f18-layer-133 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f18-layer-134 { height: 100%; position: relative; flex-shrink: 0; width: 471px; }
+.f18-layer-135 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f18-layer-136 { position: absolute; height: 100%; left: -15.64%; max-width: none; top: 0; width: 157.75%; }
+.f18-layer-137 { translate: -50% 0; position: absolute; height: 315px; left: calc(50% - 0.5px); top: 6433px; width: 783px; }
+.f18-layer-138 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f18-layer-139 { translate: -50% 0; position: absolute; height: 550px; left: 50%; top: 235px; width: 548px; }
+.f18-layer-140 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f18-layer-141 { position: absolute; height: 117.39%; left: -5.02%; max-width: none; top: -6.58%; width: 114.67%; }
+.f18-layer-142 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f18-layer-143 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f18-layer-144 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-145 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f18-layer-146 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-147 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f18-layer-148 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-149 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f18-layer-150 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-151 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f18-layer-152 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-153 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f18-layer-154 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f18-layer-155 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+.f18-layer-156 { translate: -50% 0; position: absolute; left: 50%; width: 1402px; height: 1402px; top: -1221px; }
+.f18-layer-157 { position: absolute; inset: -25.1%; }
+.f18-layer-158 { display: block; max-width: none; width: 100%; height: 100%; }
+#brand > .frame-art { width: 2064px; height: 7149px; }
+
+/* 19. Contact — Figma 780:1338 */
+.f19-layer-001 { position: relative; width: 100%; height: 100%; }
+.f19-layer-002 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f19-layer-003 { position: absolute; background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 9.404%; height: 319px; left: 0; --gradient-to: rgba(19,19,19,0); top: 0; width: 2064px; --gradient-from: #131313 9.404%; }
+.f19-layer-004 { position: absolute; background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 9.404%; height: 319px; left: 0; --gradient-to: rgba(19,19,19,0); top: 0; width: 2064px; --gradient-from: #131313 9.404%; }
+.f19-layer-005 { position: absolute; display: flex; height: 523px; align-items: center; justify-content: center; left: 0; top: 701px; width: 2064px; }
+.f19-layer-006 { flex: none; rotate: 180deg; }
+.f19-layer-007 { background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 9.404%; height: 523px; position: relative; --gradient-to: rgba(19,19,19,0); width: 2064px; --gradient-from: #131313 9.404%; }
+.f19-layer-008 { position: absolute; display: flex; height: 523px; align-items: center; justify-content: center; left: 0; top: 701px; width: 2064px; }
+.f19-layer-009 { flex: none; rotate: 180deg; }
+.f19-layer-010 { background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 35.946%; height: 523px; position: relative; --gradient-to: rgba(19,19,19,0); width: 2064px; --gradient-from: #131313 35.946%; }
+.f19-layer-011 { translate: -100% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1974px; font-style: normal; color: #f8f0e5; font-size: 54px; text-align: right; top: 146px; letter-spacing: -1.62px; white-space: nowrap; }
+.f19-layer-012 { line-height: 1; margin-bottom: 0; }
+.f19-layer-013 { line-height: 1; }
+.f19-layer-014 { position: absolute; background-color: #f48621; align-content: stretch; display: flex; align-items: center; justify-content: center; left: 1758px; padding-left: 66px; padding-right: 60px; padding-block: 23px; border-radius: 47px; top: 309px; }
+.f19-layer-015 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 700; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 16px; text-align: center; letter-spacing: -0.48px; white-space: nowrap; }
+.f19-layer-016 { position: absolute; display: contents; left: 81px; top: 789px; }
+.f19-layer-017 { position: absolute; display: contents; left: 81px; top: 789px; }
+.f19-layer-018 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 1; left: 106px; font-style: normal; color: #f48621; font-size: 16px; top: 817px; letter-spacing: -0.48px; white-space: nowrap; }
+.f19-layer-019 { position: absolute; background-color: #f48621; align-content: stretch; display: flex; align-items: center; justify-content: center; left: 332px; padding-inline: 20px; padding-block: 10px; border-radius: 23px; top: 906px; }
+.f19-layer-020 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 400; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #ffedd7; font-size: 12px; text-align: center; letter-spacing: -0.36px; white-space: nowrap; }
+.f19-layer-021 { position: absolute; border-color: #f8f0e5; border-width: 0.5px; border-style: dashed; height: 177px; left: 81px; top: 789px; width: 362px; }
+.f19-layer-022 { position: absolute; display: contents; left: 683px; top: 793px; }
+.f19-layer-023 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 1; left: 683px; font-style: normal; color: #ffe385; font-size: 16px; top: 793px; letter-spacing: -0.48px; white-space: nowrap; }
+.f19-layer-024 { position: absolute; border-color: #ffedd7; border-bottom-width: 0.5px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; left: 686px; padding-bottom: 26px; top: 863px; width: 481px; }
+.f19-layer-025 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 400; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #ffedd7; font-size: 18px; letter-spacing: 0.18px; white-space: nowrap; }
+.f19-layer-026 { position: relative; flex-shrink: 0; width: 24px; height: 24px; }
+.f19-layer-027 { position: absolute; display: block; inset: 0; max-width: none; width: 100%; height: 100%; }
+.f19-layer-028 { word-break: break-word; position: absolute; display: contents; font-family: Pretendard, sans-serif; font-weight: 700; left: 81px; font-style: normal; top: 1039px; }
+.f19-layer-029 { translate: -50% 0; position: absolute; height: 23px; line-height: 1; left: 115px; color: #f8f0e5; font-size: 20px; text-align: center; top: 1171px; letter-spacing: -0.6px; width: 68px; }
+.f19-layer-030 { translate: -50% 0; position: absolute; line-height: 1; left: 402.5px; color: #f8f0e5; font-size: 20px; text-align: center; top: 1171px; letter-spacing: -0.6px; white-space: nowrap; }
+.f19-layer-031 { position: absolute; align-content: stretch; display: flex; flex-direction: column; gap: 24px; align-items: flex-start; left: 1089px; color: #f8f0e5; font-size: 20px; top: 1039px; letter-spacing: -0.6px; white-space: nowrap; }
+.f19-layer-032 { display: block; line-height: 0; position: relative; flex-shrink: 0; }
+.f19-layer-033 { cursor: pointer; line-height: 1; }
+.f19-layer-034 { line-height: 1; position: relative; flex-shrink: 0; }
+.f19-layer-035 { line-height: 1; position: relative; flex-shrink: 0; }
+.f19-layer-036 { line-height: 1; position: relative; flex-shrink: 0; }
+.f19-layer-037 { position: absolute; align-content: stretch; display: flex; flex-direction: column; gap: 5px; align-items: flex-start; line-height: 1; left: 696px; top: 1052px; width: 104px; }
+.f19-layer-038 { position: relative; flex-shrink: 0; color: #ffe385; font-size: 15px; letter-spacing: -0.45px; width: 100%; }
+.f19-layer-039 { position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 20px; letter-spacing: -0.6px; width: 100%; }
+.f19-layer-040 { position: absolute; align-content: stretch; display: flex; flex-direction: column; gap: 5px; align-items: flex-start; left: 696px; top: 1152px; width: 240px; }
+.f19-layer-041 { line-height: 1; position: relative; flex-shrink: 0; color: #ffe385; font-size: 15px; letter-spacing: -0.45px; width: 100%; }
+.f19-layer-042 { display: block; line-height: 0; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 20px; letter-spacing: -0.6px; width: 100%; }
+.f19-layer-043 { text-underline-position: from-font; cursor: pointer; text-decoration-thickness: from-font; text-decoration-style: solid; line-height: 1; text-decoration-line: underline; }
+.f19-layer-044 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
+.f19-layer-045 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f19-layer-046 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-047 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f19-layer-048 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-049 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f19-layer-050 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-051 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f19-layer-052 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-053 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
+.f19-layer-054 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-055 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
+.f19-layer-056 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.f19-layer-057 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
+#contact > .frame-art { width: 2064px; height: 1224px; }
+/* Figma 원본 glass / inner shadow 효과 */
+[data-node-id="736:491"] { backdrop-filter: blur(31.5px); }
+[data-node-id="779:696"] { backdrop-filter: blur(33px); }
+[data-node-id="769:429"], [data-node-id="775:517"], [data-node-id="775:544"] { box-shadow: inset 0 0 50px 40px rgba(0,0,0,.6); }
