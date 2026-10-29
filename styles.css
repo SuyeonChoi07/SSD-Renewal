@@ -946,7 +946,9 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   width: var(--history-exit-outlineWidth, 500px); height: var(--history-exit-outlineHeight, 500px);
 }
 #history .f03-layer-005, #history-content-start .f04-layer-049 {
-  left: var(--history-exit-titleX, 114px); top: var(--history-exit-titleY, 377px);
+  left: var(--history-exit-titleX, 1032px); top: var(--history-exit-titleY, 377px);
+  width: max-content;
+  translate: calc(-50% * (1 - var(--history-exit-t, 0))) 0;
   font-size: var(--history-exit-titleSize, 180px);
   color: rgba(248,240,229,var(--history-exit-titleAlpha,1));
 }
