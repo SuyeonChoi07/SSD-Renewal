@@ -88,6 +88,9 @@
     const a=at(from),b=at(from+1);
     return Object.fromEntries(Object.keys(a).map(k=>[k,a[k]+(b[k]-a[k])*t]));
   }
+  function shouldExpandHistoryPhoto(index, transition) {
+    return index > 5 || (index === 5 && transition > 0);
+  }
   function historyZoomPose(index,local,transition=0) {
     const keys=[{x:732,y:150,width:600,height:720},{x:651,y:-10,width:784,height:1030},{x:391,y:0,width:1582,height:1020},{x:0,y:0,width:2064,height:1020}];
     const p=index<5?0:index===5?clamp(transition):index===6?1+clamp(local/1000):index===7?2+clamp(local/1000):3;
@@ -102,7 +105,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -168,7 +171,6 @@
   carouselPhotos.forEach(photo=>photo.classList.add('history-carousel-photo'));
   const carouselCaption=scenes[3].querySelector('.f04-layer-048');
   function renderHistoryContents(state) {
-    scenes[3].querySelector('.f04-layer-047').style.visibility = state.index >= 3 ? 'visible' : 'hidden';
     const local=state.index<3?0:state.index===3?state.local:900;
     const transition=state.index===5?state.transition:state.index>5?1:0;
     const entrance=historyContentPose(local,transition);
@@ -202,7 +204,7 @@
     const cropT=ease(clamp(zoom.progress-1)),detailT=ease(clamp(zoom.progress-2));
     const crop=zoom.progress<=2?{width:157.47+(159.79-157.47)*cropT,height:100+106.75*cropT,left:-31.38+(-31.7+31.38)*cropT,top:.01+(-7.52-.01)*cropT}:{width:159.79+.14*detailT,height:206.75+63.25*detailT,left:-31.7+14.5*detailT,top:-7.52-6.11*detailT};
     Object.entries(crop).forEach(([key,value])=>stage.style.setProperty('--history-crop-'+key,value+'%'));
-    if(state.index>=5) {
+    if(shouldExpandHistoryPhoto(state.index,state.transition)) {
       lastHistoryImage.style.setProperty('--carousel-x',zoom.x+'px');
       lastHistoryImage.style.setProperty('--carousel-y',(zoom.y-150)+'px');
       lastHistoryImage.style.setProperty('--carousel-width',zoom.width+'px');
