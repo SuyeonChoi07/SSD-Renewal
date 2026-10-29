@@ -1186,7 +1186,7 @@
     ],
     "description": "Landing 원본 로고와 nav를 공통 고정 헤더로 이동. 검정 로고는 Our Way_end 원본 자산 사용."
   },
-  "historyMotionScrollPx": 2400,
+  "historyMotionScrollPx": 2800,
   "historyContentMotionScrollPx": {
     "start": 900,
     "mid": 4100,
@@ -1194,5 +1194,6 @@
   },
   "historyContentSharedLayers": true,
   "historyEachPhotoHoldScrollPx": 1000,
-  "historyOutlineDelayScrollPx": 1000
+  "historyOutlineDelayScrollPx": 800,
+  "historyOutlineDrawScrollPx": 1200
 }

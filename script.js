@@ -10,7 +10,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 ? 0 : index >= 3 && index <= 5 ? 1000 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const motion = index === 2 ? 2400 : index === 3 ? 900 : index === 4 ? 4100 : index === 5 ? 7500 : 0;
+      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4100 : index === 5 ? 7500 : 0;
       const transition = index === heights.length - 1 ? 0 : TRANSITION_SCROLL_PX;
       const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
       start += segment.length;
@@ -50,7 +50,7 @@
   }
   function historyPose(local, arrival = 1) {
     const morph = ease(clamp(arrival));
-    return { outline: ease(clamp((local - 1000) / 600)), text: ease(clamp((local - 1600) / 800)),
+    return { outline: ease(clamp((local - 800) / 1200)), text: ease(clamp((local - 2000) / 800)),
       breadX: 1035 - 3.5 * morph, breadY: 350 - 26 * morph,
       breadWidth: 438 - 33 * morph, wrappedHeight: (438 - 33 * morph) * 373 / 405 };
   }
@@ -135,7 +135,7 @@
   const historyOutline = historyScene.querySelector('[data-node-id="749:89"]');
   function renderHistory(state) {
     const arrival = state.index < 1 ? 0 : state.index === 1 ? state.transition : 1;
-    const local = state.index < 2 ? 0 : state.index === 2 ? state.local : 2400;
+    const local = state.index < 2 ? 0 : state.index === 2 ? state.local : 2800;
     const pose = historyPose(local, arrival);
     historyBread.style.setProperty('--history-bread-x', pose.breadX + 'px');
     historyBread.style.setProperty('--history-bread-y', pose.breadY + 'px');
@@ -144,7 +144,7 @@
     historyOutline.style.setProperty('--outline-length', pose.outline * 100 + '%');
     historyTitle.style.setProperty('--title-shift', (reduced.matches ? 0 : (1 - pose.text) * 2064) + 'px');
     historyTitle.style.opacity = pose.text;
-    historyTitle.classList.toggle('is-glowing', state.index === 2 && local >= 2400);
+    historyTitle.classList.toggle('is-glowing', state.index === 2 && local >= 2800);
     const exit = historyExitPose(state.index < 2 ? 0 : state.index === 2 ? state.transition : 1);
     Object.entries(exit).forEach(([key,value]) => {
       const unit=key.includes('Rotation')?'deg':['t','titleAlpha'].includes(key)?'':'px';
