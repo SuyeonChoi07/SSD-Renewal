@@ -36,7 +36,18 @@
     }
     return { outgoing: 1 - ease(progress), incoming: ease(progress), black: 0 };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights };
+  function introPose(offset, travel) {
+    const progress = clamp(travel ? offset / travel : 0);
+    const settle = ease(clamp((progress - .76) / .24));
+    return { progress, breadX: 1035 - 21 * settle, breadY: 326 + 24 * settle };
+  }
+  function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
+    const stagger = line * .025;
+    const incoming = initiallyVisible ? 1 : ease(clamp((progress - enter - stagger) / .12));
+    const outgoing = exit === null ? 0 : ease(clamp((progress - exit - stagger) / .12));
+    return { opacity: incoming * (1 - outgoing), y: (1 - incoming) * 40 - outgoing * 40 };
+  }
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -45,6 +56,31 @@
   const stage = document.querySelector('.design-stage');
   const veil = document.querySelector('.transition-blackout');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const intro = scenes[1];
+  const bread = intro.querySelector('[data-node-id="738:634"]');
+  const introCopy = [
+    { element: intro.querySelector('[data-node-id="738:631"]'), enter: 0, exit: .20, initial: true },
+    { element: intro.querySelector('[data-node-id="740:688"]'), enter: .32, exit: .59 },
+    { element: intro.querySelector('[data-node-id="740:689"]'), enter: .71, exit: null }
+  ];
+  const introYear = intro.querySelector('[data-node-id="738:635"]');
+  function renderIntro(offset) {
+    const pose = introPose(offset, segments[1].travel);
+    intro.style.setProperty('--intro-offset', offset + 'px');
+    bread.style.setProperty('--bread-shift-x', (pose.breadX - 1035) + 'px');
+    bread.style.setProperty('--bread-shift-y', (pose.breadY - 326) + 'px');
+    introCopy.forEach(group => {
+      group.element.querySelectorAll('p').forEach((line, index) => {
+        const state = introLinePose(pose.progress, group.enter, group.exit, index, group.initial);
+        line.style.opacity = state.opacity;
+        line.style.setProperty('--line-y', (reduced.matches ? 0 : state.y) + 'px');
+      });
+      group.element.setAttribute('aria-hidden', String(pose.progress < group.enter || (group.exit !== null && pose.progress > group.exit + .22)));
+    });
+    const year = introLinePose(pose.progress, 0, .20, 0, true);
+    introYear.style.opacity = year.opacity;
+    introYear.style.setProperty('--line-y', (reduced.matches ? 0 : year.y) + 'px');
+  }
   let scheduled = false;
   function render() {
     scheduled = false;
@@ -62,6 +98,7 @@
       const offset = index < state.index ? Math.max(0, heights[index] - 1020) : index === state.index ? state.offset : 0;
       scene.querySelector('.frame-art').style.setProperty('--content-offset', `${-offset}px`);
     });
+    renderIntro(state.index < 1 ? 0 : state.index === 1 ? state.offset : segments[1].travel);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }

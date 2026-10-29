@@ -33,3 +33,7 @@ Table_tilt → Our Way_start에서는 이전 화면이 검정으로 페이드 �
 원본: https://www.figma.com/design/Km3CRMhMnwBl9hw0xiU5Sf/?node-id=705-142
 
 저장소: https://github.com/SuyeonChoi07/SSD-Renewal
+
+## Intro 연출
+
+첫 소개 문구는 Landing과 같은 원본 좌표(1340, 488)에 있습니다. 빵은 내부 스크롤의 76%까지 화면 중앙에서 고정되며 마지막 24% 구간에 손바닥 중심 쪽으로 이동합니다. 좌우 문구는 스크롤을 따라 이동하지 않고, 같은 자리에서 줄마다 아래에서 슬라이드·페이드 인되고 위로 슬라이드·페이드 아웃됩니다. 마지막 문구와 빵의 착지 상태는 화면 끝의 1,500px 유지 구간에도 고정됩니다. 추가 요소나 이미지 복제는 없습니다.
