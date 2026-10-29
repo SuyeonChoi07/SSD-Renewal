@@ -1204,5 +1204,7 @@
   "daejeonTextDelayAfterPanelScrollPx": 300,
   "daejeonExitMotionScrollPx": 2400,
   "defaultInteractionEasing": "ease-in-out: cubic-bezier(0.42, 0, 0.58, 1)",
-  "scene9To10TransitionScrollPx": 600
+  "scene9To10TransitionScrollPx": 600,
+  "scene13To14TransitionScrollPx": 1000,
+  "headerVisibleDuringBlackFade": true
 }

@@ -1048,3 +1048,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   translate: 0; left: var(--handoff-logo-x, 574px); top: var(--handoff-logo-y, 383px);
   width: var(--handoff-logo-width, 947px); height: var(--handoff-logo-height, 314px);
 }
+
+/* 검정 페이드는 본문 위에, 공통 헤더 아래에 배치합니다. */
+.design-stage > .transition-blackout { position: absolute; inset: 0; z-index: 100; }
+.persistent-header { z-index: 200; }
