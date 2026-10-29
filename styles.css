@@ -1018,3 +1018,17 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   left: var(--history-crop-left, -31.38%); top: var(--history-crop-top, 0%);
 }
 
+
+/* 원본 간판 글씨의 위치·배율을 맞춘 전환용 크롭. */
+#history-content-start .f04-layer-045 {
+  width: var(--aligned-history-width, 174.27%); height: var(--aligned-history-height, 100%);
+  left: var(--aligned-history-left, -39.86%); top: var(--aligned-history-top, 0%);
+}
+.bridge-photo-stack .f07-layer-007 {
+  width: var(--aligned-front-width, 157.47%); height: var(--aligned-front-height, 100%);
+  left: var(--aligned-front-left, -31.38%); top: var(--aligned-front-top, 0%);
+}
+.bridge-photo-stack .f08-layer-007, #with-daejeon .f09-layer-007 {
+  width: var(--aligned-back-width, 159.93%); height: var(--aligned-back-height, 270%);
+  left: var(--aligned-back-left, -17.2%); top: var(--aligned-back-top, -13.63%);
+}

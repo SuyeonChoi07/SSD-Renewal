@@ -97,6 +97,23 @@
     const a=Math.min(2,Math.floor(p)),t=ease(p-a),from=keys[a],to=keys[a+1];
     return {...Object.fromEntries(Object.keys(from).map(k=>[k,from[k]+(to[k]-from[k])*t])),progress:p};
   }
+  function historyImageCrops(progress) {
+    const lerp=(a,b,t)=>a+(b-a)*t;
+    const crop=(a,b,t)=>Object.fromEntries(Object.keys(a).map(k=>[k,lerp(a[k],b[k],t)]));
+    // 목록 사진 350×241은 bridge 사진 350×292에서 상단 52px가 잘린 버전입니다.
+    const aligned={width:174.27,height:100*292/241,left:-39.86,top:-100*52/241};
+    const first={width:157.47,height:100,left:-31.38,top:.01};
+    const second={width:159.79,height:206.75,left:-31.7,top:-7.52};
+    const front=progress<=1?crop(aligned,first,ease(clamp(progress))):crop(first,second,ease(clamp(progress-1)));
+    const history={width:front.width,height:front.height*241/292,left:front.left,top:front.top+front.height*52/292};
+    // 두 원본의 흰 간판 글씨 bbox 중심·크기를 기준으로 고해상도 면을 정렬합니다.
+    function alignHigh(low) {
+      const width=low.width*(99/350)/(1202/4096),height=low.height*(23/292)/(304/3417);
+      return {width,height,left:low.left+low.width*(181.5/350)-width*(2140/4096),top:low.top+low.height*(71.5/292)-height*(847/3417)};
+    }
+    const back=progress<=2?alignHigh(front):crop(alignHigh(second),{width:159.93,height:270,left:-17.2,top:-13.63},ease(clamp(progress-2)));
+    return {front,history,back};
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -105,7 +122,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -201,9 +218,8 @@
     bridgeStack.style.visibility=stackOpacity>0?'visible':'hidden';
     bridgeFront.style.opacity=1-ease(clamp(zoom.progress-1));
     Object.entries(zoom).forEach(([key,value])=>stage.style.setProperty('--history-zoom-'+key,value+(key==='progress'?'':'px')));
-    const cropT=ease(clamp(zoom.progress-1)),detailT=ease(clamp(zoom.progress-2));
-    const crop=zoom.progress<=2?{width:157.47+(159.79-157.47)*cropT,height:100+106.75*cropT,left:-31.38+(-31.7+31.38)*cropT,top:.01+(-7.52-.01)*cropT}:{width:159.79+.14*detailT,height:206.75+63.25*detailT,left:-31.7+14.5*detailT,top:-7.52-6.11*detailT};
-    Object.entries(crop).forEach(([key,value])=>stage.style.setProperty('--history-crop-'+key,value+'%'));
+    const crops=historyImageCrops(zoom.progress);
+    Object.entries(crops).forEach(([layer,crop])=>Object.entries(crop).forEach(([key,value])=>stage.style.setProperty('--aligned-'+layer+'-'+key,value+'%')));
     if(shouldExpandHistoryPhoto(state.index,state.transition)) {
       lastHistoryImage.style.setProperty('--carousel-x',zoom.x+'px');
       lastHistoryImage.style.setProperty('--carousel-y',(zoom.y-150)+'px');
