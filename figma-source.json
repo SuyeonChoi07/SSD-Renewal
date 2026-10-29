@@ -1208,12 +1208,15 @@
   "scene13To14TransitionScrollPx": 1000,
   "headerVisibleDuringBlackFade": true,
   "wrapperTearTransitionScrollPx": {
-    "scene14": 1000,
-    "scene15": 1000
+    "scene14": 700,
+    "scene15": 800
   },
   "generatedWrapperAssets": [
     "assets/wrapper-tear-early.png",
     "assets/wrapper-tear-wide.png",
     "assets/wrapper-tear-final.png"
-  ]
+  ],
+  "wrapperTearSteps": 15,
+  "wrapperTearScrollPxPerStep": 100,
+  "wrapperTearOpacityChanges": false
 }

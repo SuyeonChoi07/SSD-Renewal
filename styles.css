@@ -1056,7 +1056,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 /* 생성한 중간 키프레임을 원본 포장지 사이에 연결합니다. */
 #our-way-start .f15-layer-005, #our-way-mid .f16-layer-005 { visibility: hidden; }
 .tear-sequence { position: absolute; inset: 0; z-index: 40; pointer-events: none; opacity: 0; visibility: hidden; }
-.tear-frame { position: absolute; inset: 0; opacity: 0; }
+.tear-frame { position: absolute; inset: 0; opacity: 1; }
+.tear-frame[hidden] { display: none; }
 .tear-frame > img { position: absolute; inset: 0; width: 2064px; height: 1020px; object-fit: cover; }
 .tear-frame .tear-half-top { clip-path: inset(0 0 50% 0); transform: translateY(calc(-1 * var(--tear-retreat, 0px))); }
 .tear-frame .tear-half-bottom { clip-path: inset(50% 0 0 0); transform: translateY(var(--tear-retreat, 0px)); }
