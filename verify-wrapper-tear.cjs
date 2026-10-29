@@ -1,11 +1,20 @@
-const assert=require('node:assert/strict'),fs=require('node:fs');
-const {wrapperTearPose:pose,timeline,stateAt}=require('./script.js');
+const assert=require('node:assert/strict'),fs=require('node:fs'),crypto=require('node:crypto');
+const {wrapperTearPose:pose,timeline}=require('./script.js');
 const segments=timeline(require('./figma-source.json').frames.map(f=>f.height));
-assert.equal(segments[14].transition,700);assert.equal(segments[15].transition,800);assert.equal(segments[15].hold,0);
-assert.deepEqual(pose(14,1),pose(15,0),'No midpoint reset');
-const start=segments[14].start+segments[14].hold+segments[14].motion;
-for(let distance=0;distance<=1500;distance+=25){const state=stateAt(start+distance,require('./figma-source.json').frames.map(f=>f.height));const p=pose(state.index,state.transition);assert.equal(p.step,Math.floor(distance/100));assert.ok(p.opacities.every(v=>v===0||v===1),'No translucent paper');if(distance<1500)assert.equal(p.opacities.reduce((a,b)=>a+b,0),1);}
-const stages=new Set();for(let step=0;step<15;step++){const p=step<7?pose(14,step/7):pose(15,(step-7)/8);stages.add(p.frame+':'+p.retreat);}assert.equal(stages.size,15,'15 distinct paper poses');
-assert.ok(pose(16,0).opacities.every(v=>v===0));
-const manifest=require('./assets/wrapper-generation.json');for(const asset of manifest.assets)assert.ok(fs.statSync(__dirname+'/'+asset.path).size>0);
-console.log('15 distinct opaque tear stages; 100px each, 1500px total, no midpoint delay: PASS');
+assert.equal(segments[14].transition+segments[15].transition,1500);assert.equal(segments[15].hold,0);
+assert.deepEqual(pose(14,1),pose(15,0));assert.equal(pose(14,0).frame,0);
+const seen=new Set();
+for(let i=0;i<15;i++){
+ const distance=i*100+1,index=distance<700?14:15,t=index===14?distance/700:(distance-700)/800,p=pose(index,t);
+ assert.equal(p.frame,i+1);assert.ok(p.opacities.every(v=>v===0||v===1));seen.add(p.frame);
+}
+assert.equal(seen.size,15);assert.ok(pose(16,0).opacities.every(v=>v===0));
+const manifest=require('./assets/wrapper-generation-v2.json');assert.equal(manifest.assets.length,15);
+const hashes=new Set();let previous=-1;
+for(const asset of manifest.assets){const bytes=fs.readFileSync(__dirname+'/'+asset.path);hashes.add(crypto.createHash('sha256').update(bytes).digest('hex'));assert.ok(asset.transparentFraction>previous);previous=asset.transparentFraction;}
+assert.equal(hashes.size,15,'Fifteen distinct generated images');
+const html=fs.readFileSync(__dirname+'/index.html','utf8'),css=fs.readFileSync(__dirname+'/styles.css','utf8'),script=fs.readFileSync(__dirname+'/script.js','utf8');
+assert.equal((html.match(/data-tear-frame=/g)||[]).length,16,'Baseline plus 15 full images');
+assert.ok(!html.includes('tear-half')&&!css.includes('tear-half')&&!script.includes('tear-retreat'),'No half clipping or artificial paper movement');
+for(const asset of manifest.assets)assert.ok(html.includes(asset.path));
+console.log('15 individually generated full frames; 100px each; unique files, increasing opening area; no cropping/movement/fade workaround: PASS');

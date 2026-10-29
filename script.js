@@ -155,10 +155,8 @@
   }
   function wrapperTearPose(index,transition) {
     const distance=index<14?0:index===14?700*clamp(transition):index===15?700+800*clamp(transition):1500;
-    const step=Math.min(15,Math.floor((distance+1e-7)/100));
-    const frame=Math.min(4,Math.floor(step/3));
-    const retreat=frame===4?(step-12)*180:(step%3)*12;
-    return {step,frame,retreat,opacities:Array.from({length:5},(_,i)=>step<15&&i===frame?1:0)};
+    const step=index>=16?16:distance<=0?0:Math.min(15,Math.floor((distance+1e-7)/100)+1);
+    return {step,frame:step<16?step:-1,opacities:Array.from({length:16},(_,i)=>step<16&&i===step?1:0)};
   }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
@@ -321,7 +319,6 @@
     const visible=state.index===13?transitionWeights(13,state.transition).incoming:state.index===14||state.index===15?1:0;
     tearSequence.style.opacity=visible;
     tearSequence.style.visibility=visible>0?'visible':'hidden';
-    tearSequence.style.setProperty('--tear-retreat',(reduced.matches?0:pose.retreat)+'px');
     tearFrames.forEach((frame,index)=>{ frame.style.opacity=1; frame.hidden=pose.opacities[index]===0; });
   }
   const header = document.querySelector('.persistent-header');

@@ -85,3 +85,5 @@ data-scene=13 → 14 검정 페이드 구간은 1,000px입니다. 검정 오버�
 포장지 찢기: built-in image_gen으로 투명 중간 프레임 3장(early/wide/final)을 생성했습니다. 원본 2장과 5단계 시퀀스로 연결하며 14→15와 15→16은 각각 1,000px, 공통 ease-in-out을 사용합니다. 마지막 종이 조각은 위·아래로 벗겨집니다. 자산과 전체 생성 프롬프트는 assets/wrapper-generation.json에 기록했습니다. 원본 이미지는 덮어쓰지 않았습니다.
 
 포장지 최신 동작: 전체 1,500px에서 100px당 1단계, 총 15단계로 진행합니다. 기존 생성 이미지 5개 상태를 사용하며 각 상태 사이에 종이 위·아래 이동 단계를 추가합니다. 교차 페이드와 종이 opacity 보간을 제거했습니다. scene14 전환 700px + scene15 전환 800px이며 중간 유지 구간은 없습니다.
+
+현재 포장지 구현은 별도로 생성한 완성 이미지 15장(assets/wrapper-tear-frames-v2/step-01.png ~ step-15.png)을 직접 교체합니다. 이전 5장 이미지를 반으로 잘라 이동시키던 코드와 clip-path는 제거했습니다. 원본 시작 이미지 이후 100px마다 생성 이미지 한 장씩 표시되며 교차 페이드가 없습니다. 생성 도구는 built-in image_gen이며 전체 프롬프트·원본 생성 식별자·SHA256·투명 영역 검수값은 assets/wrapper-generation-v2.json에 기록했습니다. 검수용 전체 미리보기는 wrapper-frames-review.jpg입니다.

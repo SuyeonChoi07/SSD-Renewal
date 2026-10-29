@@ -1212,11 +1212,25 @@
     "scene15": 800
   },
   "generatedWrapperAssets": [
-    "assets/wrapper-tear-early.png",
-    "assets/wrapper-tear-wide.png",
-    "assets/wrapper-tear-final.png"
+    "assets/wrapper-tear-frames-v2/step-01.png",
+    "assets/wrapper-tear-frames-v2/step-02.png",
+    "assets/wrapper-tear-frames-v2/step-03.png",
+    "assets/wrapper-tear-frames-v2/step-04.png",
+    "assets/wrapper-tear-frames-v2/step-05.png",
+    "assets/wrapper-tear-frames-v2/step-06.png",
+    "assets/wrapper-tear-frames-v2/step-07.png",
+    "assets/wrapper-tear-frames-v2/step-08.png",
+    "assets/wrapper-tear-frames-v2/step-09.png",
+    "assets/wrapper-tear-frames-v2/step-10.png",
+    "assets/wrapper-tear-frames-v2/step-11.png",
+    "assets/wrapper-tear-frames-v2/step-12.png",
+    "assets/wrapper-tear-frames-v2/step-13.png",
+    "assets/wrapper-tear-frames-v2/step-14.png",
+    "assets/wrapper-tear-frames-v2/step-15.png"
   ],
   "wrapperTearSteps": 15,
   "wrapperTearScrollPxPerStep": 100,
-  "wrapperTearOpacityChanges": false
+  "wrapperTearOpacityChanges": false,
+  "wrapperTearUsesIndividuallyGeneratedFrames": true,
+  "wrapperTearUsesHalfClipping": false
 }
