@@ -10,7 +10,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 ? 0 : index >= 3 && index <= 5 ? 1000 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4100 : index === 5 ? 7500 : 0;
+      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 5000 : index === 5 ? 9000 : 0;
       const transition = index === heights.length - 1 ? 0 : TRANSITION_SCROLL_PX;
       const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
       start += segment.length;
@@ -73,11 +73,12 @@
     if(index<4)return 0;
     if(index>5)return 8;
     const base=index===4?0:3, count=index===4?3:5;
-    const step=Math.min(count,Math.floor(Math.max(0,local)/1700));
-    return base+Math.min(count,step+clamp((local-step*1700)/700));
+    const step=Math.min(count,Math.floor(Math.max(0,local)/2000));
+    return base+Math.min(count,step+clamp((local-step*2000)/1000));
   }
   function historyCarouselGeometry(focus, index) {
-    const from=Math.min(7,Math.floor(clamp(focus,0,8))), t=ease(clamp(focus-from));
+    const from=Math.min(7,Math.floor(clamp(focus,0,8))), p=clamp(focus-from);
+    const t=p*p*p*(p*(p*6-15)+10); // 출발·도착의 속도와 가속도를 모두 0으로 연결
     function at(active) {
       const width=index===active?600:250, height=index===active?720:300;
       const start=732-active*280;
