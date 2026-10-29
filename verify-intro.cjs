@@ -9,7 +9,13 @@ for(const offset of [0,500,1000,1500]) {
   assert.equal(-offset+326+offset,326);
 }
 const end=introPose(travel,travel);
-assert.equal(end.breadX,1014);
+assert.equal(end.breadX,1035);
+assert.equal(end.breadRotation,360);
+let previousRotation=-1;
+for(let offset=0;offset<=travel;offset+=20){const pose=introPose(offset,travel);assert.equal(pose.breadX,1035,'No horizontal bread movement');assert.ok(pose.breadRotation>previousRotation,'Clockwise rotation follows scroll');previousRotation=pose.breadRotation;}
+const css=require('node:fs').readFileSync(__dirname+'/styles.css','utf8');
+assert.match(css,/#intro \.f02-layer-006 \{ left: 301px;/);
+assert.match(css,/#intro \.f02-layer-037 \{ top: 319px; transform: translateY\(var\(--intro-offset, 0px\)\)/);
 assert.equal(end.breadY,350);
 assert.deepEqual(introPose(travel+1500,travel),end,'End pose stays fixed during hold');
 assert.deepEqual(introLinePose(0,0,.20,0,true),{opacity:1,y:0});

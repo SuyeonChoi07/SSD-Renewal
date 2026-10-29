@@ -39,7 +39,7 @@
   function introPose(offset, travel) {
     const progress = clamp(travel ? offset / travel : 0);
     const settle = ease(clamp((progress - .76) / .24));
-    return { progress, breadX: 1035 - 21 * settle, breadY: 326 + 24 * settle };
+    return { progress, breadX: 1035, breadY: 326 + 24 * settle, breadRotation: 360 * progress };
   }
   function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
     const stagger = line * .025;
@@ -67,7 +67,7 @@
   function renderIntro(offset) {
     const pose = introPose(offset, segments[1].travel);
     intro.style.setProperty('--intro-offset', offset + 'px');
-    bread.style.setProperty('--bread-shift-x', (pose.breadX - 1035) + 'px');
+    bread.style.setProperty('--bread-rotation', (reduced.matches ? 0 : pose.breadRotation) + 'deg');
     bread.style.setProperty('--bread-shift-y', (pose.breadY - 326) + 'px');
     introCopy.forEach(group => {
       group.element.querySelectorAll('p').forEach((line, index) => {

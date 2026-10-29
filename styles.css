@@ -897,12 +897,13 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   transform: translateY(calc(var(--intro-offset, 0px) + var(--line-y, 0px))); z-index: 15;
 }
 #intro .f02-layer-020 {
-  transform: translate(var(--bread-shift-x, 0px), calc(var(--intro-offset, 0px) + var(--bread-shift-y, 0px)));
+  transform: translateY(calc(var(--intro-offset, 0px) + var(--bread-shift-y, 0px))) rotate(var(--bread-rotation, 0deg));
+  transform-origin: center;
   z-index: 10; will-change: transform;
 }
-#intro .f02-layer-006 { z-index: 1; }
+#intro .f02-layer-006 { left: 301px; z-index: 1; }
 #intro .f02-layer-013 { z-index: 2; }
-#intro .f02-layer-037 { z-index: 0; }
+#intro .f02-layer-037 { top: 319px; transform: translateY(var(--intro-offset, 0px)); z-index: 0; }
 #intro .f02-layer-023, #intro .f02-layer-034 {
   transform: translateY(var(--intro-offset, 0px)); z-index: 20;
 }
