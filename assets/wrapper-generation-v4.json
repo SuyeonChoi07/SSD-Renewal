@@ -1,0 +1,325 @@
+{
+  "tool": "built-in image_gen",
+  "description": "20 individually generated frames; last five release and widen the left gap and peel out through left corners",
+  "assets": [
+    {
+      "generatedStep": 1,
+      "prompt": "Use case: precise-object-edit. Asset: ONE fully rendered animation keyframe 1 of 15, not a contact sheet. Edit target is image 1, the initial yellow wrapper; image 2 is the partly open reference for SAME wrapper. Create a photographic tearing state for progress 1/15. Wide 2064:1020 composition, same camera and registered paper texture. Preserve the identical golden yellow tone, creases, lighting, black ink fragments at upper-left and lower-left; no new lettering, hands, bread or props. Upper paper is pulled upward and lower paper downward along the EXISTING fibrous jagged horizontal rip, which opens from right toward left. This particular frame must have a genuinely TRANSPARENT opening of approximately 3% of image height at the RIGHT edge, 3% at CENTER, 0% at LEFT. The tear remains almost closed on the left; only a narrow but visibly larger opening on right. This must be a unique newly rendered intermediate state, NOT a crop, zoom, tiled version, cut-out half, opacity variation, stretched image or reused frame. Keep output fully opaque wherever paper exists, and actual alpha transparency in the torn-away gap (never black/gray/checkerboard fill). Torn fibers have a natural off-white appearance. No artificial horizontal clipping line. No text labels, panel borders or watermarks.",
+      "references": [
+        "assets/wrapper-start.png",
+        "assets/wrapper-mid.png"
+      ],
+      "refined": false,
+      "transparentFraction": 0.02805,
+      "width": 1783,
+      "height": 882,
+      "step": 1,
+      "path": "assets/wrapper-tear-frames-v2/step-01.png",
+      "generationId": "exec-3d94284f-1eb2-4170-b4a8-e0b3697cffb6.png",
+      "sha256": "576f9d1763d4a3c3757ad8eb33e94f4e66cfe9e1e34aa6dc2b1a95e43dd0c3cf"
+    },
+    {
+      "generatedStep": 3,
+      "prompt": "Edit the reference yellow wrapper into an early tearing animation keyframe. Keep same framing folds and lighting. Make the existing ragged horizontal rip open a little at right: transparent hole roughly 12% image height on right, 3% at middle, zero on left. Real alpha transparent opening, NO white or checkerboard or tinted film inside gap. Paper fully opaque, fibers natural. One wide 2064:1020 image, same composition, no new objects or text.",
+      "references": [
+        "assets/wrapper-start.png",
+        "assets/wrapper-tear-early.png"
+      ],
+      "refined": true,
+      "transparentFraction": 0.048701,
+      "width": 1783,
+      "height": 882,
+      "step": 2,
+      "path": "assets/wrapper-tear-frames-v2/step-02.png",
+      "generationId": "exec-2318fb35-10e0-42d4-a7ca-b6085f19d2f0.png",
+      "sha256": "fb771bc50695164b8229192e62592e9d92769596bf17d6822277714af4765b5d"
+    },
+    {
+      "generatedStep": 4,
+      "prompt": "Use case: precise-object-edit. Asset: ONE fully rendered animation keyframe 4 of 15, not a contact sheet. Edit target is image 1, the initial yellow wrapper; image 2 is the partly open reference for SAME wrapper. Create a photographic tearing state for progress 4/15. Wide 2064:1020 composition, same camera and registered paper texture. Preserve the identical golden yellow tone, creases, lighting, black ink fragments at upper-left and lower-left; no new lettering, hands, bread or props. Upper paper is pulled upward and lower paper downward along the EXISTING fibrous jagged horizontal rip, which opens from right toward left. This particular frame must have a genuinely TRANSPARENT opening of approximately 18% of image height at the RIGHT edge, 15% at CENTER, 0% at LEFT. The tear remains almost closed on the left; only a narrow but visibly larger opening on right. This must be a unique newly rendered intermediate state, NOT a crop, zoom, tiled version, cut-out half, opacity variation, stretched image or reused frame. Keep output fully opaque wherever paper exists, and actual alpha transparency in the torn-away gap (never black/gray/checkerboard fill). Torn fibers have a natural off-white appearance. No artificial horizontal clipping line. No text labels, panel borders or watermarks.",
+      "references": [
+        "assets/wrapper-start.png",
+        "assets/wrapper-mid.png"
+      ],
+      "refined": false,
+      "transparentFraction": 0.112561,
+      "width": 1783,
+      "height": 882,
+      "step": 3,
+      "path": "assets/wrapper-tear-frames-v2/step-03.png",
+      "generationId": "exec-3b64e790-d454-4bd2-9fa1-15842f545e46.png",
+      "sha256": "d00ede0aa0f98282aa3196ad213d47262520686d228214757563d177624b2522"
+    },
+    {
+      "generatedStep": 5,
+      "prompt": "Use case: precise-object-edit. Asset: ONE fully rendered animation keyframe 5 of 15, not a contact sheet. Edit target is image 1, the initial yellow wrapper; image 2 is the partly open reference for SAME wrapper. Create a photographic tearing state for progress 5/15. Wide 2064:1020 composition, same camera and registered paper texture. Preserve the identical golden yellow tone, creases, lighting, black ink fragments at upper-left and lower-left; no new lettering, hands, bread or props. Upper paper is pulled upward and lower paper downward along the EXISTING fibrous jagged horizontal rip, which opens from right toward left. This particular frame must have a genuinely TRANSPARENT opening of approximately 25% of image height at the RIGHT edge, 21% at CENTER, 4% at LEFT. Keep recognizable upper and lower paper sheets and clean white cellulose fibers, pull further apart than previous frames. This must be a unique newly rendered intermediate state, NOT a crop, zoom, tiled version, cut-out half, opacity variation, stretched image or reused frame. Keep output fully opaque wherever paper exists, and actual alpha transparency in the torn-away gap (never black/gray/checkerboard fill). Torn fibers have a natural off-white appearance. No artificial horizontal clipping line. No text labels, panel borders or watermarks.",
+      "references": [
+        "assets/wrapper-start.png",
+        "assets/wrapper-mid.png"
+      ],
+      "refined": false,
+      "transparentFraction": 0.189082,
+      "width": 1783,
+      "height": 882,
+      "step": 4,
+      "path": "assets/wrapper-tear-frames-v2/step-04.png",
+      "generationId": "exec-23317a42-037a-40c3-b76b-7166743b97f4.png",
+      "sha256": "72ec826dda401d8721aa710c0e24252a93de89daeb1b32b8cb8b86cad9d7325e"
+    },
+    {
+      "generatedStep": 8,
+      "prompt": "Use case: precise-object-edit. Asset: ONE fully rendered animation keyframe 8 of 15, not a contact sheet. Edit target is image 1, the initial yellow wrapper; image 2 is the partly open reference for SAME wrapper. Create a photographic tearing state for progress 8/15. Wide 2064:1020 composition, same camera and registered paper texture. Preserve the identical golden yellow tone, creases, lighting, black ink fragments at upper-left and lower-left; no new lettering, hands, bread or props. Upper paper is pulled upward and lower paper downward along the EXISTING fibrous jagged horizontal rip, which opens from right toward left. This particular frame must have a genuinely TRANSPARENT opening of approximately 51% of image height at the RIGHT edge, 43% at CENTER, 25% at LEFT. Keep recognizable upper and lower paper sheets and clean white cellulose fibers, pull further apart than previous frames. This must be a unique newly rendered intermediate state, NOT a crop, zoom, tiled version, cut-out half, opacity variation, stretched image or reused frame. Keep output fully opaque wherever paper exists, and actual alpha transparency in the torn-away gap (never black/gray/checkerboard fill). Torn fibers have a natural off-white appearance. No artificial horizontal clipping line. No text labels, panel borders or watermarks.",
+      "references": [
+        "assets/wrapper-start.png",
+        "assets/wrapper-mid.png"
+      ],
+      "refined": false,
+      "transparentFraction": 0.264753,
+      "width": 1782,
+      "height": 883,
+      "step": 5,
+      "path": "assets/wrapper-tear-frames-v2/step-05.png",
+      "generationId": "exec-a24ecbe4-f055-4400-b3ce-62628be75bd1.png",
+      "sha256": "de2dffce81215505a7820e280d5dc312a288fae4a4fb077dcabc44936e3c3d57"
+    },
+    {
+      "generatedStep": 9,
+      "prompt": "Use case: precise-object-edit. Asset: ONE fully rendered animation keyframe 9 of 15, not a contact sheet. Edit target is image 1, the initial yellow wrapper; image 2 is the partly open reference for SAME wrapper. Create a photographic tearing state for progress 9/15. Wide 2064:1020 composition, same camera and registered paper texture. Preserve the identical golden yellow tone, creases, lighting, black ink fragments at upper-left and lower-left; no new lettering, hands, bread or props. Upper paper is pulled upward and lower paper downward along the EXISTING fibrous jagged horizontal rip, which opens from right toward left. This particular frame must have a genuinely TRANSPARENT opening of approximately 61% of image height at the RIGHT edge, 52% at CENTER, 33% at LEFT. Keep recognizable upper and lower paper sheets and clean white cellulose fibers, pull further apart than previous frames. This must be a unique newly rendered intermediate state, NOT a crop, zoom, tiled version, cut-out half, opacity variation, stretched image or reused frame. Keep output fully opaque wherever paper exists, and actual alpha transparency in the torn-away gap (never black/gray/checkerboard fill). Torn fibers have a natural off-white appearance. No artificial horizontal clipping line. No text labels, panel borders or watermarks.",
+      "references": [
+        "assets/wrapper-start.png",
+        "assets/wrapper-mid.png"
+      ],
+      "refined": false,
+      "transparentFraction": 0.297147,
+      "width": 1783,
+      "height": 882,
+      "step": 6,
+      "path": "assets/wrapper-tear-frames-v2/step-06.png",
+      "generationId": "exec-0f387767-0d10-44df-8de6-c6798042a50b.png",
+      "sha256": "2e436622fe8495cdddd9e21a2ed9f3353eee7c27c29ffdb28012b6e483fcd928"
+    },
+    {
+      "generatedStep": 11,
+      "prompt": "Use case: precise-object-edit. Asset: ONE fully rendered animation keyframe 11 of 15, not a contact sheet. Edit target is image 1, the initial yellow wrapper; image 2 is the partly open reference for SAME wrapper. Create a photographic tearing state for progress 11/15. Wide 2064:1020 composition, same camera and registered paper texture. Preserve the identical golden yellow tone, creases, lighting, black ink fragments at upper-left and lower-left; no new lettering, hands, bread or props. Upper paper is pulled upward and lower paper downward along the EXISTING fibrous jagged horizontal rip, which opens from right toward left. This particular frame must have a genuinely TRANSPARENT opening of approximately 78% of image height at the RIGHT edge, 66% at CENTER, 46% at LEFT. Paper retreats mostly outside top/bottom borders; retain only gradually thinner irregular paper strips near edges. This must be a unique newly rendered intermediate state, NOT a crop, zoom, tiled version, cut-out half, opacity variation, stretched image or reused frame. Keep output fully opaque wherever paper exists, and actual alpha transparency in the torn-away gap (never black/gray/checkerboard fill). Torn fibers have a natural off-white appearance. No artificial horizontal clipping line. No text labels, panel borders or watermarks.",
+      "references": [
+        "assets/wrapper-start.png",
+        "assets/wrapper-mid.png"
+      ],
+      "refined": false,
+      "transparentFraction": 0.437519,
+      "width": 1782,
+      "height": 883,
+      "step": 7,
+      "path": "assets/wrapper-tear-frames-v2/step-07.png",
+      "generationId": "exec-c6062e32-56c6-4a0c-b85a-b735b941a3ea.png",
+      "sha256": "2f91528136abffdfa403255e958e277e82535dd382ab87925fb3d93cb3669b64"
+    },
+    {
+      "generatedStep": 13,
+      "prompt": "Use case: precise-object-edit. Asset: ONE fully rendered animation keyframe 13 of 15, not a contact sheet. Edit target is image 1, the initial yellow wrapper; image 2 is the partly open reference for SAME wrapper. Create a photographic tearing state for progress 13/15. Wide 2064:1020 composition, same camera and registered paper texture. Preserve the identical golden yellow tone, creases, lighting, black ink fragments at upper-left and lower-left; no new lettering, hands, bread or props. Upper paper is pulled upward and lower paper downward along the EXISTING fibrous jagged horizontal rip, which opens from right toward left. This particular frame must have a genuinely TRANSPARENT opening of approximately 91% of image height at the RIGHT edge, 77% at CENTER, 57% at LEFT. Paper retreats mostly outside top/bottom borders; retain only gradually thinner irregular paper strips near edges. This must be a unique newly rendered intermediate state, NOT a crop, zoom, tiled version, cut-out half, opacity variation, stretched image or reused frame. Keep output fully opaque wherever paper exists, and actual alpha transparency in the torn-away gap (never black/gray/checkerboard fill). Torn fibers have a natural off-white appearance. No artificial horizontal clipping line. No text labels, panel borders or watermarks.",
+      "references": [
+        "assets/wrapper-start.png",
+        "assets/wrapper-mid.png"
+      ],
+      "refined": false,
+      "transparentFraction": 0.491967,
+      "width": 1783,
+      "height": 882,
+      "step": 8,
+      "path": "assets/wrapper-tear-frames-v2/step-08.png",
+      "generationId": "exec-1f9887c3-a004-4842-a76a-ef53ac4f2961.png",
+      "sha256": "a0b13eb1c0e9568f988321a8d2d7e307b924fd926e3fdb94a65e11c5a07b8351"
+    },
+    {
+      "step": 9,
+      "path": "assets/wrapper-tear-frames-v3/step-09.png",
+      "prompt": "Precise object edit, one complete transparent animation frame 9/15. INPUT 1 is edit target, the yellow torn wrapper at frame 8. INPUT 2 is ONLY a geometry instruction diagram: blue to green describes changing silhouette, red circle marks LEFT GAP TO KEEP FIXED. Do not reproduce screenshot, typography, UI, colored marks. Output only two golden paper flaps on transparent canvas same wide 2064:1020 registration as input1. CRITICAL: preserve upper-left corner at (0,0), lower-left corner at (0,100%), upper torn left endpoint at (0,47%), lower torn left endpoint at (0,50%). Keep this narrow left gap and left anchors EXACTLY fixed. No whole-object left/right/up/down translation. Change the SHAPE of the flaps instead: upper sheet is now a triangular tapered piece bounded by top border from x0 to x88%, left border y0 to47%, and a natural ragged diagonal tear from (0,47%) to (88%,0). Lower sheet mirrors it bounded by left border y50% to100%, bottom border x0 to88%, and ragged diagonal from (0,50%) to (88%,100%). All area to right of these diagonals is genuinely alpha transparent. This frame has border extent 88% of canvas width, distinct from neighboring frames. Maintain source paper's photorealistic yellow creases, black ink fragments at left, warm lighting, rough cream-white fibrous torn edges. Newly render realistic folds as the diagonal tear edge bends back toward left while its left endpoint stays pinned. Preserve canvas and left-edge material scale. Fully opaque paper, transparent removed region; no black fill, checkerboard, text, guide lines, labels, border, new objects. One full frame, never contact sheet, never merely crop/slide input.",
+      "generationId": "exec-1dbaa0d7-c37e-4bad-824d-dbaf3570e21f.png",
+      "references": [
+        "assets/wrapper-tear-frames-v2/step-08.png",
+        "user annotated blue-to-green geometry guide"
+      ],
+      "sha256": "10a30f8bc1cf055d9b7a57c57d2eea82ccadcb0b07964ca04c7431257ade4461",
+      "transparentFraction": 0.5299051383499745,
+      "width": 1783,
+      "height": 882,
+      "leftGapRows": [
+        412,
+        443
+      ]
+    },
+    {
+      "step": 10,
+      "path": "assets/wrapper-tear-frames-v3/step-10.png",
+      "prompt": "Precise object edit, one complete transparent animation frame 10/15. INPUT 1 is edit target, the yellow torn wrapper at frame 8. INPUT 2 is ONLY a geometry instruction diagram: blue to green describes changing silhouette, red circle marks LEFT GAP TO KEEP FIXED. Do not reproduce screenshot, typography, UI, colored marks. Output only two golden paper flaps on transparent canvas same wide 2064:1020 registration as input1. CRITICAL: preserve upper-left corner at (0,0), lower-left corner at (0,100%), upper torn left endpoint at (0,47%), lower torn left endpoint at (0,50%). Keep this narrow left gap and left anchors EXACTLY fixed. No whole-object left/right/up/down translation. Change the SHAPE of the flaps instead: upper sheet is now a triangular tapered piece bounded by top border from x0 to x76%, left border y0 to47%, and a natural ragged diagonal tear from (0,47%) to (76%,0). Lower sheet mirrors it bounded by left border y50% to100%, bottom border x0 to76%, and ragged diagonal from (0,50%) to (76%,100%). All area to right of these diagonals is genuinely alpha transparent. This frame has border extent 76% of canvas width, distinct from neighboring frames. Maintain source paper's photorealistic yellow creases, black ink fragments at left, warm lighting, rough cream-white fibrous torn edges. Newly render realistic folds as the diagonal tear edge bends back toward left while its left endpoint stays pinned. Preserve canvas and left-edge material scale. Fully opaque paper, transparent removed region; no black fill, checkerboard, text, guide lines, labels, border, new objects. One full frame, never contact sheet, never merely crop/slide input.",
+      "generationId": "exec-881c9a54-3563-4adb-b2dc-599ce827b4a1.png",
+      "references": [
+        "assets/wrapper-tear-frames-v2/step-08.png",
+        "user annotated blue-to-green geometry guide"
+      ],
+      "sha256": "bf6f6fb62755b0d97286294693ccf1a7c2c1a3a46b0e3d88148da10107c5d448",
+      "transparentFraction": 0.5379917156617742,
+      "width": 1783,
+      "height": 882,
+      "leftGapRows": [
+        413,
+        441
+      ]
+    },
+    {
+      "step": 11,
+      "path": "assets/wrapper-tear-frames-v3/step-11.png",
+      "prompt": "Precise object edit, one complete transparent animation frame 11/15. INPUT 1 is edit target, the yellow torn wrapper at frame 8. INPUT 2 is ONLY a geometry instruction diagram: blue to green describes changing silhouette, red circle marks LEFT GAP TO KEEP FIXED. Do not reproduce screenshot, typography, UI, colored marks. Output only two golden paper flaps on transparent canvas same wide 2064:1020 registration as input1. CRITICAL: preserve upper-left corner at (0,0), lower-left corner at (0,100%), upper torn left endpoint at (0,47%), lower torn left endpoint at (0,50%). Keep this narrow left gap and left anchors EXACTLY fixed. No whole-object left/right/up/down translation. Change the SHAPE of the flaps instead: upper sheet is now a triangular tapered piece bounded by top border from x0 to x64%, left border y0 to47%, and a natural ragged diagonal tear from (0,47%) to (64%,0). Lower sheet mirrors it bounded by left border y50% to100%, bottom border x0 to64%, and ragged diagonal from (0,50%) to (64%,100%). All area to right of these diagonals is genuinely alpha transparent. This frame has border extent 64% of canvas width, distinct from neighboring frames. Maintain source paper's photorealistic yellow creases, black ink fragments at left, warm lighting, rough cream-white fibrous torn edges. Newly render realistic folds as the diagonal tear edge bends back toward left while its left endpoint stays pinned. Preserve canvas and left-edge material scale. Fully opaque paper, transparent removed region; no black fill, checkerboard, text, guide lines, labels, border, new objects. One full frame, never contact sheet, never merely crop/slide input.",
+      "generationId": "exec-a5b12540-dd87-453f-a9aa-b1b02c3092d8.png",
+      "references": [
+        "assets/wrapper-tear-frames-v2/step-08.png",
+        "user annotated blue-to-green geometry guide"
+      ],
+      "sha256": "f9015f7fe1629c0ef7e5a557c0eb334659fbc6b2757fe17bc95a9c8061245f4b",
+      "transparentFraction": 0.5862481617483505,
+      "width": 1782,
+      "height": 883,
+      "leftGapRows": [
+        413,
+        444
+      ]
+    },
+    {
+      "step": 12,
+      "path": "assets/wrapper-tear-frames-v3/step-12.png",
+      "prompt": "Precise object edit, one complete transparent animation frame 12/15. INPUT 1 is edit target, the yellow torn wrapper at frame 8. INPUT 2 is ONLY a geometry instruction diagram: blue to green describes changing silhouette, red circle marks LEFT GAP TO KEEP FIXED. Do not reproduce screenshot, typography, UI, colored marks. Output only two golden paper flaps on transparent canvas same wide 2064:1020 registration as input1. CRITICAL: preserve upper-left corner at (0,0), lower-left corner at (0,100%), upper torn left endpoint at (0,47%), lower torn left endpoint at (0,50%). Keep this narrow left gap and left anchors EXACTLY fixed. No whole-object left/right/up/down translation. Change the SHAPE of the flaps instead: upper sheet is now a triangular tapered piece bounded by top border from x0 to x51%, left border y0 to47%, and a natural ragged diagonal tear from (0,47%) to (51%,0). Lower sheet mirrors it bounded by left border y50% to100%, bottom border x0 to51%, and ragged diagonal from (0,50%) to (51%,100%). All area to right of these diagonals is genuinely alpha transparent. This frame has border extent 51% of canvas width, distinct from neighboring frames. Maintain source paper's photorealistic yellow creases, black ink fragments at left, warm lighting, rough cream-white fibrous torn edges. Newly render realistic folds as the diagonal tear edge bends back toward left while its left endpoint stays pinned. Preserve canvas and left-edge material scale. Fully opaque paper, transparent removed region; no black fill, checkerboard, text, guide lines, labels, border, new objects. One full frame, never contact sheet, never merely crop/slide input.",
+      "generationId": "exec-d5b2d5b8-0b4f-4ab2-9c35-a2577caadeb0.png",
+      "references": [
+        "assets/wrapper-tear-frames-v2/step-08.png",
+        "user annotated blue-to-green geometry guide"
+      ],
+      "sha256": "bb0f4493c9d2cf917dfef95fb0e693b1195d5f4b3b0f3501aacc23edc5540f03",
+      "transparentFraction": 0.6051134231969101,
+      "width": 1783,
+      "height": 882,
+      "leftGapRows": [
+        413,
+        428
+      ]
+    },
+    {
+      "step": 13,
+      "path": "assets/wrapper-tear-frames-v3/step-13.png",
+      "prompt": "Precise object edit, one complete transparent animation frame 13/15. INPUT 1 is edit target, the yellow torn wrapper at frame 8. INPUT 2 is ONLY a geometry instruction diagram: blue to green describes changing silhouette, red circle marks LEFT GAP TO KEEP FIXED. Do not reproduce screenshot, typography, UI, colored marks. Output only two golden paper flaps on transparent canvas same wide 2064:1020 registration as input1. CRITICAL: preserve upper-left corner at (0,0), lower-left corner at (0,100%), upper torn left endpoint at (0,47%), lower torn left endpoint at (0,50%). Keep this narrow left gap and left anchors EXACTLY fixed. No whole-object left/right/up/down translation. Change the SHAPE of the flaps instead: upper sheet is now a triangular tapered piece bounded by top border from x0 to x38%, left border y0 to47%, and a natural ragged diagonal tear from (0,47%) to (38%,0). Lower sheet mirrors it bounded by left border y50% to100%, bottom border x0 to38%, and ragged diagonal from (0,50%) to (38%,100%). All area to right of these diagonals is genuinely alpha transparent. This frame has border extent 38% of canvas width, distinct from neighboring frames. Maintain source paper's photorealistic yellow creases, black ink fragments at left, warm lighting, rough cream-white fibrous torn edges. Newly render realistic folds as the diagonal tear edge bends back toward left while its left endpoint stays pinned. Preserve canvas and left-edge material scale. Fully opaque paper, transparent removed region; no black fill, checkerboard, text, guide lines, labels, border, new objects. One full frame, never contact sheet, never merely crop/slide input.",
+      "generationId": "exec-52f78727-3b52-4ebb-98bc-cefe3b8d8284.png",
+      "references": [
+        "assets/wrapper-tear-frames-v2/step-08.png",
+        "user annotated blue-to-green geometry guide"
+      ],
+      "sha256": "45ec95459f3f7bafc41330fa48317b93a8ed54aa401676ee269e1542cd96871f",
+      "transparentFraction": 0.6828493595980175,
+      "width": 1783,
+      "height": 882,
+      "leftGapRows": [
+        413,
+        433
+      ]
+    },
+    {
+      "step": 14,
+      "path": "assets/wrapper-tear-frames-v3/step-14.png",
+      "prompt": "Precise object edit, one complete transparent animation frame 14/15. INPUT 1 is edit target, the yellow torn wrapper at frame 8. INPUT 2 is ONLY a geometry instruction diagram: blue to green describes changing silhouette, red circle marks LEFT GAP TO KEEP FIXED. Do not reproduce screenshot, typography, UI, colored marks. Output only two golden paper flaps on transparent canvas same wide 2064:1020 registration as input1. CRITICAL: preserve upper-left corner at (0,0), lower-left corner at (0,100%), upper torn left endpoint at (0,47%), lower torn left endpoint at (0,50%). Keep this narrow left gap and left anchors EXACTLY fixed. No whole-object left/right/up/down translation. Change the SHAPE of the flaps instead: upper sheet is now a triangular tapered piece bounded by top border from x0 to x24%, left border y0 to47%, and a natural ragged diagonal tear from (0,47%) to (24%,0). Lower sheet mirrors it bounded by left border y50% to100%, bottom border x0 to24%, and ragged diagonal from (0,50%) to (24%,100%). All area to right of these diagonals is genuinely alpha transparent. This frame has border extent 24% of canvas width, distinct from neighboring frames. Maintain source paper's photorealistic yellow creases, black ink fragments at left, warm lighting, rough cream-white fibrous torn edges. Newly render realistic folds as the diagonal tear edge bends back toward left while its left endpoint stays pinned. Preserve canvas and left-edge material scale. Fully opaque paper, transparent removed region; no black fill, checkerboard, text, guide lines, labels, border, new objects. One full frame, never contact sheet, never merely crop/slide input.",
+      "generationId": "exec-e597d79f-d88c-4089-8a35-546d85a9c5c0.png",
+      "references": [
+        "assets/wrapper-tear-frames-v2/step-08.png",
+        "user annotated blue-to-green geometry guide"
+      ],
+      "sha256": "a85fa7032d585df4cdb2b0d8682decadce8618dc39d0e1faa793a5ba8bdfb7f9",
+      "transparentFraction": 0.729776561961483,
+      "width": 1783,
+      "height": 882,
+      "leftGapRows": [
+        415,
+        441
+      ]
+    },
+    {
+      "step": 15,
+      "path": "assets/wrapper-tear-frames-v3/step-15.png",
+      "prompt": "Precise object edit, one complete transparent animation frame 15/15. INPUT 1 is edit target, the yellow torn wrapper at frame 8. INPUT 2 is ONLY a geometry instruction diagram: blue to green describes changing silhouette, red circle marks LEFT GAP TO KEEP FIXED. Do not reproduce screenshot, typography, UI, colored marks. Output only two golden paper flaps on transparent canvas same wide 2064:1020 registration as input1. CRITICAL: preserve upper-left corner at (0,0), lower-left corner at (0,100%), upper torn left endpoint at (0,47%), lower torn left endpoint at (0,50%). Keep this narrow left gap and left anchors EXACTLY fixed. No whole-object left/right/up/down translation. Change the SHAPE of the flaps instead: upper sheet is now a triangular tapered piece bounded by top border from x0 to x10%, left border y0 to47%, and a natural ragged diagonal tear from (0,47%) to (10%,0). Lower sheet mirrors it bounded by left border y50% to100%, bottom border x0 to10%, and ragged diagonal from (0,50%) to (10%,100%). All area to right of these diagonals is genuinely alpha transparent. This frame has border extent 10% of canvas width, distinct from neighboring frames. Maintain source paper's photorealistic yellow creases, black ink fragments at left, warm lighting, rough cream-white fibrous torn edges. Newly render realistic folds as the diagonal tear edge bends back toward left while its left endpoint stays pinned. Preserve canvas and left-edge material scale. Fully opaque paper, transparent removed region; no black fill, checkerboard, text, guide lines, labels, border, new objects. One full frame, never contact sheet, never merely crop/slide input.",
+      "generationId": "exec-8eaa025d-8da6-4061-beca-38cf7fd6c22a.png",
+      "references": [
+        "assets/wrapper-tear-frames-v2/step-08.png",
+        "user annotated blue-to-green geometry guide"
+      ],
+      "sha256": "0e113a55acd41e381ce2ce1751e5e0e7b92eac0e7a4f9476193ef6bba0a65535",
+      "transparentFraction": 0.8193107491641263,
+      "width": 1783,
+      "height": 882,
+      "leftGapRows": [
+        419,
+        440
+      ]
+    },
+    {
+      "step": 16,
+      "path": "assets/wrapper-tear-frames-v4/step-16.png",
+      "prompt": "Precise object edit. Create ONE newly rendered transparent animation frame 16 continuing input frame15 of yellow torn paper. Same wide 2064:1020 canvas, golden creases, black printed fragments and white fibrous edges. Only paper, no text, UI, props. Previously left gap was pinned at y47%-50%; NOW release those anchors: upper left torn endpoint rises to 38% height, lower left endpoint drops to 60%. Gap at left opens progressively while remaining triangular flaps curl and peel diagonally out toward the LEFT beyond canvas. Upper flap rightmost extent at top border is 27% canvas width; lower flap rightmost extent at bottom border likewise. Upper flap retreats toward upper-left; lower toward lower-left, with natural newly rendered folds and torn fibers. Frame 16 should show two smaller left corner triangles with visibly widening central gap. This is not a whole-image horizontal slide or crop; reconstruct physical curling/folding silhouette and release left tear ends. Preserve same camera and paper scale, no opacity fading. Genuine alpha transparency everywhere paper removed, opaque paper where present. No black background, checkerboard, contact sheet or labels.",
+      "generationId": "exec-5c01d3ad-a665-4995-a0aa-82b69df1df12.png",
+      "references": [
+        "assets/wrapper-tear-frames-v3/step-15.png"
+      ],
+      "sha256": "584c023dd34b3b2b169b090eafbd46c5b8e1a0c4cc27df421734ae9a7bdfcce9",
+      "width": 1783,
+      "height": 882,
+      "transparentFraction": 0.8648237384316224
+    },
+    {
+      "step": 17,
+      "path": "assets/wrapper-tear-frames-v4/step-17.png",
+      "prompt": "Precise object edit. Create ONE newly rendered transparent animation frame 17 continuing input frame15 of yellow torn paper. Same wide 2064:1020 canvas, golden creases, black printed fragments and white fibrous edges. Only paper, no text, UI, props. Previously left gap was pinned at y47%-50%; NOW release those anchors: upper left torn endpoint rises to 28% height, lower left endpoint drops to 72%. Gap at left opens progressively while remaining triangular flaps curl and peel diagonally out toward the LEFT beyond canvas. Upper flap rightmost extent at top border is 20% canvas width; lower flap rightmost extent at bottom border likewise. Upper flap retreats toward upper-left; lower toward lower-left, with natural newly rendered folds and torn fibers. Frame 17 should show small corner flaps with wide left gap. This is not a whole-image horizontal slide or crop; reconstruct physical curling/folding silhouette and release left tear ends. Preserve same camera and paper scale, no opacity fading. Genuine alpha transparency everywhere paper removed, opaque paper where present. No black background, checkerboard, contact sheet or labels.",
+      "generationId": "exec-a18384fc-379f-43c4-b753-b88d908dcd1a.png",
+      "references": [
+        "assets/wrapper-tear-frames-v3/step-15.png"
+      ],
+      "sha256": "eedb8209fe9f7315fbc26315186d1a1e70eb5905e8b0f1d427398315b5ed8c8f",
+      "width": 1782,
+      "height": 883,
+      "transparentFraction": 0.8877500308228885
+    },
+    {
+      "step": 18,
+      "path": "assets/wrapper-tear-frames-v4/step-18.png",
+      "prompt": "Precise object edit. Create ONE newly rendered transparent animation frame 19 continuing input frame15 of yellow torn paper. Same wide 2064:1020 canvas, golden creases, black printed fragments and white fibrous edges. Only paper, no text, UI, props. Previously left gap was pinned at y47%-50%; NOW release those anchors: upper left torn endpoint rises to 5% height, lower left endpoint drops to 95%. Gap at left opens progressively while remaining triangular flaps curl and peel diagonally out toward the LEFT beyond canvas. Upper flap rightmost extent at top border is 6% canvas width; lower flap rightmost extent at bottom border likewise. Upper flap retreats toward upper-left; lower toward lower-left, with natural newly rendered folds and torn fibers. Frame 19 should show very small corner tips almost outside. This is not a whole-image horizontal slide or crop; reconstruct physical curling/folding silhouette and release left tear ends. Preserve same camera and paper scale, no opacity fading. Genuine alpha transparency everywhere paper removed, opaque paper where present. No black background, checkerboard, contact sheet or labels.",
+      "generationId": "exec-e4beecff-52ae-46f1-a747-b0a0a3a79c19.png",
+      "references": [
+        "assets/wrapper-tear-frames-v3/step-15.png"
+      ],
+      "sha256": "f56b7f47cd2e5720b56d78efc256ff817d128aa7c1be22a0d73bf7f4d277af15",
+      "width": 1780,
+      "height": 883,
+      "transparentFraction": 0.9011878554977286
+    },
+    {
+      "step": 19,
+      "path": "assets/wrapper-tear-frames-v4/step-19.png",
+      "prompt": "Precise object edit. Create ONE newly rendered transparent animation frame 18 continuing input frame15 of yellow torn paper. Same wide 2064:1020 canvas, golden creases, black printed fragments and white fibrous edges. Only paper, no text, UI, props. Previously left gap was pinned at y47%-50%; NOW release those anchors: upper left torn endpoint rises to 16% height, lower left endpoint drops to 84%. Gap at left opens progressively while remaining triangular flaps curl and peel diagonally out toward the LEFT beyond canvas. Upper flap rightmost extent at top border is 13% canvas width; lower flap rightmost extent at bottom border likewise. Upper flap retreats toward upper-left; lower toward lower-left, with natural newly rendered folds and torn fibers. Frame 18 should show tiny curled corner remnants. This is not a whole-image horizontal slide or crop; reconstruct physical curling/folding silhouette and release left tear ends. Preserve same camera and paper scale, no opacity fading. Genuine alpha transparency everywhere paper removed, opaque paper where present. No black background, checkerboard, contact sheet or labels.",
+      "generationId": "exec-cf77b243-2755-4081-87b7-cc295f54cc53.png",
+      "references": [
+        "assets/wrapper-tear-frames-v3/step-15.png"
+      ],
+      "sha256": "a10c7665a4a8780a662e3fe76bfa93b0e6e750d86700bb2ab0f6d5897263effe",
+      "width": 1782,
+      "height": 883,
+      "transparentFraction": 0.929294200339878
+    },
+    {
+      "step": 20,
+      "path": "assets/wrapper-tear-frames-v4/step-20.png",
+      "prompt": "Precise object edit. Create ONE newly rendered transparent animation frame 20 continuing input frame15 of yellow torn paper. Same wide 2064:1020 canvas, golden creases, black printed fragments and white fibrous edges. Only paper, no text, UI, props. Previously left gap was pinned at y47%-50%; NOW release those anchors: upper left torn endpoint rises to 0% height, lower left endpoint drops to 100%. Gap at left opens progressively while remaining triangular flaps curl and peel diagonally out toward the LEFT beyond canvas. Upper flap rightmost extent at top border is 1% canvas width; lower flap rightmost extent at bottom border likewise. Upper flap retreats toward upper-left; lower toward lower-left, with natural newly rendered folds and torn fibers. Frame 20 should show only a minute last golden fiber at extreme upper-left and lower-left corners, rest completely transparent. This is not a whole-image horizontal slide or crop; reconstruct physical curling/folding silhouette and release left tear ends. Preserve same camera and paper scale, no opacity fading. Genuine alpha transparency everywhere paper removed, opaque paper where present. No black background, checkerboard, contact sheet or labels.",
+      "generationId": "exec-bccb9f26-9ece-4eaf-a21d-f6c3738a2a17.png",
+      "references": [
+        "assets/wrapper-tear-frames-v3/step-15.png"
+      ],
+      "sha256": "9a5a1c8608d6a2a5512f0c2da1c402cca53a52cf536a8cb620f6b5b879dae050",
+      "width": 1781,
+      "height": 883,
+      "transparentFraction": 0.9944284167279761
+    }
+  ]
+}

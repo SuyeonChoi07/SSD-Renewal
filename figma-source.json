@@ -1226,13 +1226,25 @@
     "assets/wrapper-tear-frames-v3/step-12.png",
     "assets/wrapper-tear-frames-v3/step-13.png",
     "assets/wrapper-tear-frames-v3/step-14.png",
-    "assets/wrapper-tear-frames-v3/step-15.png"
+    "assets/wrapper-tear-frames-v3/step-15.png",
+    "assets/wrapper-tear-frames-v4/step-16.png",
+    "assets/wrapper-tear-frames-v4/step-17.png",
+    "assets/wrapper-tear-frames-v4/step-18.png",
+    "assets/wrapper-tear-frames-v4/step-19.png",
+    "assets/wrapper-tear-frames-v4/step-20.png"
   ],
-  "wrapperTearSteps": 15,
+  "wrapperTearSteps": 20,
   "wrapperTearScrollPxPerStep": 100,
   "wrapperTearOpacityChanges": false,
   "wrapperTearUsesIndividuallyGeneratedFrames": true,
   "wrapperTearUsesHalfClipping": false,
-  "wrapperTearFixedLeftGap": true,
-  "wrapperTearShapeChangeStartsAtFrame": 9
+  "wrapperTearShapeChangeStartsAtFrame": 9,
+  "wrapperTearFixedLeftGapThroughFrame": 15,
+  "wrapperTearLeftGapReleaseFrames": [
+    16,
+    17,
+    18,
+    19,
+    20
+  ]
 }

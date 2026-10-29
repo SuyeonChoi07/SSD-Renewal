@@ -1059,3 +1059,4 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .tear-frame { position: absolute; inset: 0; opacity: 1; }
 .tear-frame[hidden] { display: none; }
 .tear-frame > img { position: absolute; inset: 0; width: 2064px; height: 1020px; object-fit: cover; }
+#our-way-start .f15-layer-002 { visibility: hidden; }

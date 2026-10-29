@@ -23,7 +23,7 @@
       const hold = index === 0 || index === 6 || index === 15 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 800 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 1300 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2400 : 0;
       const segment = { start, hold, travel, motion, exitMotion, transition, length: hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -154,9 +154,12 @@
     return {x:crop.left/100*2064+1530*sx,y:crop.top/100*1020+634*sy,width:415*scale,height:167*scale/1.2134};
   }
   function wrapperTearPose(index,transition) {
-    const distance=index<14?0:index===14?700*clamp(transition):index===15?700+800*clamp(transition):1500;
-    const step=index>=16?16:distance<=0?0:Math.min(15,Math.floor((distance+1e-7)/100)+1);
-    return {step,frame:step<16?step:-1,opacities:Array.from({length:16},(_,i)=>step<16&&i===step?1:0)};
+    const distance=index<14?0:index===14?700*clamp(transition):index===15?700+1300*clamp(transition):2000;
+    const step=index>=16?21:distance<=0?0:Math.min(20,Math.floor((distance+1e-7)/100)+1);
+    return {step,frame:step<21?step:-1,opacities:Array.from({length:21},(_,i)=>step<21&&i===step?1:0)};
+  }
+  function wrapperCopyVisible(index,progress) {
+    return index>=14;
   }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
@@ -166,7 +169,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperTearPose };
+  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperTearPose, wrapperCopyVisible };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -314,11 +317,13 @@
   }
   const tearSequence=document.querySelector('.tear-sequence');
   const tearFrames=Array.from(tearSequence.querySelectorAll('.tear-frame'));
+  const wrapperCopy=document.querySelector('#our-way-start .f15-layer-002');
   function renderWrapperTear(state) {
     const pose=wrapperTearPose(state.index,state.transition);
     const visible=state.index===13?transitionWeights(13,state.transition).incoming:state.index===14||state.index===15?1:0;
     tearSequence.style.opacity=visible;
     tearSequence.style.visibility=visible>0?'visible':'hidden';
+    wrapperCopy.style.visibility=wrapperCopyVisible(state.index,state.transition)?'visible':'hidden';
     tearFrames.forEach((frame,index)=>{ frame.style.opacity=1; frame.hidden=pose.opacities[index]===0; });
   }
   const header = document.querySelector('.persistent-header');
