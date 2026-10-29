@@ -1197,5 +1197,9 @@
   "historyOutlineDelayScrollPx": 800,
   "historyOutlineDrawScrollPx": 1200,
   "historyPhotoMoveScrollPx": 1000,
-  "historyPhotoEasing": "quintic smootherstep"
+  "historyPhotoEasing": "quintic smootherstep",
+  "historyToDaejeonZoomMotionScrollPx": {
+    "bridge_scale": 1000,
+    "bridge_scale_end": 1000
+  }
 }

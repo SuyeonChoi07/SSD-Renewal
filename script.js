@@ -10,7 +10,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : 0;
+      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : 0;
       const transition = index === heights.length - 1 ? 0 : TRANSITION_SCROLL_PX;
       const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
       start += segment.length;
@@ -88,6 +88,12 @@
     const a=at(from),b=at(from+1);
     return Object.fromEntries(Object.keys(a).map(k=>[k,a[k]+(b[k]-a[k])*t]));
   }
+  function historyZoomPose(index,local,transition=0) {
+    const keys=[{x:732,y:150,width:600,height:720},{x:651,y:-10,width:784,height:1030},{x:391,y:0,width:1582,height:1020},{x:0,y:0,width:2064,height:1020}];
+    const p=index<5?0:index===5?clamp(transition):index===6?1+clamp(local/1000):index===7?2+clamp(local/1000):3;
+    const a=Math.min(2,Math.floor(p)),t=ease(p-a),from=keys[a],to=keys[a+1];
+    return {...Object.fromEntries(Object.keys(from).map(k=>[k,from[k]+(to[k]-from[k])*t])),progress:p};
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -96,7 +102,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -181,6 +187,24 @@
       photo.style.setProperty('--carousel-blur',(index===0?entrance.imageBlur:0)+'px');
     });
   }
+  const lastHistoryImage=carouselPhotos[8];
+  const historyCommon=[scenes[3].querySelector('.f04-layer-047'),scenes[3].querySelector('.f04-layer-048'),scenes[3].querySelector('.f04-layer-049')];
+  function renderHistoryZoom(state) {
+    const zoom=historyZoomPose(state.index,state.local,state.transition);
+    Object.entries(zoom).forEach(([key,value])=>stage.style.setProperty('--history-zoom-'+key,value+(key==='progress'?'':'px')));
+    const cropT=ease(clamp(zoom.progress-1)),detailT=ease(clamp(zoom.progress-2));
+    const crop=zoom.progress<=2?{width:157.47+(159.79-157.47)*cropT,height:100+106.75*cropT,left:-31.38+(-31.7+31.38)*cropT,top:.01+(-7.52-.01)*cropT}:{width:159.79+.14*detailT,height:206.75+63.25*detailT,left:-31.7+14.5*detailT,top:-7.52-6.11*detailT};
+    Object.entries(crop).forEach(([key,value])=>stage.style.setProperty('--history-crop-'+key,value+'%'));
+    if(state.index>=5) {
+      lastHistoryImage.style.setProperty('--carousel-x',zoom.x+'px');
+      lastHistoryImage.style.setProperty('--carousel-y',(zoom.y-150)+'px');
+      lastHistoryImage.style.setProperty('--carousel-width',zoom.width+'px');
+      lastHistoryImage.style.setProperty('--carousel-height',zoom.height+'px');
+      const fade=1-ease(clamp(zoom.progress));
+      carouselPhotos.slice(0,8).forEach(photo=>photo.style.setProperty('--carousel-opacity',.6*fade));
+      historyCommon.forEach(element=>element.style.setProperty('--zoom-common-opacity',fade));
+    } else historyCommon.forEach(element=>element.style.setProperty('--zoom-common-opacity',1));
+  }
   const header = document.querySelector('.persistent-header');
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
   function renderHeader(state) {
@@ -219,6 +243,7 @@
     renderIntro(state.index < 1 ? 0 : state.index === 1 ? state.offset : segments[1].travel);
     renderHistory(state);
     renderHistoryContents(state);
+    renderHistoryZoom(state);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }

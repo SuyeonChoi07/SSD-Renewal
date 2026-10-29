@@ -5,3 +5,4 @@ require('./verify-header.cjs');
 require('./verify-history.cjs');
 require('./verify-history-content.cjs');
 require('./verify-carousel.cjs');
+require('./verify-history-zoom.cjs');

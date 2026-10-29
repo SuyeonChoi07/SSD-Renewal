@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict');
+const {historyZoomPose:pose,timeline}=require('./script.js');
+const plain=p=>[p.x,p.y,p.width,p.height];
+assert.deepEqual(plain(pose(5,8200,0)),[732,150,600,720]);
+assert.deepEqual(plain(pose(5,9000,1)),plain(pose(6,0,0)));
+assert.deepEqual(plain(pose(6,1000,1)),plain(pose(7,0,0)));
+assert.deepEqual(plain(pose(7,1000,1)),plain(pose(8,0,0)));
+assert.deepEqual(plain(pose(8,0,0)),[0,0,2064,1020]);
+for(const index of [6,7])for(let d=100;d<=1000;d+=100)assert.ok(pose(index,d).width>=pose(index,d-100).width);
+assert.deepEqual(plain(pose(6,1000)),plain(pose(6,2500)),'Zoom endpoint holds without jump');
+console.log('History last photo: continuous zoom geometry through bridges to full Daejeon background: PASS');

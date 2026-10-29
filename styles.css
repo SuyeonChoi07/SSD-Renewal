@@ -991,3 +991,16 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #history-content-start .f04-layer-023, #history-content-start .f04-layer-028,
 #history-content-start .f04-layer-033, #history-content-start .f04-layer-037,
 #history-content-start .f04-layer-041, #history-content-start .f04-layer-046 { background: transparent; }
+
+/* 마지막 중앙 사진 → bridge_scale → with Daejeon 배경: 연속 확대. */
+#bridge-scale .f07-layer-005, #bridge-scale-end .f08-layer-005, #with-daejeon .f09-layer-005 {
+  left: var(--history-zoom-x, 732px); top: var(--history-zoom-y, 150px);
+  width: var(--history-zoom-width, 600px); height: var(--history-zoom-height, 720px);
+  will-change: left, top, width, height;
+}
+#history-content-start .f04-layer-047, #history-content-start .f04-layer-049 { opacity: var(--zoom-common-opacity, 1); }
+#history-content-start .f04-layer-048 { opacity: calc(var(--caption-opacity, 1) * var(--zoom-common-opacity, 1)); }
+#bridge-scale .f07-layer-007, #bridge-scale-end .f08-layer-007, #with-daejeon .f09-layer-007 {
+  width: var(--history-crop-width, 157.47%); height: var(--history-crop-height, 100%);
+  left: var(--history-crop-left, -31.38%); top: var(--history-crop-top, 0%);
+}
