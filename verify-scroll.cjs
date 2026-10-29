@@ -11,22 +11,28 @@ assert.equal(segments[1].start, 250);
 assert.ok(stateAt(1, heights).transition > 0, 'Landing transitions immediately');
 for(let i=1;i<heights.length;i++) {
   const segment=segments[i];
-  // Internal scrolling starts immediately, with no hold at the beginning.
+  // Scene 16 holds its first view before internal scrolling begins.
+  assert.equal(segment.entryHold,i===16?800:0);
+  for(const delta of [0,400,799,800])if(i===16){
+    const state=stateAt(segment.start+delta,heights);
+    assert.equal(state.index,16);assert.equal(state.offset,0);assert.equal(state.transition,0);
+  }
+  const contentStart=segment.start+segment.entryHold;
   if(segment.travel) {
-    assert.equal(stateAt(segment.start+segment.travel/2,heights).offset,segment.travel/2);
-    assert.equal(stateAt(segment.start+segment.travel,heights).offset,segment.travel);
+    assert.equal(stateAt(contentStart+segment.travel/2,heights).offset,segment.travel/2);
+    assert.equal(stateAt(contentStart+segment.travel,heights).offset,segment.travel);
   }
   // Once the end is reached, both position and opacity stay fixed for 1500px.
   for(const delta of segment.hold ? [0,1,Math.min(500,segment.hold),segment.hold-1,segment.hold] : []) {
-    const state=stateAt(segment.start+segment.travel+segment.motion+delta,heights);
+    const state=stateAt(contentStart+segment.travel+segment.motion+delta,heights);
     assert.equal(state.index,i);
     assert.equal(state.offset,segment.travel,'Keep end position: '+source.frames[i].name);
     assert.equal(state.transition,0,'No fade before 1500px hold ends: '+source.frames[i].name);
     assert.equal(transitionWeights(i,state.transition).outgoing,1);
   }
   if(segment.transition) {
-    assert.ok(stateAt(segment.start+segment.travel+segment.motion+segment.exitMotion+segment.hold+1,heights).transition>0);
-    assert.equal(stateAt(segment.start+segment.travel+segment.motion+segment.exitMotion+segment.hold+segment.transition/2,heights).transition,.5);
+    assert.ok(stateAt(contentStart+segment.travel+segment.motion+segment.exitMotion+segment.hold+1,heights).transition>0);
+    assert.equal(stateAt(contentStart+segment.travel+segment.motion+segment.exitMotion+segment.hold+segment.transition/2,heights).transition,.5);
     assert.equal(stateAt(segments[i+1].start,heights).index,i+1);
   }
 }

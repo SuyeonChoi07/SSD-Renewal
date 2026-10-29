@@ -22,10 +22,11 @@
     return heights.map((height, index) => {
       const hold = index === 0 || index === 6 || index === 15 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
+      const entryHold = index === 16 ? 800 : 0;
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2400 : 0;
-      const segment = { start, hold, travel, motion, exitMotion, transition, length: hold + travel + motion + exitMotion + transition };
+      const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
       return segment;
     });
@@ -36,8 +37,8 @@
     if (index < 0) index = segments.length - 1;
     const segment = segments[index];
     const local = clamp(scrollPx - segment.start, 0, segment.length);
-    const offset = clamp(local, 0, segment.travel);
-    const transition = segment.transition ? clamp((local - segment.hold - segment.travel - segment.motion - segment.exitMotion) / segment.transition) : 0;
+    const offset = clamp(local - segment.entryHold, 0, segment.travel);
+    const transition = segment.transition ? clamp((local - segment.entryHold - segment.hold - segment.travel - segment.motion - segment.exitMotion) / segment.transition) : 0;
     return { index, local, transition, offset };
   }
   function transitionWeights(index, progress) {
