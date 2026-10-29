@@ -12,3 +12,4 @@ require('./verify-opacity.cjs');
 require('./verify-daejeon-exit.cjs');
 require('./verify-easing.cjs');
 require('./verify-black-fade.cjs');
+require('./verify-wrapper-tear.cjs');

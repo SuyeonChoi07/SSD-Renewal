@@ -23,7 +23,7 @@
       const hold = index === 0 || index === 6 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 13 || index === 14 || index === 15 ? 1000 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2400 : 0;
       const segment = { start, hold, travel, motion, exitMotion, transition, length: hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -153,6 +153,11 @@
     const scale=2.85*sx;
     return {x:crop.left/100*2064+1530*sx,y:crop.top/100*1020+634*sy,width:415*scale,height:167*scale/1.2134};
   }
+  function wrapperTearPose(index,transition) {
+    const progress=index<14?0:index===14?2*ease(clamp(transition)):index===15?2+3*ease(clamp(transition)):5;
+    const frame=Math.min(4,Math.floor(progress)),t=ease(clamp(progress-frame));
+    return {progress,retreat:frame===4?180*t:0,opacities:Array.from({length:5},(_,i)=>i===frame?1-t:i===frame+1?t:0)};
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -161,7 +166,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect };
+  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperTearPose };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -307,6 +312,16 @@
     const rect=daejeonAlignedLogoRect(),target={x:908,y:494,width:279,height:92};
     Object.keys(rect).forEach(key=>daejeonLogo.style.setProperty('--handoff-logo-'+key,(rect[key]+(target[key]-rect[key])*next)+'px'));
   }
+  const tearSequence=document.querySelector('.tear-sequence');
+  const tearFrames=Array.from(tearSequence.querySelectorAll('.tear-frame'));
+  function renderWrapperTear(state) {
+    const pose=wrapperTearPose(state.index,state.transition);
+    const visible=state.index===13?transitionWeights(13,state.transition).incoming:state.index===14||state.index===15?1:0;
+    tearSequence.style.opacity=visible;
+    tearSequence.style.visibility=visible>0?'visible':'hidden';
+    tearSequence.style.setProperty('--tear-retreat',(reduced.matches?0:pose.retreat)+'px');
+    tearFrames.forEach((frame,index)=>frame.style.opacity=pose.opacities[index]);
+  }
   const header = document.querySelector('.persistent-header');
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
   function renderHeader(state) {
@@ -351,6 +366,7 @@
     renderHistoryZoom(state);
     renderDaejeon(state);
     renderDaejeonHandoff(state);
+    renderWrapperTear(state);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }

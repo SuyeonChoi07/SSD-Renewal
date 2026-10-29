@@ -1206,5 +1206,14 @@
   "defaultInteractionEasing": "ease-in-out: cubic-bezier(0.42, 0, 0.58, 1)",
   "scene9To10TransitionScrollPx": 600,
   "scene13To14TransitionScrollPx": 1000,
-  "headerVisibleDuringBlackFade": true
+  "headerVisibleDuringBlackFade": true,
+  "wrapperTearTransitionScrollPx": {
+    "scene14": 1000,
+    "scene15": 1000
+  },
+  "generatedWrapperAssets": [
+    "assets/wrapper-tear-early.png",
+    "assets/wrapper-tear-wide.png",
+    "assets/wrapper-tear-final.png"
+  ]
 }

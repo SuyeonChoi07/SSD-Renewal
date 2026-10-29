@@ -1,0 +1,30 @@
+{
+  "tool": "built-in image_gen",
+  "transparentBackground": true,
+  "assets": [
+    {
+      "path": "assets/wrapper-tear-early.png",
+      "prompt": "Use case: precise-object-edit. Edit target image 1 (closed yellow bread wrapper); image 2 is a later animation reference. Produce ONE intermediate animation keyframe halfway between these two states, landscape ratio 2064:1020. Preserve EXACT same yellow paper creases, black printed fragment positions at top left and bottom left, camera, lighting, edge-to-edge framing. Change ONLY the horizontal tear: gently pull upper half upward and lower half downward so a narrow irregular 5-12% high opening grows from the right edge toward center. Gap on left almost closed; opening at right narrow. Preserve realistic white fibrous torn edges. The opening must be genuine alpha transparency, not black, checkerboard, text, scenery or white fill. Paper extends off all four image edges. No hands, new logos, new objects or writing. This is an early tearing frame aligned with reference, not a redesigned wrapper.",
+      "references": [
+        "wrapper-start.png",
+        "wrapper-mid.png"
+      ]
+    },
+    {
+      "path": "assets/wrapper-tear-wide.png",
+      "prompt": "Use case: precise-object-edit. Edit target image 1 (partly torn yellow wrapper); image 2 preserves its initial paper identity. Generate ONE subsequent animation keyframe, landscape 2064:1020. Pull this SAME upper paper flap toward top and SAME bottom flap toward bottom, widening existing right-to-left jagged opening to roughly 55% image height on right and 25% at center, left still connected by small ragged strand. Preserve EXACT yellow tone, all folds and black printed fragments at top left/bottom left and lighting, no camera change, no scaling of whole texture. Jagged natural white cellulose fibers at torn boundaries. Central revealed opening must be real transparent alpha. Paper visible as broad upper/lower bands. No text, hands, objects, logo additions, shadow background, black or checkerboard fill.",
+      "references": [
+        "wrapper-mid.png",
+        "wrapper-start.png"
+      ]
+    },
+    {
+      "path": "assets/wrapper-tear-final.png",
+      "prompt": "Use case: precise-object-edit. Target image 1 yellow torn paper; image 2 initial matching texture. Generate ONE nearly completed tearing animation keyframe, wide landscape 2064:1020. Same yellow wrapper being pulled completely upward and downward out of frame. Leave only two thin irregular yellow paper bands close to top and bottom edges, each 8-14% image height, tapering narrower toward right; very small torn paper remnants at left upper and lower corners, preserve original folds and original black print fragment locations without inventing marks. The entire central 75-85% must be truly transparent alpha, so webpage copy shows through. Match photo texture and lighting and existing white fibrous torn edges exactly. Do not show hands, bread, text, new objects, checkerboard, black backdrop or shadows floating in gap. No borders.",
+      "references": [
+        "wrapper-mid.png",
+        "wrapper-start.png"
+      ]
+    }
+  ]
+}

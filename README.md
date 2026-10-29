@@ -81,3 +81,5 @@ with Daejeon 퇴장: 완료 화면 유지 후 마지막 문구 줄부터 위로 
 기본 상호작용 easing은 CSS ease-in-out과 동일한 cubic-bezier(0.42, 0, 0.58, 1)로 통일했습니다. 기존 사진용 별도 smootherstep과 빵의 선형 회전도 공통 easing을 사용합니다. data-scene=9 → 10의 로고 축소 구간은 250px에서 600px로 늘렸습니다.
 
 data-scene=13 → 14 검정 페이드 구간은 1,000px입니다. 검정 오버레이를 design-stage 안으로 옮겨 본문만 가리며, 공통 헤더는 더 높은 z-index에서 계속 표시됩니다.
+
+포장지 찢기: built-in image_gen으로 투명 중간 프레임 3장(early/wide/final)을 생성했습니다. 원본 2장과 5단계 시퀀스로 연결하며 14→15와 15→16은 각각 1,000px, 공통 ease-in-out을 사용합니다. 마지막 종이 조각은 위·아래로 벗겨집니다. 자산과 전체 생성 프롬프트는 assets/wrapper-generation.json에 기록했습니다. 원본 이미지는 덮어쓰지 않았습니다.
