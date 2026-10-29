@@ -10,3 +10,9 @@ const heights=require('./figma-source.json').frames.map(f=>f.height),segments=ti
 assert.equal(segments[8].exitMotion,2400);
 assert.equal(stateAt(segments[8].start+segments[8].motion+segments[8].hold+2400,heights).transition,0);
 console.log('Daejeon reverse text/panel exit, sign alignment first, then photo-to-logo dissolve: PASS');
+
+const {daejeonAlignedCrop}=require('./script.js');
+for(const p of [0,.1,.25,.5,.75,1]){const crop=daejeonAlignedCrop(p);assert.equal(crop.width,159.93,'No horizontal resizing');assert.equal(crop.height,270,'No vertical resizing');}
+const startCrop=daejeonAlignedCrop(0),endCrop=daejeonAlignedCrop(1);
+assert.ok(endCrop.left<startCrop.left,'Move background left');
+console.log('Background alignment changes position only; image dimensions and aspect ratio stay fixed: PASS');

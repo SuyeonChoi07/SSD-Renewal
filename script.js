@@ -127,6 +127,13 @@
     return {textOpacity:1-text,textY:-32*text,panelOpacity:1-panel,panelX:-702*panel,
       align:ease(clamp((elapsed-1250)/800)),fade:ease(clamp((elapsed-2050)/350))};
   }
+  function daejeonAlignedCrop(progress) {
+    const width=159.93,height=270;
+    const centerX=574+947*196.5/415,centerY=383+314*1.2134*62.5/167;
+    const left=(centerX-width/100*2064*2140/4096)/2064*100;
+    const top=(centerY-height/100*1020*847/3417)/1020*100;
+    return {width,height,left:-17.2+(left+17.2)*clamp(progress),top:-13.63+(top+13.63)*clamp(progress)};
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -135,7 +142,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose };
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -270,14 +277,8 @@
   function renderDaejeonHandoff(state) {
     const elapsed=state.index<8?0:state.index===8?Math.max(0,state.local-segments[8].motion-segments[8].hold):2400;
     const pose=daejeonExitPose(elapsed);
-    const targetWidth=(947*391/415)/(1202/4096)/2064*100;
-    const targetHeight=(314*1.2134*123/167)/(304/3417)/1020*100;
-    const centerX=574+947*196.5/415,centerY=383+314*1.2134*62.5/167;
-    const targetLeft=(centerX-targetWidth/100*2064*2140/4096)/2064*100;
-    const targetTop=(centerY-targetHeight/100*1020*847/3417)/1020*100;
     if(state.index===8){
-      const initial={width:159.93,height:270,left:-17.2,top:-13.63},target={width:targetWidth,height:targetHeight,left:targetLeft,top:targetTop};
-      Object.keys(initial).forEach(key=>stage.style.setProperty('--aligned-back-'+key,(initial[key]+(target[key]-initial[key])*pose.align)+'%'));
+      Object.entries(daejeonAlignedCrop(pose.align)).forEach(([key,value])=>stage.style.setProperty('--aligned-back-'+key,value+'%'));
     }
     daejeon.style.setProperty('--daejeon-bg-opacity',1-pose.fade);
     const next=state.index===9?ease(state.transition):0;
