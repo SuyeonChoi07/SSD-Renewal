@@ -1189,11 +1189,11 @@
   "historyMotionScrollPx": 2800,
   "historyContentMotionScrollPx": {
     "start": 900,
-    "mid": 5000,
-    "end": 9000
+    "mid": 4600,
+    "end": 8200
   },
   "historyContentSharedLayers": true,
-  "historyEachPhotoHoldScrollPx": 1000,
+  "historyEachPhotoHoldScrollPx": 800,
   "historyOutlineDelayScrollPx": 800,
   "historyOutlineDrawScrollPx": 1200,
   "historyPhotoMoveScrollPx": 1000,
