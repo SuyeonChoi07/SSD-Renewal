@@ -1017,3 +1017,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   width: var(--history-crop-width, 157.47%); height: var(--history-crop-height, 100%);
   left: var(--history-crop-left, -31.38%); top: var(--history-crop-top, 0%);
 }
+
+/* 다음 프레임의 점선이 이전 화면에서 미리 나타나지 않도록 합니다. */
+#history-content-start .f04-layer-047 { visibility: hidden; }

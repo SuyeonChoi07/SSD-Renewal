@@ -168,6 +168,7 @@
   carouselPhotos.forEach(photo=>photo.classList.add('history-carousel-photo'));
   const carouselCaption=scenes[3].querySelector('.f04-layer-048');
   function renderHistoryContents(state) {
+    scenes[3].querySelector('.f04-layer-047').style.visibility = state.index >= 3 ? 'visible' : 'hidden';
     const local=state.index<3?0:state.index===3?state.local:900;
     const transition=state.index===5?state.transition:state.index>5?1:0;
     const entrance=historyContentPose(local,transition);
