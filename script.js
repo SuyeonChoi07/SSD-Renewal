@@ -22,7 +22,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 || index === 6 || index === 15 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const entryHold = index === 16 ? 800 : 0;
+      const entryHold = 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2400 : 0;
@@ -36,9 +36,10 @@
     let index = segments.findIndex(segment => scrollPx < segment.start + segment.length);
     if (index < 0) index = segments.length - 1;
     const segment = segments[index];
-    const local = clamp(scrollPx - segment.start, 0, segment.length);
-    const offset = clamp(local - segment.entryHold, 0, segment.travel);
-    const transition = segment.transition ? clamp((local - segment.entryHold - segment.hold - segment.travel - segment.motion - segment.exitMotion) / segment.transition) : 0;
+    // 진입 고정 구간에는 내부 스크롤과 스크롤 기반 효과의 시간도 함께 멈춥니다.
+    const local = clamp(scrollPx - segment.start - segment.entryHold, 0, segment.length - segment.entryHold);
+    const offset = clamp(local, 0, segment.travel);
+    const transition = segment.transition ? clamp((local - segment.hold - segment.travel - segment.motion - segment.exitMotion) / segment.transition) : 0;
     return { index, local, transition, offset };
   }
   function transitionWeights(index, progress) {

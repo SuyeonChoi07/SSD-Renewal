@@ -12,8 +12,8 @@ console.log('History last photo: continuous zoom geometry through bridges to ful
 
 const {stateAt}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height),segments=timeline(heights);
-assert.equal(segments[6].hold,0);assert.equal(segments[6].transition,0);assert.equal(segments[6].length,1000);
-assert.equal(stateAt(segments[6].start+1000,heights).index,7,'Bridge changes immediately after zoom');
+assert.equal(segments[6].hold,0);assert.equal(segments[6].transition,0);assert.equal(segments[6].length,2000);
+assert.equal(stateAt(segments[6].start+segments[6].entryHold+1000,heights).index,7,'Bridge changes after entry hold and zoom');
 const html=require('node:fs').readFileSync(__dirname+'/index.html','utf8');
 const stack=html.slice(html.indexOf('<div class="bridge-photo-stack"'));
 assert.ok(stack.indexOf('class="f08-layer-005"')<stack.indexOf('class="f07-layer-005"'),'f08 is prepositioned behind f07');
@@ -22,7 +22,7 @@ console.log('Bridge: no hold or transition gap; next original photo prepositione
 
 const {shouldExpandHistoryPhoto,historyCarouselFocus,historyCarouselGeometry}=require('./script.js');
 for(const local of [0,1000,1800,3600,5400,7200,8200,8999]) {
- const state=stateAt(segments[5].start+local,heights);
+ const state=stateAt(segments[5].start+segments[5].entryHold+local,heights);
  assert.equal(shouldExpandHistoryPhoto(state.index,state.transition),false,'Zoom must not override ordered gallery before outgoing transition');
  const focus=historyCarouselFocus(5,local);
  if(focus<8)assert.ok(historyCarouselGeometry(focus,8).x>732,'Last photo stays to the right until its turn');

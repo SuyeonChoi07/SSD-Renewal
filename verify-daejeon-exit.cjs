@@ -8,7 +8,7 @@ assert.equal(pose(2400).fade,1);
 for(const n of [1400,1700,2000])assert.equal(pose(n).fade,0);
 const heights=require('./figma-source.json').frames.map(f=>f.height),segments=timeline(heights);
 assert.equal(segments[8].exitMotion,2400);
-assert.equal(stateAt(segments[8].start+segments[8].motion+segments[8].hold+2400,heights).transition,0);
+assert.equal(stateAt(segments[8].start+segments[8].entryHold+segments[8].motion+segments[8].hold+2400,heights).transition,0);
 console.log('Daejeon reverse text/panel exit, sign alignment first, then photo-to-logo dissolve: PASS');
 
 const {daejeonAlignedCrop}=require('./script.js');

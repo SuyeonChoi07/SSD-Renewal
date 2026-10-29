@@ -11,5 +11,5 @@ for(let i=0;i<8;i++){const done=historyContentPose(900,0,i);assert.equal(done.ph
 assert.equal(historyContentPose(900,0).captionY,0);assert.equal(historyContentPose(900,0).captionOpacity,1);
 assert.equal(historyContentPose(900,1).captionY,32);assert.equal(historyContentPose(900,1).captionOpacity,0);
 const segments=timeline(heights);
-for(const [index,motion] of [[3,900],[4,4600],[5,8200]]){assert.equal(segments[index].motion,motion);assert.equal(stateAt(segments[index].start+motion+800,heights).transition,0);}
+for(const [index,motion] of [[3,900],[4,4600],[5,8200]]){assert.equal(segments[index].motion,motion);assert.equal(stateAt(segments[index].start+segments[index].entryHold+motion+800,heights).transition,0);}
 console.log('History_content: no incoming rotation, center blur/fade, caption slide/fade, delayed side photos, 800px photo hold: PASS');

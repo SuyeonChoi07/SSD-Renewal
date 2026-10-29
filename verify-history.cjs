@@ -12,7 +12,7 @@ assert.equal(historyPose(2000).text,0,'Text waits for completed outline');
 assert.ok(historyPose(2200).text>0&&historyPose(800).text<1);
 assert.equal(historyPose(2800).text,1);
 for(const distance of [2800,3300,4299,4300]) {
- const state=stateAt(segment.start+distance,heights);
+ const state=stateAt(segment.start+segment.entryHold+distance,heights);
  assert.equal(state.index,2);
  assert.equal(state.transition,0,'Hold the completed composition for 1500px');
  assert.equal(historyPose(state.local).text,1);

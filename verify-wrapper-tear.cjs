@@ -32,7 +32,7 @@ for(const elapsed of [1300,1301,1500,1799,1800]){
  assert.equal(pose(15,progress).frame,-1,'No wrapper during the 500px clear-screen hold');
  assert.equal(headerPose(15,progress).light,0,'Header color remains fixed through tear and hold');
  assert.deepEqual(transitionWeights(15,progress),{outgoing:1,incoming:0,black:0});
- assert.equal(stateAt(segments[15].start+elapsed,heights).index,15);
+ assert.equal(stateAt(segments[15].start+segments[15].entryHold+elapsed,heights).index,15);
 }
 for(let elapsed=0;elapsed<=1300;elapsed+=50)assert.equal(headerPose(15,elapsed/2050).light,0);
 assert.deepEqual(transitionWeights(15,1925/2050),{outgoing:.5,incoming:.5,black:0});

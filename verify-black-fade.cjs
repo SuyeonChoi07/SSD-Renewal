@@ -2,7 +2,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
 const {timeline,stateAt,transitionWeights}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height),segments=timeline(heights),segment=segments[13];
 assert.equal(segment.transition,1000);
-const start=segment.start+segment.travel+segment.motion+segment.hold+segment.exitMotion;
+const start=segment.start+segment.entryHold+segment.travel+segment.motion+segment.hold+segment.exitMotion;
 assert.equal(stateAt(start+500,heights).transition,.5);
 assert.equal(transitionWeights(13,.5).black,1);
 const html=fs.readFileSync(__dirname+'/index.html','utf8'),css=fs.readFileSync(__dirname+'/styles.css','utf8');
