@@ -23,7 +23,7 @@
       const hold = index === 0 || index === 6 || index === 15 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 1300 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2400 : 0;
       const segment = { start, hold, travel, motion, exitMotion, transition, length: hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -41,6 +41,10 @@
     return { index, local, transition, offset };
   }
   function transitionWeights(index, progress) {
+    if (index === 15) {
+      const incoming=wrapperExitPose(progress).fade;
+      return {outgoing:1-incoming,incoming,black:0};
+    }
     if (index === 13) {
       // Table_tilt → 검정 → Our Way_start. 역방향 스크롤도 동일합니다.
       const outgoing = 1 - ease(clamp(progress / .45));
@@ -153,9 +157,13 @@
     const scale=2.85*sx;
     return {x:crop.left/100*2064+1530*sx,y:crop.top/100*1020+634*sy,width:415*scale,height:167*scale/1.2134};
   }
+  function wrapperExitPose(progress) {
+    const elapsed=2050*clamp(progress);
+    return {elapsed,fade:ease(clamp((elapsed-1800)/250))};
+  }
   function wrapperTearPose(index,transition) {
-    const distance=index<14?0:index===14?700*clamp(transition):index===15?700+1300*clamp(transition):2000;
-    const step=index>=16?21:distance<=0?0:Math.min(20,Math.floor((distance+1e-7)/100)+1);
+    const distance=index<14?0:index===14?700*clamp(transition):index===15?700+wrapperExitPose(transition).elapsed:2000;
+    const step=index>=16||distance>=2000?21:distance<=0?0:Math.min(20,Math.floor((distance+1e-7)/100)+1);
     return {step,frame:step<21?step:-1,opacities:Array.from({length:21},(_,i)=>step<21&&i===step?1:0)};
   }
   function wrapperCopyVisible(index,progress) {
@@ -165,7 +173,7 @@
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
     const group = i => i >= 18 ? 4 : i >= 17 ? 3 : i >= 9 ? 2 : i >= 2 ? 1 : 0;
-    const light = mix(index === 16 ? 1 : 0, index + 1 === 16 ? 1 : 0);
+    const light = index===15?wrapperExitPose(progress).fade:mix(index === 16 ? 1 : 0, index + 1 === 16 ? 1 : 0);
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
@@ -352,7 +360,7 @@
         if(index===3)opacity=state.index===5?weights.outgoing:1;
         if(index===4||index===5)opacity=0;
       }
-      if(state.index===14||state.index===15){
+      if(state.index===14){
         if(index===state.index)opacity=1;
         if(index===state.index+1)opacity=0;
       }

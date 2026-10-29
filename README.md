@@ -89,3 +89,5 @@ data-scene=13 → 14 검정 페이드 구간은 1,000px입니다. 검정 오버�
 현재 포장지 구현은 별도로 생성한 완성 이미지 15장을 직접 교체합니다. 1~8번은 wrapper-tear-frames-v2를 유지하고, 9~15번은 wrapper-tear-frames-v3에 각각 새로 생성했습니다. 전체 이미지를 왼쪽으로 이동하는 처리는 취소했습니다. 왼쪽 끝의 좁은 틈과 고정점을 유지하면서 찢어진 대각선 경계가 가팔라지고 종이의 오른쪽 범위가 줄어듭니다. 100px마다 한 장씩 표시하며 교차 페이드가 없습니다. 생성 도구는 built-in image_gen이며 프롬프트·원본 생성 식별자·SHA256·투명 영역 검수값은 assets/wrapper-generation-v3.json, 8~15번 비교 이미지는 wrapper-frames-09-15-review.jpg에 저장했습니다.
 
 16~20번은 왼쪽 끝의 고정을 풀어 틈을 벌리고, 종이가 왼쪽 위·아래 모서리 밖으로 벗겨지는 완성 이미지 5장을 추가 생성했습니다. assets/wrapper-tear-frames-v4에 저장했으며 전체 20단계는 100px씩 총 2,000px입니다(scene14 전환 700px + scene15 전환 1,300px). 생성 프롬프트와 자산 기록은 assets/wrapper-generation-v4.json, 비교 이미지는 wrapper-frames-15-20-review.jpg입니다. scene14의 글은 진입 페이드가 끝나고 opacity가 1인 scene14에 도착한 뒤에만 표시합니다. 역방향에서도 진입 구간에서는 숨깁니다.
+
+종이 찢기 2,000px 완료 후 scene15의 포장지 없는 화면을 500px 유지하고, 이어지는 250px 동안 scene15와 scene16을 ease-in-out으로 교차 페이드합니다. scene15의 전체 진행 구간은 찢기 1,300px + 유지 500px + 교차 페이드 250px입니다. 공통 로고와 내비게이션의 색상은 찢기와 유지 구간 내내 고정되며 교차 페이드가 시작된 뒤 scene16의 색상으로 변합니다.
