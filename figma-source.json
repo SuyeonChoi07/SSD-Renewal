@@ -10,22 +10,10 @@
       "height": 1020,
       "nodeIds": [
         "736:447",
-        "736:479",
-        "738:565",
-        "738:564",
-        "738:594",
-        "738:595",
-        "738:597",
-        "738:598",
-        "738:602",
-        "738:603",
-        "738:605",
-        "738:606",
         "738:608",
         "736:475",
         "736:476",
         "736:482",
-        "736:484",
         "736:491",
         "736:490",
         "736:486",
@@ -36,7 +24,6 @@
       "assetSlots": [
         "assets/landing-history.png",
         "assets/brand-seal-white.png",
-        "assets/brand-wordmark-white.png",
         "assets/intro-divider.svg"
       ]
     },
@@ -1177,5 +1164,26 @@
   "holdScrollPx": 1500,
   "transitionScrollPx": 250,
   "landingHoldScrollPx": 0,
-  "longFrameTravel": "before hold; hold final content position for 1500px before transition"
+  "longFrameTravel": "before hold; hold final content position for 1500px before transition",
+  "persistentHeader": {
+    "nodeIds": [
+      "736:484",
+      "736:479",
+      "738:565",
+      "738:564",
+      "738:594",
+      "738:595",
+      "738:597",
+      "738:598",
+      "738:602",
+      "738:603",
+      "738:605",
+      "738:606"
+    ],
+    "assetSlots": [
+      "assets/brand-wordmark-white.png",
+      "assets/brand-wordmark-black.png"
+    ],
+    "description": "Landing 원본 로고와 nav를 공통 고정 헤더로 이동. 검정 로고는 Our Way_end 원본 자산 사용."
+  }
 }

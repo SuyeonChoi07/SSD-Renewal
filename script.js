@@ -47,7 +47,15 @@
     const outgoing = exit === null ? 0 : ease(clamp((progress - exit - stagger) / .12));
     return { opacity: incoming * (1 - outgoing), y: (1 - incoming) * 40 - outgoing * 40 };
   }
-  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose };
+  function headerPose(index, progress) {
+    const t = ease(clamp(progress));
+    const mix = (a,b) => a + (b-a)*t;
+    const group = i => i >= 18 ? 4 : i >= 17 ? 3 : i >= 9 ? 2 : i >= 2 ? 1 : 0;
+    const light = mix(index === 16 ? 1 : 0, index + 1 === 16 ? 1 : 0);
+    return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
+      active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
+  }
+  if (typeof module !== 'undefined') module.exports = { HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -81,12 +89,26 @@
     introYear.style.opacity = year.opacity;
     introYear.style.setProperty('--line-y', (reduced.matches ? 0 : year.y) + 'px');
   }
+  const header = document.querySelector('.persistent-header');
+  const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
+  function renderHeader(state) {
+    const pose = headerPose(state.index, state.transition);
+    header.style.setProperty('--logo-width', pose.width + 'px');
+    header.style.setProperty('--logo-height', pose.height + 'px');
+    header.style.setProperty('--header-light', pose.light);
+    header.style.setProperty('--header-rgb', [248,240,229].map(v => v+(19-v)*pose.light).join(', '));
+    headerLinks.forEach((link,index) => {
+      link.style.setProperty('--active-weight', pose.active[index]);
+      if(pose.active[index]>=.5)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');
+    });
+  }
   let scheduled = false;
   function render() {
     scheduled = false;
     const state = stateAt(window.scrollY, heights);
     const weights = transitionWeights(state.index, state.transition);
     veil.style.opacity = weights.black;
+    renderHeader(state);
     scenes.forEach((scene, index) => {
       const opacity = index === state.index ? weights.outgoing : index === state.index + 1 ? weights.incoming : 0;
       scene.style.opacity = opacity;
