@@ -1,3 +1,4 @@
+const fs=require('node:fs');
 const assert=require('node:assert/strict');
 const {historyPose,timeline,stateAt}=require('./script.js');
 const frames=require('./figma-source.json').frames;
