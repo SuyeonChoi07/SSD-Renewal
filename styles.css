@@ -1004,3 +1004,16 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   width: var(--history-crop-width, 157.47%); height: var(--history-crop-height, 100%);
   left: var(--history-crop-left, -31.38%); top: var(--history-crop-top, 0%);
 }
+
+/* f08 원본 사진을 f07 뒤에 선배치하여 확대 도중 미리 표시합니다. */
+.bridge-photo-stack { position: absolute; inset: 0; z-index: 30; pointer-events: none; opacity: 0; visibility: hidden; }
+.bridge-photo-stack .f07-layer-005, .bridge-photo-stack .f08-layer-005 {
+  left: var(--history-zoom-x, 651px); top: var(--history-zoom-y, -10px);
+  width: var(--history-zoom-width, 784px); height: var(--history-zoom-height, 1030px);
+}
+.bridge-photo-stack .f08-layer-005 { z-index: 0; }
+.bridge-photo-stack .f07-layer-005 { z-index: 1; }
+.bridge-photo-stack .f07-layer-007, .bridge-photo-stack .f08-layer-007 {
+  width: var(--history-crop-width, 157.47%); height: var(--history-crop-height, 100%);
+  left: var(--history-crop-left, -31.38%); top: var(--history-crop-top, 0%);
+}

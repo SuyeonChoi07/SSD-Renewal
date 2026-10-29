@@ -245,7 +245,6 @@
       "nodeIds": [
         "775:559",
         "775:560",
-        "779:580",
         "775:564",
         "775:565",
         "775:566",
@@ -261,7 +260,6 @@
       ],
       "assetSlots": [
         "assets/glow-history.svg",
-        "assets/bridge-store.png",
         "assets/brand-wordmark-white.png"
       ]
     },
@@ -273,7 +271,6 @@
       "nodeIds": [
         "779:633",
         "779:634",
-        "779:635",
         "779:636",
         "779:637",
         "779:638",
@@ -289,7 +286,6 @@
       ],
       "assetSlots": [
         "assets/glow-history.svg",
-        "assets/bridge-store-detail.png",
         "assets/brand-wordmark-white.png"
       ]
     },
@@ -1201,5 +1197,8 @@
   "historyToDaejeonZoomMotionScrollPx": {
     "bridge_scale": 1000,
     "bridge_scale_end": 1000
-  }
+  },
+  "bridgePhotoStack": "Original f08-layer-005 placed behind original f07-layer-005 outside fading scenes",
+  "bridgeScaleHoldScrollPx": 0,
+  "bridgeScaleTransitionScrollPx": 0
 }

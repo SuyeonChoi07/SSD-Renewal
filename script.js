@@ -8,10 +8,10 @@
   function timeline(heights) {
     let start = 0;
     return heights.map((height, index) => {
-      const hold = index === 0 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
+      const hold = index === 0 || index === 6 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : 0;
-      const transition = index === heights.length - 1 ? 0 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : TRANSITION_SCROLL_PX;
       const segment = { start, hold, travel, motion, transition, length: hold + travel + motion + transition };
       start += segment.length;
       return segment;
@@ -187,10 +187,16 @@
       photo.style.setProperty('--carousel-blur',(index===0?entrance.imageBlur:0)+'px');
     });
   }
+  const bridgeStack=document.querySelector('.bridge-photo-stack');
+  const bridgeFront=bridgeStack.querySelector('.f07-layer-005');
   const lastHistoryImage=carouselPhotos[8];
   const historyCommon=[scenes[3].querySelector('.f04-layer-047'),scenes[3].querySelector('.f04-layer-048'),scenes[3].querySelector('.f04-layer-049')];
   function renderHistoryZoom(state) {
     const zoom=historyZoomPose(state.index,state.local,state.transition);
+    const stackOpacity=state.index===5?ease(state.transition):state.index===6?1:state.index===7?1-ease(state.transition):0;
+    bridgeStack.style.opacity=stackOpacity;
+    bridgeStack.style.visibility=stackOpacity>0?'visible':'hidden';
+    bridgeFront.style.opacity=1-ease(clamp(zoom.progress-1));
     Object.entries(zoom).forEach(([key,value])=>stage.style.setProperty('--history-zoom-'+key,value+(key==='progress'?'':'px')));
     const cropT=ease(clamp(zoom.progress-1)),detailT=ease(clamp(zoom.progress-2));
     const crop=zoom.progress<=2?{width:157.47+(159.79-157.47)*cropT,height:100+106.75*cropT,left:-31.38+(-31.7+31.38)*cropT,top:.01+(-7.52-.01)*cropT}:{width:159.79+.14*detailT,height:206.75+63.25*detailT,left:-31.7+14.5*detailT,top:-7.52-6.11*detailT};
