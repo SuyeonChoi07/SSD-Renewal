@@ -21,7 +21,7 @@ for(let i=0;i<heights.length;i++) {
   const contentStart=segment.start+segment.entryHold;
   if(segment.travel) {
     assert.equal(stateAt(contentStart+segment.travel/2,heights).offset,segment.travel/2);
-    assert.equal(stateAt(contentStart+segment.travel,heights).offset,segment.travel);
+    assert.equal(stateAt(contentStart+segment.travel+(i===17?segment.motion:0),heights).offset,segment.travel);
   }
   // Once the end is reached, both position and opacity stay fixed for 1500px.
   for(const delta of segment.hold ? [0,1,Math.min(500,segment.hold),segment.hold-1,segment.hold] : []) {

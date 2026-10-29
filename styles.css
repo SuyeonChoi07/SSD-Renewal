@@ -1063,3 +1063,13 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .tear-frame[hidden] { display: none; }
 .tear-frame > img { position: absolute; inset: 0; width: 2064px; height: 1020px; object-fit: cover; }
 #our-way-start .f15-layer-002 { visibility: hidden; }
+
+/* Brand: 중앙 빵은 원본 세로 이동을 상쇄하고, 명예의 전당은 세로 고정 중 가로 이동. */
+#brand .f18-layer-139 {
+  transform: translateY(var(--brand-bread-offset, 0px)) rotate(var(--brand-bread-rotation, 0deg));
+  transform-origin: center; will-change: transform; z-index: 0;
+}
+#brand .f18-layer-124 { transform: translateX(var(--brand-gallery-x, 0px)); will-change: transform; z-index: 2; }
+#brand .f18-layer-005, #brand .f18-layer-137 { z-index: 2; }
+/* 고정된 빵이 사진·하단 로고 위로 겹치지 않도록 원래의 Brand 배경을 받칩니다. */
+#brand > .frame-art::after { content: ""; position: absolute; left: 0; right: 0; top: 5248px; bottom: 0; background: #131313; z-index: 1; pointer-events: none; }

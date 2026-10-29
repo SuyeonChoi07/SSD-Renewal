@@ -3,6 +3,9 @@
   'use strict';
   const TRANSITION_SCROLL_PX = 250;
   const HOLD_SCROLL_PX = 1500;
+  // Brand: 제목 5248px → 화면 180px. 사진 3635px 중 보이는 폭 1806px를 제외한 거리.
+  const BRAND_HALL_PIN = 5248 - 180;
+  const BRAND_HALL_SCROLL = 3635 - 1806;
   const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
   // CSS ease-in-out와 동일한 cubic-bezier(.42, 0, .58, 1).
   const ease = value => {
@@ -23,7 +26,7 @@
       const hold = index === 0 || index === 6 || index === 15 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
       const entryHold = 1000;
-      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : 0;
+      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2750 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
@@ -38,7 +41,7 @@
     const segment = segments[index];
     // 진입 고정 구간에는 내부 스크롤과 스크롤 기반 효과의 시간도 함께 멈춥니다.
     const local = clamp(scrollPx - segment.start - segment.entryHold, 0, segment.length - segment.entryHold);
-    const offset = clamp(local, 0, segment.travel);
+    const offset = index===17?brandPose(local,segment.travel).offset:clamp(local, 0, segment.travel);
     const transition = segment.transition ? clamp((local - segment.hold - segment.travel - segment.motion - segment.exitMotion) / segment.transition) : 0;
     return { index, local, transition, offset };
   }
@@ -61,6 +64,13 @@
     const progress = clamp(travel ? offset / travel : 0);
     const settle = ease(clamp((progress - .76) / .24));
     return { progress, breadX: 1035, breadY: 326 + 24 * settle, breadRotation: 360 * ease(progress) };
+  }
+  function brandPose(local,travel=6129) {
+    const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
+    const horizontal=clamp((progress-BRAND_HALL_PIN)/BRAND_HALL_SCROLL);
+    const offset=progress<=BRAND_HALL_PIN?progress:progress<=BRAND_HALL_PIN+BRAND_HALL_SCROLL?BRAND_HALL_PIN:progress-BRAND_HALL_SCROLL;
+    return {offset:Math.min(travel,offset),galleryX:horizontal===0?0:-BRAND_HALL_SCROLL*ease(horizontal),
+      breadRotation:360*ease(progress/(travel+BRAND_HALL_SCROLL))};
   }
   function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
     const stagger = line * .025;
@@ -179,7 +189,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperTearPose, wrapperCopyVisible };
+  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperTearPose, wrapperCopyVisible, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -337,6 +347,14 @@
     tearFrames.forEach((frame,index)=>{ frame.style.opacity=1; frame.hidden=pose.opacities[index]===0; });
   }
   const header = document.querySelector('.persistent-header');
+  const brand=scenes[17];
+  function renderBrand(state) {
+    const local=state.index<17?0:state.index===17?state.local:segments[17].travel+BRAND_HALL_SCROLL;
+    const pose=brandPose(local,segments[17].travel);
+    brand.style.setProperty('--brand-bread-offset',pose.offset+'px');
+    brand.style.setProperty('--brand-bread-rotation',(reduced.matches?0:pose.breadRotation)+'deg');
+    brand.style.setProperty('--brand-gallery-x',pose.galleryX+'px');
+  }
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
   function renderHeader(state) {
     const pose = headerPose(state.index, state.transition);
@@ -385,6 +403,7 @@
     renderDaejeon(state);
     renderDaejeonHandoff(state);
     renderWrapperTear(state);
+    renderBrand(state);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }
