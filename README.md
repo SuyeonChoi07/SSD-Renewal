@@ -18,7 +18,7 @@ Landing → Intro → History → History_content_start → History_content_mid 
 
 ## 스크롤
 
-Landing은 고정 유지 구간 없이 Intro로 전환합니다. Intro부터 각 화면으로의 전환이 완료되면 1,000px 스크롤 동안 화면의 위치와 투명도를 유지합니다. 긴 프레임의 내부 스크롤은 이 유지 구간 이후에 시작하며, 내부 스크롤이 끝나면 별도의 250px 구간에서 다음 화면으로 전환합니다.
+각 화면의 내부 스크롤을 먼저 진행합니다. 화면 끝에 도착하면 마지막 위치와 투명도를 1,500px 스크롤 동안 그대로 유지하고, 그 이후 별도의 250px 구간에서 다음 화면으로 전환합니다. Landing → Intro는 유지 구간을 적용하지 않습니다.
 
 Table_tilt → Our Way_start에서는 이전 화면이 검정으로 페이드 아웃되고 검정 화면을 거쳐 다음 화면이 페이드 인됩니다. 역방향도 동일합니다.
 
@@ -27,7 +27,7 @@ Table_tilt → Our Way_start에서는 이전 화면이 검정으로 페이드 �
 ## 검사
 
 - `node verify.cjs`: 19개 순서, 원본 레이어 493개 순서, 이미지 슬롯 103개, 로컬 원본 자산 47개, HTML 중첩, 앵커, JavaScript 문법 확인.
-- `node verify-motion.cjs`: Landing 유지 구간 제외, 나머지 18개 화면의 전환 후 1,000px 고정, 긴 프레임 이동 범위, 검정 페이드와 역방향 전환 확인.
+- `node verify-motion.cjs`: Landing 유지 구간 제외, 나머지 18개 화면의 내부 스크롤 완료 후 1,500px 고정, 긴 프레임 이동 범위, 검정 페이드와 역방향 전환 확인.
 - 실제 브라우저 시각 검수는 Computer Use가 현재 URL을 확인할 수 없어 중단되었습니다. 위 검사는 픽셀 단위 렌더링 일치를 증명하지 않습니다. Figma의 GLASS 효과는 CSS backdrop blur로 대응합니다.
 
 원본: https://www.figma.com/design/Km3CRMhMnwBl9hw0xiU5Sf/?node-id=705-142

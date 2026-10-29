@@ -1,8 +1,8 @@
-/* 전환 완료 후 1,000px 고정. Landing은 유지 구간 없이 Intro로 전환합니다. */
+/* 내부 스크롤 완료 → 마지막 화면 1,500px 고정 → 다음 화면 전환. Landing은 고정 제외. */
 (() => {
   'use strict';
   const TRANSITION_SCROLL_PX = 250;
-  const HOLD_SCROLL_PX = 1000;
+  const HOLD_SCROLL_PX = 1500;
   const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
   const ease = value => value * value * (3 - 2 * value);
   function timeline(heights) {
@@ -22,7 +22,7 @@
     if (index < 0) index = segments.length - 1;
     const segment = segments[index];
     const local = clamp(scrollPx - segment.start, 0, segment.length);
-    const offset = clamp(local - segment.hold, 0, segment.travel);
+    const offset = clamp(local, 0, segment.travel);
     const transition = segment.transition ? clamp((local - segment.hold - segment.travel) / segment.transition) : 0;
     return { index, local, transition, offset };
   }
