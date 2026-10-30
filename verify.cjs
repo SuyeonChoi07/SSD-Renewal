@@ -16,7 +16,8 @@ assert.ok(!html.includes('intro-copy-track'),'Removed wrapper must stay removed'
 assert.ok(!html.includes('https://www.figma.com/api/mcp/asset/'));
 assert.ok(!html.includes('className=')&&!html.includes('src={'),'Plain HTML');
 assert.ok(!html.includes('style="'),'Design belongs in CSS');
-for(const m of html.matchAll(/class="([^"]+)"/g))for(const c of m[1].split(/\s+/))assert.ok(css.includes('.'+c),c);
+const linkedCss=css+fs.readFileSync(path.join(root,'particle-flow.css'),'utf8');
+for(const m of html.matchAll(/class="([^"]+)"/g))for(const c of m[1].split(/\s+/))assert.ok(linkedCss.includes('.'+c),c);
 const voids=new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);const stack=[];
 for(const m of html.replace(/<!--[\s\S]*?-->/g,'').matchAll(/<(\/?)([a-z][a-z0-9-]*)\b[^>]*>/gi)){const tag=m[2].toLowerCase();if(voids.has(tag))continue;if(m[1])assert.equal(stack.pop(),tag,'HTML nesting');else stack.push(tag);}assert.equal(stack.length,0);
 console.log(JSON.stringify({status:'PASS',frames:19,originalLayers:layerCount,originalAssetSlots:slotCount,localAssets:provenance.assets.length,noMobileClones:true,frameOrder:'PASS',htmlNesting:'PASS',scriptSyntax:'PASS'},null,2));
