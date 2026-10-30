@@ -1,12 +1,15 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {timeline,stateAt,transitionWeights}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height),segments=timeline(heights),segment=segments[13];
-assert.equal(segment.transition,1000);
+assert.equal(segment.transition,1050);
 const start=segment.start+segment.entryHold+segment.travel+segment.motion+segment.hold+segment.exitMotion;
-assert.equal(stateAt(start+500,heights).transition,.5);
+assert.equal(stateAt(start+525,heights).transition,.5);
+for(const elapsed of [450,500,550,599,600])assert.deepEqual(transitionWeights(13,elapsed/1050),{outgoing:0,incoming:0,black:1},'Full black holds for 150px instead of 100px');
+assert.equal(transitionWeights(13,225/1050).outgoing,.5,'Fade-out still lasts 450px');
+assert.equal(transitionWeights(13,825/1050).incoming,.5,'Fade-in still lasts 450px');
 assert.equal(transitionWeights(13,.5).black,1);
 const html=fs.readFileSync(__dirname+'/index.html','utf8'),css=fs.readFileSync(__dirname+'/styles.css','utf8');
 assert.match(html,/<div class="transition-blackout" aria-hidden="true"><\/div>\s*<\/div><\/main>/);
 assert.match(css,/\.persistent-header \{ z-index: 200; \}/);
 assert.match(css,/\.design-stage > \.transition-blackout \{ position: absolute; inset: 0; z-index: 100; \}/);
-console.log('Scene 13→14: 1000px black fade, header rendered above blackout: PASS');
+console.log('Scene 13→14: 450px fade out + 150px black hold + 450px fade in, header above blackout: PASS');
