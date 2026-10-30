@@ -28,7 +28,7 @@
       const entryHold = index === 11 ? 0 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1400 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
-      const exitMotion = index === 8 ? 2750 : 0;
+      const exitMotion = index === 8 ? 3450 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
       return segment;
@@ -174,7 +174,7 @@
     const text=ease(clamp((elapsed-(count-1-line)*60)/250));
     const panel=ease(clamp((elapsed-750)/500));
     return {textOpacity:1-text,textY:-32*text,panelOpacity:1-panel,panelX:-702*panel,
-      align:ease(clamp((elapsed-1250)/800)),fade:ease(clamp((elapsed-2050)/700))};
+      align:ease(clamp((elapsed-1250)/800)),fade:ease(clamp((elapsed-2050)/1400))};
   }
   function daejeonAlignedCrop(progress) {
     const width=159.93,height=270;

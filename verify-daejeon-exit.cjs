@@ -4,12 +4,12 @@ assert.ok(pose(150,8).textOpacity<pose(150,0).textOpacity,'Last line exits first
 assert.equal(pose(750).textOpacity,0);assert.equal(pose(750).panelOpacity,1);
 assert.equal(pose(1250).panelOpacity,0);assert.equal(pose(1250).align,0);
 assert.equal(pose(2050).align,1);assert.equal(pose(2050).fade,0,'Align before dissolve');
-assert.equal(pose(2400).fade,.5,'Dissolve is halfway at the former endpoint');
-assert.equal(pose(2750).fade,1);
+assert.equal(pose(2750).fade,.5,'Double scroll length puts midpoint 700px after alignment');
+assert.equal(pose(3450).fade,1);
 for(const n of [1400,1700,2000])assert.equal(pose(n).fade,0);
 const heights=require('./figma-source.json').frames.map(f=>f.height),segments=timeline(heights);
-assert.equal(segments[8].exitMotion,2750);
-assert.equal(stateAt(segments[8].start+segments[8].entryHold+segments[8].motion+segments[8].hold+2750,heights).transition,0);
+assert.equal(segments[8].exitMotion,3450);
+assert.equal(stateAt(segments[8].start+segments[8].entryHold+segments[8].motion+segments[8].hold+3450,heights).transition,0);
 console.log('Daejeon reverse text/panel exit, sign alignment first, then photo-to-logo dissolve: PASS');
 
 const {daejeonAlignedCrop}=require('./script.js');
