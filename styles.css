@@ -901,6 +901,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 /* Intro: 원본 요소를 복제하지 않고 뷰포트에 고정합니다. */
 #intro .f02-layer-002 { left: 1340px; top: 488px; }
 #intro .f02-layer-008, #intro .f02-layer-015 { left: 1340px; top: 488px; }
+#intro .f02-layer-008 > p, #intro .f02-layer-015 > p { line-height: 40px; }
 #intro .f02-layer-002, #intro .f02-layer-008, #intro .f02-layer-015 {
   transform: translateY(var(--intro-offset, 0px)); z-index: 15;
 }
