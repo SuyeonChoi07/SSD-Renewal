@@ -1126,6 +1126,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #brand .f18-layer-006 > .f18-layer-008, #brand .f18-layer-006 > .f18-layer-010 { margin-top: 24px; }
 #brand .f18-layer-009 { display: none; }
 .brand-copy-character { opacity: 0; }
+#history-content-start .f04-layer-049 { font-size: calc(var(--history-exit-titleSize, 36px) * .7); }
 .light-korean-number { font-weight: 200; font-synthesis-weight: none; }
 .persistent-header [data-name="nav"] { --page-font: 'Pretendard Navigation', sans-serif; }
 .persistent-header [data-name="nav"] a { --page-font: 'Pretendard Navigation', sans-serif; font-family: var(--page-font); }
