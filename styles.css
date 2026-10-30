@@ -832,10 +832,10 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f19-layer-008 { position: absolute; display: flex; height: 523px; align-items: center; justify-content: center; left: 0; top: 701px; width: 2064px; }
 .f19-layer-009 { flex: none; rotate: 180deg; }
 .f19-layer-010 { background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 35.946%; height: 523px; position: relative; --gradient-to: rgba(19,19,19,0); width: 2064px; --gradient-from: #131313 35.946%; }
-.f19-layer-011 { translate: -100% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1974px; font-style: normal; color: #f8f0e5; font-size: 54px; text-align: right; top: 146px; letter-spacing: -1.62px; white-space: nowrap; }
+.f19-layer-011 { translate: -100% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1974px; font-style: normal; color: #f8f0e5; font-size: 54px; text-align: right; top: 246px; letter-spacing: -1.62px; white-space: nowrap; }
 .f19-layer-012 { line-height: 1; margin-bottom: 0; }
 .f19-layer-013 { line-height: 1; }
-.f19-layer-014 { position: absolute; background-color: #f48621; align-content: stretch; display: flex; align-items: center; justify-content: center; left: 1758px; padding-left: 66px; padding-right: 60px; padding-block: 23px; border-radius: 47px; top: 309px; }
+.f19-layer-014 { position: absolute; background-color: #f48621; align-content: stretch; display: flex; align-items: center; justify-content: center; left: 1758px; padding-left: 66px; padding-right: 60px; padding-block: 23px; border-radius: 47px; top: 409px; }
 .f19-layer-015 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 700; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 16px; text-align: center; letter-spacing: -0.48px; white-space: nowrap; }
 .f19-layer-016 { position: absolute; display: contents; left: 81px; top: 789px; }
 .f19-layer-017 { position: absolute; display: contents; left: 81px; top: 789px; }
