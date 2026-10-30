@@ -1073,8 +1073,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #brand .f18-layer-124 { transform: translateX(var(--brand-gallery-x, 0px)); will-change: transform; z-index: 2; }
 #brand .f18-layer-005, #brand .f18-layer-137 { z-index: 2; }
 #brand .f18-layer-013 > [data-name="cell"] { opacity: var(--brand-cell-opacity, .5); }
-/* 고정된 빵이 사진·하단 로고 위로 겹치지 않도록 원래의 Brand 배경을 받칩니다. */
-#brand > .frame-art::after { content: ""; position: absolute; left: 0; right: 0; top: 5248px; bottom: 0; background: #131313; z-index: 1; pointer-events: none; }
 
 /* Contact의 원본 상단 그라데이션은 본문 스크롤과 독립된 고정 레이어. */
 .design-stage > .f19-layer-003, .design-stage > .f19-layer-004 { top: 0; z-index: 80; visibility: hidden; pointer-events: none; }
