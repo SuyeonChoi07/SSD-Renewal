@@ -1111,6 +1111,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #brand .f18-layer-006 > .f18-layer-008, #brand .f18-layer-006 > .f18-layer-010 { margin-top: 24px; }
 #brand .f18-layer-009 { display: none; }
 .brand-copy-character { opacity: 0; }
+.light-korean-number { font-weight: 200; font-synthesis-weight: none; }
 .f02-layer-005 { font-family: ChosunCentennial, Pretendard, sans-serif; }
 .f15-layer-002, .f16-layer-002, .f17-layer-002 {
   font-size: 80px; line-height: normal;

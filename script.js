@@ -489,6 +489,24 @@
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', resize);
   window.addEventListener('popstate', () => navigate(location.hash || '#landing', false));
+  // 영문 굵기는 유지하고, 한글·숫자 구간만 200으로 지정합니다.
+  const lightCharacters=/([0-9\u1100-\u11ff\u3130-\u318f\ua960-\ua97f\uac00-\ud7ff\uff10-\uff19]+)/;
+  const textWalker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+  const lightTextNodes=[];
+  while(textWalker.nextNode()){
+    const node=textWalker.currentNode;
+    if(!node.parentElement.closest('script, style, noscript')&&lightCharacters.test(node.textContent))lightTextNodes.push(node);
+  }
+  lightTextNodes.forEach(node=>{
+    const fragment=document.createDocumentFragment();
+    node.textContent.split(lightCharacters).forEach(part=>{
+      if(!part)return;
+      if(lightCharacters.test(part)){
+        const span=document.createElement('span');span.className='light-korean-number';span.textContent=part;fragment.append(span);
+      }else fragment.append(document.createTextNode(part));
+    });
+    node.replaceWith(fragment);
+  });
   resize();
   if (location.hash) navigate(location.hash, false);
 })();
