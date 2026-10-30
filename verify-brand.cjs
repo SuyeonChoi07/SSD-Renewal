@@ -61,8 +61,8 @@ console.log('Brand cells: 50% outside 30–70vh; eased ramps at 30–40/60–70v
 
 const {brandGalleryReveal:reveal}=require('./script.js');
 for(const top of [2,1,.85])assert.equal(reveal(top),0);
-for(const top of [.55,.5,0,-1])assert.equal(reveal(top),1);
-assert.ok(Math.abs(reveal(.7)-.5)<1e-6);
-for(let i=1;i<=30;i++)assert.ok(reveal(.85-i*.01)>reveal(.85-(i-1)*.01));
+for(const top of [.45,.4,0,-1])assert.equal(reveal(top),1);
+assert.ok(Math.abs(reveal(.65)-.5)<1e-6);
+for(let i=1;i<=40;i++)assert.ok(reveal(.85-i*.01)>reveal(.85-(i-1)*.01));
 assert.ok(css.includes('overflow: hidden;')&&css.includes('--brand-gallery-reveal-x'));
-console.log('Brand gallery images: scroll-controlled left reveal from 85vh to 55vh; clipped to original photo parents: PASS');
+console.log('Brand gallery images: scroll-controlled left reveal from 85vh to 45vh; clipped to original photo parents: PASS');

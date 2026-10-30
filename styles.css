@@ -1,6 +1,7 @@
 /* Figma 원본 레이어별 CSS. f01=Landing, f02=Intro ... f19=Contact.
    요소·문구는 index.html, 스크롤 거리는 script.js의 SCENE_SCROLL_PX에서 수정합니다. */
 @font-face { font-family: Pretendard; src: url('assets/PretendardVariable.woff2') format('woff2'); font-weight: 100 900; font-display: swap; size-adjust: 70%; }
+@font-face { font-family: 'Pretendard Navigation'; src: url('assets/PretendardVariable.woff2') format('woff2'); font-style: normal; font-weight: 100 900; font-display: swap; }
 @font-face { font-family: ChosunCentennial; src: url('assets/ChosunCentennial.ttf') format('truetype'); font-style: normal; font-weight: 400; font-display: swap; size-adjust: 70%; }
 /* 한글·숫자·영문을 모두 원래 글리프 크기의 70%로 표시합니다. */
 @font-face {
@@ -1126,6 +1127,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #brand .f18-layer-009 { display: none; }
 .brand-copy-character { opacity: 0; }
 .light-korean-number { font-weight: 200; font-synthesis-weight: none; }
+.persistent-header [data-name="nav"] { --page-font: 'Pretendard Navigation', sans-serif; }
+.persistent-header [data-name="nav"] a { --page-font: 'Pretendard Navigation', sans-serif; font-family: var(--page-font); }
 .light-korean-number.korean-glyph { font-weight: var(--korean-weight, 200); }
 .f02-layer-005 { font-family: ChosunCentennial, Pretendard, sans-serif; }
 .f15-layer-002, .f16-layer-002, .f17-layer-002 {

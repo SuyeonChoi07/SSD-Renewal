@@ -95,8 +95,8 @@
   }
   function brandGalleryReveal(topVh) {
     if(topVh>=.85)return 0;
-    if(topVh<=.55)return 1;
-    return ease((.85-topVh)/.3);
+    if(topVh<=.45)return 1;
+    return ease((.85-topVh)/.4);
   }
   function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
     const stagger = line * .025;
