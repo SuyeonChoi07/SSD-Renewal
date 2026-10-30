@@ -1143,7 +1143,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   --korean-weight: 400;
   font-family: Pretendard, sans-serif;
 }
-#contact .f19-layer-011 { --page-font: 'ChosunCentennial Korean Full', 'ChosunCentennial Korean', Pretendard, sans-serif; font-family: var(--page-font); }
+#contact .f19-layer-011 { --page-font: 'ChosunCentennial Korean', Pretendard, sans-serif; --korean-weight: 200; font-family: var(--page-font); font-weight: 200; }
 #contact .f19-layer-014 { --page-font: 'Pretendard Korean Full', Pretendard, sans-serif; font-family: var(--page-font); }
 @media(prefers-reduced-motion:reduce) {
   #brand .brand-copy-character { opacity: 1; }
