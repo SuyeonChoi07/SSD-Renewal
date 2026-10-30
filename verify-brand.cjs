@@ -19,3 +19,20 @@ assert.equal(pose(segment.travel+width).offset,segment.travel);
 assert.equal(pose(segment.travel+width).breadRotation,360);
 assert.deepEqual(pose(segment.travel+width+1500),pose(segment.travel+width),'Final hold preserves complete pose');
 console.log('Brand: pinned rotating bread, heading at 180px, vertical pause during gallery, full last photo then vertical resume: PASS');
+
+const {brandCharacterOpacity:alpha}=require('./script.js');
+for(const count of [23,240]){
+ for(let i=0;i<count;i++){
+  assert.equal(alpha(0,0,i,count),0,'Loading without scroll cannot reveal letters');
+  assert.equal(alpha(680,0,i,count),1,'All characters revealed during entry hold');
+  assert.equal(alpha(1000,180,i,count),0,'All characters fade out with downward scroll');
+ }
+ assert.ok(alpha(300,0,0,count)>alpha(300,0,count-1,count),'Letters enter in reading order');
+ assert.ok(alpha(1000,90,0,count)<alpha(1000,90,count-1,count),'Letters exit in reading order');
+ const before=alpha(350,0,Math.floor(count/2),count);
+ alpha(1000,180,Math.floor(count/2),count);
+ assert.equal(alpha(350,0,Math.floor(count/2),count),before,'Reverse scroll restores exact character opacity');
+}
+const css=require('node:fs').readFileSync(__dirname+'/styles.css','utf8');
+assert.ok(!css.includes('brand-character-in'),'No time-based autoplay animation');
+console.log('Brand heading and introduction: scroll-driven per-character in/out; no loading autoplay; reversible: PASS');

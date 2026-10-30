@@ -77,6 +77,12 @@
     const y=1020*ease(clamp(progress));
     return {brandY:-y,contactY:1020-y};
   }
+  function brandCharacterOpacity(entryScroll,local,index,count) {
+    const order=count>1?index/(count-1):0;
+    const incoming=ease(clamp((entryScroll-order*480)/200));
+    const outgoing=ease(clamp((local-order*100)/80));
+    return incoming*(1-outgoing);
+  }
   function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
     const stagger = line * .025;
     const incoming = initiallyVisible ? 1 : ease(clamp((progress - enter - stagger) / .12));
@@ -196,6 +202,7 @@
   }
   if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperTearPose, wrapperCopyVisible, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
   if (typeof module !== 'undefined') module.exports.contactScrollPose=contactScrollPose;
+  if (typeof module !== 'undefined') module.exports.brandCharacterOpacity=brandCharacterOpacity;
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -358,22 +365,24 @@
   const header = document.querySelector('.persistent-header');
   const brand=scenes[17];
   const brandCopy=brand.querySelector('.f18-layer-006');
-  const brandCopyParagraphs=Array.from(brandCopy.querySelectorAll('p:not(.f18-layer-009)'));
-  brandCopy.setAttribute('role','group');
-  brandCopy.setAttribute('aria-label',brandCopyParagraphs.map(p=>p.innerText).join('\n'));
-  let brandCharacterIndex=0;
-  brandCopyParagraphs.forEach(paragraph=>{
-    paragraph.setAttribute('aria-hidden','true');
-    Array.from(paragraph.childNodes).filter(node=>node.nodeType===3).forEach(node=>{
-      const fragment=document.createDocumentFragment();
-      Array.from(node.textContent.trim().replace(/\s+/g,' ')).forEach(character=>{
-        const span=document.createElement('span');
-        span.className='brand-copy-character';span.textContent=character;
-        span.style.setProperty('--character-index',brandCharacterIndex++);
-        fragment.append(span);
+  const brandTextGroups=[brand.querySelector('.f18-layer-002'),brandCopy].map(container=>{
+    const paragraphs=Array.from(container.querySelectorAll('p:not(.f18-layer-009)'));
+    container.setAttribute('role','group');
+    container.setAttribute('aria-label',paragraphs.map(p=>p.innerText).join('\n'));
+    const characters=[];
+    paragraphs.forEach(paragraph=>{
+      paragraph.setAttribute('aria-hidden','true');
+      Array.from(paragraph.childNodes).filter(node=>node.nodeType===3).forEach(node=>{
+        const fragment=document.createDocumentFragment();
+        Array.from(node.textContent.trim().replace(/\s+/g,' ')).forEach(character=>{
+          const span=document.createElement('span');
+          span.className='brand-copy-character';span.textContent=character;
+          characters.push(span);fragment.append(span);
+        });
+        node.replaceWith(fragment);
       });
-      node.replaceWith(fragment);
     });
+    return characters;
   });
   function renderBrand(state) {
     const local=state.index<17?0:state.index===17?state.local:segments[17].travel+BRAND_HALL_SCROLL;
@@ -381,6 +390,11 @@
     brand.style.setProperty('--brand-bread-offset',pose.offset+'px');
     brand.style.setProperty('--brand-bread-rotation',(reduced.matches?0:pose.breadRotation)+'deg');
     brand.style.setProperty('--brand-gallery-x',pose.galleryX+'px');
+    // 화면 시작 고정 구간의 실제 스크롤로 등장, 세로 스크롤 시작 후 글자별 퇴장.
+    const entryScroll=state.index<17?0:state.index===17?clamp(window.scrollY-segments[17].start,0,segments[17].entryHold):segments[17].entryHold;
+    brandTextGroups.forEach(characters=>characters.forEach((span,index)=>{
+      span.style.opacity=reduced.matches?1:brandCharacterOpacity(entryScroll,local,index,characters.length);
+    }));
   }
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));
   function renderHeader(state) {
