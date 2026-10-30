@@ -84,9 +84,9 @@
     return incoming*(1-outgoing);
   }
   function brandCellOpacity(centerVh) {
-    if(centerVh<=.3||centerVh>=.7)return .3;
+    if(centerVh<=.3||centerVh>=.7)return .5;
     if(centerVh>=.4&&centerVh<=.6)return 1;
-    return .3+.7*ease(centerVh<.4?(centerVh-.3)/.1:(.7-centerVh)/.1);
+    return .5+.5*ease(centerVh<.4?(centerVh-.3)/.1:(.7-centerVh)/.1);
   }
   function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
     const stagger = line * .025;
