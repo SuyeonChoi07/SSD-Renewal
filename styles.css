@@ -7,19 +7,19 @@
   font-family: Pretendard;
   src: url('assets/PretendardVariable.woff2') format('woff2');
   font-style: normal; font-weight: 100 900; font-display: swap; size-adjust: 70%;
-  unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF;
+  unicode-range: U+0030-0039, U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF, U+FF10-FF19;
 }
 @font-face {
   font-family: ChosunCentennial;
   src: url('assets/ChosunCentennial.ttf') format('truetype');
   font-style: normal; font-weight: 400; font-display: swap; size-adjust: 70%;
-  unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF;
+  unicode-range: U+0030-0039, U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF, U+FF10-FF19;
 }
 @font-face {
   font-family: 'ChosunCentennial Korean';
   src: url('assets/ChosunCentennial.ttf') format('truetype');
   font-style: normal; font-weight: 400; font-display: swap; size-adjust: 70%;
-  unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF;
+  unicode-range: U+0030-0039, U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF, U+FF10-FF19;
 }
 :root { --page-font: 'ChosunCentennial Korean', Pretendard, sans-serif; }
 /* 버튼과 링크의 내부 문구는 기존 폰트로 유지합니다. */
