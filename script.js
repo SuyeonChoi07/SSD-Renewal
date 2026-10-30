@@ -489,8 +489,9 @@
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', resize);
   window.addEventListener('popstate', () => navigate(location.hash || '#landing', false));
-  // 영문 굵기는 유지하고, 한글·숫자 구간만 200으로 지정합니다.
-  const lightCharacters=/([0-9\u1100-\u11ff\u3130-\u318f\ua960-\ua97f\uac00-\ud7ff\uff10-\uff19]+)/;
+  // 숫자는 200, 한글은 폰트별 지정 굵기로 표시하고 영문 굵기는 유지합니다.
+  const lightCharacters=/([0-9\uff10-\uff19]+|[\u1100-\u11ff\u3130-\u318f\ua960-\ua97f\uac00-\ud7ff]+)/;
+  const koreanCharacters=/[\u1100-\u11ff\u3130-\u318f\ua960-\ua97f\uac00-\ud7ff]/;
   const textWalker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
   const lightTextNodes=[];
   while(textWalker.nextNode()){
@@ -502,7 +503,9 @@
     node.textContent.split(lightCharacters).forEach(part=>{
       if(!part)return;
       if(lightCharacters.test(part)){
-        const span=document.createElement('span');span.className='light-korean-number';span.textContent=part;fragment.append(span);
+        const span=document.createElement('span');span.className='light-korean-number';
+        if(koreanCharacters.test(part))span.classList.add('korean-glyph');
+        span.textContent=part;fragment.append(span);
       }else fragment.append(document.createTextNode(part));
     });
     node.replaceWith(fragment);
