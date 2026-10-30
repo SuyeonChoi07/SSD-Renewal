@@ -2,10 +2,23 @@
    요소·문구는 index.html, 스크롤 거리는 script.js의 SCENE_SCROLL_PX에서 수정합니다. */
 @font-face { font-family: Pretendard; src: url('assets/PretendardVariable.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
 @font-face { font-family: ChosunCentennial; src: url('assets/ChosunCentennial.ttf') format('truetype'); font-style: normal; font-weight: 400; font-display: swap; }
+/* 한글 글리프만 70%로 축소하고 영문·숫자는 기존 크기를 유지합니다. */
+@font-face {
+  font-family: Pretendard;
+  src: url('assets/PretendardVariable.woff2') format('woff2');
+  font-style: normal; font-weight: 100 900; font-display: swap; size-adjust: 70%;
+  unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF;
+}
+@font-face {
+  font-family: ChosunCentennial;
+  src: url('assets/ChosunCentennial.ttf') format('truetype');
+  font-style: normal; font-weight: 400; font-display: swap; size-adjust: 70%;
+  unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF;
+}
 @font-face {
   font-family: 'ChosunCentennial Korean';
   src: url('assets/ChosunCentennial.ttf') format('truetype');
-  font-style: normal; font-weight: 400; font-display: swap;
+  font-style: normal; font-weight: 400; font-display: swap; size-adjust: 70%;
   unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF;
 }
 :root { --page-font: 'ChosunCentennial Korean', Pretendard, sans-serif; }
