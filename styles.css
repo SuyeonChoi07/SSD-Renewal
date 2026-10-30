@@ -1,10 +1,22 @@
 /* Figma 원본 레이어별 CSS. f01=Landing, f02=Intro ... f19=Contact.
    요소·문구는 index.html, 스크롤 거리는 script.js의 SCENE_SCROLL_PX에서 수정합니다. */
 @font-face { font-family: Pretendard; src: url('assets/PretendardVariable.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+@font-face {
+  font-family: 'Shilla Culture Korean';
+  src: url('assets/Shilla-Culture-M.ttf') format('truetype');
+  font-style: normal; font-weight: 400; font-display: swap;
+  unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF;
+}
+:root { --page-font: 'Shilla Culture Korean', Pretendard, sans-serif; }
+/* 버튼과 링크의 내부 문구는 기존 폰트로 유지합니다. */
+button, [role="button"], a, input, select, textarea {
+  --page-font: Pretendard, sans-serif;
+  font-family: var(--page-font);
+}
 *,:before,:after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: currentColor; }
 html { background: #131313; scroll-behavior: auto; scrollbar-width: none; }
 html::-webkit-scrollbar { display: none; }
-body { margin: 0; color: #f8f0e5; font-family: Pretendard, sans-serif; line-height: normal; }
+body { margin: 0; color: #f8f0e5; font-family: var(--page-font); line-height: normal; }
 p,h1,h2,h3,figure,ul { margin: 0; padding: 0; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: inherit; }
@@ -29,20 +41,20 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f01-layer-005 { position: absolute; background-color: rgba(0,0,0,0.35); inset: 0; }
 .f01-layer-006 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f01-layer-007 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f01-layer-008 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-008 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f01-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f01-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-010 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f01-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f01-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-012 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f01-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f01-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-014 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f01-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f01-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f01-layer-016 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f01-layer-017 { position: absolute; display: contents; left: 2019px; top: 0; }
 .f01-layer-018 { position: absolute; background-color: #fff; height: 150px; left: 2019px; top: 0; width: 45px; }
 .f01-layer-019 { position: absolute; display: flex; height: 115px; align-items: center; justify-content: center; left: 2034px; top: 14px; width: 16px; }
 .f01-layer-020 { flex: none; rotate: 90deg; }
-.f01-layer-021 { word-break: break-word; display: block; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; font-style: normal; position: relative; font-size: 13px; color: #000; white-space: nowrap; }
+.f01-layer-021 { word-break: break-word; display: block; font-family: var(--page-font); font-weight: 600; line-height: 0; font-style: normal; position: relative; font-size: 13px; color: #000; white-space: nowrap; }
 .f01-layer-022 { list-style-type: disc; margin-inline-start: 19.5px; }
 .f01-layer-023 { line-height: normal; }
 .f01-layer-024 { position: absolute; height: 394px; left: 829px; top: 314px; width: 407px; }
@@ -52,38 +64,38 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f01-layer-028 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
 .f01-layer-029 { position: absolute; background-color: rgba(217,217,217,0.2); bottom: 40px; align-content: stretch; display: flex; flex-direction: column; height: 346px; align-items: flex-start; left: 40px; padding-inline: 22px; padding-block: 20px; width: 361px; }
 .f01-layer-030 { grid-template-columns: max-content; grid-template-rows: max-content; display: inline-grid; line-height: 0; place-items: start; position: relative; flex-shrink: 0; }
-.f01-layer-031 { word-break: break-word; grid-column-start: 1; font-family: Pretendard, sans-serif; font-weight: 600; height: 162px; margin-left: 4.5px; margin-top: 0; font-style: normal; position: relative; grid-row-start: 1; font-size: 32px; color: #fff; width: 126px; }
+.f01-layer-031 { word-break: break-word; grid-column-start: 1; font-family: var(--page-font); font-weight: 600; height: 162px; margin-left: 4.5px; margin-top: 0; font-style: normal; position: relative; grid-row-start: 1; font-size: 32px; color: #fff; width: 126px; }
 .f01-layer-032 { line-height: 45px; margin-bottom: 0; }
 .f01-layer-033 { line-height: 45px; margin-bottom: 0; }
 .f01-layer-034 { line-height: 45px; }
-.f01-layer-035 { word-break: break-word; grid-column-start: 1; font-family: Pretendard, sans-serif; font-weight: 500; height: 90px; margin-left: 142px; margin-top: 216px; font-style: normal; position: relative; grid-row-start: 1; font-size: 20px; text-align: right; color: #fff; width: 176px; }
+.f01-layer-035 { word-break: break-word; grid-column-start: 1; font-family: var(--page-font); font-weight: 500; height: 90px; margin-left: 142px; margin-top: 216px; font-style: normal; position: relative; grid-row-start: 1; font-size: 20px; text-align: right; color: #fff; width: 176px; }
 .f01-layer-036 { line-height: 30px; margin-bottom: 0; }
 .f01-layer-037 { line-height: 30px; margin-bottom: 0; }
 .f01-layer-038 { line-height: 30px; }
 .f01-layer-039 { grid-column-start: 1; height: 0; margin-left: 0; margin-top: 196px; position: relative; grid-row-start: 1; width: 319px; }
 .f01-layer-040 { position: absolute; inset: -0.5px 0; }
 .f01-layer-041 { display: block; max-width: none; width: 100%; height: 100%; }
-.f01-layer-042 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1340px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% - 22px); white-space: nowrap; }
+.f01-layer-042 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 1340px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% - 22px); white-space: nowrap; }
 .f01-layer-043 { line-height: 40px; margin-bottom: 0; }
 .f01-layer-044 { line-height: 40px; }
 #landing > .frame-art { width: 2064px; height: 1020px; }
 
 /* 02. Intro — Figma 738:609 */
 .f02-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
-.f02-layer-002 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: calc(50% + 322px); font-style: normal; font-size: 30px; color: #fff; top: 488px; white-space: nowrap; }
+.f02-layer-002 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: calc(50% + 322px); font-style: normal; font-size: 30px; color: #fff; top: 488px; white-space: nowrap; }
 .f02-layer-003 { line-height: 40px; margin-bottom: 0; }
 .f02-layer-004 { line-height: 40px; }
-.f02-layer-005 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 140px; left: calc(50% - 644px); font-style: normal; font-size: 140px; color: #fff; top: 458px; white-space: nowrap; }
+.f02-layer-005 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 140px; left: calc(50% - 644px); font-style: normal; font-size: 140px; color: #fff; top: 458px; white-space: nowrap; }
 .f02-layer-006 { position: absolute; height: 534px; left: 280px; top: 2465px; width: 1469px; }
 .f02-layer-007 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
-.f02-layer-008 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1354px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% - 22px); letter-spacing: -0.9px; white-space: nowrap; }
+.f02-layer-008 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 1354px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% - 22px); letter-spacing: -0.9px; white-space: nowrap; }
 .f02-layer-009 { line-height: 1; margin-bottom: 0; }
 .f02-layer-010 { line-height: 1; margin-bottom: 0; }
 .f02-layer-011 { line-height: 1; margin-bottom: 0; }
 .f02-layer-012 { line-height: 1; }
 .f02-layer-013 { position: absolute; height: 1008px; left: 1345px; top: 2052px; width: 719px; }
 .f02-layer-014 { position: absolute; display: block; inset: 0; max-width: none; width: 100%; height: 100%; }
-.f02-layer-015 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1354px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% + 985px); letter-spacing: -0.9px; white-space: nowrap; }
+.f02-layer-015 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 1354px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% + 985px); letter-spacing: -0.9px; white-space: nowrap; }
 .f02-layer-016 { line-height: 1; margin-bottom: 0; }
 .f02-layer-017 { line-height: 1; margin-bottom: 0; }
 .f02-layer-018 { line-height: 1; margin-bottom: 0; }
@@ -93,15 +105,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f02-layer-022 { position: absolute; height: 118.72%; left: -5.48%; max-width: none; top: -6.85%; width: 115.53%; }
 .f02-layer-023 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f02-layer-024 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f02-layer-025 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-025 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f02-layer-026 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f02-layer-027 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-027 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f02-layer-028 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f02-layer-029 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-029 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f02-layer-030 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f02-layer-031 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-031 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f02-layer-032 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f02-layer-033 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f02-layer-033 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f02-layer-034 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f02-layer-035 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f02-layer-036 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -115,22 +127,22 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f03-layer-002 { position: absolute; left: -751px; width: 1402px; height: 1402px; top: 437px; }
 .f03-layer-003 { position: absolute; inset: -25.1%; }
 .f03-layer-004 { display: block; max-width: none; width: 100%; height: 100%; }
-.f03-layer-005 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 918px); font-style: normal; color: #f8f0e5; font-size: 180px; top: 377px; white-space: nowrap; }
+.f03-layer-005 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: calc(50% - 918px); font-style: normal; color: #f8f0e5; font-size: 180px; top: 377px; white-space: nowrap; }
 .f03-layer-006 { translate: -50% 0; position: absolute; height: 373px; left: calc(50% - 0.5px); top: 324px; width: 405px; }
 .f03-layer-007 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f03-layer-008 { position: absolute; height: 144.93%; left: -16.8%; max-width: none; top: -24.93%; width: 133.33%; }
 .f03-layer-009 { translate: -50% 0; position: absolute; border-width: 1px; border-color: #f8f0e5; border-style: dashed; left: calc(50% - 3px); width: 500px; height: 500px; top: 258px; }
 .f03-layer-010 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f03-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f03-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-012 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f03-layer-013 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f03-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-014 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f03-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f03-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-016 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f03-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f03-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-018 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f03-layer-019 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f03-layer-020 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f03-layer-020 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f03-layer-021 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f03-layer-022 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f03-layer-023 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -184,19 +196,19 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f04-layer-045 { position: absolute; height: 100%; left: -39.86%; max-width: none; top: 0; width: 174.27%; }
 .f04-layer-046 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
 .f04-layer-047 { translate: -50% -50%; position: absolute; border-width: 1px; border-color: #f8f0e5; border-style: dashed; height: 732px; left: 50%; top: 50%; width: 610px; }
-.f04-layer-048 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; color: #f8f0e5; font-size: 40px; top: 300px; white-space: nowrap; }
-.f04-layer-049 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; font-size: 36px; color: rgba(255,255,255,0.59); top: 252px; white-space: nowrap; }
+.f04-layer-048 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; color: #f8f0e5; font-size: 40px; top: 300px; white-space: nowrap; }
+.f04-layer-049 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; font-size: 36px; color: rgba(255,255,255,0.59); top: 252px; white-space: nowrap; }
 .f04-layer-050 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f04-layer-051 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f04-layer-052 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-052 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f04-layer-053 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f04-layer-054 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-054 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f04-layer-055 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f04-layer-056 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-056 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f04-layer-057 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f04-layer-058 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-058 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f04-layer-059 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f04-layer-060 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f04-layer-060 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f04-layer-061 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f04-layer-062 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f04-layer-063 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -250,19 +262,19 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f05-layer-045 { position: absolute; height: 100%; left: -39.86%; max-width: none; top: 0; width: 174.27%; }
 .f05-layer-046 { position: absolute; background-color: rgba(0,0,0,0.4); inset: 0; }
 .f05-layer-047 { translate: -50% -50%; position: absolute; border-width: 1px; border-color: #f8f0e5; border-style: dashed; height: 732px; left: 50%; top: 50%; width: 610px; }
-.f05-layer-048 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; color: #f8f0e5; font-size: 40px; top: 300px; white-space: nowrap; }
-.f05-layer-049 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; font-size: 36px; color: rgba(255,255,255,0.59); top: 252px; white-space: nowrap; }
+.f05-layer-048 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; color: #f8f0e5; font-size: 40px; top: 300px; white-space: nowrap; }
+.f05-layer-049 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; font-size: 36px; color: rgba(255,255,255,0.59); top: 252px; white-space: nowrap; }
 .f05-layer-050 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f05-layer-051 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f05-layer-052 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-052 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f05-layer-053 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f05-layer-054 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-054 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f05-layer-055 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f05-layer-056 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-056 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f05-layer-057 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f05-layer-058 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-058 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f05-layer-059 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f05-layer-060 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f05-layer-060 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f05-layer-061 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f05-layer-062 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f05-layer-063 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -316,19 +328,19 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f06-layer-045 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f06-layer-046 { position: absolute; height: 100%; left: -39.86%; max-width: none; top: 0; width: 174.27%; }
 .f06-layer-047 { translate: -50% -50%; position: absolute; border-width: 1px; border-color: #f8f0e5; border-style: dashed; height: 732px; left: 50%; top: 50%; width: 610px; }
-.f06-layer-048 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; color: #f8f0e5; font-size: 40px; top: 300px; white-space: nowrap; }
-.f06-layer-049 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; font-size: 36px; color: rgba(255,255,255,0.59); top: 252px; white-space: nowrap; }
+.f06-layer-048 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; color: #f8f0e5; font-size: 40px; top: 300px; white-space: nowrap; }
+.f06-layer-049 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: calc(50% - 964px); font-style: normal; font-size: 36px; color: rgba(255,255,255,0.59); top: 252px; white-space: nowrap; }
 .f06-layer-050 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f06-layer-051 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f06-layer-052 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-052 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f06-layer-053 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f06-layer-054 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-054 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f06-layer-055 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f06-layer-056 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-056 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f06-layer-057 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f06-layer-058 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-058 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f06-layer-059 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f06-layer-060 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f06-layer-060 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f06-layer-061 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f06-layer-062 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f06-layer-063 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -344,15 +356,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f07-layer-007 { position: absolute; height: 100%; left: -31.38%; max-width: none; top: 0.01%; width: 157.47%; }
 .f07-layer-008 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f07-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f07-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-010 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f07-layer-011 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f07-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-012 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f07-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f07-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-014 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f07-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f07-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-016 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f07-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f07-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f07-layer-018 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f07-layer-019 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f07-layer-020 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f07-layer-021 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -368,15 +380,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f08-layer-007 { position: absolute; height: 206.75%; left: -31.7%; max-width: none; top: -7.52%; width: 159.79%; }
 .f08-layer-008 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f08-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f08-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-010 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f08-layer-011 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f08-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-012 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f08-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f08-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-014 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f08-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f08-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-016 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f08-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f08-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f08-layer-018 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f08-layer-019 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f08-layer-020 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f08-layer-021 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -391,10 +403,10 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f09-layer-006 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f09-layer-007 { position: absolute; height: 270%; left: -17.2%; max-width: none; top: -13.63%; width: 159.93%; }
 .f09-layer-008 { translate: 0 -50%; position: absolute; background-color: rgba(217,217,217,0.2); height: 1020px; left: 0; top: 50%; width: 702px; }
-.f09-layer-009 { translate: -100% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: calc(50% - 425px); font-style: normal; color: #f8f0e5; font-size: 40px; text-align: right; top: 776px; white-space: nowrap; }
+.f09-layer-009 { translate: -100% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: calc(50% - 425px); font-style: normal; color: #f8f0e5; font-size: 40px; text-align: right; top: 776px; white-space: nowrap; }
 .f09-layer-010 { line-height: normal; margin-bottom: 0; }
 .f09-layer-011 { line-height: normal; }
-.f09-layer-012 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: calc(50% - 957px); font-style: normal; font-size: 24px; color: #fff; top: 245px; letter-spacing: -0.72px; white-space: nowrap; }
+.f09-layer-012 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: calc(50% - 957px); font-style: normal; font-size: 24px; color: #fff; top: 245px; letter-spacing: -0.72px; white-space: nowrap; }
 .f09-layer-013 { line-height: 1; margin-bottom: 0; }
 .f09-layer-014 { line-height: 1; margin-bottom: 0; }
 .f09-layer-015 { line-height: 1; margin-bottom: 0; }
@@ -404,15 +416,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f09-layer-019 { display: block; max-width: none; width: 100%; height: 100%; }
 .f09-layer-020 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f09-layer-021 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f09-layer-022 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-022 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f09-layer-023 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f09-layer-024 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-024 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f09-layer-025 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f09-layer-026 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-026 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f09-layer-027 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f09-layer-028 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-028 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f09-layer-029 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f09-layer-030 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f09-layer-030 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f09-layer-031 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f09-layer-032 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f09-layer-033 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -430,15 +442,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f10-layer-009 { position: absolute; background-color: rgba(0,0,0,0.6); inset: 0; }
 .f10-layer-010 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f10-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f10-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-012 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f10-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f10-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-014 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f10-layer-015 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f10-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-016 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f10-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f10-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-018 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f10-layer-019 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f10-layer-020 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f10-layer-020 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f10-layer-021 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f10-layer-022 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f10-layer-023 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -455,15 +467,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f11-layer-005 { position: absolute; background-color: rgba(0,0,0,0.8); height: 1020px; left: 0; top: 0; width: 2064px; }
 .f11-layer-006 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f11-layer-007 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f11-layer-008 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-008 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f11-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f11-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-010 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f11-layer-011 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f11-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-012 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f11-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f11-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-014 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f11-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f11-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f11-layer-016 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f11-layer-017 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f11-layer-018 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f11-layer-019 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -484,15 +496,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f12-layer-009 { position: absolute; background-color: rgba(0,0,0,0.8); height: 1020px; left: 0; top: 0; width: 2064px; }
 .f12-layer-010 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f12-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f12-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-012 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f12-layer-013 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f12-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-014 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f12-layer-015 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f12-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-016 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f12-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f12-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-018 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f12-layer-019 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f12-layer-020 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f12-layer-020 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f12-layer-021 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f12-layer-022 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f12-layer-023 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -512,15 +524,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f13-layer-008 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
 .f13-layer-009 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f13-layer-010 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f13-layer-011 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-011 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f13-layer-012 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f13-layer-013 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-013 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f13-layer-014 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f13-layer-015 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-015 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f13-layer-016 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f13-layer-017 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-017 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f13-layer-018 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f13-layer-019 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f13-layer-019 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f13-layer-020 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f13-layer-021 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f13-layer-022 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -531,15 +543,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f14-layer-002 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
 .f14-layer-003 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f14-layer-004 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f14-layer-005 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-005 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f14-layer-006 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f14-layer-007 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-007 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f14-layer-008 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f14-layer-009 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-009 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f14-layer-010 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f14-layer-011 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-011 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f14-layer-012 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f14-layer-013 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f14-layer-013 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f14-layer-014 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f14-layer-015 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f14-layer-016 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -547,7 +559,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 
 /* 15. Our Way_start — Figma 779:823 */
 .f15-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
-.f15-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #f8f0e5; font-size: 190px; text-align: center; top: calc(50% - 191px); white-space: nowrap; }
+.f15-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #f8f0e5; font-size: 190px; text-align: center; top: calc(50% - 191px); white-space: nowrap; }
 .f15-layer-003 { line-height: normal; margin-bottom: 0; }
 .f15-layer-004 { line-height: normal; }
 .f15-layer-005 { position: absolute; height: 1020px; left: 0; top: 0; width: 2062px; }
@@ -555,15 +567,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f15-layer-007 { position: absolute; background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 26.646%; height: 319px; left: 0; --gradient-to: rgba(19,19,19,0); top: 0; width: 2064px; --gradient-from: #131313 26.646%; }
 .f15-layer-008 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f15-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f15-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-010 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f15-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f15-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-012 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f15-layer-013 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f15-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-014 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f15-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f15-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-016 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f15-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f15-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f15-layer-018 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f15-layer-019 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f15-layer-020 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f15-layer-021 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -571,7 +583,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 
 /* 16. Our Way_mid — Figma 779:840 */
 .f16-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
-.f16-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #f8f0e5; font-size: 190px; text-align: center; top: calc(50% - 191px); white-space: nowrap; }
+.f16-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #f8f0e5; font-size: 190px; text-align: center; top: calc(50% - 191px); white-space: nowrap; }
 .f16-layer-003 { line-height: normal; margin-bottom: 0; }
 .f16-layer-004 { line-height: normal; }
 .f16-layer-005 { position: absolute; height: 1020px; left: 0; top: 0; width: 2064px; }
@@ -579,15 +591,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f16-layer-007 { position: absolute; background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 26.646%; height: 319px; left: 0; --gradient-to: rgba(19,19,19,0); top: 0; width: 2064px; --gradient-from: #131313 26.646%; }
 .f16-layer-008 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f16-layer-009 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f16-layer-010 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-010 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f16-layer-011 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f16-layer-012 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-012 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f16-layer-013 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f16-layer-014 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-014 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f16-layer-015 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f16-layer-016 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-016 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f16-layer-017 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f16-layer-018 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f16-layer-018 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f16-layer-019 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f16-layer-020 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f16-layer-021 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -595,14 +607,14 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 
 /* 17. Our Way_end — Figma 779:854 */
 .f17-layer-001 { background-color: #f8f0e5; position: relative; width: 100%; height: 100%; }
-.f17-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #131313; font-size: 190px; text-align: center; top: 319px; white-space: nowrap; }
+.f17-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #131313; font-size: 190px; text-align: center; top: 319px; white-space: nowrap; }
 .f17-layer-003 { line-height: normal; margin-bottom: 0; }
 .f17-layer-004 { line-height: normal; }
 .f17-layer-005 { translate: -50% 0; position: absolute; align-content: stretch; display: flex; align-items: center; justify-content: space-between; left: calc(50% - 23px); top: 1158px; width: 1740px; }
 .f17-layer-006 { background-color: #f48621; height: 657px; position: relative; flex-shrink: 0; width: 650px; }
 .f17-layer-007 { background-color: #f6e0c6; height: 657px; position: relative; flex-shrink: 0; width: 500px; }
 .f17-layer-008 { background-color: #f6e0c6; height: 657px; position: relative; flex-shrink: 0; width: 500px; }
-.f17-layer-009 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 184px; font-style: normal; color: #f8f0e5; font-size: 40px; top: 1201px; white-space: nowrap; }
+.f17-layer-009 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 184px; font-style: normal; color: #f8f0e5; font-size: 40px; top: 1201px; white-space: nowrap; }
 .f17-layer-010 { line-height: normal; margin-bottom: 0; }
 .f17-layer-011 { line-height: normal; }
 .f17-layer-012 { position: absolute; background-color: #f8f0e5; left: 913px; border-radius: 1000px; width: 350px; height: 350px; top: 1325px; }
@@ -617,28 +629,28 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f17-layer-021 { display: flex; align-items: center; justify-content: center; justify-self: stretch; position: relative; align-self: stretch; flex-shrink: 0; }
 .f17-layer-022 { flex: none; rotate: 180deg; width: 100%; height: 100%; }
 .f17-layer-023 { background-color: #f8f0e5; position: relative; border-top-left-radius: 65px; width: 100%; height: 100%; }
-.f17-layer-024 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 315px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1455px; white-space: nowrap; }
+.f17-layer-024 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 315px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1455px; white-space: nowrap; }
 .f17-layer-025 { line-height: normal; margin-bottom: 0; }
 .f17-layer-026 { line-height: normal; }
-.f17-layer-027 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 307.5px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1650px; white-space: nowrap; }
+.f17-layer-027 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 307.5px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1650px; white-space: nowrap; }
 .f17-layer-028 { line-height: normal; margin-bottom: 0; }
 .f17-layer-029 { line-height: normal; }
-.f17-layer-030 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 609.5px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1455px; white-space: nowrap; }
+.f17-layer-030 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 609.5px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1455px; white-space: nowrap; }
 .f17-layer-031 { line-height: normal; margin-bottom: 0; }
 .f17-layer-032 { line-height: normal; }
-.f17-layer-033 { translate: -50% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 601px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1650px; white-space: nowrap; }
+.f17-layer-033 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 601px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1650px; white-space: nowrap; }
 .f17-layer-034 { line-height: normal; margin-bottom: 0; }
 .f17-layer-035 { line-height: normal; }
 .f17-layer-036 { position: absolute; background-color: #f48621; align-content: stretch; display: flex; flex-direction: column; align-items: center; justify-content: center; left: 394px; border-radius: 100px; width: 140px; height: 140px; top: 1505px; }
 .f17-layer-037 { height: 96px; position: relative; flex-shrink: 0; width: 100px; }
 .f17-layer-038 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f17-layer-039 { position: absolute; height: 100%; left: -0.01%; max-width: none; top: 0; width: 100.02%; }
-.f17-layer-040 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: 866px; font-style: normal; color: #834627; font-size: 40px; top: 1191px; white-space: nowrap; }
-.f17-layer-041 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 866px; font-style: normal; color: #834627; font-size: 24px; top: 1732px; white-space: nowrap; }
+.f17-layer-040 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: 866px; font-style: normal; color: #834627; font-size: 40px; top: 1191px; white-space: nowrap; }
+.f17-layer-041 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 866px; font-style: normal; color: #834627; font-size: 24px; top: 1732px; white-space: nowrap; }
 .f17-layer-042 { line-height: normal; margin-bottom: 0; }
 .f17-layer-043 { line-height: normal; }
-.f17-layer-044 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: 1411px; font-style: normal; color: #834627; font-size: 24px; top: 1758px; white-space: nowrap; }
-.f17-layer-045 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: 1411px; font-style: normal; color: #834627; font-size: 40px; top: 1191px; white-space: nowrap; }
+.f17-layer-044 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: 1411px; font-style: normal; color: #834627; font-size: 24px; top: 1758px; white-space: nowrap; }
+.f17-layer-045 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: 1411px; font-style: normal; color: #834627; font-size: 40px; top: 1191px; white-space: nowrap; }
 .f17-layer-046 { position: absolute; align-content: stretch; display: flex; align-items: center; justify-content: center; left: 1349px; overflow: clip; border-bottom-right-radius: 332px; width: 486px; height: 486px; top: 1264px; }
 .f17-layer-047 { position: relative; flex-shrink: 0; width: 476px; height: 476px; }
 .f17-layer-048 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
@@ -646,26 +658,26 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f17-layer-050 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
 .f17-layer-051 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f17-layer-052 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f17-layer-053 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-053 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
 .f17-layer-054 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f17-layer-055 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-055 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
 .f17-layer-056 { border-bottom-width: 1px; border-color: #000; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f17-layer-057 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-057 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
 .f17-layer-058 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f17-layer-059 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-059 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
 .f17-layer-060 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f17-layer-061 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
+.f17-layer-061 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
 .f17-layer-062 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f17-layer-063 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
 #our-way-end > .frame-art { width: 2064px; height: 1878px; }
 
 /* 18. Brand — Figma 779:906 */
 .f18-layer-001 { background-color: #131313; position: relative; width: 100%; height: 100%; }
-.f18-layer-002 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 102px; font-style: normal; color: #ffedd7; font-size: 70px; top: 181px; white-space: nowrap; }
+.f18-layer-002 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 102px; font-style: normal; color: #ffedd7; font-size: 70px; top: 181px; white-space: nowrap; }
 .f18-layer-003 { line-height: normal; margin-bottom: 0; }
 .f18-layer-004 { line-height: normal; }
-.f18-layer-005 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; left: 129px; font-style: normal; color: #ffedd7; font-size: 64px; top: 5248px; white-space: nowrap; }
-.f18-layer-006 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; font-style: normal; right: 658px; color: #f8f0e5; font-size: 24px; top: 441px; letter-spacing: -0.72px; translate: 100% 0; white-space: nowrap; }
+.f18-layer-005 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: 129px; font-style: normal; color: #ffedd7; font-size: 64px; top: 5248px; white-space: nowrap; }
+.f18-layer-006 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; font-style: normal; right: 658px; color: #f8f0e5; font-size: 24px; top: 441px; letter-spacing: -0.72px; translate: 100% 0; white-space: nowrap; }
 .f18-layer-007 { line-height: 1; margin-bottom: 0; white-space: pre; }
 .f18-layer-008 { line-height: 1; margin-bottom: 0; white-space: pre; }
 .f18-layer-009 { line-height: 1; margin-bottom: 0; white-space: pre; }
@@ -676,8 +688,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-014 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-015 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-016 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-017 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
-.f18-layer-018 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-017 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-018 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-019 { position: relative; flex-shrink: 0; width: 318px; }
 .f18-layer-020 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-021 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -687,8 +699,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-025 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-026 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-027 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-028 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
-.f18-layer-029 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-028 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-029 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-030 { position: relative; flex-shrink: 0; width: 318px; }
 .f18-layer-031 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-032 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -698,8 +710,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-036 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-037 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-038 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-039 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
-.f18-layer-040 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-039 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-040 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-041 { position: relative; flex-shrink: 0; white-space: nowrap; }
 .f18-layer-042 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-043 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -709,8 +721,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-047 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-048 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-049 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-050 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
-.f18-layer-051 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-050 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-051 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-052 { position: relative; flex-shrink: 0; white-space: nowrap; }
 .f18-layer-053 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-054 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -720,8 +732,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-058 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-059 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-060 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-061 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; white-space: nowrap; }
-.f18-layer-062 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-061 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; white-space: nowrap; }
+.f18-layer-062 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-063 { position: relative; flex-shrink: 0; white-space: nowrap; }
 .f18-layer-064 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-065 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -731,8 +743,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-069 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-070 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-071 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-072 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
-.f18-layer-073 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-072 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-073 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-074 { position: relative; flex-shrink: 0; white-space: nowrap; }
 .f18-layer-075 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-076 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -742,8 +754,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-080 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-081 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-082 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-083 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
-.f18-layer-084 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-083 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-084 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-085 { position: relative; flex-shrink: 0; white-space: nowrap; }
 .f18-layer-086 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-087 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -753,8 +765,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-091 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-092 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-093 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-094 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
-.f18-layer-095 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-094 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-095 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-096 { position: relative; flex-shrink: 0; white-space: nowrap; }
 .f18-layer-097 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-098 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -764,8 +776,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-102 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-103 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-104 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-105 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
-.f18-layer-106 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-105 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-106 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-107 { position: relative; flex-shrink: 0; white-space: nowrap; }
 .f18-layer-108 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-109 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -775,8 +787,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-113 { border-color: #cabbaa; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; padding-block: 19px; position: relative; flex-shrink: 0; width: 100%; }
 .f18-layer-114 { align-content: stretch; display: flex; flex-direction: column; gap: 159px; align-items: flex-start; position: relative; flex-shrink: 0; width: 429px; }
 .f18-layer-115 { align-content: stretch; display: flex; flex-direction: column; align-items: flex-start; position: relative; flex-shrink: 0; width: 100%; }
-.f18-layer-116 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
-.f18-layer-117 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: Pretendard, sans-serif; font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
+.f18-layer-116 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 32px; letter-spacing: -1.92px; width: 100%; }
+.f18-layer-117 { word-break: break-word; align-content: stretch; display: flex; flex-direction: column; font-family: var(--page-font); font-weight: 600; align-items: flex-start; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #cabbaa; font-size: 15px; }
 .f18-layer-118 { position: relative; flex-shrink: 0; white-space: nowrap; }
 .f18-layer-119 { min-width: 100%; position: relative; flex-shrink: 0; width: min-content; }
 .f18-layer-120 { height: 343px; position: relative; flex-shrink: 0; width: 457px; }
@@ -803,15 +815,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-141 { position: absolute; height: 117.39%; left: -5.02%; max-width: none; top: -6.58%; width: 114.67%; }
 .f18-layer-142 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f18-layer-143 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f18-layer-144 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-144 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f18-layer-145 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f18-layer-146 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-146 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f18-layer-147 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f18-layer-148 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-148 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f18-layer-149 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f18-layer-150 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-150 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f18-layer-151 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f18-layer-152 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f18-layer-152 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f18-layer-153 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f18-layer-154 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f18-layer-155 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
@@ -832,24 +844,24 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f19-layer-008 { position: absolute; display: flex; height: 523px; align-items: center; justify-content: center; left: 0; top: 701px; width: 2064px; }
 .f19-layer-009 { flex: none; rotate: 180deg; }
 .f19-layer-010 { background-image: linear-gradient(to bottom,var(--gradient-from),var(--gradient-to)); --gradient-color: #131313; --gradient-stop: 35.946%; height: 523px; position: relative; --gradient-to: rgba(19,19,19,0); width: 2064px; --gradient-from: #131313 35.946%; }
-.f19-layer-011 { translate: -100% 0; word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 0; left: 1974px; font-style: normal; color: #f8f0e5; font-size: 54px; text-align: right; top: 346px; letter-spacing: -1.62px; white-space: nowrap; }
+.f19-layer-011 { translate: -100% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 1974px; font-style: normal; color: #f8f0e5; font-size: 54px; text-align: right; top: 346px; letter-spacing: -1.62px; white-space: nowrap; }
 .f19-layer-012 { line-height: 1; margin-bottom: 0; }
 .f19-layer-013 { line-height: 1; }
 .f19-layer-014 { position: absolute; background-color: #f48621; align-content: stretch; display: flex; align-items: center; justify-content: center; left: 1758px; padding-left: 66px; padding-right: 60px; padding-block: 23px; border-radius: 47px; top: 509px; }
-.f19-layer-015 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 700; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 16px; text-align: center; letter-spacing: -0.48px; white-space: nowrap; }
+.f19-layer-015 { word-break: break-word; font-family: var(--page-font); font-weight: 700; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 16px; text-align: center; letter-spacing: -0.48px; white-space: nowrap; }
 .f19-layer-016 { position: absolute; display: contents; left: 81px; top: 789px; }
 .f19-layer-017 { position: absolute; display: contents; left: 81px; top: 789px; }
-.f19-layer-018 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 1; left: 106px; font-style: normal; color: #f48621; font-size: 16px; top: 817px; letter-spacing: -0.48px; white-space: nowrap; }
+.f19-layer-018 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 1; left: 106px; font-style: normal; color: #f48621; font-size: 16px; top: 817px; letter-spacing: -0.48px; white-space: nowrap; }
 .f19-layer-019 { position: absolute; background-color: #f48621; align-content: stretch; display: flex; align-items: center; justify-content: center; left: 332px; padding-inline: 20px; padding-block: 10px; border-radius: 23px; top: 906px; }
-.f19-layer-020 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 400; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #ffedd7; font-size: 12px; text-align: center; letter-spacing: -0.36px; white-space: nowrap; }
+.f19-layer-020 { word-break: break-word; font-family: var(--page-font); font-weight: 400; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #ffedd7; font-size: 12px; text-align: center; letter-spacing: -0.36px; white-space: nowrap; }
 .f19-layer-021 { position: absolute; border-color: #f8f0e5; border-width: 0.5px; border-style: dashed; height: 177px; left: 81px; top: 789px; width: 362px; }
 .f19-layer-022 { position: absolute; display: contents; left: 683px; top: 793px; }
-.f19-layer-023 { word-break: break-word; position: absolute; font-family: Pretendard, sans-serif; font-weight: 600; line-height: 1; left: 683px; font-style: normal; color: #ffe385; font-size: 16px; top: 793px; letter-spacing: -0.48px; white-space: nowrap; }
+.f19-layer-023 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 1; left: 683px; font-style: normal; color: #ffe385; font-size: 16px; top: 793px; letter-spacing: -0.48px; white-space: nowrap; }
 .f19-layer-024 { position: absolute; border-color: #ffedd7; border-bottom-width: 0.5px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: space-between; left: 686px; padding-bottom: 26px; top: 863px; width: 481px; }
-.f19-layer-025 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 400; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #ffedd7; font-size: 18px; letter-spacing: 0.18px; white-space: nowrap; }
+.f19-layer-025 { word-break: break-word; font-family: var(--page-font); font-weight: 400; line-height: 1; font-style: normal; position: relative; flex-shrink: 0; color: #ffedd7; font-size: 18px; letter-spacing: 0.18px; white-space: nowrap; }
 .f19-layer-026 { position: relative; flex-shrink: 0; width: 24px; height: 24px; }
 .f19-layer-027 { position: absolute; display: block; inset: 0; max-width: none; width: 100%; height: 100%; }
-.f19-layer-028 { word-break: break-word; position: absolute; display: contents; font-family: Pretendard, sans-serif; font-weight: 700; left: 81px; font-style: normal; top: 1039px; }
+.f19-layer-028 { word-break: break-word; position: absolute; display: contents; font-family: var(--page-font); font-weight: 700; left: 81px; font-style: normal; top: 1039px; }
 .f19-layer-029 { translate: -50% 0; position: absolute; height: 23px; line-height: 1; left: 115px; color: #f8f0e5; font-size: 20px; text-align: center; top: 1171px; letter-spacing: -0.6px; width: 68px; }
 .f19-layer-030 { translate: -50% 0; position: absolute; line-height: 1; left: 402.5px; color: #f8f0e5; font-size: 20px; text-align: center; top: 1171px; letter-spacing: -0.6px; white-space: nowrap; }
 .f19-layer-031 { position: absolute; align-content: stretch; display: flex; flex-direction: column; gap: 24px; align-items: flex-start; left: 1089px; color: #f8f0e5; font-size: 20px; top: 1039px; letter-spacing: -0.6px; white-space: nowrap; }
@@ -867,15 +879,15 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f19-layer-043 { text-underline-position: from-font; cursor: pointer; text-decoration-thickness: from-font; text-decoration-style: solid; line-height: 1; text-decoration-line: underline; }
 .f19-layer-044 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f19-layer-045 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f19-layer-046 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-046 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f19-layer-047 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f19-layer-048 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-048 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f19-layer-049 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f19-layer-050 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-050 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f19-layer-051 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f19-layer-052 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-052 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f19-layer-053 { border-color: #f8f0e5; border-bottom-width: 1px; border-style: dashed; align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
-.f19-layer-054 { word-break: break-word; font-family: Pretendard, sans-serif; font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
+.f19-layer-054 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #f8f0e5; font-size: 15px; white-space: nowrap; }
 .f19-layer-055 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f19-layer-056 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f19-layer-057 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
