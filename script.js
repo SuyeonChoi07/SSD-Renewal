@@ -25,7 +25,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 || index === 6 || index === 15 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const entryHold = index === 17 ? 1500 : 1000;
+      const entryHold = index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1000 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2750 : 0;

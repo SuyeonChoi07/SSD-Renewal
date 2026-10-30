@@ -13,7 +13,7 @@ assert.ok(stateAt(1001, heights).transition > 0);
 for(let i=0;i<heights.length;i++) {
   const segment=segments[i];
   // Every scene holds its first view before scrolling or motion begins.
-  assert.equal(segment.entryHold,i===17?1500:1000);
+  assert.equal(segment.entryHold,i===17?1680:1000);
   for(const delta of [0,400,800,segment.entryHold-1,segment.entryHold]){
     const state=stateAt(segment.start+delta,heights);
     assert.equal(state.index,i);assert.equal(state.local,0);assert.equal(state.offset,0);assert.equal(state.transition,0);

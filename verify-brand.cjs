@@ -1,7 +1,13 @@
 const assert=require('node:assert/strict');
 const {brandPose:pose,BRAND_HALL_PIN:pin,BRAND_HALL_SCROLL:width,timeline,stateAt}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height),segment=timeline(heights)[17];
-assert.equal(segment.motion,width);assert.equal(segment.entryHold,1500);
+assert.equal(segment.motion,width);assert.equal(segment.entryHold,1680);
+for(const distance of [1180,1300,1500,1679,1680]){
+ const state=stateAt(segment.start+distance,heights);
+ assert.equal(state.local,0,'Hold for 500px after the final character appears');
+ assert.equal(state.offset,0);
+}
+assert.equal(stateAt(segment.start+1681,heights).offset,1,'Scroll resumes after the text hold');
 for(const local of [0,1000,pin-1,pin]){const p=pose(local);assert.equal(p.offset,local);assert.equal(p.galleryX,0);assert.equal(235-p.offset+p.offset,235,'Bread remains at its original screen height');}
 let previousX=0,previousRotation=-1;
 for(let d=0;d<=width;d+=1){
