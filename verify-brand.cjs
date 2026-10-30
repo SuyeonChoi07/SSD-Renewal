@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict');
 const {brandPose:pose,BRAND_HALL_PIN:pin,BRAND_HALL_SCROLL:width,timeline,stateAt}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height),segment=timeline(heights)[17];
-assert.equal(segment.motion,width);assert.equal(segment.entryHold,1000);
+assert.equal(segment.motion,width);assert.equal(segment.entryHold,1500);
 for(const local of [0,1000,pin-1,pin]){const p=pose(local);assert.equal(p.offset,local);assert.equal(p.galleryX,0);assert.equal(235-p.offset+p.offset,235,'Bread remains at its original screen height');}
 let previousX=0,previousRotation=-1;
 for(let d=0;d<=width;d+=1){
@@ -24,14 +24,15 @@ const {brandCharacterOpacity:alpha}=require('./script.js');
 for(const count of [23,240]){
  for(let i=0;i<count;i++){
   assert.equal(alpha(0,0,i,count),0,'Loading without scroll cannot reveal letters');
-  assert.equal(alpha(680,0,i,count),1,'All characters revealed during entry hold');
-  assert.equal(alpha(1000,180,i,count),0,'All characters fade out with downward scroll');
+  assert.equal(alpha(500,0,i,count),0,'No character appears before the 500px delay ends');
+  assert.equal(alpha(1180,0,i,count),1,'All characters revealed after delay and original animation');
+  assert.equal(alpha(1500,180,i,count),0,'All characters fade out with downward scroll');
  }
- assert.ok(alpha(300,0,0,count)>alpha(300,0,count-1,count),'Letters enter in reading order');
- assert.ok(alpha(1000,90,0,count)<alpha(1000,90,count-1,count),'Letters exit in reading order');
- const before=alpha(350,0,Math.floor(count/2),count);
- alpha(1000,180,Math.floor(count/2),count);
- assert.equal(alpha(350,0,Math.floor(count/2),count),before,'Reverse scroll restores exact character opacity');
+ assert.ok(alpha(800,0,0,count)>alpha(800,0,count-1,count),'Letters enter in reading order');
+ assert.ok(alpha(1500,90,0,count)<alpha(1500,90,count-1,count),'Letters exit in reading order');
+ const before=alpha(850,0,Math.floor(count/2),count);
+ alpha(1500,180,Math.floor(count/2),count);
+ assert.equal(alpha(850,0,Math.floor(count/2),count),before,'Reverse scroll restores exact character opacity');
 }
 const css=require('node:fs').readFileSync(__dirname+'/styles.css','utf8');
 assert.ok(!css.includes('brand-character-in'),'No time-based autoplay animation');

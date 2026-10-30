@@ -25,7 +25,7 @@
     return heights.map((height, index) => {
       const hold = index === 0 || index === 6 || index === 15 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const entryHold = 1000;
+      const entryHold = index === 17 ? 1500 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1000 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2750 : 0;
@@ -79,7 +79,7 @@
   }
   function brandCharacterOpacity(entryScroll,local,index,count) {
     const order=count>1?index/(count-1):0;
-    const incoming=ease(clamp((entryScroll-order*480)/200));
+    const incoming=ease(clamp((entryScroll-500-order*480)/200));
     const outgoing=ease(clamp((local-order*100)/80));
     return incoming*(1-outgoing);
   }
