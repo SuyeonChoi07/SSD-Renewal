@@ -27,7 +27,7 @@
       const travel = Math.max(0, height - 1020);
       const entryHold = 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1000 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1000 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2750 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -46,7 +46,6 @@
     return { index, local, transition, offset };
   }
   function transitionWeights(index, progress) {
-    if(index===17)return {outgoing:1,incoming:1,black:0};
     if (index === 15) {
       const incoming=wrapperExitPose(progress).fade;
       return {outgoing:1-incoming,incoming,black:0};
@@ -72,10 +71,6 @@
     const offset=progress<=BRAND_HALL_PIN?progress:progress<=BRAND_HALL_PIN+BRAND_HALL_SCROLL?BRAND_HALL_PIN:progress-BRAND_HALL_SCROLL;
     return {offset:Math.min(travel,offset),galleryX:horizontal===0?0:-BRAND_HALL_SCROLL*ease(horizontal),
       breadRotation:360*ease(progress/(travel+BRAND_HALL_SCROLL))};
-  }
-  function contactScrollPose(progress) {
-    const y=1020*ease(clamp(progress));
-    return {brandY:-y,contactY:1020-y};
   }
   function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
     const stagger = line * .025;
@@ -195,16 +190,12 @@
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
   if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperTearPose, wrapperCopyVisible, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
-  if (typeof module !== 'undefined') module.exports.contactScrollPose=contactScrollPose;
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
   const segments = timeline(heights);
   document.querySelectorAll('.scroll-chapter').forEach((chapter, index) => { chapter.style.height = segments[index].length + 'px'; });
   const stage = document.querySelector('.design-stage');
-  // 원본 그라데이션 두 장을 스크롤되는 Contact 본문 밖의 고정 무대로 이동.
-  const contactGradients=Array.from(scenes[18].querySelectorAll('.f19-layer-003, .f19-layer-004'));
-  contactGradients.forEach(layer=>stage.append(layer));
   const veil = document.querySelector('.transition-blackout');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const intro = scenes[1];
@@ -383,10 +374,6 @@
     const weights = transitionWeights(state.index, state.transition);
     veil.style.opacity = weights.black;
     renderHeader(state);
-    const contactScroll=contactScrollPose(state.index===17?state.transition:state.index>17?1:0);
-    contactGradients.forEach(layer=>{
-      layer.style.visibility=state.index===18||state.index===17&&state.transition>0?'visible':'hidden';
-    });
     scenes.forEach((scene, index) => {
       let opacity = index === state.index ? weights.outgoing : index === state.index + 1 ? weights.incoming : 0;
       if(state.index>=3 && state.index<=5) {
@@ -398,8 +385,6 @@
         if(index===state.index+1)opacity=0;
       }
       scene.style.opacity = opacity;
-      const sceneY=state.index===17?(index===17?contactScroll.brandY:index===18?contactScroll.contactY:0):0;
-      scene.style.transform=`translateY(${sceneY}px)`;
       scene.classList.toggle('is-visible', opacity > 0);
       const logicalCurrent=state.transition>=.5?Math.min(state.index+1,scenes.length-1):state.index;
       const visualCurrent=logicalCurrent>=3&&logicalCurrent<=5?3:logicalCurrent;
