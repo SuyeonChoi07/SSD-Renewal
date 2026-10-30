@@ -93,6 +93,11 @@
     if(centerVh>=.4&&centerVh<=.6)return 1;
     return .5+.5*ease(centerVh<.4?(centerVh-.3)/.1:(.7-centerVh)/.1);
   }
+  function brandGalleryReveal(topVh) {
+    if(topVh>=.95)return 0;
+    if(topVh<=.8)return 1;
+    return ease((.95-topVh)/.15);
+  }
   function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
     const stagger = line * .025;
     const incoming = initiallyVisible ? 1 : ease(clamp((progress - enter - stagger) / .12));
@@ -214,6 +219,7 @@
   if (typeof module !== 'undefined') module.exports.contactScrollPose=contactScrollPose;
   if (typeof module !== 'undefined') module.exports.brandCharacterOpacity=brandCharacterOpacity;
   if (typeof module !== 'undefined') module.exports.brandCellOpacity=brandCellOpacity;
+  if (typeof module !== 'undefined') module.exports.brandGalleryReveal=brandGalleryReveal;
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -375,6 +381,7 @@
   }
   const header = document.querySelector('.persistent-header');
   const brand=scenes[17];
+  const brandGallery=brand.querySelector('.f18-layer-124');
   const brandCells=Array.from(brand.querySelector('.f18-layer-013').children);
   const brandCopy=brand.querySelector('.f18-layer-006');
   const brandTextGroups=[brand.querySelector('.f18-layer-002'),brandCopy].map(container=>{
@@ -408,12 +415,14 @@
       span.style.opacity=reduced.matches?1:brandCharacterOpacity(entryScroll,local,index,characters.length);
     }));
     if(brand.classList.contains('is-visible')){
+      const reveal=reduced.matches?1:brandGalleryReveal(brandGallery.getBoundingClientRect().top/innerHeight);
       // 레터박스와 화면 배율을 포함한 실제 viewport 기준의 cell 중심선.
       const opacities=brandCells.map(cell=>{
         const rect=cell.getBoundingClientRect();
         return brandCellOpacity((rect.top+rect.height/2)/innerHeight);
       });
       brandCells.forEach((cell,index)=>cell.style.setProperty('--brand-cell-opacity',opacities[index]));
+      brandGallery.style.setProperty('--brand-gallery-reveal-x',(-100*(1-reveal))+'%');
     }
   }
   const headerLinks = Array.from(header.querySelectorAll('[data-name="nav"] > a'));

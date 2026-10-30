@@ -1111,6 +1111,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   transform-origin: center; will-change: transform; z-index: 0;
 }
 #brand .f18-layer-124 { transform: translateX(var(--brand-gallery-x, 0px)); will-change: transform; z-index: 2; }
+#brand .f18-layer-124 > div, #brand .f18-layer-130, #brand .f18-layer-135 { overflow: hidden; }
+#brand .f18-layer-124 img { translate: var(--brand-gallery-reveal-x, -100%) 0; will-change: translate; }
 #brand .f18-layer-005, #brand .f18-layer-137 { z-index: 2; }
 #brand .f18-layer-013 > [data-name="cell"] { opacity: var(--brand-cell-opacity, .5); }
 
