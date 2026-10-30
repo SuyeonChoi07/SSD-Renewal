@@ -27,7 +27,7 @@
       const travel = Math.max(0, height - 1020);
       const entryHold = index === 11 ? 0 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1050 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1400 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 2750 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -53,10 +53,10 @@
     }
     if (index === 13) {
       // Table_tilt → 검정 → Our Way_start. 역방향 스크롤도 동일합니다.
-      const elapsed=1050*clamp(progress);
+      const elapsed=1400*clamp(progress);
       const outgoing = 1 - ease(clamp(elapsed / 450));
-      const incoming = ease(clamp((elapsed - 600) / 450));
-      const black = elapsed < 450 ? 1 - outgoing : elapsed > 600 ? 1 - incoming : 1;
+      const incoming = ease(clamp((elapsed - 950) / 450));
+      const black = elapsed < 450 ? 1 - outgoing : elapsed > 950 ? 1 - incoming : 1;
       return { outgoing, incoming, black };
     }
     // 이전 화면은 완전 불투명하게 받치고 다음 화면만 올려 합성 알파를 1로 유지합니다.
