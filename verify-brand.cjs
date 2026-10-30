@@ -43,3 +43,11 @@ for(const count of [23,240]){
 const css=require('node:fs').readFileSync(__dirname+'/styles.css','utf8');
 assert.ok(!css.includes('brand-character-in'),'No time-based autoplay animation');
 console.log('Brand heading and introduction: scroll-driven per-character in/out; no loading autoplay; reversible: PASS');
+
+const {brandCellOpacity:cellOpacity}=require('./script.js');
+for(const y of [-1,0,.2,.3,.7,.8,1,2])assert.equal(cellOpacity(y),.6);
+for(const y of [.4,.45,.5,.55,.6])assert.equal(cellOpacity(y),1);
+assert.ok(Math.abs(cellOpacity(.35)-.8)<1e-6);assert.ok(Math.abs(cellOpacity(.65)-.8)<1e-6);
+for(let i=31;i<40;i++)assert.ok(cellOpacity(i/100)>cellOpacity((i-1)/100));
+for(let i=61;i<=70;i++)assert.ok(cellOpacity(i/100)<cellOpacity((i-1)/100));
+console.log('Brand cells: 60% outside 30–70vh; eased ramps at 30–40/60–70vh; 100% across 40–60vh: PASS');
