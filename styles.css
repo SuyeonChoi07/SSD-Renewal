@@ -1099,7 +1099,10 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #brand .f18-layer-009 { display: none; }
 .brand-copy-character { opacity: 0; }
 .f02-layer-005 { font-family: ChosunCentennial, Pretendard, sans-serif; }
-.f16-layer-002, .f17-layer-002 { font-size: 150px; }
+.f15-layer-002, .f16-layer-002, .f17-layer-002 {
+  font-size: 100px; line-height: normal;
+  left: 1032px; top: 510px; translate: -50% -50%;
+}
 .f01-layer-035,
 .f17-layer-024, .f17-layer-030, .f17-layer-033, .f17-layer-027, .f17-layer-041, .f17-layer-044,
 .f17-layer-040, .f17-layer-045,
