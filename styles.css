@@ -1100,7 +1100,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .brand-copy-character { opacity: 0; }
 .f02-layer-005 { font-family: ChosunCentennial, Pretendard, sans-serif; }
 .f15-layer-002, .f16-layer-002, .f17-layer-002 {
-  font-size: 100px; line-height: normal;
+  font-size: 80px; line-height: normal;
   left: 1032px; top: 510px; translate: -50% -50%;
 }
 .f01-layer-035,
