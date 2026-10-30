@@ -1052,6 +1052,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 
 /* 확대 완료 → 패널 진입(500px) → 300px 대기 → 위에서 줄별 문구 진입. */
 #with-daejeon .f09-layer-008 { transform: translateX(var(--panel-x, -702px)); opacity: var(--panel-opacity, 0); will-change: transform, opacity; }
+#with-daejeon .f09-layer-012 .daejeon-line { line-height: 40px; }
 #with-daejeon .daejeon-line { display: block; opacity: var(--daejeon-line-opacity, 0); transform: translateY(var(--daejeon-line-y, -32px)); will-change: transform, opacity; }
 #with-daejeon .f09-layer-017 { opacity: 0; }
 
