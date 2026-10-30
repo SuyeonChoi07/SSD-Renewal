@@ -94,9 +94,9 @@
     return .5+.5*ease(centerVh<.4?(centerVh-.3)/.1:(.7-centerVh)/.1);
   }
   function brandGalleryReveal(topVh) {
-    if(topVh>=.95)return 0;
-    if(topVh<=.8)return 1;
-    return ease((.95-topVh)/.15);
+    if(topVh>=.85)return 0;
+    if(topVh<=.55)return 1;
+    return ease((.85-topVh)/.3);
   }
   function introLinePose(progress, enter, exit, line, initiallyVisible = false) {
     const stagger = line * .025;
