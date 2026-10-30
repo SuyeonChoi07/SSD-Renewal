@@ -1,6 +1,7 @@
 /* Figma 원본 레이어별 CSS. f01=Landing, f02=Intro ... f19=Contact.
    요소·문구는 index.html, 스크롤 거리는 script.js의 SCENE_SCROLL_PX에서 수정합니다. */
 @font-face { font-family: Pretendard; src: url('assets/PretendardVariable.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: Shilla_Culture; src: url('assets/Shilla-Culture-M.ttf') format('truetype'); font-style: normal; font-weight: 400; font-display: swap; }
 @font-face {
   font-family: 'Shilla Culture Korean';
   src: url('assets/Shilla-Culture-M.ttf') format('truetype');
@@ -1097,6 +1098,14 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #brand .f18-layer-006 > .f18-layer-008, #brand .f18-layer-006 > .f18-layer-010 { margin-top: 24px; }
 #brand .f18-layer-009 { display: none; }
 .brand-copy-character { opacity: 0; }
+.f02-layer-005 { font-family: Shilla_Culture, Pretendard, sans-serif; }
+.f16-layer-002, .f17-layer-002 { font-size: 150px; }
+.f01-layer-035,
+.f17-layer-024, .f17-layer-030, .f17-layer-033, .f17-layer-027, .f17-layer-041, .f17-layer-044,
+.f19-layer-018, .f19-layer-023 {
+  --page-font: Pretendard, sans-serif;
+  font-family: Pretendard, sans-serif;
+}
 @media(prefers-reduced-motion:reduce) {
   #brand .brand-copy-character { opacity: 1; }
 }
