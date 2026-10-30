@@ -1077,3 +1077,14 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 
 /* Contact의 원본 상단 그라데이션은 본문 스크롤과 독립된 고정 레이어. */
 .design-stage > .f19-layer-003, .design-stage > .f19-layer-004 { top: 0; z-index: 80; visibility: hidden; pointer-events: none; }
+
+/* Brand 우측 소개: 들여쓰기 없이 같은 줄 간격, 글자 순차 페이드 인. */
+#brand .f18-layer-006 { text-align: left; line-height: 1.9; }
+#brand .f18-layer-006 > p { margin: 0; line-height: inherit; white-space: nowrap; }
+#brand .f18-layer-009 { display: none; }
+.brand-copy-character { opacity: 0; }
+#brand.is-visible .brand-copy-character { animation: brand-character-in 360ms ease-in-out both; animation-delay: calc(var(--character-index) * 18ms); }
+@keyframes brand-character-in { from { opacity: 0; } to { opacity: 1; } }
+@media(prefers-reduced-motion:reduce) {
+  #brand .brand-copy-character { opacity: 1; animation: none; }
+}

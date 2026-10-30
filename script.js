@@ -357,6 +357,24 @@
   }
   const header = document.querySelector('.persistent-header');
   const brand=scenes[17];
+  const brandCopy=brand.querySelector('.f18-layer-006');
+  const brandCopyParagraphs=Array.from(brandCopy.querySelectorAll('p:not(.f18-layer-009)'));
+  brandCopy.setAttribute('role','group');
+  brandCopy.setAttribute('aria-label',brandCopyParagraphs.map(p=>p.innerText).join('\n'));
+  let brandCharacterIndex=0;
+  brandCopyParagraphs.forEach(paragraph=>{
+    paragraph.setAttribute('aria-hidden','true');
+    Array.from(paragraph.childNodes).filter(node=>node.nodeType===3).forEach(node=>{
+      const fragment=document.createDocumentFragment();
+      Array.from(node.textContent.trim().replace(/\s+/g,' ')).forEach(character=>{
+        const span=document.createElement('span');
+        span.className='brand-copy-character';span.textContent=character;
+        span.style.setProperty('--character-index',brandCharacterIndex++);
+        fragment.append(span);
+      });
+      node.replaceWith(fragment);
+    });
+  });
   function renderBrand(state) {
     const local=state.index<17?0:state.index===17?state.local:segments[17].travel+BRAND_HALL_SCROLL;
     const pose=brandPose(local,segments[17].travel);
