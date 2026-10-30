@@ -1102,6 +1102,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f16-layer-002, .f17-layer-002 { font-size: 150px; }
 .f01-layer-035,
 .f17-layer-024, .f17-layer-030, .f17-layer-033, .f17-layer-027, .f17-layer-041, .f17-layer-044,
+.f17-layer-040, .f17-layer-045,
 .f19-layer-018, .f19-layer-023 {
   --page-font: Pretendard, sans-serif;
   font-family: Pretendard, sans-serif;
