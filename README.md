@@ -10,7 +10,11 @@ Figma의 지정된 19개 프레임을 원본 HTML 레이어와 CSS로 구현한 
 - `assets/`: Figma 원본 이미지, SVG, Pretendard 폰트.
 - `figma-source.json`: 원본 프레임, 레이어 ID 순서, 이미지 슬롯 매핑.
 
-설치나 빌드 없이 `index.html`을 브라우저에서 열면 실행됩니다.
+설치나 빌드 없이 HTTP 서버에서 실행됩니다. Intro의 3D 모델은 ES 모듈과 GLB를 불러오므로 `file://` 방식은 지원하지 않습니다.
+
+## Intro 3D 빵
+
+`assets/tws-model-kit/`의 `tws.glb`와 `tws_w.glb`를 사용합니다. `intro-model.js`에서 모델을 초기화하고 카메라를 기존 빵 이미지의 438×438px 영역에 맞춥니다. 01은 Intro 스크롤 시작, 02는 Intro 내부 스크롤의 끝, 03은 History 스크롤 시작에 연결됩니다. 기존 Intro 빵 이미지의 이동·회전 속성은 제거했으며 모델의 회전과 교체는 `assets/tws-model-kit/model-experience.js`가 담당합니다. 포함된 Three.js MIT 라이선스는 `assets/tws-model-kit/vendor/THREE-LICENSE.txt`에 있습니다.
 
 ## 화면 순서
 

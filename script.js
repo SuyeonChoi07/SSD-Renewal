@@ -64,8 +64,11 @@
   }
   function introPose(offset, travel) {
     const progress = clamp(travel ? offset / travel : 0);
-    const settle = ease(clamp((progress - .76) / .24));
-    return { progress, breadX: 1035, breadY: 326 + 24 * settle, breadRotation: 360 * ease(progress) };
+    return { progress };
+  }
+  function modelScrollAnchors(segments) {
+    const intro=segments[1];
+    return [intro.start,intro.start+intro.entryHold+intro.travel,segments[2].start];
   }
   function brandPose(local,travel=6129) {
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
@@ -220,19 +223,22 @@
   if (typeof module !== 'undefined') module.exports.brandCharacterOpacity=brandCharacterOpacity;
   if (typeof module !== 'undefined') module.exports.brandCellOpacity=brandCellOpacity;
   if (typeof module !== 'undefined') module.exports.brandGalleryReveal=brandGalleryReveal;
+  if (typeof module !== 'undefined') module.exports.modelScrollAnchors=modelScrollAnchors;
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
   const segments = timeline(heights);
+  window.storyModel={anchors:modelScrollAnchors(segments)};
   document.querySelectorAll('.scroll-chapter').forEach((chapter, index) => { chapter.style.height = segments[index].length + 'px'; });
   const stage = document.querySelector('.design-stage');
+  const introModel=document.querySelector('.intro-model-stage');
+  stage.append(introModel);
   // 원본 그라데이션 두 장을 스크롤되는 Contact 본문 밖의 고정 무대로 이동.
   const contactGradients=Array.from(scenes[18].querySelectorAll('.f19-layer-003, .f19-layer-004'));
   contactGradients.forEach(layer=>stage.append(layer));
   const veil = document.querySelector('.transition-blackout');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const intro = scenes[1];
-  const bread = intro.querySelector('[data-node-id="738:634"]');
   const introCopy = [
     { element: intro.querySelector('[data-node-id="738:631"]'), enter: 0, exit: .20, initial: true },
     { element: intro.querySelector('[data-node-id="740:688"]'), enter: .32, exit: .59 },
@@ -242,8 +248,6 @@
   function renderIntro(offset) {
     const pose = introPose(offset, segments[1].travel);
     intro.style.setProperty('--intro-offset', offset + 'px');
-    bread.style.setProperty('--bread-rotation', (reduced.matches ? 0 : pose.breadRotation) + 'deg');
-    bread.style.setProperty('--bread-shift-y', (pose.breadY - 326) + 'px');
     introCopy.forEach(group => {
       group.element.querySelectorAll('p').forEach((line, index) => {
         const state = introLinePose(pose.progress, group.enter, group.exit, index, group.initial);
@@ -277,10 +281,6 @@
       const unit=key.includes('Rotation')?'deg':['t','titleAlpha'].includes(key)?'':'px';
       stage.style.setProperty('--history-exit-'+key,value+unit);
     });
-    const outgoing = state.index === 1 ? pose : historyPose(0, 0);
-    bread.style.setProperty('--bread-arrival-x', (outgoing.breadX - 1035) + 'px');
-    bread.style.setProperty('--bread-arrival-y', (outgoing.breadY - 350) + 'px');
-    bread.style.setProperty('--intro-bread-size', outgoing.breadWidth + 'px');
   }
   // 세 History_content 프레임에서 하나의 원본 갤러리·문구·점선을 계속 사용합니다.
   const gallery=scenes[3].querySelector('.f04-layer-005');
@@ -442,6 +442,10 @@
     scheduled = false;
     const state = stateAt(window.scrollY, heights);
     const weights = transitionWeights(state.index, state.transition);
+    const modelOpacity=state.index===0?weights.incoming:state.index===1?1:state.index===2?1-ease(state.transition):0;
+    introModel.dataset.opacity=modelOpacity;
+    introModel.style.opacity=modelOpacity;
+    introModel.style.visibility=modelOpacity>0?'visible':'hidden';
     veil.style.opacity = weights.black;
     renderHeader(state);
     const contactScroll=contactScrollPose(state.index===17?state.transition:state.index>17?1:0);

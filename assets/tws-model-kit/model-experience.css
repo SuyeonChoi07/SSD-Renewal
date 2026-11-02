@@ -1,0 +1,3 @@
+/* 고정된 전체 화면 3D 레이어. 이 클래스는 모델 표시 영역에만 적용합니다. */
+.tws-model-stage { position:fixed; inset:0; z-index:0; pointer-events:auto; }
+.tws-model-stage canvas { display:block; width:100%; height:100%; touch-action:pan-y; }

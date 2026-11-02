@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TWS 3D 재사용 예제</title>
+  <link rel="stylesheet" href="model-experience.css">
+  <style>
+    body { margin:0; background:#f2eee6; }
+    main { position:relative; z-index:1; pointer-events:none; }
+    section { height:100vh; }
+  </style>
+  <script type="importmap">
+  {"imports":{
+    "three":"./vendor/three.module.js",
+    "three/addons/loaders/GLTFLoader.js":"./vendor/GLTFLoader.js",
+    "three/addons/environments/RoomEnvironment.js":"./vendor/RoomEnvironment.js"
+  }}
+  </script>
+</head>
+<body>
+  <div id="model-stage" class="tws-model-stage" aria-label="스크롤과 호버에 반응하는 3D 모델"></div>
+  <main>
+    <section id="section-01" aria-label="첫 번째 섹션"></section>
+    <section id="section-02" aria-label="두 번째 섹션"></section>
+    <section id="section-03" aria-label="세 번째 섹션"></section>
+  </main>
+  <script type="module" src="example.js"></script>
+</body>
+</html>
