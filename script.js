@@ -67,8 +67,9 @@
     return { progress };
   }
   function modelScrollAnchors(segments) {
-    const intro=segments[1];
-    return [intro.start,intro.start+intro.entryHold+intro.travel,segments[2].start];
+    const intro=segments[1],history=segments[2];
+    // 02: History 전환이 끝나 opacity 1. 03: History 문구 슬라이드 인 완료.
+    return [intro.start,history.start,history.start+history.entryHold+2800];
   }
   function brandPose(local,travel=6129) {
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);

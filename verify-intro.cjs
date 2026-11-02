@@ -16,8 +16,10 @@ assert.doesNotMatch(css+script,/--bread-(?:rotation|shift|arrival)/);
 assert.match(modelModule,/framing:\{size:438,centerX:1035,centerY:545\}/);
 const segments=timeline([1020,3060,1020,1020]);
 const anchors=modelScrollAnchors(segments);
-assert.deepEqual(anchors,[segments[1].start,segments[1].start+segments[1].entryHold+segments[1].travel,segments[2].start]);
+assert.deepEqual(anchors,[segments[1].start,segments[2].start,segments[2].start+segments[2].entryHold+2800]);
 assert.ok(anchors[0]<anchors[1]&&anchors[1]<anchors[2]);
+assert.equal(anchors[1],segments[1].start+segments[1].length,'02 begins after the Intro to History transition');
+assert.equal(require('./script.js').historyPose(2800).text,1,'03 begins when the History title finishes sliding in');
 for(const name of ['tws.glb','tws_w.glb']){
   const glb=fs.readFileSync(__dirname+'/assets/tws-model-kit/'+name);
   assert.equal(glb.toString('ascii',0,4),'glTF');
