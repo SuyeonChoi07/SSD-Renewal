@@ -71,6 +71,12 @@
     // 02: History 전환이 끝나 opacity 1. 03: History 문구 슬라이드 인 완료.
     return [intro.start,history.start,history.start+history.entryHold+2800];
   }
+  function modelPlacement(progress) {
+    const t=ease(clamp(progress));
+    const scale=1-.1*t;
+    // 캔버스 중앙 기준 배율 변화 뒤에도 모델 중심이 점선 사각형의 중심(1029, 508)에 닿게 한다.
+    return {scale,x:-6*t+3*(1-scale),y:-37*t+35*(1-scale)};
+  }
   function brandPose(local,travel=6129) {
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
     const horizontal=clamp((progress-BRAND_HALL_PIN)/BRAND_HALL_SCROLL);
@@ -225,11 +231,12 @@
   if (typeof module !== 'undefined') module.exports.brandCellOpacity=brandCellOpacity;
   if (typeof module !== 'undefined') module.exports.brandGalleryReveal=brandGalleryReveal;
   if (typeof module !== 'undefined') module.exports.modelScrollAnchors=modelScrollAnchors;
+  if (typeof module !== 'undefined') module.exports.modelPlacement=modelPlacement;
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
   const segments = timeline(heights);
-  window.storyModel={anchors:modelScrollAnchors(segments)};
+  window.storyModel={anchors:modelScrollAnchors(segments),placement:modelPlacement};
   document.querySelectorAll('.scroll-chapter').forEach((chapter, index) => { chapter.style.height = segments[index].length + 'px'; });
   const stage = document.querySelector('.design-stage');
   const introModel=document.querySelector('.intro-model-stage');

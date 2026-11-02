@@ -16,6 +16,8 @@ Figma의 지정된 19개 프레임을 원본 HTML 레이어와 CSS로 구현한 
 
 `assets/tws-model-kit/`의 `tws.glb`와 `tws_w.glb`를 사용합니다. `intro-model.js`에서 모델을 초기화하고 카메라를 기존 빵 이미지의 438×438px 영역에 맞춥니다. 01은 Intro 스크롤 시작, 02는 History의 opacity가 1이 되는 순간, 03은 History 문구(`.f03-layer-005`)의 슬라이드 인이 끝나는 순간에 연결됩니다. 기존 Intro 빵 이미지의 이동·회전 속성은 제거했으며 모델의 회전과 교체는 `assets/tws-model-kit/model-experience.js`가 담당합니다. 포함된 Three.js MIT 라이선스는 `assets/tws-model-kit/vendor/THREE-LICENSE.txt`에 있습니다.
 
+02→03 구간에는 3D 모델이 점선 사각형(`.f03-layer-009`)의 중심으로 이동하면서 90% 크기로 줄어듭니다. 위치·배율의 스크롤 보간 값은 `script.js`의 `modelPlacement()`에서 수정할 수 있습니다.
+
 ## 화면 순서
 
 Landing → Intro → History → History_content_start → History_content_mid → History_content_end → bridge_scale → bridge_scale_end → with Daejeon → bridge_fade_1 → bridge_fade_2 → bridge_fade_3 → Table → Table_tilt → Our Way_start → Our Way_mid → Our Way_end → Brand → Contact

@@ -935,7 +935,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #intro .f02-layer-005 {
   transform: translateY(calc(var(--intro-offset, 0px) + var(--line-y, 0px))); z-index: 15;
 }
-.intro-model-stage { position: absolute; inset: 0; width: 2064px; height: 1020px; z-index: 10; opacity: 0; visibility: hidden; pointer-events: none; }
+.intro-model-stage { position: absolute; inset: 0; width: 2064px; height: 1020px; z-index: 10; opacity: 0; visibility: hidden; pointer-events: none; transform-origin: 1032px 510px; will-change: transform; }
 .intro-model-stage canvas { display: block; width: 100%; height: 100%; pointer-events: auto; }
 .intro-model-stage:not([data-status="ready"]) canvas { visibility: hidden; }
 .design-stage[data-model-ready="true"] #history .f03-layer-006 { visibility: hidden; }

@@ -12,7 +12,11 @@ try {
     getScrollPositions:()=>window.storyModel.anchors,
     // 이전 빵의 438×438 영역과 같은 초기 크기, 기존 초기 중심 좌표.
     framing:{size:438,centerX:1035,centerY:545},
-    isActive:()=>Number(container.dataset.opacity)>0
+    isActive:()=>Number(container.dataset.opacity)>0,
+    onUpdate:({swapProgress})=>{
+      const {x,y,scale}=window.storyModel.placement(swapProgress);
+      container.style.transform=`translate(${x}px, ${y}px) scale(${scale})`;
+    }
   });
   window.introBreadModel=model;
   model.ready.then(()=>{

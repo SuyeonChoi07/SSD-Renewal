@@ -1,5 +1,5 @@
 const assert = require('node:assert/strict');
-const {introPose,introLinePose,timeline,modelScrollAnchors}=require('./script.js');
+const {introPose,introLinePose,timeline,modelScrollAnchors,modelPlacement}=require('./script.js');
 const travel=2040;
 assert.equal(introPose(0,travel).progress,0);
 const end=introPose(travel,travel);
@@ -20,6 +20,12 @@ assert.deepEqual(anchors,[segments[1].start,segments[2].start,segments[2].start+
 assert.ok(anchors[0]<anchors[1]&&anchors[1]<anchors[2]);
 assert.equal(anchors[1],segments[1].start+segments[1].length,'02 begins after the Intro to History transition');
 assert.equal(require('./script.js').historyPose(2800).text,1,'03 begins when the History title finishes sliding in');
+assert.deepEqual(modelPlacement(0),{scale:1,x:0,y:0});
+const endPlacement=modelPlacement(1);
+assert.ok(Math.abs(endPlacement.scale-.9)<1e-12);
+assert.ok(Math.abs(1032+(1035-1032)*endPlacement.scale+endPlacement.x-1029)<1e-12);
+assert.ok(Math.abs(510+(545-510)*endPlacement.scale+endPlacement.y-508)<1e-12);
+assert.ok(modelPlacement(.5).scale<1&&modelPlacement(.5).scale>.9);
 for(const name of ['tws.glb','tws_w.glb']){
   const glb=fs.readFileSync(__dirname+'/assets/tws-model-kit/'+name);
   assert.equal(glb.toString('ascii',0,4),'glTF');
