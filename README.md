@@ -22,6 +22,8 @@ Figma의 지정된 19개 프레임을 원본 HTML 레이어와 CSS로 구현한 
 
 `f18-layer-139`의 이미지를 `assets/tws-scroll-reuse/tws.glb`로 교체했습니다. 카메라는 초기 모델의 최대 표시 크기를 기존 이미지 영역과 비슷한 550px에 맞춥니다. 01은 Brand 소개 문구(`.f18-layer-006`)가 모두 등장한 시점, 02는 명예의 전당 갤러리(`.f18-layer-124`)의 가로 스크롤이 시작되는 시점입니다. `brand-model.js`가 모델을 초기화하고, 기존 이미지의 이동·회전 속성은 제거했습니다. 새 모델의 축별 회전과 호버는 압축 파일에 포함된 `assets/tws-scroll-reuse/model-experience.js` 및 `rotation-math.mjs`가 담당합니다. Three.js 런타임과 MIT 라이선스는 앞서 설치한 `assets/tws-model-kit/vendor/`를 함께 사용합니다.
 
+갤러리의 가로 스크롤이 끝나면 3D 모델도 갤러리와 같은 거리만큼 위로 이동합니다. 이 이동은 `script.js`의 `brandPose().modelY`에서 계산합니다.
+
 ## 화면 순서
 
 Landing → Intro → History → History_content_start → History_content_mid → History_content_end → bridge_scale → bridge_scale_end → with Daejeon → bridge_fade_1 → bridge_fade_2 → bridge_fade_3 → Table → Table_tilt → Our Way_start → Our Way_mid → Our Way_end → Brand → Contact

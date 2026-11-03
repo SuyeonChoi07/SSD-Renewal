@@ -81,7 +81,9 @@
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
     const horizontal=clamp((progress-BRAND_HALL_PIN)/BRAND_HALL_SCROLL);
     const offset=progress<=BRAND_HALL_PIN?progress:progress<=BRAND_HALL_PIN+BRAND_HALL_SCROLL?BRAND_HALL_PIN:progress-BRAND_HALL_SCROLL;
-    return {offset:Math.min(travel,offset),galleryX:horizontal===0?0:-BRAND_HALL_SCROLL*ease(horizontal)};
+    const visibleOffset=Math.min(travel,offset);
+    return {offset:visibleOffset,galleryX:horizontal===0?0:-BRAND_HALL_SCROLL*ease(horizontal),
+      modelY:visibleOffset>BRAND_HALL_PIN?BRAND_HALL_PIN-visibleOffset:0};
   }
   function brandModelScrollAnchors(segments) {
     const brand=segments[17];
@@ -389,7 +391,8 @@
   }
   const header = document.querySelector('.persistent-header');
   const brand=scenes[17];
-  brand.append(brand.querySelector('.brand-model-stage'));
+  const brandModel=brand.querySelector('.brand-model-stage');
+  brand.append(brandModel);
   const brandGallery=brand.querySelector('.f18-layer-124');
   const brandCells=Array.from(brand.querySelector('.f18-layer-013').children);
   const brandCopy=brand.querySelector('.f18-layer-006');
@@ -415,6 +418,7 @@
   function renderBrand(state) {
     const local=state.index<17?0:state.index===17?state.local:segments[17].travel+BRAND_HALL_SCROLL;
     const pose=brandPose(local,segments[17].travel);
+    brandModel.style.transform=`translateY(${pose.modelY}px)`;
     brand.style.setProperty('--brand-gallery-x',pose.galleryX+'px');
     // 화면 시작 고정 구간의 실제 스크롤로 등장, 세로 스크롤 시작 후 글자별 퇴장.
     const entryScroll=state.index<17?0:state.index===17?clamp(window.scrollY-segments[17].start,0,segments[17].entryHold):segments[17].entryHold;

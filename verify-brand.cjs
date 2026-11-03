@@ -38,7 +38,7 @@ for(const distance of [1180,1300,1500,1679,1680]){
  assert.equal(state.offset,0);
 }
 assert.equal(stateAt(segment.start+1681,heights).offset,1,'Scroll resumes after the text hold');
-for(const local of [0,1000,pin-400]){const p=pose(local);assert.equal(p.offset,local);assert.equal(p.galleryX,0);}
+for(const local of [0,1000,pin-400]){const p=pose(local);assert.equal(p.offset,local);assert.equal(p.galleryX,0);assert.equal(p.modelY,0);}
 let previousX=0;
 for(let d=0;d<=width;d+=1){
  const local=pin+d,p=pose(local),state=stateAt(segment.start+segment.entryHold+local,heights);
@@ -46,12 +46,14 @@ for(let d=0;d<=width;d+=1){
  assert.equal(5248-p.offset,180,'Heading reaches attached image position');
  assert.ok(p.galleryX<=previousX);
  assert.equal(state.offset,pin);assert.equal(state.transition,0);
+ assert.equal(p.modelY,0,'3D bread stays fixed during horizontal gallery scroll');
  previousX=p.galleryX;
 }
 assert.equal(pose(pin+width).galleryX,-width);
 for(const d of [1,200,1061]){
  const p=pose(pin+width+d);
  assert.equal(p.offset,pin+d);assert.equal(p.galleryX,-width,'Gallery stops moving after last photo');
+ assert.equal(p.modelY,-d,'3D bread and gallery move upward by the same scroll distance');
 }
 assert.equal(129+3635+pose(pin+width).galleryX,1935,'Last photo ends at right inset');
 assert.equal(pose(segment.travel+width).offset,segment.travel);
