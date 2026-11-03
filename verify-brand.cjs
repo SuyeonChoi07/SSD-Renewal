@@ -14,6 +14,24 @@ assert.equal(glb.readUInt32LE(8),glb.length);
 assert.match(html,/class="brand-model-stage" data-node-id="779:926"/);
 assert.doesNotMatch(html,/class="f18-layer-139/);
 assert.match(moduleSource,/framing:\{size:550\}/);
+const {ROTATION_DEGREES,axisEase,scrollRotation}=require('./assets/tws-scroll-reuse/rotation-math.mjs');
+assert.deepEqual(ROTATION_DEGREES,{x:-430,y:0,z:353});
+const radians=Math.PI/180;
+assert.ok(Math.abs(scrollRotation(1).x+430*radians)<1e-10);
+assert.ok(Math.abs(scrollRotation(1).z-353*radians)<1e-10);
+for(const axis of ['x','z']){
+  const peak=fn=>{
+    let maximum=0;
+    for(let i=1;i<10000;i++){
+      const t=i/10000,h=.00001;
+      maximum=Math.max(maximum,Math.abs((fn(t+h)-fn(t-h))/(2*h)));
+    }
+    return maximum;
+  };
+  const originalPeak=peak(t=>axisEase(t,axis));
+  const newPeak=peak(t=>scrollRotation(t)[axis]/(ROTATION_DEGREES[axis]*radians));
+  assert.ok(Math.abs(newPeak/originalPeak-.7)<.001,axis+' peak angular speed is 70%');
+}
 for(const distance of [1180,1300,1500,1679,1680]){
  const state=stateAt(segment.start+distance,heights);
  assert.equal(state.local,0,'Hold for 500px after the final character appears');
