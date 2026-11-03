@@ -81,12 +81,11 @@
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
     const horizontal=clamp((progress-BRAND_HALL_PIN)/BRAND_HALL_SCROLL);
     const offset=progress<=BRAND_HALL_PIN?progress:progress<=BRAND_HALL_PIN+BRAND_HALL_SCROLL?BRAND_HALL_PIN:progress-BRAND_HALL_SCROLL;
-    // 사진에 접근하면 빵 중심을 사진 세로 중심으로 내리고, 가로 이동 이후에는 함께 스크롤.
-    const breadDrop=110.5*ease(clamp((progress-(BRAND_HALL_PIN-400))/400));
-    const breadOffset=Math.min(offset,BRAND_HALL_PIN)+breadDrop;
-    return {offset:Math.min(travel,offset),galleryX:horizontal===0?0:-BRAND_HALL_SCROLL*ease(horizontal),
-      breadOffset,
-      breadRotation:360*ease(progress/(travel+BRAND_HALL_SCROLL))};
+    return {offset:Math.min(travel,offset),galleryX:horizontal===0?0:-BRAND_HALL_SCROLL*ease(horizontal)};
+  }
+  function brandModelScrollAnchors(segments) {
+    const brand=segments[17];
+    return [brand.start+1180,brand.start+brand.entryHold+BRAND_HALL_PIN];
   }
   function contactScrollPose(progress) {
     const y=1020*ease(clamp(progress));
@@ -232,11 +231,12 @@
   if (typeof module !== 'undefined') module.exports.brandGalleryReveal=brandGalleryReveal;
   if (typeof module !== 'undefined') module.exports.modelScrollAnchors=modelScrollAnchors;
   if (typeof module !== 'undefined') module.exports.modelPlacement=modelPlacement;
+  if (typeof module !== 'undefined') module.exports.brandModelScrollAnchors=brandModelScrollAnchors;
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
   const segments = timeline(heights);
-  window.storyModel={anchors:modelScrollAnchors(segments),placement:modelPlacement};
+  window.storyModel={anchors:modelScrollAnchors(segments),placement:modelPlacement,brandAnchors:brandModelScrollAnchors(segments)};
   document.querySelectorAll('.scroll-chapter').forEach((chapter, index) => { chapter.style.height = segments[index].length + 'px'; });
   const stage = document.querySelector('.design-stage');
   const introModel=document.querySelector('.intro-model-stage');
@@ -389,6 +389,7 @@
   }
   const header = document.querySelector('.persistent-header');
   const brand=scenes[17];
+  brand.append(brand.querySelector('.brand-model-stage'));
   const brandGallery=brand.querySelector('.f18-layer-124');
   const brandCells=Array.from(brand.querySelector('.f18-layer-013').children);
   const brandCopy=brand.querySelector('.f18-layer-006');
@@ -414,8 +415,6 @@
   function renderBrand(state) {
     const local=state.index<17?0:state.index===17?state.local:segments[17].travel+BRAND_HALL_SCROLL;
     const pose=brandPose(local,segments[17].travel);
-    brand.style.setProperty('--brand-bread-offset',pose.breadOffset+'px');
-    brand.style.setProperty('--brand-bread-rotation',(reduced.matches?0:pose.breadRotation)+'deg');
     brand.style.setProperty('--brand-gallery-x',pose.galleryX+'px');
     // 화면 시작 고정 구간의 실제 스크롤로 등장, 세로 스크롤 시작 후 글자별 퇴장.
     const entryScroll=state.index<17?0:state.index===17?clamp(window.scrollY-segments[17].start,0,segments[17].entryHold):segments[17].entryHold;

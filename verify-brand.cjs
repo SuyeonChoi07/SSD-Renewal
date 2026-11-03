@@ -1,37 +1,44 @@
 const assert=require('node:assert/strict');
-const {brandPose:pose,BRAND_HALL_PIN:pin,BRAND_HALL_SCROLL:width,timeline,stateAt}=require('./script.js');
+const {brandPose:pose,brandModelScrollAnchors,BRAND_HALL_PIN:pin,BRAND_HALL_SCROLL:width,timeline,stateAt}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height),segment=timeline(heights)[17];
 assert.equal(segment.motion,width);assert.equal(segment.entryHold,1680);
+const anchors=brandModelScrollAnchors(timeline(heights));
+assert.deepEqual(anchors,[segment.start+1180,segment.start+segment.entryHold+pin]);
+assert.ok(anchors[0]<anchors[1]);
+const fs=require('node:fs');
+const html=fs.readFileSync(__dirname+'/index.html','utf8');
+const moduleSource=fs.readFileSync(__dirname+'/brand-model.js','utf8');
+const glb=fs.readFileSync(__dirname+'/assets/tws-scroll-reuse/tws.glb');
+assert.equal(glb.toString('ascii',0,4),'glTF');
+assert.equal(glb.readUInt32LE(8),glb.length);
+assert.match(html,/class="brand-model-stage" data-node-id="779:926"/);
+assert.doesNotMatch(html,/class="f18-layer-139/);
+assert.match(moduleSource,/framing:\{size:550\}/);
 for(const distance of [1180,1300,1500,1679,1680]){
  const state=stateAt(segment.start+distance,heights);
  assert.equal(state.local,0,'Hold for 500px after the final character appears');
  assert.equal(state.offset,0);
 }
 assert.equal(stateAt(segment.start+1681,heights).offset,1,'Scroll resumes after the text hold');
-for(const local of [0,1000,pin-400]){const p=pose(local);assert.equal(p.offset,local);assert.equal(p.galleryX,0);assert.equal(235-p.offset+p.breadOffset,235,'Bread remains pinned until gallery approach');}
-assert.equal(pose(pin).breadOffset,pin+110.5,'Bread settles lower behind photos');
-let previousX=0,previousRotation=-1;
+for(const local of [0,1000,pin-400]){const p=pose(local);assert.equal(p.offset,local);assert.equal(p.galleryX,0);}
+let previousX=0;
 for(let d=0;d<=width;d+=1){
  const local=pin+d,p=pose(local),state=stateAt(segment.start+segment.entryHold+local,heights);
  assert.equal(p.offset,pin,'Vertical motion stops during horizontal gallery');
  assert.equal(5248-p.offset,180,'Heading reaches attached image position');
- assert.ok(p.galleryX<=previousX);assert.ok(p.breadRotation>previousRotation);
+ assert.ok(p.galleryX<=previousX);
  assert.equal(state.offset,pin);assert.equal(state.transition,0);
- assert.equal(235-p.offset+p.breadOffset+275,5347-p.offset+683/2,'Bread center sits behind gallery center throughout horizontal scroll');
- previousX=p.galleryX;previousRotation=p.breadRotation;
+ previousX=p.galleryX;
 }
 assert.equal(pose(pin+width).galleryX,-width);
 for(const d of [1,200,1061]){
  const p=pose(pin+width+d);
  assert.equal(p.offset,pin+d);assert.equal(p.galleryX,-width,'Gallery stops moving after last photo');
- assert.equal(p.breadOffset,pin+110.5,'Bread counter-scroll stops after gallery');
- assert.equal(235-p.offset+p.breadOffset,345.5-d,'Bread and gallery rise by the same scroll distance');
 }
 assert.equal(129+3635+pose(pin+width).galleryX,1935,'Last photo ends at right inset');
 assert.equal(pose(segment.travel+width).offset,segment.travel);
-assert.equal(pose(segment.travel+width).breadRotation,360);
 assert.deepEqual(pose(segment.travel+width+1500),pose(segment.travel+width),'Final hold preserves complete pose');
-console.log('Brand: pinned rotating bread, heading at 180px, vertical pause during gallery, full last photo then vertical resume: PASS');
+console.log('Brand: 3D model anchors and asset, heading at 180px, vertical pause during gallery, full last photo then vertical resume: PASS');
 
 const {brandCharacterOpacity:alpha}=require('./script.js');
 for(const count of [23,240]){
@@ -47,7 +54,7 @@ for(const count of [23,240]){
  alpha(1500,180,Math.floor(count/2),count);
  assert.equal(alpha(850,0,Math.floor(count/2),count),before,'Reverse scroll restores exact character opacity');
 }
-const css=require('node:fs').readFileSync(__dirname+'/styles.css','utf8');
+const css=fs.readFileSync(__dirname+'/styles.css','utf8');
 assert.ok(!css.includes('brand-character-in'),'No time-based autoplay animation');
 console.log('Brand heading and introduction: scroll-driven per-character in/out; no loading autoplay; reversible: PASS');
 
