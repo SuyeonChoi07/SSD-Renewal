@@ -7,14 +7,15 @@ const segments = timeline(heights);
 assert.equal(HOLD_SCROLL_PX, 1500);
 assert.equal(TRANSITION_SCROLL_PX, 250);
 assert.equal(segments[0].hold, 0);
-assert.equal(segments[1].start, 1250);
-assert.equal(stateAt(999, heights).transition,0,'Landing also holds its opening');
-assert.ok(stateAt(1001, heights).transition > 0);
+assert.equal(segments[1].start, 750);
+assert.equal(stateAt(499, heights).transition,0,'Landing also holds its opening');
+assert.ok(stateAt(501, heights).transition > 0);
 for(let i=0;i<heights.length;i++) {
   const segment=segments[i];
   // Every scene holds its first view before scrolling or motion begins.
-  assert.equal(segment.entryHold,i===6||i===7||i===11?0:i===17?1680:1000);
-  for(const delta of segment.entryHold?[0,400,800,segment.entryHold-1,segment.entryHold]:[0]){
+  assert.equal(segment.entryHold,i===6||i===7||i===11?0:i===0||i===14?500:i===17?1680:1000);
+  if([7,9,12,13].includes(i)) assert.equal(segment.hold,750);
+  for(const delta of segment.entryHold?[0,Math.min(400,segment.entryHold-1),segment.entryHold-1,segment.entryHold]:[0]){
     const state=stateAt(segment.start+delta,heights);
     assert.equal(state.index,i);assert.equal(state.local,0);assert.equal(state.offset,0);assert.equal(state.transition,0);
   }
