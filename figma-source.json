@@ -1191,44 +1191,11 @@
   "scene9To10TransitionScrollPx": 600,
   "scene13To14TransitionScrollPx": 1000,
   "headerVisibleDuringBlackFade": true,
-  "wrapperTearTransitionScrollPx": {
+  "wrapperOpenerTransitionScrollPx": {
     "scene14": 700,
-    "scene15": 800
+    "scene15": 1300
   },
-  "generatedWrapperAssets": [
-    "assets/wrapper-tear-frames-v2/step-01.png",
-    "assets/wrapper-tear-frames-v2/step-02.png",
-    "assets/wrapper-tear-frames-v2/step-03.png",
-    "assets/wrapper-tear-frames-v2/step-04.png",
-    "assets/wrapper-tear-frames-v2/step-05.png",
-    "assets/wrapper-tear-frames-v2/step-06.png",
-    "assets/wrapper-tear-frames-v2/step-07.png",
-    "assets/wrapper-tear-frames-v2/step-08.png",
-    "assets/wrapper-tear-frames-v3/step-09.png",
-    "assets/wrapper-tear-frames-v3/step-10.png",
-    "assets/wrapper-tear-frames-v3/step-11.png",
-    "assets/wrapper-tear-frames-v3/step-12.png",
-    "assets/wrapper-tear-frames-v3/step-13.png",
-    "assets/wrapper-tear-frames-v3/step-14.png",
-    "assets/wrapper-tear-frames-v3/step-15.png",
-    "assets/wrapper-tear-frames-v4/step-16.png",
-    "assets/wrapper-tear-frames-v4/step-17.png",
-    "assets/wrapper-tear-frames-v4/step-18.png",
-    "assets/wrapper-tear-frames-v4/step-19.png",
-    "assets/wrapper-tear-frames-v4/step-20.png"
-  ],
-  "wrapperTearSteps": 20,
-  "wrapperTearScrollPxPerStep": 100,
-  "wrapperTearOpacityChanges": false,
-  "wrapperTearUsesIndividuallyGeneratedFrames": true,
-  "wrapperTearUsesHalfClipping": false,
-  "wrapperTearShapeChangeStartsAtFrame": 9,
-  "wrapperTearFixedLeftGapThroughFrame": 15,
-  "wrapperTearLeftGapReleaseFrames": [
-    16,
-    17,
-    18,
-    19,
-    20
-  ]
+  "wrapperOpenerModel": "assets/opener-effect/assets/opener.glb",
+  "wrapperOpenerScrollPx": 2000,
+  "wrapperClearScreenHoldPx": 500
 }

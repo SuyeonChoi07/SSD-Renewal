@@ -94,15 +94,7 @@ with Daejeon 퇴장: 완료 화면 유지 후 마지막 문구 줄부터 위로 
 
 data-scene=13 → 14 검정 페이드 구간은 1,000px입니다. 검정 오버레이를 design-stage 안으로 옮겨 본문만 가리며, 공통 헤더는 더 높은 z-index에서 계속 표시됩니다.
 
-포장지 찢기: built-in image_gen으로 투명 중간 프레임 3장(early/wide/final)을 생성했습니다. 원본 2장과 5단계 시퀀스로 연결하며 14→15와 15→16은 각각 1,000px, 공통 ease-in-out을 사용합니다. 마지막 종이 조각은 위·아래로 벗겨집니다. 자산과 전체 생성 프롬프트는 assets/wrapper-generation.json에 기록했습니다. 원본 이미지는 덮어쓰지 않았습니다.
-
-포장지 최신 동작: 전체 1,500px에서 100px당 1단계, 총 15단계로 진행합니다. 기존 생성 이미지 5개 상태를 사용하며 각 상태 사이에 종이 위·아래 이동 단계를 추가합니다. 교차 페이드와 종이 opacity 보간을 제거했습니다. scene14 전환 700px + scene15 전환 800px이며 중간 유지 구간은 없습니다.
-
-현재 포장지 구현은 별도로 생성한 완성 이미지 15장을 직접 교체합니다. 1~8번은 wrapper-tear-frames-v2를 유지하고, 9~15번은 wrapper-tear-frames-v3에 각각 새로 생성했습니다. 전체 이미지를 왼쪽으로 이동하는 처리는 취소했습니다. 왼쪽 끝의 좁은 틈과 고정점을 유지하면서 찢어진 대각선 경계가 가팔라지고 종이의 오른쪽 범위가 줄어듭니다. 100px마다 한 장씩 표시하며 교차 페이드가 없습니다. 생성 도구는 built-in image_gen이며 프롬프트·원본 생성 식별자·SHA256·투명 영역 검수값은 assets/wrapper-generation-v3.json, 8~15번 비교 이미지는 wrapper-frames-09-15-review.jpg에 저장했습니다.
-
-16~20번은 왼쪽 끝의 고정을 풀어 틈을 벌리고, 종이가 왼쪽 위·아래 모서리 밖으로 벗겨지는 완성 이미지 5장을 추가 생성했습니다. assets/wrapper-tear-frames-v4에 저장했으며 전체 20단계는 100px씩 총 2,000px입니다(scene14 전환 700px + scene15 전환 1,300px). 생성 프롬프트와 자산 기록은 assets/wrapper-generation-v4.json, 비교 이미지는 wrapper-frames-15-20-review.jpg입니다. scene14의 글은 진입 페이드가 끝나고 opacity가 1인 scene14에 도착한 뒤에만 표시합니다. 역방향에서도 진입 구간에서는 숨깁니다.
-
-종이 찢기 2,000px 완료 후 scene15의 포장지 없는 화면을 500px 유지하고, 이어지는 250px 동안 scene15와 scene16을 ease-in-out으로 교차 페이드합니다. scene15의 전체 진행 구간은 찢기 1,300px + 유지 500px + 교차 페이드 250px입니다. 공통 로고와 내비게이션의 색상은 찢기와 유지 구간 내내 고정되며 교차 페이드가 시작된 뒤 scene16의 색상으로 변합니다.
+Our Way 포장지 개봉은 `assets/opener-effect/assets/opener.glb`의 두 메시(`upper`, `downer`)를 셰이더로 벌리는 3D 효과입니다. 기존 20개 PNG 이미지는 제거했습니다. `opener-model.js`가 압축 파일의 `createOpenerEffect()`를 불러와 페이지 스크롤 진행도를 직접 지정합니다. 개봉은 기존과 동일한 2,000px(scene14 전환 700px + scene15 전환 1,300px)에 걸쳐 0→100%로 진행됩니다. 완료 후 scene15의 포장지 없는 화면을 500px 유지하고, 이어지는 250px 동안 scene15와 scene16을 ease-in-out으로 교차 페이드합니다. 공통 로고와 내비게이션의 색상은 개봉과 유지 구간 내내 고정됩니다.
 
 scene16은 교차 페이드 완료 후 첫 화면을 800px 유지한 뒤 내부 콘텐츠 스크롤을 시작합니다. 콘텐츠 마지막의 기존 유지 구간은 그대로 적용합니다.
 

@@ -210,10 +210,9 @@
     const elapsed=2050*clamp(progress);
     return {elapsed,fade:ease(clamp((elapsed-1800)/250))};
   }
-  function wrapperTearPose(index,transition) {
+  function wrapperOpenPose(index,transition) {
     const distance=index<14?0:index===14?700*clamp(transition):index===15?700+wrapperExitPose(transition).elapsed:2000;
-    const step=index>=16||distance>=2000?21:distance<=0?0:Math.min(20,Math.floor((distance+1e-7)/100)+1);
-    return {step,frame:step<21?step:-1,opacities:Array.from({length:21},(_,i)=>step<21&&i===step?1:0)};
+    return {distance,progress:clamp(distance/2000)};
   }
   function wrapperCopyVisible(index,progress) {
     return index>=14;
@@ -226,7 +225,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperTearPose, wrapperCopyVisible, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
+  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperOpenPose, wrapperCopyVisible, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
   if (typeof module !== 'undefined') module.exports.contactScrollPose=contactScrollPose;
   if (typeof module !== 'undefined') module.exports.brandCharacterOpacity=brandCharacterOpacity;
   if (typeof module !== 'undefined') module.exports.brandCellOpacity=brandCellOpacity;
@@ -378,16 +377,16 @@
     const rect=daejeonAlignedLogoRect(),target={x:908,y:494,width:279,height:92};
     Object.keys(rect).forEach(key=>daejeonLogo.style.setProperty('--handoff-logo-'+key,(rect[key]+(target[key]-rect[key])*next)+'px'));
   }
-  const tearSequence=document.querySelector('.tear-sequence');
-  const tearFrames=Array.from(tearSequence.querySelectorAll('.tear-frame'));
+  const opener=document.querySelector('.opener-effect');
   const wrapperCopy=document.querySelector('#our-way-start .f15-layer-002');
-  function renderWrapperTear(state) {
-    const pose=wrapperTearPose(state.index,state.transition);
-    const visible=state.index===13?transitionWeights(13,state.transition).incoming:state.index===14||state.index===15?1:0;
-    tearSequence.style.opacity=visible;
-    tearSequence.style.visibility=visible>0?'visible':'hidden';
+  function renderWrapperOpen(state) {
+    const pose=wrapperOpenPose(state.index,state.transition);
+    const visible=state.index===13?transitionWeights(13,state.transition).incoming:state.index===14||state.index===15&&pose.distance<2000?1:0;
+    opener.style.opacity=visible;
+    opener.style.visibility=visible>0?'visible':'hidden';
+    window.storyModel.openerProgress=pose.progress;
+    window.openerEffect?.setProgress(pose.progress);
     wrapperCopy.style.visibility=wrapperCopyVisible(state.index,state.transition)?'visible':'hidden';
-    tearFrames.forEach((frame,index)=>{ frame.style.opacity=1; frame.hidden=pose.opacities[index]===0; });
   }
   const header = document.querySelector('.persistent-header');
   const brand=scenes[17];
@@ -493,7 +492,7 @@
     renderHistoryZoom(state);
     renderDaejeon(state);
     renderDaejeonHandoff(state);
-    renderWrapperTear(state);
+    renderWrapperOpen(state);
     renderBrand(state);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }

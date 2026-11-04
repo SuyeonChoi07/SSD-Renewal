@@ -1090,12 +1090,11 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .design-stage > .transition-blackout { position: absolute; inset: 0; z-index: 100; }
 .persistent-header { z-index: 200; }
 
-/* 생성한 중간 키프레임을 원본 포장지 사이에 연결합니다. */
+/* Our Way 포장지 개봉은 같은 2,000px 스크롤 구간에서 3D 모델로 렌더링합니다. */
 #our-way-start .f15-layer-005, #our-way-mid .f16-layer-005 { visibility: hidden; }
-.tear-sequence { position: absolute; inset: 0; z-index: 40; pointer-events: none; opacity: 0; visibility: hidden; }
-.tear-frame { position: absolute; inset: 0; opacity: 1; }
-.tear-frame[hidden] { display: none; }
-.tear-frame > img { position: absolute; inset: 0; width: 2064px; height: 1020px; object-fit: cover; }
+.opener-effect { position: absolute; inset: 0; z-index: 40; overflow: hidden; pointer-events: none; opacity: 0; visibility: hidden; }
+.opener-effect canvas { display: block; width: 100%; height: 100%; }
+.opener-effect:not([data-status="ready"]) canvas { visibility: hidden; }
 #our-way-start .f15-layer-002 { visibility: hidden; }
 
 /* Brand: 3D 모델은 장면에 고정하고, 투명한 본문과 갤러리를 그 위에 놓는다. */
