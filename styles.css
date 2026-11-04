@@ -89,19 +89,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f01-layer-026 { position: absolute; height: 147px; left: 40px; top: 30px; width: 365.299px; }
 .f01-layer-027 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f01-layer-028 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
-.f01-layer-029 { position: absolute; background-color: rgba(217,217,217,0.2); bottom: 40px; align-content: stretch; display: flex; flex-direction: column; height: 346px; align-items: flex-start; left: 40px; padding-inline: 22px; padding-block: 20px; width: 361px; }
-.f01-layer-030 { grid-template-columns: max-content; grid-template-rows: max-content; display: inline-grid; line-height: 0; place-items: start; position: relative; flex-shrink: 0; }
-.f01-layer-031 { word-break: break-word; grid-column-start: 1; font-family: var(--page-font); font-weight: 600; height: 162px; margin-left: 4.5px; margin-top: 0; font-style: normal; position: relative; grid-row-start: 1; font-size: 32px; color: #fff; width: 126px; }
-.f01-layer-032 { line-height: 45px; margin-bottom: 0; }
-.f01-layer-033 { line-height: 45px; margin-bottom: 0; }
-.f01-layer-034 { line-height: 45px; }
-.f01-layer-035 { word-break: break-word; grid-column-start: 1; font-family: var(--page-font); font-weight: 500; height: 90px; margin-left: 142px; margin-top: 216px; font-style: normal; position: relative; grid-row-start: 1; font-size: 20px; text-align: right; color: #fff; width: 176px; }
-.f01-layer-036 { line-height: 30px; margin-bottom: 0; }
-.f01-layer-037 { line-height: 30px; margin-bottom: 0; }
-.f01-layer-038 { line-height: 30px; }
-.f01-layer-039 { grid-column-start: 1; height: 0; margin-left: 0; margin-top: 196px; position: relative; grid-row-start: 1; width: 319px; }
-.f01-layer-040 { position: absolute; inset: -0.5px 0; }
-.f01-layer-041 { display: block; max-width: none; width: 100%; height: 100%; }
 .f01-layer-042 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 1340px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% - 22px); white-space: nowrap; }
 .f01-layer-043 { line-height: 40px; margin-bottom: 0; }
 .f01-layer-044 { line-height: 40px; }
@@ -893,7 +880,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #contact .f19-layer-037 { left: 285px; top: 22px; }
 #contact .f19-layer-040 { left: 285px; top: 100px; }
 /* Figma 원본 glass / inner shadow 효과 */
-[data-node-id="736:491"] { backdrop-filter: blur(31.5px); }
 [data-node-id="779:696"] { backdrop-filter: blur(33px); }
 [data-node-id="775:517"], [data-node-id="775:544"] { box-shadow: inset 0 0 50px 40px rgba(0,0,0,.6); }
 #history-content-start .f04-layer-047 { box-shadow: none; }
@@ -1112,7 +1098,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   font-size: 80px; line-height: normal;
   left: 1032px; top: 510px; translate: -50% -50%;
 }
-.f01-layer-035,
 .f17-layer-024, .f17-layer-030, .f17-layer-033, .f17-layer-027, .f17-layer-041, .f17-layer-044,
 .f17-layer-040, .f17-layer-045,
 .f19-layer-018, .f19-layer-023 {
