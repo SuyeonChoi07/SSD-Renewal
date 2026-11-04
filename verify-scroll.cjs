@@ -13,7 +13,7 @@ assert.ok(stateAt(501, heights).transition > 0);
 for(let i=0;i<heights.length;i++) {
   const segment=segments[i];
   // Every scene holds its first view before scrolling or motion begins.
-  assert.equal(segment.entryHold,i===6||i===7||i===11?0:i===8?400:i===0||i===14?500:i===17?1680:1000);
+  assert.equal(segment.entryHold,i===heights.length-1||i===6||i===7||i===11?0:i===8?400:i===0||i===14?500:i===17?1680:1000);
   if([7,9,12,13].includes(i)) assert.equal(segment.hold,750);
   if(i===10) assert.equal(segment.hold,600);
   for(const delta of segment.entryHold?[0,Math.min(400,segment.entryHold-1),segment.entryHold-1,segment.entryHold]:[0]){
@@ -44,5 +44,7 @@ assert.equal(segments[11].hold,0);
 assert.equal(segments[11].length,segments[11].transition,'Scene 11 has no scroll delay before scene 12');
 assert.ok(stateAt(segments[11].start+1,heights).transition>0);
 assert.equal(stateAt(999999,heights).index,18);
+assert.equal(segments[18].length,0,'The scroll ends as Contact settles into the viewport');
+assert.equal(stateAt(segments[18].start,heights).index,18);
 for(const points of [[0,.25,.45,.5,.55,.75,1],[1,.75,.55,.5,.45,.25,0]])for(const t of points){const w=transitionWeights(13,t);assert.ok(w.outgoing===0||w.incoming===0);if(t>=.45&&t<=.55)assert.equal(w.black,1);}
-console.log(JSON.stringify({status:'PASS',landingHoldPx:0,endOfContentHoldPx:1500,heldFrames:18,order:'content scroll -> hold final position -> transition',blackFadeBothDirections:'PASS'},null,2));
+console.log(JSON.stringify({status:'PASS',landingHoldPx:0,endOfContentHoldPx:1500,heldFrames:segments.filter(segment=>segment.hold>0).length,finalSceneScrollPx:segments[18].length,order:'content scroll -> hold final position -> transition',blackFadeBothDirections:'PASS'},null,2));

@@ -14,8 +14,10 @@ for(let n=0;n<=100;n++){
 }
 assert.equal(pose(0).contactY,1020);assert.equal(pose(1).contactY,0);
 const contactStart=segments[18].start;
-for(const d of [0,500,999,1000]){const s=stateAt(contactStart+d,heights);assert.equal(s.index,18);assert.equal(s.offset,0,'Contact first view still holds for 1000px');}
-assert.equal(stateAt(contactStart+1001,heights).offset,0,'Contact has no extra lower scroll area');
+assert.equal(segments[18].length,0,'No scrolling remains after the Contact screen settles');
+assert.equal(stateAt(contactStart-1,heights).index,17);
+assert.equal(stateAt(contactStart,heights).index,18);
+assert.equal(stateAt(contactStart,heights).offset,0);
 const css=fs.readFileSync(__dirname+'/styles.css','utf8'),js=fs.readFileSync(__dirname+'/script.js','utf8');
 assert.match(css,/\.design-stage > \.f19-layer-003, \.design-stage > \.f19-layer-004 \{ top: 0; z-index: 80;/);
 assert.ok(js.includes('contactGradients.forEach(layer=>stage.append(layer))'),'Use original gradient elements outside scrolling content');
@@ -24,8 +26,9 @@ assert.match(html,/<section class="scene particle-flow-host" id="contact"/,'Pres
 assert.match(css,/#contact\.particle-flow-host \{ position: absolute; min-height: 0; \}/,'Particle styles cannot override scene positioning');
 assert.match(css,/#contact \{ background-color: #131313; \}/);
 assert.match(css,/#contact \.f19-layer-016 \{[^}]*scale: \.7;/);
+assert.match(css,/\.scroll-rail \{ padding-bottom: 100vh;/,'The final viewport fills the page without extra scroll');
 assert.match(html,/id="contact"[^>]*data-frame-height="1020"/);
 assert.match(css,/#brand \{ background-color: #131313; \}/);
 assert.match(js,/state\.index===16\?\(index===16\?brandScroll\.brandY:index===17\?brandScroll\.contactY:0\)/);
 assert.ok(!html.includes('class="f19-layer-002"'),'Deleted background image stays removed');
-console.log('Our Way to Brand to Contact: adjacent opaque vertical scenes; original gradients fixed above scrolling content; Contact entry hold preserved: PASS');
+console.log('Our Way to Brand to Contact: adjacent opaque vertical scenes; Contact is the document scroll end: PASS');
