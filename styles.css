@@ -912,7 +912,22 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f19-layer-055 { position: absolute; height: 50px; left: 40px; top: 30px; width: 124px; }
 .f19-layer-056 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f19-layer-057 { position: absolute; left: 0; max-width: none; width: 100%; height: 100%; top: 0; }
-#contact > .frame-art { width: 2064px; height: 1224px; }
+#contact > .frame-art { width: 2064px; height: 1020px; }
+/* Contact의 문의와 하단 정보를 한 화면 안의 두 구역으로 압축합니다. */
+#contact .f19-layer-011 { top: 142px; }
+#contact .f19-layer-014 { top: 305px; }
+#contact .f19-layer-016 { position: absolute; display: block; left: 60px; top: 610px; width: 1126px; height: 180px; scale: .7; transform-origin: top left; }
+#contact .f19-layer-018 { left: 25px; top: 28px; }
+#contact .f19-layer-019 { left: 251px; top: 117px; }
+#contact .f19-layer-021 { left: 0; top: 0; }
+#contact .f19-layer-023 { left: 602px; top: 4px; }
+#contact .f19-layer-024 { left: 605px; top: 74px; }
+#contact .f19-layer-028 { position: absolute; display: block; left: 1210px; top: 580px; width: 805px; height: 205px; }
+#contact .f19-layer-029 { left: 48px; top: 170px; }
+#contact .f19-layer-030 { left: 285px; top: 170px; }
+#contact .f19-layer-031 { left: 650px; top: 10px; gap: 14px; }
+#contact .f19-layer-037 { left: 285px; top: 22px; }
+#contact .f19-layer-040 { left: 285px; top: 100px; }
 /* Figma 원본 glass / inner shadow 효과 */
 [data-node-id="736:491"] { backdrop-filter: blur(31.5px); }
 [data-node-id="779:696"] { backdrop-filter: blur(33px); }
