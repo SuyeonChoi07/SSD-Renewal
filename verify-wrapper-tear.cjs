@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
-const {wrapperOpenPose:pose,wrapperCopyVisible,transitionWeights,headerPose,stateAt,timeline}=require('./script.js');
+const {wrapperOpenPose:pose,wrapperCopyVisible,wrapperCopyOpacity,transitionWeights,headerPose,stateAt,timeline}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height);
 const segments=timeline(heights);
 assert.equal(segments[14].transition+segments[15].transition,2750);
@@ -15,6 +15,12 @@ for(let distance=0;distance<=2000;distance+=100){
 }
 assert.equal(pose(15,1300/2050).progress,1);
 assert.equal(pose(16,0).progress,1);
+assert.equal(wrapperCopyOpacity(13,1),0);
+assert.equal(wrapperCopyOpacity(14,0),0);
+assert.ok(wrapperCopyOpacity(14,.5)>0&&wrapperCopyOpacity(14,.5)<wrapperCopyOpacity(14,1));
+assert.equal(wrapperCopyOpacity(14,1),wrapperCopyOpacity(15,0));
+assert.equal(wrapperCopyOpacity(15,1300/2050),1);
+assert.equal(wrapperCopyOpacity(15,1800/2050),1);
 const glb=fs.readFileSync(__dirname+'/assets/opener-effect/assets/opener.glb');
 assert.equal(glb.toString('ascii',0,4),'glTF');
 assert.equal(glb.readUInt32LE(8),glb.length);

@@ -217,6 +217,9 @@
   function wrapperCopyVisible(index,progress) {
     return index>=14;
   }
+  function wrapperCopyOpacity(index,transition) {
+    return index<14?0:ease(wrapperOpenPose(index,transition).progress);
+  }
   function headerPose(index, progress) {
     const t = ease(clamp(progress));
     const mix = (a,b) => a + (b-a)*t;
@@ -225,7 +228,7 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperOpenPose, wrapperCopyVisible, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
+  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperOpenPose, wrapperCopyVisible, wrapperCopyOpacity, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
   if (typeof module !== 'undefined') module.exports.contactScrollPose=contactScrollPose;
   if (typeof module !== 'undefined') module.exports.brandCharacterOpacity=brandCharacterOpacity;
   if (typeof module !== 'undefined') module.exports.brandCellOpacity=brandCellOpacity;
@@ -379,6 +382,7 @@
   }
   const opener=document.querySelector('.opener-effect');
   const wrapperCopy=document.querySelector('#our-way-start .f15-layer-002');
+  const wrapperMidCopy=document.querySelector('#our-way-mid .f16-layer-002');
   function renderWrapperOpen(state) {
     const pose=wrapperOpenPose(state.index,state.transition);
     const visible=state.index===13?transitionWeights(13,state.transition).incoming:state.index===14||state.index===15&&pose.distance<2000?1:0;
@@ -387,6 +391,9 @@
     window.storyModel.openerProgress=pose.progress;
     window.openerEffect?.setProgress(pose.progress);
     wrapperCopy.style.visibility=wrapperCopyVisible(state.index,state.transition)?'visible':'hidden';
+    const copyOpacity=wrapperCopyOpacity(state.index,state.transition);
+    wrapperCopy.style.opacity=copyOpacity;
+    wrapperMidCopy.style.opacity=copyOpacity;
   }
   const header = document.querySelector('.persistent-header');
   const brand=scenes[17];

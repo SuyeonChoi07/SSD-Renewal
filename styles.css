@@ -1096,6 +1096,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .opener-effect canvas { display: block; width: 100%; height: 100%; }
 .opener-effect:not([data-status="ready"]) canvas { visibility: hidden; }
 #our-way-start .f15-layer-002 { visibility: hidden; }
+#our-way-start .f15-layer-002, #our-way-mid .f16-layer-002 { opacity: 0; }
 
 /* Brand: 3D 모델은 장면에 고정하고, 투명한 본문과 갤러리를 그 위에 놓는다. */
 #brand .f18-layer-001 { background-color: transparent; }
