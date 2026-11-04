@@ -11,7 +11,7 @@
 | example.js | 최소 초기화 예제. 컨테이너와 3개 섹션 선택자를 지정하고 로딩 실패를 처리합니다. |
 | index.html | 바로 실행할 수 있는 예제. importmap, 모델 컨테이너, 세 섹션, 모듈 연결 순서를 보여줍니다. |
 | tws.glb | 처음 표시하는 모델. 포함된 머티리얼과 텍스처를 사용합니다. |
-| tws_w.glb | 두 번째 모델. 02→03 추가 Y축 회전이 -270°가 되면 표시합니다. |
+| tws_w_o.glb | 두 번째 모델. 02→03 추가 Y축 회전이 -270°가 되면 표시합니다. |
 | vendor/three.module.js | Three.js 렌더링 모듈. three.core.js를 함께 둡니다. |
 | vendor/three.core.js | 장면·카메라·수학·재질 등 Three.js 기반 구현입니다. |
 | vendor/GLTFLoader.js | GLB 로더. BufferGeometryUtils.js를 같은 폴더에서 참조합니다. |
@@ -73,8 +73,8 @@ model.ready.catch(error => {
 const model = createModelExperience({
   container: '#product-3d',
   sections: ['#intro', '#detail', '#finish'],
-  // 생략 시 이 모듈 옆의 tws.glb / tws_w.glb를 사용합니다.
-  modelUrls: ['/models/tws.glb', '/models/tws_w.glb'],
+  // 생략 시 이 모듈 옆의 tws.glb / tws_w_o.glb를 사용합니다.
+  modelUrls: ['/models/tws.glb', '/models/tws_w_o.glb'],
   onUpdate(state) { /* 필요할 때 상태를 외부 UI나 로직에 전달 */ }
 });
 await model.ready;

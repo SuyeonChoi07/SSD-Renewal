@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 
-export function createModelExperience({ container, sections, getScrollPositions = null, framing = null, isActive = () => true, modelUrls = [new URL('./tws.glb', import.meta.url).href, new URL('./tws_w.glb', import.meta.url).href], onUpdate = () => {} }) {
+export function createModelExperience({ container, sections, getScrollPositions = null, framing = null, isActive = () => true, modelUrls = [new URL('./tws.glb', import.meta.url).href, new URL('./tws_w_o.glb', import.meta.url).href], onUpdate = () => {} }) {
   const resolve = value => typeof value === 'string' ? document.querySelector(value) : value;
   container = resolve(container);
   sections = sections.map(resolve);

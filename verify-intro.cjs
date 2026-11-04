@@ -26,7 +26,7 @@ assert.ok(Math.abs(endPlacement.scale-.9)<1e-12);
 assert.ok(Math.abs(1032+(1035-1032)*endPlacement.scale+endPlacement.x-1029)<1e-12);
 assert.ok(Math.abs(510+(545-510)*endPlacement.scale+endPlacement.y-508)<1e-12);
 assert.ok(modelPlacement(.5).scale<1&&modelPlacement(.5).scale>.9);
-for(const name of ['tws.glb','tws_w.glb']){
+for(const name of ['tws.glb','tws_w_o.glb']){
   const glb=fs.readFileSync(__dirname+'/assets/tws-model-kit/'+name);
   assert.equal(glb.toString('ascii',0,4),'glTF');
   assert.equal(glb.readUInt32LE(4),2);
@@ -34,6 +34,7 @@ for(const name of ['tws.glb','tws_w.glb']){
   const gltf=JSON.parse(glb.toString('utf8',20,20+glb.readUInt32LE(12)).trimEnd());
   assert.ok(gltf.meshes?.length>0);
 }
+assert.equal(fs.existsSync(__dirname+'/assets/tws-model-kit/tws_w.glb'),false,'Previous alternate model is removed');
 assert.match(css,/#intro \.f02-layer-006 \{ left: 301px;/);
 assert.match(css,/#intro \.f02-layer-037 \{ top: 319px; transform: translateY\(var\(--intro-offset, 0px\)\)/);
 assert.deepEqual(introPose(travel+1500,travel),end,'End pose stays fixed during hold');
