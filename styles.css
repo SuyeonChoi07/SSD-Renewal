@@ -700,7 +700,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-002 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 102px; font-style: normal; color: #ffedd7; font-size: 70px; top: 181px; white-space: nowrap; }
 .f18-layer-003 { line-height: normal; margin-bottom: 0; }
 .f18-layer-004 { line-height: normal; }
-.f18-layer-005 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: 129px; font-style: normal; color: #ffedd7; font-size: 64px; top: 5248px; white-space: nowrap; }
+.f18-layer-005 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: 129px; font-style: normal; color: #ffedd7; font-size: 64px; top: 5708px; white-space: nowrap; }
 .f18-layer-006 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; font-style: normal; right: 658px; color: #f8f0e5; font-size: 24px; top: 441px; letter-spacing: -0.72px; translate: 100% 0; white-space: nowrap; }
 .f18-layer-007 { line-height: 1; margin-bottom: 0; white-space: pre; }
 .f18-layer-008 { line-height: 1; margin-bottom: 0; white-space: pre; }
@@ -819,7 +819,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-121 { position: absolute; inset: 0; pointer-events: none; }
 .f18-layer-122 { position: absolute; max-width: none; object-fit: cover; width: 100%; height: 100%; }
 .f18-layer-123 { position: absolute; background-color: rgba(0,0,0,0.2); inset: 0; }
-.f18-layer-124 { position: absolute; align-content: stretch; display: flex; gap: 15px; height: 683px; align-items: center; left: 129px; top: 5347px; width: 1806px; }
+.f18-layer-124 { position: absolute; align-content: stretch; display: flex; gap: 15px; height: 683px; align-items: center; left: 129px; top: 5807px; width: 1806px; }
 .f18-layer-125 { height: 100%; position: relative; flex-shrink: 0; width: 1081px; }
 .f18-layer-126 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
 .f18-layer-127 { height: 100%; position: relative; flex-shrink: 0; width: 471px; }
@@ -832,7 +832,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-134 { height: 100%; position: relative; flex-shrink: 0; width: 471px; }
 .f18-layer-135 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f18-layer-136 { position: absolute; height: 100%; left: -15.64%; max-width: none; top: 0; width: 157.75%; }
-.f18-layer-137 { translate: -50% 0; position: absolute; height: 315px; left: calc(50% - 0.5px); top: 6433px; width: 783px; }
+.f18-layer-137 { translate: -50% 0; position: absolute; height: 315px; left: calc(50% - 0.5px); top: 6893px; width: 783px; }
 .f18-layer-138 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
 .f18-layer-142 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f18-layer-143 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
@@ -851,7 +851,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-156 { translate: -50% 0; position: absolute; left: 50%; width: 1402px; height: 1402px; top: -1221px; }
 .f18-layer-157 { position: absolute; inset: -25.1%; }
 .f18-layer-158 { display: block; max-width: none; width: 100%; height: 100%; }
-#brand > .frame-art { width: 2064px; height: 7149px; }
+#brand > .frame-art { width: 2064px; height: 7609px; }
 
 /* 19. Contact — Figma 780:1338 */
 #contact { background-color: #131313; }

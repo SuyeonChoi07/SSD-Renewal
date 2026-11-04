@@ -6,8 +6,8 @@
   const HISTORY_PHOTO_MOVE_PX = 600;
   const HISTORY_PHOTO_HOLD_PX = 400;
   const HISTORY_PHOTO_STEP_PX = HISTORY_PHOTO_MOVE_PX + HISTORY_PHOTO_HOLD_PX;
-  // Brand: 제목 5248px → 화면 180px. 사진 3635px 중 보이는 폭 1806px를 제외한 거리.
-  const BRAND_HALL_PIN = 5248 - 180;
+  // Brand: 목록과 명예의 전당 사이 간격을 120% 늘린 뒤 제목 5708px → 화면 180px.
+  const BRAND_HALL_PIN = 5708 - 180;
   const BRAND_HALL_SCROLL = 3635 - 1806;
   const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
   // CSS ease-in-out와 동일한 cubic-bezier(.42, 0, .58, 1).
@@ -26,7 +26,7 @@
   function timeline(heights) {
     let start = 0;
     return heights.map((height, index) => {
-      const hold = index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 7 || index === 9 || index === 12 || index === 13 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
+      const hold = index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 10 ? HOLD_SCROLL_PX * .4 : index === 7 || index === 9 || index === 12 || index === 13 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
       const entryHold = index === 6 || index === 7 || index === 11 ? 0 : index === 8 ? 400 : index === 0 || index === 14 ? 500 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
@@ -80,7 +80,7 @@
     // 캔버스 중앙 기준 배율 변화 뒤에도 모델 중심이 점선 사각형의 중심(1029, 508)에 닿게 한다.
     return {scale,x:-6*t+3*(1-scale),y:-37*t+35*(1-scale)};
   }
-  function brandPose(local,travel=6129) {
+  function brandPose(local,travel=6589) {
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
     const horizontal=clamp((progress-BRAND_HALL_PIN)/BRAND_HALL_SCROLL);
     const offset=progress<=BRAND_HALL_PIN?progress:progress<=BRAND_HALL_PIN+BRAND_HALL_SCROLL?BRAND_HALL_PIN:progress-BRAND_HALL_SCROLL;

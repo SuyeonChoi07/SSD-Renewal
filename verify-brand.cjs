@@ -1,6 +1,8 @@
 const assert=require('node:assert/strict');
 const {brandPose:pose,brandModelScrollAnchors,BRAND_HALL_PIN:pin,BRAND_HALL_SCROLL:width,timeline,stateAt}=require('./script.js');
-const heights=require('./figma-source.json').frames.map(f=>f.height),segment=timeline(heights)[17];
+const heights=require('./figma-source.json').frames.map(f=>f.height);
+heights[17]=Number(require('node:fs').readFileSync(__dirname+'/index.html','utf8').match(/id="brand"[^>]*data-frame-height="(\d+)"/)[1]);
+const segment=timeline(heights)[17];
 assert.equal(segment.motion,width);assert.equal(segment.entryHold,1680);
 const anchors=brandModelScrollAnchors(timeline(heights));
 assert.deepEqual(anchors,[segment.start+1180,segment.start+segment.entryHold+pin]);
@@ -43,7 +45,7 @@ let previousX=0;
 for(let d=0;d<=width;d+=1){
  const local=pin+d,p=pose(local),state=stateAt(segment.start+segment.entryHold+local,heights);
  assert.equal(p.offset,pin,'Vertical motion stops during horizontal gallery');
- assert.equal(5248-p.offset,180,'Heading reaches attached image position');
+ assert.equal(5708-p.offset,180,'Heading reaches attached image position');
  assert.ok(p.galleryX<=previousX);
  assert.equal(state.offset,pin);assert.equal(state.transition,0);
  assert.equal(p.modelY,0,'3D bread stays fixed during horizontal gallery scroll');
