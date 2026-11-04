@@ -425,6 +425,15 @@
     wrapperMidCopy.style.opacity=copyOpacity;
   }
   const header = document.querySelector('.persistent-header');
+  const ourWayCards = Array.from(scenes[16].querySelectorAll('.our-way-card'));
+  function renderOurWayCards(state) {
+    const offset=state.index<16?0:state.index===16?state.offset:segments[16].travel;
+    ourWayCards.forEach((card,index)=>{
+      const progress=ease(clamp((offset-(138+index*170))/170));
+      card.style.setProperty('--card-reveal',progress);
+      card.style.setProperty('--card-rise',(reduced.matches?0:90*(1-progress))+'px');
+    });
+  }
   const brand=scenes[17];
   const brandModel=brand.querySelector('.brand-model-stage');
   brand.append(brandModel);
@@ -530,6 +539,7 @@
     renderDaejeon(state);
     renderDaejeonHandoff(state);
     renderWrapperOpen(state);
+    renderOurWayCards(state);
     renderBrand(state);
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
