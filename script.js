@@ -92,6 +92,9 @@
     const brand=segments[17];
     return [brand.start+1180,brand.start+brand.entryHold+BRAND_HALL_PIN];
   }
+  function brandModelDrop(scrollPx,anchors) {
+    return 50*ease(clamp((scrollPx-anchors[0])/(anchors[1]-anchors[0])));
+  }
   function contactScrollPose(progress) {
     const y=1020*ease(clamp(progress));
     return {brandY:-y,contactY:1020-y};
@@ -238,7 +241,7 @@
   if (typeof module !== 'undefined') module.exports.brandGalleryReveal=brandGalleryReveal;
   if (typeof module !== 'undefined') module.exports.modelScrollAnchors=modelScrollAnchors;
   if (typeof module !== 'undefined') module.exports.modelPlacement=modelPlacement;
-  if (typeof module !== 'undefined') module.exports.brandModelScrollAnchors=brandModelScrollAnchors;
+  if (typeof module !== 'undefined') { module.exports.brandModelScrollAnchors=brandModelScrollAnchors; module.exports.brandModelDrop=brandModelDrop; }
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
@@ -427,7 +430,7 @@
   function renderBrand(state) {
     const local=state.index<17?0:state.index===17?state.local:segments[17].travel+BRAND_HALL_SCROLL;
     const pose=brandPose(local,segments[17].travel);
-    brandModel.style.transform=`translateY(${pose.modelY}px)`;
+    brandModel.style.transform=`translateY(${pose.modelY+brandModelDrop(window.scrollY,window.storyModel.brandAnchors)}px)`;
     brand.style.setProperty('--brand-gallery-x',pose.galleryX+'px');
     // 화면 시작 고정 구간의 실제 스크롤로 등장, 세로 스크롤 시작 후 글자별 퇴장.
     const entryScroll=state.index<17?0:state.index===17?clamp(window.scrollY-segments[17].start,0,segments[17].entryHold):segments[17].entryHold;

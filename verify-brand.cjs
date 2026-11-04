@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict');
-const {brandPose:pose,brandModelScrollAnchors,BRAND_HALL_PIN:pin,BRAND_HALL_SCROLL:width,timeline,stateAt}=require('./script.js');
+const {brandPose:pose,brandModelScrollAnchors,brandModelDrop,BRAND_HALL_PIN:pin,BRAND_HALL_SCROLL:width,timeline,stateAt}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height);
 heights[17]=Number(require('node:fs').readFileSync(__dirname+'/index.html','utf8').match(/id="brand"[^>]*data-frame-height="(\d+)"/)[1]);
 const segment=timeline(heights)[17];
@@ -7,6 +7,9 @@ assert.equal(segment.motion,width);assert.equal(segment.entryHold,1680);
 const anchors=brandModelScrollAnchors(timeline(heights));
 assert.deepEqual(anchors,[segment.start+1180,segment.start+segment.entryHold+pin]);
 assert.ok(anchors[0]<anchors[1]);
+assert.equal(brandModelDrop(anchors[0]-1,anchors),0);
+assert.ok(brandModelDrop((anchors[0]+anchors[1])/2,anchors)>0);
+assert.equal(brandModelDrop(anchors[1],anchors),50);
 const fs=require('node:fs');
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
 const moduleSource=fs.readFileSync(__dirname+'/brand-model.js','utf8');
@@ -77,6 +80,7 @@ for(const count of [23,240]){
  assert.equal(alpha(850,0,Math.floor(count/2),count),before,'Reverse scroll restores exact character opacity');
 }
 const css=fs.readFileSync(__dirname+'/styles.css','utf8');
+assert.match(css,/#brand > \.frame-art::before \{[^}]*top: 5708px;[^}]*height: 1901px;[^}]*background: #131313;/);
 assert.ok(!css.includes('brand-character-in'),'No time-based autoplay animation');
 console.log('Brand heading and introduction: scroll-driven per-character in/out; no loading autoplay; reversible: PASS');
 
