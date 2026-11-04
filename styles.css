@@ -106,6 +106,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f02-layer-003 { line-height: 40px; margin-bottom: 0; }
 .f02-layer-004 { line-height: 40px; }
 .f02-layer-005 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 140px; left: calc(50% - 644px); font-style: normal; font-size: 140px; color: #fff; top: 458px; white-space: nowrap; }
+.f02-layer-006 { position: absolute; height: 534px; left: 280px; top: 2465px; width: 1469px; }
+.f02-layer-007 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
 .f02-layer-008 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 1354px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% - 22px); letter-spacing: -0.9px; white-space: nowrap; }
 .f02-layer-009 { line-height: 1; margin-bottom: 0; }
 .f02-layer-010 { line-height: 1; margin-bottom: 0; }
@@ -902,11 +904,10 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
   transform: translateY(calc(var(--intro-offset, 0px) + var(--line-y, 0px))); z-index: 15;
 }
 .intro-model-stage { position: absolute; inset: 0; width: 2064px; height: 1020px; z-index: 10; opacity: 0; visibility: hidden; pointer-events: none; transform-origin: 1032px 510px; will-change: transform; }
-.intro-hand-model-stage { position: absolute; inset: 0; width: 2064px; height: 1020px; z-index: 5; opacity: 0; visibility: hidden; pointer-events: none; }
-.intro-hand-model-stage canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
 .intro-model-stage canvas { display: block; width: 100%; height: 100%; pointer-events: auto; }
 .intro-model-stage:not([data-status="ready"]) canvas { visibility: hidden; }
 .design-stage[data-model-ready="true"] #history .f03-layer-006 { visibility: hidden; }
+#intro .f02-layer-006 { left: 301px; z-index: 1; }
 #intro .f02-layer-013 { z-index: 2; }
 #intro .f02-layer-037 { top: 319px; transform: translateY(var(--intro-offset, 0px)); z-index: 0; }
 #intro .f02-layer-023, #intro .f02-layer-034 {

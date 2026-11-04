@@ -83,19 +83,6 @@
     // 캔버스 중앙 기준 배율 변화 뒤에도 모델 중심이 점선 사각형의 중심(1029, 508)에 닿게 한다.
     return {scale,x:-6*t+3*(1-scale),y:-37*t+35*(1-scale)};
   }
-  function introHandScrollAnchors(segments) {
-    const intro=segments[1],history=segments[2];
-    const modelAnchors=modelScrollAnchors(segments);
-    // 기존 빵 모델의 translate(-0.131274px, -0.771525px) 지점을 역으로 찾는다.
-    let low=0,high=1;
-    for(let i=0;i<32;i++){
-      const mid=(low+high)/2;
-      if(modelPlacement(mid).y>-.771525)low=mid;else high=mid;
-    }
-    const third=modelAnchors[1]+(modelAnchors[2]-modelAnchors[1])*(low+high)/2;
-    return {first:intro.start+intro.entryHold+1200,second:intro.start+intro.entryHold+2040,
-      reverseStart:history.start,third};
-  }
   function brandPose(local,travel=7011) {
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
     const horizontal=clamp((progress-BRAND_HALL_PIN)/BRAND_HALL_SCROLL);
@@ -260,19 +247,16 @@
   if (typeof module !== 'undefined') module.exports.brandGalleryReveal=brandGalleryReveal;
   if (typeof module !== 'undefined') module.exports.modelScrollAnchors=modelScrollAnchors;
   if (typeof module !== 'undefined') module.exports.modelPlacement=modelPlacement;
-  if (typeof module !== 'undefined') module.exports.introHandScrollAnchors=introHandScrollAnchors;
   if (typeof module !== 'undefined') { module.exports.brandModelScrollAnchors=brandModelScrollAnchors; module.exports.brandModelDrop=brandModelDrop; }
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
   const segments = timeline(heights);
-  window.storyModel={anchors:modelScrollAnchors(segments),placement:modelPlacement,brandAnchors:brandModelScrollAnchors(segments),handAnchors:introHandScrollAnchors(segments)};
+  window.storyModel={anchors:modelScrollAnchors(segments),placement:modelPlacement,brandAnchors:brandModelScrollAnchors(segments)};
   document.querySelectorAll('.scroll-chapter').forEach((chapter, index) => { chapter.style.height = segments[index].length + 'px'; });
   const stage = document.querySelector('.design-stage');
   const introModel=document.querySelector('.intro-model-stage');
   stage.append(introModel);
-  const introHandModel=document.querySelector('.intro-hand-model-stage');
-  stage.append(introHandModel);
   // 원본 그라데이션 두 장을 스크롤되는 Contact 본문 밖의 고정 무대로 이동.
   const contactGradients=Array.from(scenes[18].querySelectorAll('.f19-layer-003, .f19-layer-004'));
   contactGradients.forEach(layer=>stage.append(layer));
