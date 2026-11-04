@@ -4,7 +4,7 @@ const heights=require('./figma-source.json').frames.map(f=>f.height);
 heights[18]=1020;
 const segments=timeline(heights),brand=segments[17];
 assert.equal(segments[16].transition,1020);
-assert.equal(brand.transition,774,'Brand to Contact vertical scroll is shortened by 246px');
+assert.equal(brand.transition,574,'Brand to Contact vertical scroll is shortened by another 200px');
 for(let n=0;n<=100;n++){
  const p=n/100,{brandY,contactY}=pose(p);
  assert.equal(brandY+1020,contactY,'Adjacent scene edges remain joined');
@@ -26,6 +26,8 @@ assert.match(html,/<section class="scene particle-flow-host" id="contact"/,'Pres
 assert.match(css,/#contact\.particle-flow-host \{ position: absolute; min-height: 0; \}/,'Particle styles cannot override scene positioning');
 assert.match(css,/#contact \{ background-color: #131313; \}/);
 assert.match(css,/#contact \.f19-layer-016 \{[^}]*scale: \.7;/);
+assert.match(css,/#contact \.f19-layer-016 \{[^}]*top: 685px;/);
+assert.match(css,/#contact \.f19-layer-028 \{[^}]*top: 655px;/);
 assert.match(css,/\.scroll-rail \{ padding-bottom: 100vh;/,'The final viewport fills the page without extra scroll');
 assert.match(html,/id="contact"[^>]*data-frame-height="1020"/);
 assert.match(css,/#brand \{ background-color: #131313; \}/);
