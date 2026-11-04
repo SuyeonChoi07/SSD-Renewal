@@ -832,7 +832,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f18-layer-134 { height: 100%; position: relative; flex-shrink: 0; width: 471px; }
 .f18-layer-135 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .f18-layer-136 { position: absolute; height: 100%; left: -15.64%; max-width: none; top: 0; width: 157.75%; }
-.f18-layer-137 { translate: -50% 0; position: absolute; height: 315px; left: calc(50% - 0.5px); top: 7315px; width: 783px; }
+.f18-layer-137 { translate: -50% 0; scale: .75; position: absolute; height: 315px; left: calc(50% - 0.5px); top: 7315px; width: 783px; }
 .f18-layer-138 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
 .f18-layer-142 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f18-layer-143 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
