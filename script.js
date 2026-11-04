@@ -26,11 +26,11 @@
   function timeline(heights) {
     let start = 0;
     return heights.map((height, index) => {
-      const hold = index === 0 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 5 ? HISTORY_PHOTO_HOLD_PX : HOLD_SCROLL_PX;
+      const hold = index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
-      const entryHold = index === 11 ? 0 : index === 17 ? 1680 : 1000;
-      const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1400 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
+      const entryHold = index === 6 || index === 7 || index === 11 ? 0 : index === 17 ? 1680 : 1000;
+      const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1400 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 3450 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -163,7 +163,7 @@
   }
   function historyZoomPose(index,local,transition=0) {
     const keys=[{x:732,y:150,width:600,height:720},{x:651,y:-10,width:784,height:1030},{x:391,y:0,width:1582,height:1020},{x:0,y:0,width:2064,height:1020}];
-    const p=index<5?0:index===5?clamp(transition):index===6?1+clamp(local/1000):index===7?2+clamp(local/1000):3;
+    const p=index<5?0:index===5?clamp(transition):index===6?1+clamp(local/600):index===7?2+clamp(local/600):3;
     const a=Math.min(2,Math.floor(p)),t=ease(p-a),from=keys[a],to=keys[a+1];
     return {...Object.fromEntries(Object.keys(from).map(k=>[k,from[k]+(to[k]-from[k])*t])),progress:p};
   }
