@@ -1102,7 +1102,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 #brand { background-color: #131313; }
 #brand .f18-layer-001 { background-color: transparent; }
 #brand > .frame-art { z-index: 1; pointer-events: none; }
-#brand > .frame-art::before { content: ""; position: absolute; top: 6130px; left: 0; width: 100%; height: 1901px; background: #131313; }
 #brand > .frame-art a { pointer-events: auto; }
 .brand-model-stage { position: absolute; inset: 0; width: 2064px; height: 1020px; z-index: 0; pointer-events: none; will-change: transform; }
 .brand-model-stage canvas { display: block; width: 100%; height: 100%; pointer-events: auto; }

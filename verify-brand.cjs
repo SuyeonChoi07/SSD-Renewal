@@ -81,7 +81,7 @@ for(const count of [23,240]){
  assert.equal(alpha(850,0,Math.floor(count/2),count),before,'Reverse scroll restores exact character opacity');
 }
 const css=fs.readFileSync(__dirname+'/styles.css','utf8');
-assert.match(css,/#brand > \.frame-art::before \{[^}]*top: 6130px;[^}]*height: 1901px;[^}]*background: #131313;/);
+assert.doesNotMatch(css,/#brand > \.frame-art::before/,'No black overlay behind the hall');
 assert.ok(!css.includes('brand-character-in'),'No time-based autoplay animation');
 console.log('Brand heading and introduction: scroll-driven per-character in/out; no loading autoplay; reversible: PASS');
 
