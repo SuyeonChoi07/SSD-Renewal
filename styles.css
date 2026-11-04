@@ -634,9 +634,9 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f17-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #131313; font-size: 190px; text-align: center; top: 319px; white-space: nowrap; }
 .f17-layer-003 { line-height: normal; margin-bottom: 0; }
 .f17-layer-004 { line-height: normal; }
-.f17-layer-005 { position: absolute; display: flex; gap: 50px; left: 50%; top: 1158px; width: 1450px; transform: translateX(-50%); }
-.our-way-card { box-sizing: border-box; position: relative; flex: 0 0 450px; height: 600px; background: #fff; color: #834627; --korean-weight: 400; }
-.our-way-card-content { position: absolute; inset: 0; }
+.f17-layer-005 { position: absolute; display: flex; gap: 30px; left: 50%; top: 1158px; width: max-content; transform: translateX(-50%); }
+.our-way-card { box-sizing: border-box; position: relative; flex: 0 0 auto; aspect-ratio: 3 / 4; height: 530px; background: #fff; color: #834627; --korean-weight: 400; }
+.our-way-card-content { position: absolute; top: 0; left: 0; width: 450px; height: 600px; transform: scale(.8833333333); transform-origin: top left; }
 .our-way-card-title, .our-way-card-subtitle, .our-way-card-description, .our-way-card-link { position: absolute; left: 40px; margin: 0; }
 .our-way-card-title { top: 149px; font-family: Pretendard, sans-serif; font-size: 40px; font-weight: 700; line-height: 1.2; }
 .our-way-card-subtitle { top: 286px; font-family: ChosunCentennial, serif; font-size: 20px; font-weight: 400; line-height: normal; }
