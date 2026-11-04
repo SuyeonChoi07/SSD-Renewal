@@ -29,7 +29,7 @@
   function timeline(heights) {
     let start = 0;
     return heights.map((height, index) => {
-      const hold = index === heights.length - 1 || index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 10 ? HOLD_SCROLL_PX * .4 : index === 7 || index === 9 || index === 12 || index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
+      const hold = index === heights.length - 1 || index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 9 ? HOLD_SCROLL_PX / 4 : index === 10 ? HOLD_SCROLL_PX * .4 : index === 7 || index === 12 || index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
       const travel = index === heights.length - 1 ? 0 : Math.max(0, height - 1020);
       const entryHold = index === heights.length - 1 || index === 6 || index === 7 || index === 11 ? 0 : index === 8 ? 400 : index === 0 ? 500 : index === 14 ? 250 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
