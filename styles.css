@@ -639,8 +639,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .our-way-card-content { position: absolute; top: 0; left: 0; width: 450px; height: 600px; transform: scale(.8833333333); transform-origin: top left; }
 .our-way-card-title, .our-way-card-subtitle, .our-way-card-description, .our-way-card-link { position: absolute; left: 40px; margin: 0; }
 .our-way-card-title { top: 149px; font-family: Pretendard, sans-serif; font-size: 40px; font-weight: 700; line-height: 1.2; }
-.our-way-card-subtitle { top: 286px; font-family: ChosunCentennial, serif; font-size: 20px; font-weight: 400; line-height: normal; }
-.our-way-card-description { top: 332px; font-family: ChosunCentennial, serif; font-size: 16px; font-weight: 400; line-height: normal; white-space: nowrap; }
+.our-way-card-subtitle { top: 286px; font-family: ChosunCentennial, serif; font-size: 24px; font-weight: 400; line-height: normal; }
+.our-way-card-description { top: 332px; font-family: ChosunCentennial, serif; font-size: 20px; font-weight: 400; line-height: normal; white-space: nowrap; }
 .our-way-card-link { top: 413px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-height: 48px; padding: 16px 34px 16px 40px; border: 0; border-radius: 47px; background: #834627; color: #f8f0e5; font-family: Pretendard, sans-serif; font-size: 16px; font-weight: 700; line-height: 1; letter-spacing: -.48px; text-decoration: none; cursor: pointer; }
 .f17-layer-051 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f17-layer-052 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
