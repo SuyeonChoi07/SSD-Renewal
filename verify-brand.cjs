@@ -17,9 +17,9 @@ assert.match(html,/class="brand-model-stage" data-node-id="779:926"/);
 assert.doesNotMatch(html,/class="f18-layer-139/);
 assert.match(moduleSource,/framing:\{size:550\}/);
 const {ROTATION_DEGREES,axisEase,scrollRotation}=require('./assets/tws-scroll-reuse/rotation-math.mjs');
-assert.deepEqual(ROTATION_DEGREES,{x:-430,y:0,z:353});
+assert.deepEqual(ROTATION_DEGREES,{x:-700,y:0,z:353});
 const radians=Math.PI/180;
-assert.ok(Math.abs(scrollRotation(1).x+430*radians)<1e-10);
+assert.ok(Math.abs(scrollRotation(1).x+700*radians)<1e-10);
 assert.ok(Math.abs(scrollRotation(1).z-353*radians)<1e-10);
 for(const axis of ['x','z']){
   const peak=fn=>{
