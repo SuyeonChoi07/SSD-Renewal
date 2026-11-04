@@ -5,8 +5,9 @@ heights[17]=Number(require('node:fs').readFileSync(__dirname+'/index.html','utf8
 const segment=timeline(heights)[17];
 assert.equal(segment.motion,width);assert.equal(segment.entryHold,1680);
 const anchors=brandModelScrollAnchors(timeline(heights));
-assert.deepEqual(anchors,[segment.start+1180,segment.start+segment.entryHold+pin]);
+assert.deepEqual(anchors,[segment.start+1180,segment.start+segment.entryHold+4620]);
 assert.ok(anchors[0]<anchors[1]);
+assert.equal(stateAt(anchors[1],heights).offset,4620,'Model rotation ends at content offset -4620px');
 assert.equal(brandModelDrop(anchors[0]-1,anchors),0);
 assert.ok(brandModelDrop((anchors[0]+anchors[1])/2,anchors)>0);
 assert.equal(brandModelDrop(anchors[1],anchors),50);

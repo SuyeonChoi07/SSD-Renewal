@@ -90,7 +90,7 @@
   }
   function brandModelScrollAnchors(segments) {
     const brand=segments[17];
-    return [brand.start+1180,brand.start+brand.entryHold+BRAND_HALL_PIN];
+    return [brand.start+1180,brand.start+brand.entryHold+4620];
   }
   function brandModelDrop(scrollPx,anchors) {
     return 50*ease(clamp((scrollPx-anchors[0])/(anchors[1]-anchors[0])));
