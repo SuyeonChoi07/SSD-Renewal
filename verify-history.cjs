@@ -11,6 +11,9 @@ assert.equal(historyPose(2000).outline,1);
 assert.equal(historyPose(2000).text,0,'Text waits for completed outline');
 assert.ok(historyPose(2200).text>0&&historyPose(800).text<1);
 assert.equal(historyPose(2800).text,1);
+const historyHtml=fs.readFileSync(__dirname+'/index.html','utf8');
+assert.match(historyHtml,/<p class="f03-layer-005"[^>]*><span class="history-title-part">성심당,?<\/span> <span class="history-title-part">대전의 문화<\/span><\/p>/);
+assert.match(fs.readFileSync(__dirname+'/script.js','utf8'),/historyTitleTargets=\[\{x:430,y:260\},\{x:1285,y:600\}\]/);
 for(const distance of [2800,3300,4299,4300]) {
  const state=stateAt(segment.start+segment.entryHold+distance,heights);
  assert.equal(state.index,2);

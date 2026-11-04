@@ -284,6 +284,21 @@
   const historyScene = scenes[2];
   const historyBread = historyScene.querySelector('[data-node-id="749:88"]');
   const historyTitle = historyScene.querySelector('[data-node-id="749:87"]');
+  const historyTitleParts=Array.from(historyTitle.querySelectorAll('.history-title-part'));
+  const historyTitleTargets=[{x:430,y:260},{x:1285,y:600}];
+  let historyTitleOffsets=[{x:0,y:0},{x:0,y:0}];
+  function measureHistoryTitleParts() {
+    const previousFontSize=historyTitle.style.fontSize;
+    historyTitle.style.fontSize='180px';
+    const naturalLeft=1032-historyTitle.offsetWidth/2;
+    historyTitleOffsets=historyTitleParts.map((part,index)=>({
+      x:historyTitleTargets[index].x-naturalLeft-part.offsetLeft,
+      y:historyTitleTargets[index].y-377-part.offsetTop
+    }));
+    historyTitle.style.fontSize=previousFontSize;
+  }
+  measureHistoryTitleParts();
+  document.fonts?.ready.then(measureHistoryTitleParts);
   const historyOutline = historyScene.querySelector('[data-node-id="749:89"]');
   function renderHistory(state) {
     const arrival = state.index < 1 ? 0 : state.index === 1 ? state.transition : 1;
@@ -298,6 +313,11 @@
     historyTitle.style.opacity = pose.text;
     historyTitle.classList.toggle('is-glowing', state.index === 2 && local >= 2800);
     const exit = historyExitPose(state.index < 2 ? 0 : state.index === 2 ? state.transition : 1);
+    historyTitleParts.forEach((part,index)=>{
+      const merge=1-exit.t;
+      const offset=historyTitleOffsets[index];
+      part.style.transform=`translate(${offset.x*merge}px, ${offset.y*merge}px)`;
+    });
     Object.entries(exit).forEach(([key,value]) => {
       const unit=key.includes('Rotation')?'deg':['t','titleAlpha'].includes(key)?'':'px';
       stage.style.setProperty('--history-exit-'+key,value+unit);
