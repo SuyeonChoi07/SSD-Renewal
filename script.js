@@ -285,7 +285,7 @@
   const historyBread = historyScene.querySelector('[data-node-id="749:88"]');
   const historyTitle = historyScene.querySelector('[data-node-id="749:87"]');
   const historyTitleParts=Array.from(historyTitle.querySelectorAll('.history-title-part'));
-  const historyTitleTargets=[{x:430,y:260},{x:1285,y:600}];
+  const historyTitleTargets=[{x:400,y:260},{x:1285,y:600}];
   let historyTitleOffsets=[{x:0,y:0},{x:0,y:0}];
   function measureHistoryTitleParts() {
     const previousFontSize=historyTitle.style.fontSize;
