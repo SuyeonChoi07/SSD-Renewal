@@ -2,6 +2,14 @@
   "fileKey": "Km3CRMhMnwBl9hw0xiU5Sf",
   "figmaUrl": "https://www.figma.com/design/Km3CRMhMnwBl9hw0xiU5Sf/?node-id=705-142",
   "updated": "2026-11-04",
+  "landingAdd": {
+    "id": "857:186",
+    "width": 2064,
+    "height": 1020,
+    "nodeIds": ["857:186", "857:201"],
+    "assetSlots": ["assets/landing-add-ring.png"],
+    "scrollLength": 0
+  },
   "frames": [
     {
       "name": "Landing",
@@ -725,6 +733,11 @@
     }
   ],
   "assets": [
+    {
+      "localPath": "assets/landing-add-ring.png",
+      "frames": ["Landing_add"],
+      "source": "Figma get_design_context original asset"
+    },
     {
       "localPath": "assets/landing-history.png",
       "frames": [

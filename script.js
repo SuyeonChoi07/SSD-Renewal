@@ -262,6 +262,17 @@
   contactGradients.forEach(layer=>stage.append(layer));
   const veil = document.querySelector('.transition-blackout');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const landingAdd = document.querySelector('.landing-add');
+  if (landingAdd) {
+    const finishLandingAdd=()=>{
+      landingAdd.remove();
+      document.documentElement.classList.remove('is-landing-loading');
+    };
+    if (reduced.matches || window.scrollY > 0 || location.hash && location.hash !== '#landing') finishLandingAdd();
+    else landingAdd.addEventListener('animationend',event=>{
+      if(event.target===landingAdd)finishLandingAdd();
+    });
+  }
   const intro = scenes[1];
   const introCopy = [
     { element: intro.querySelector('[data-node-id="738:631"]'), enter: 0, exit: .20, initial: true },
