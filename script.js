@@ -6,6 +6,9 @@
   const HISTORY_PHOTO_MOVE_PX = 600;
   const HISTORY_PHOTO_HOLD_PX = 400;
   const HISTORY_PHOTO_STEP_PX = HISTORY_PHOTO_MOVE_PX + HISTORY_PHOTO_HOLD_PX;
+  const WRAPPER_FIRST_OPEN_PX = 525;
+  const WRAPPER_OPEN_PX = 1500;
+  const WRAPPER_EXIT_PX = 1725;
   // Brand: 명예의 전당 제목 6130px → 화면 180px. 갤러리 가로 이동 중 세로 위치 고정.
   const BRAND_HALL_PIN = 6130 - 180;
   const BRAND_HALL_SCROLL = 3635 - 1806;
@@ -26,11 +29,11 @@
   function timeline(heights) {
     let start = 0;
     return heights.map((height, index) => {
-      const hold = index === heights.length - 1 || index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 10 ? HOLD_SCROLL_PX * .4 : index === 7 || index === 9 || index === 12 || index === 13 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
+      const hold = index === heights.length - 1 || index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 10 ? HOLD_SCROLL_PX * .4 : index === 7 || index === 9 || index === 12 || index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
       const travel = index === heights.length - 1 ? 0 : Math.max(0, height - 1020);
-      const entryHold = index === heights.length - 1 || index === 6 || index === 7 || index === 11 ? 0 : index === 8 ? 400 : index === 0 || index === 14 ? 500 : index === 17 ? 1680 : 1000;
+      const entryHold = index === heights.length - 1 || index === 6 || index === 7 || index === 11 ? 0 : index === 8 ? 400 : index === 0 ? 500 : index === 14 ? 250 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1400 : index === 16 ? 1020 : index === 17 ? 774 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? WRAPPER_FIRST_OPEN_PX : index === 15 ? WRAPPER_EXIT_PX : index === 13 ? 1400 : index === 16 ? 1020 : index === 17 ? 774 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 3450 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -213,12 +216,12 @@
     return {x:crop.left/100*2064+1530*sx,y:crop.top/100*1020+634*sy,width:415*scale,height:167*scale/1.2134};
   }
   function wrapperExitPose(progress) {
-    const elapsed=2050*clamp(progress);
-    return {elapsed,fade:ease(clamp((elapsed-1800)/250))};
+    const elapsed=WRAPPER_EXIT_PX*clamp(progress);
+    return {elapsed,fade:ease(clamp((elapsed-1475)/250))};
   }
   function wrapperOpenPose(index,transition) {
-    const distance=index<14?0:index===14?700*clamp(transition):index===15?700+wrapperExitPose(transition).elapsed:2000;
-    return {distance,progress:clamp(distance/2000)};
+    const distance=index<14?0:index===14?WRAPPER_FIRST_OPEN_PX*clamp(transition):index===15?WRAPPER_FIRST_OPEN_PX+wrapperExitPose(transition).elapsed:WRAPPER_OPEN_PX;
+    return {distance,progress:clamp(distance/WRAPPER_OPEN_PX)};
   }
   function wrapperCopyVisible(index,progress) {
     return index>=14;
@@ -391,7 +394,7 @@
   const wrapperMidCopy=document.querySelector('#our-way-mid .f16-layer-002');
   function renderWrapperOpen(state) {
     const pose=wrapperOpenPose(state.index,state.transition);
-    const visible=state.index===13?transitionWeights(13,state.transition).incoming:state.index===14||state.index===15&&pose.distance<2000?1:0;
+    const visible=state.index===13?transitionWeights(13,state.transition).incoming:state.index===14||state.index===15&&pose.distance<WRAPPER_OPEN_PX?1:0;
     opener.style.opacity=visible;
     opener.style.visibility=visible>0?'visible':'hidden';
     window.storyModel.openerProgress=pose.progress;

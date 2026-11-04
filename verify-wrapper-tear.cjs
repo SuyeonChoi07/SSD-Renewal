@@ -3,24 +3,29 @@ const fs=require('node:fs');
 const {wrapperOpenPose:pose,wrapperCopyVisible,wrapperCopyOpacity,transitionWeights,headerPose,stateAt,timeline}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height);
 const segments=timeline(heights);
-assert.equal(segments[14].transition+segments[15].transition,2750);
+assert.equal(segments[14].entryHold,250);
+assert.equal(segments[14].hold,750);
+assert.equal(segments[14].entryHold+segments[14].hold,1000,'Opening starts after half the original 2,000px opening hold');
+assert.equal(segments[14].transition,525);
+assert.equal(segments[15].transition,1725);
+assert.equal(segments[14].transition+segments[15].transition,2250);
 assert.equal(segments[15].hold,0);
 assert.deepEqual(pose(14,1),pose(15,0));
 assert.deepEqual(pose(14,0),{distance:0,progress:0});
-for(let distance=0;distance<=2000;distance+=100){
-  const index=distance<700?14:15;
-  const transition=index===14?distance/700:(distance-700)/2050;
+for(let distance=0;distance<=1500;distance+=75){
+  const index=distance<525?14:15;
+  const transition=index===14?distance/525:(distance-525)/1725;
   const result=pose(index,transition);
-  assert.ok(Math.abs(result.progress-distance/2000)<1e-12,'3D opens across the original 2,000px');
+  assert.ok(Math.abs(result.progress-distance/1500)<1e-12,'3D opens across 1,500px');
 }
-assert.equal(pose(15,1300/2050).progress,1);
+assert.equal(pose(15,975/1725).progress,1);
 assert.equal(pose(16,0).progress,1);
 assert.equal(wrapperCopyOpacity(13,1),0);
 assert.equal(wrapperCopyOpacity(14,0),0);
 assert.ok(wrapperCopyOpacity(14,.5)>0&&wrapperCopyOpacity(14,.5)<wrapperCopyOpacity(14,1));
 assert.equal(wrapperCopyOpacity(14,1),wrapperCopyOpacity(15,0));
-assert.equal(wrapperCopyOpacity(15,1300/2050),1);
-assert.equal(wrapperCopyOpacity(15,1800/2050),1);
+assert.equal(wrapperCopyOpacity(15,975/1725),1);
+assert.equal(wrapperCopyOpacity(15,1475/1725),1);
 const glb=fs.readFileSync(__dirname+'/assets/opener-effect/assets/opener.glb');
 assert.equal(glb.toString('ascii',0,4),'glTF');
 assert.equal(glb.readUInt32LE(8),glb.length);
@@ -35,14 +40,14 @@ assert.doesNotMatch(html,/data-tear-frame=|wrapper-tear-frames/);
 assert.doesNotMatch(css+script,/tear-sequence|tear-frame|wrapperTearPose/);
 for(let p=0;p<=1;p+=.05)assert.equal(wrapperCopyVisible(13,p),false);
 assert.equal(wrapperCopyVisible(14,0),true);
-for(const elapsed of [1300,1301,1500,1799,1800]){
-  const progress=elapsed/2050;
+for(const elapsed of [975,976,1200,1474,1475]){
+  const progress=elapsed/1725;
   assert.equal(pose(15,progress).progress,1);
   assert.equal(headerPose(15,progress).light,0);
   assert.deepEqual(transitionWeights(15,progress),{outgoing:1,incoming:0,black:0});
   assert.equal(stateAt(segments[15].start+segments[15].entryHold+elapsed,heights).index,15);
 }
-assert.deepEqual(transitionWeights(15,1925/2050),{outgoing:.5,incoming:.5,black:0});
-assert.equal(headerPose(15,1925/2050).light,.5);
+assert.deepEqual(transitionWeights(15,1600/1725),{outgoing:.5,incoming:.5,black:0});
+assert.equal(headerPose(15,1600/1725).light,.5);
 assert.equal(transitionWeights(15,1).incoming,1);
-console.log('Our Way: GLB upper/downer, exact 2,000px scroll opening, 500px clear hold, header and crossfade: PASS');
+console.log('Our Way: 1,000px total opening hold, 1,500px GLB opening, 500px clear hold, header and crossfade: PASS');

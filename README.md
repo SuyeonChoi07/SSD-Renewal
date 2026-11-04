@@ -30,7 +30,7 @@ Landing → Intro → History → History_content_start → History_content_mid 
 
 ## 스크롤
 
-각 화면의 내부 스크롤을 먼저 진행합니다. 기본적으로 화면 끝에 도착하면 마지막 위치와 투명도를 1,500px 스크롤 동안 그대로 유지한 뒤 다음 화면으로 전환합니다. scene 7·9·12·13의 끝 유지 구간은 750px입니다. scene 0·14의 시작 유지 구간은 500px입니다. Landing → Intro에는 끝 유지 구간을 적용하지 않습니다. 마지막 Contact 화면이 완전히 올라오면 문서 스크롤이 끝납니다.
+각 화면의 내부 스크롤을 먼저 진행합니다. 기본적으로 화면 끝에 도착하면 마지막 위치와 투명도를 1,500px 스크롤 동안 그대로 유지한 뒤 다음 화면으로 전환합니다. scene 7·9·12·13의 끝 유지 구간은 750px입니다. scene 0의 시작 유지 구간은 500px입니다. Landing → Intro에는 끝 유지 구간을 적용하지 않습니다. 마지막 Contact 화면이 완전히 올라오면 문서 스크롤이 끝납니다.
 
 Table_tilt → Our Way_start에서는 이전 화면이 검정으로 페이드 아웃되고 검정 화면을 거쳐 다음 화면이 페이드 인됩니다. 역방향도 동일합니다.
 
@@ -94,7 +94,7 @@ with Daejeon 퇴장: 완료 화면 유지 후 마지막 문구 줄부터 위로 
 
 data-scene=13 → 14 검정 페이드 구간은 1,000px입니다. 검정 오버레이를 design-stage 안으로 옮겨 본문만 가리며, 공통 헤더는 더 높은 z-index에서 계속 표시됩니다.
 
-Our Way 포장지 개봉은 `assets/opener-effect/assets/opener.glb`의 두 메시(`upper`, `downer`)를 셰이더로 벌리는 3D 효과입니다. 기존 20개 PNG 이미지는 제거했습니다. `opener-model.js`가 압축 파일의 `createOpenerEffect()`를 불러와 페이지 스크롤 진행도를 직접 지정합니다. 개봉은 기존과 동일한 2,000px(scene14 전환 700px + scene15 전환 1,300px)에 걸쳐 0→100%로 진행됩니다. 완료 후 scene15의 포장지 없는 화면을 500px 유지하고, 이어지는 250px 동안 scene15와 scene16을 ease-in-out으로 교차 페이드합니다. 공통 로고와 내비게이션의 색상은 개봉과 유지 구간 내내 고정됩니다.
+Our Way 포장지 개봉은 `assets/opener-effect/assets/opener.glb`의 두 메시(`upper`, `downer`)를 셰이더로 벌리는 3D 효과입니다. 기존 20개 PNG 이미지는 제거했습니다. `opener-model.js`가 압축 파일의 `createOpenerEffect()`를 불러와 페이지 스크롤 진행도를 직접 지정합니다. 개봉 전 scene14의 시작·끝 유지 구간은 합계 1,000px입니다. 개봉은 1,500px(scene14 전환 525px + scene15 전환 975px)에 걸쳐 0→100%로 진행됩니다. 완료 후 scene15의 포장지 없는 화면을 500px 유지하고, 이어지는 250px 동안 scene15와 scene16을 ease-in-out으로 교차 페이드합니다. 공통 로고와 내비게이션의 색상은 개봉과 유지 구간 내내 고정됩니다.
 
 포장지 뒤의 문구(`.f15-layer-002`, `.f16-layer-002`)는 개봉 시작 시 opacity 0이며, 같은 스크롤 진행도에 따라 ease-in-out으로 1까지 밝아집니다. 장면이 바뀌는 지점에도 동일한 opacity를 적용해 밝기가 튀지 않도록 합니다.
 
