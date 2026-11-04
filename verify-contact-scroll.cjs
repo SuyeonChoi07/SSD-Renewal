@@ -4,7 +4,7 @@ const heights=require('./figma-source.json').frames.map(f=>f.height);
 heights[18]=1020;
 const segments=timeline(heights),brand=segments[17];
 assert.equal(segments[16].transition,1020);
-assert.equal(brand.transition,574,'Brand to Contact vertical scroll is shortened by another 200px');
+assert.equal(brand.transition,774,'Brand to Contact vertical scroll is restored to 774px');
 for(let n=0;n<=100;n++){
  const p=n/100,{brandY,contactY}=pose(p);
  assert.equal(brandY+1020,contactY,'Adjacent scene edges remain joined');
