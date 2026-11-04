@@ -6,8 +6,8 @@
   const HISTORY_PHOTO_MOVE_PX = 600;
   const HISTORY_PHOTO_HOLD_PX = 400;
   const HISTORY_PHOTO_STEP_PX = HISTORY_PHOTO_MOVE_PX + HISTORY_PHOTO_HOLD_PX;
-  // Brand: 목록과 명예의 전당 사이 간격을 120% 늘린 뒤 제목 5708px → 화면 180px.
-  const BRAND_HALL_PIN = 5708 - 180;
+  // Brand: 명예의 전당 제목 6130px → 화면 180px. 갤러리 가로 이동 중 세로 위치 고정.
+  const BRAND_HALL_PIN = 6130 - 180;
   const BRAND_HALL_SCROLL = 3635 - 1806;
   const clamp = (value, min = 0, max = 1) => Math.max(min, Math.min(max, value));
   // CSS ease-in-out와 동일한 cubic-bezier(.42, 0, .58, 1).
@@ -80,7 +80,7 @@
     // 캔버스 중앙 기준 배율 변화 뒤에도 모델 중심이 점선 사각형의 중심(1029, 508)에 닿게 한다.
     return {scale,x:-6*t+3*(1-scale),y:-37*t+35*(1-scale)};
   }
-  function brandPose(local,travel=6589) {
+  function brandPose(local,travel=7011) {
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
     const horizontal=clamp((progress-BRAND_HALL_PIN)/BRAND_HALL_SCROLL);
     const offset=progress<=BRAND_HALL_PIN?progress:progress<=BRAND_HALL_PIN+BRAND_HALL_SCROLL?BRAND_HALL_PIN:progress-BRAND_HALL_SCROLL;

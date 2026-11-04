@@ -49,7 +49,7 @@ let previousX=0;
 for(let d=0;d<=width;d+=1){
  const local=pin+d,p=pose(local),state=stateAt(segment.start+segment.entryHold+local,heights);
  assert.equal(p.offset,pin,'Vertical motion stops during horizontal gallery');
- assert.equal(5708-p.offset,180,'Heading reaches attached image position');
+ assert.equal(6130-p.offset,180,'Heading reaches attached image position');
  assert.ok(p.galleryX<=previousX);
  assert.equal(state.offset,pin);assert.equal(state.transition,0);
  assert.equal(p.modelY,0,'3D bread stays fixed during horizontal gallery scroll');
@@ -81,7 +81,7 @@ for(const count of [23,240]){
  assert.equal(alpha(850,0,Math.floor(count/2),count),before,'Reverse scroll restores exact character opacity');
 }
 const css=fs.readFileSync(__dirname+'/styles.css','utf8');
-assert.match(css,/#brand > \.frame-art::before \{[^}]*top: 5708px;[^}]*height: 1901px;[^}]*background: #131313;/);
+assert.match(css,/#brand > \.frame-art::before \{[^}]*top: 6130px;[^}]*height: 1901px;[^}]*background: #131313;/);
 assert.ok(!css.includes('brand-character-in'),'No time-based autoplay animation');
 console.log('Brand heading and introduction: scroll-driven per-character in/out; no loading autoplay; reversible: PASS');
 
