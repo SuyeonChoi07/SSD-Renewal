@@ -30,7 +30,7 @@
       const travel = Math.max(0, height - 1020);
       const entryHold = index === 6 || index === 7 || index === 11 ? 0 : index === 8 ? 400 : index === 0 || index === 14 ? 500 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1400 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1400 : index === 16 || index === 17 ? 1020 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 3450 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -49,7 +49,7 @@
     return { index, local, transition, offset };
   }
   function transitionWeights(index, progress) {
-    if(index===17)return {outgoing:1,incoming:1,black:0};
+    if(index===16||index===17)return {outgoing:1,incoming:1,black:0};
     if (index === 15) {
       const incoming=wrapperExitPose(progress).fade;
       return {outgoing:1-incoming,incoming,black:0};
@@ -471,6 +471,7 @@
     introModel.style.visibility=modelOpacity>0?'visible':'hidden';
     veil.style.opacity = weights.black;
     renderHeader(state);
+    const brandScroll=contactScrollPose(state.index===16?state.transition:state.index>16?1:0);
     const contactScroll=contactScrollPose(state.index===17?state.transition:state.index>17?1:0);
     contactGradients.forEach(layer=>{
       layer.style.visibility=state.index===18||state.index===17&&state.transition>0?'visible':'hidden';
@@ -486,7 +487,7 @@
         if(index===state.index+1)opacity=0;
       }
       scene.style.opacity = opacity;
-      const sceneY=state.index===17?(index===17?contactScroll.brandY:index===18?contactScroll.contactY:0):0;
+      const sceneY=state.index===16?(index===16?brandScroll.brandY:index===17?brandScroll.contactY:0):state.index===17?(index===17?contactScroll.brandY:index===18?contactScroll.contactY:0):0;
       scene.style.transform=`translateY(${sceneY}px)`;
       scene.classList.toggle('is-visible', opacity > 0);
       const logicalCurrent=state.transition>=.5?Math.min(state.index+1,scenes.length-1):state.index;

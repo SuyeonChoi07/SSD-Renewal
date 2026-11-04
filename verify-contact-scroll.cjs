@@ -1,12 +1,14 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {contactScrollPose:pose,transitionWeights,timeline,stateAt}=require('./script.js');
 const heights=require('./figma-source.json').frames.map(f=>f.height),segments=timeline(heights),brand=segments[17];
+assert.equal(segments[16].transition,1020);
 assert.equal(brand.transition,1020);
 for(let n=0;n<=100;n++){
  const p=n/100,{brandY,contactY}=pose(p);
  assert.equal(brandY+1020,contactY,'Adjacent scene edges remain joined');
  assert.ok(brandY<=0&&brandY>=-1020);assert.ok(contactY>=0&&contactY<=1020);
  assert.deepEqual(transitionWeights(17,p),{outgoing:1,incoming:1,black:0},'No opacity interpolation');
+ assert.deepEqual(transitionWeights(16,p),{outgoing:1,incoming:1,black:0},'Our Way to Brand uses opaque vertical scroll');
 }
 assert.equal(pose(0).contactY,1020);assert.equal(pose(1).contactY,0);
 const contactStart=segments[18].start;
@@ -19,5 +21,7 @@ const html=fs.readFileSync(__dirname+'/index.html','utf8');
 assert.match(html,/<section class="scene particle-flow-host" id="contact"/,'Preserve Contact ID for CSS, navigation and particle host');
 assert.match(css,/#contact\.particle-flow-host \{ position: absolute; min-height: 0; \}/,'Particle styles cannot override scene positioning');
 assert.match(css,/#contact \{ background-color: #131313; \}/);
+assert.match(css,/#brand \{ background-color: #131313; \}/);
+assert.match(js,/state\.index===16\?\(index===16\?brandScroll\.brandY:index===17\?brandScroll\.contactY:0\)/);
 assert.ok(!html.includes('class="f19-layer-002"'),'Deleted background image stays removed');
-console.log('Brand to Contact: adjacent opaque vertical scenes; original gradients fixed above scrolling content; Contact entry hold preserved: PASS');
+console.log('Our Way to Brand to Contact: adjacent opaque vertical scenes; original gradients fixed above scrolling content; Contact entry hold preserved: PASS');
