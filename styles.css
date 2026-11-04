@@ -634,52 +634,14 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f17-layer-002 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 50%; font-style: normal; color: #131313; font-size: 190px; text-align: center; top: 319px; white-space: nowrap; }
 .f17-layer-003 { line-height: normal; margin-bottom: 0; }
 .f17-layer-004 { line-height: normal; }
-.f17-layer-005 { translate: -50% 0; position: absolute; align-content: stretch; display: flex; align-items: center; justify-content: space-between; left: calc(50% - 23px); top: 1158px; width: 1740px; }
-.f17-layer-006 { background-color: #f48621; height: 657px; position: relative; flex-shrink: 0; width: 650px; }
-.f17-layer-007 { background-color: #f6e0c6; height: 657px; position: relative; flex-shrink: 0; width: 500px; }
-.f17-layer-008 { background-color: #f6e0c6; height: 657px; position: relative; flex-shrink: 0; width: 500px; }
-.f17-layer-009 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 184px; font-style: normal; color: #f8f0e5; font-size: 40px; top: 1201px; white-space: nowrap; }
-.f17-layer-010 { line-height: normal; margin-bottom: 0; }
-.f17-layer-011 { line-height: normal; }
-.f17-layer-012 { position: absolute; background-color: #f8f0e5; left: 913px; border-radius: 1000px; width: 350px; height: 350px; top: 1325px; }
-.f17-layer-013 { position: absolute; background-color: #f8f0e5; left: 1454px; border-radius: 1000px; width: 350px; height: 350px; top: 1338px; }
-.f17-layer-014 { position: absolute; display: contents; left: 184px; top: 1390px; }
-.f17-layer-015 { position: absolute; column-gap: 20px; row-gap: 20px; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: repeat(2,minmax(0,1fr)); height: 374px; left: 184px; top: 1390px; width: 560px; }
-.f17-layer-016 { background-color: #f8f0e5; justify-self: stretch; position: relative; border-top-left-radius: 65px; align-self: stretch; flex-shrink: 0; }
-.f17-layer-017 { background-color: #f8f0e5; justify-self: stretch; position: relative; border-top-right-radius: 65px; align-self: stretch; flex-shrink: 0; }
-.f17-layer-018 { display: flex; align-items: center; justify-content: center; justify-self: stretch; position: relative; align-self: stretch; flex-shrink: 0; }
-.f17-layer-019 { flex: none; rotate: 180deg; width: 100%; height: 100%; }
-.f17-layer-020 { background-color: #f8f0e5; position: relative; border-top-right-radius: 65px; width: 100%; height: 100%; }
-.f17-layer-021 { display: flex; align-items: center; justify-content: center; justify-self: stretch; position: relative; align-self: stretch; flex-shrink: 0; }
-.f17-layer-022 { flex: none; rotate: 180deg; width: 100%; height: 100%; }
-.f17-layer-023 { background-color: #f8f0e5; position: relative; border-top-left-radius: 65px; width: 100%; height: 100%; }
-.f17-layer-024 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 315px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1455px; white-space: nowrap; }
-.f17-layer-025 { line-height: normal; margin-bottom: 0; }
-.f17-layer-026 { line-height: normal; }
-.f17-layer-027 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 307.5px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1650px; white-space: nowrap; }
-.f17-layer-028 { line-height: normal; margin-bottom: 0; }
-.f17-layer-029 { line-height: normal; }
-.f17-layer-030 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 609.5px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1455px; white-space: nowrap; }
-.f17-layer-031 { line-height: normal; margin-bottom: 0; }
-.f17-layer-032 { line-height: normal; }
-.f17-layer-033 { translate: -50% 0; word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 601px; font-style: normal; color: #834627; font-size: 24px; text-align: center; top: 1650px; white-space: nowrap; }
-.f17-layer-034 { line-height: normal; margin-bottom: 0; }
-.f17-layer-035 { line-height: normal; }
-.f17-layer-036 { position: absolute; background-color: #f48621; align-content: stretch; display: flex; flex-direction: column; align-items: center; justify-content: center; left: 394px; border-radius: 100px; width: 140px; height: 140px; top: 1505px; }
-.f17-layer-037 { height: 96px; position: relative; flex-shrink: 0; width: 100px; }
-.f17-layer-038 { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-.f17-layer-039 { position: absolute; height: 100%; left: -0.01%; max-width: none; top: 0; width: 100.02%; }
-.f17-layer-040 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: 866px; font-style: normal; color: #834627; font-size: 40px; top: 1191px; white-space: nowrap; }
-.f17-layer-041 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 866px; font-style: normal; color: #834627; font-size: 24px; top: 1732px; white-space: nowrap; }
-.f17-layer-042 { line-height: normal; margin-bottom: 0; }
-.f17-layer-043 { line-height: normal; }
-.f17-layer-044 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: 1411px; font-style: normal; color: #834627; font-size: 24px; top: 1758px; white-space: nowrap; }
-.f17-layer-045 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: normal; left: 1411px; font-style: normal; color: #834627; font-size: 40px; top: 1191px; white-space: nowrap; }
-.f17-layer-046 { position: absolute; align-content: stretch; display: flex; align-items: center; justify-content: center; left: 1349px; overflow: clip; border-bottom-right-radius: 332px; width: 486px; height: 486px; top: 1264px; }
-.f17-layer-047 { position: relative; flex-shrink: 0; width: 476px; height: 476px; }
-.f17-layer-048 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
-.f17-layer-049 { position: absolute; aspect-ratio: 1774/887; left: 860px; right: 730px; top: 1382px; }
-.f17-layer-050 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
+.f17-layer-005 { position: absolute; display: flex; gap: 50px; left: 50%; top: 1158px; width: 1450px; transform: translateX(-50%); }
+.our-way-card { box-sizing: border-box; position: relative; flex: 0 0 450px; height: 600px; background: #fff; color: #834627; --korean-weight: 400; }
+.our-way-card-content { position: absolute; inset: 0; }
+.our-way-card-title, .our-way-card-subtitle, .our-way-card-description, .our-way-card-link { position: absolute; left: 40px; margin: 0; }
+.our-way-card-title { top: 149px; font-family: Pretendard, sans-serif; font-size: 40px; font-weight: 700; line-height: 1.2; }
+.our-way-card-subtitle { top: 286px; font-family: ChosunCentennial, serif; font-size: 20px; font-weight: 400; line-height: normal; }
+.our-way-card-description { top: 332px; font-family: ChosunCentennial, serif; font-size: 16px; font-weight: 400; line-height: normal; white-space: nowrap; }
+.our-way-card-link { top: 413px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-height: 48px; padding: 16px 34px 16px 40px; border: 0; border-radius: 47px; background: #834627; color: #f8f0e5; font-family: Pretendard, sans-serif; font-size: 16px; font-weight: 700; line-height: 1; letter-spacing: -.48px; text-decoration: none; cursor: pointer; }
 .f17-layer-051 { position: absolute; align-content: stretch; display: flex; gap: 40px; align-items: center; justify-content: center; left: 1514px; top: 30px; }
 .f17-layer-052 { align-content: stretch; display: flex; align-items: center; justify-content: center; padding-block: 3px; position: relative; flex-shrink: 0; }
 .f17-layer-053 { word-break: break-word; font-family: var(--page-font); font-weight: 600; line-height: normal; font-style: normal; position: relative; flex-shrink: 0; color: #131313; font-size: 15px; white-space: nowrap; }
@@ -976,6 +938,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 }
 #history .f03-layer-005 { transform: translateX(var(--title-shift, 2064px)); opacity: 0; z-index: 1; will-change: transform, opacity; }
 #history .history-title-part { display: inline-block; will-change: transform; }
+.history-title-comma { display: inline; }
 #history .f03-layer-009 {
   border: 0; z-index: 4;
   background-image:
