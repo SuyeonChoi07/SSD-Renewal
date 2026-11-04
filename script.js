@@ -133,7 +133,10 @@
   function historyExitPose(progress) {
     const t=ease(clamp(progress));
     const mix=(a,b)=>a+(b-a)*t;
-    return { t, outlineX:mix(1029,1032), outlineY:mix(258,144), outlineWidth:mix(500,610), outlineHeight:mix(500,732),
+    const widthT=ease(clamp(progress*2));
+    const heightT=ease(clamp((progress-.5)*2));
+    return { t, outlineX:1029+3*widthT, outlineY:258-114*heightT,
+      outlineWidth:500+110*widthT, outlineHeight:500+232*heightT,
       titleX:mix(1032,68), titleY:mix(377,142), titleSize:mix(180,36), titleAlpha:mix(1,.59),
       breadY:mix(324,150), outgoingRotation:-180*t, incomingRotation:0,
       photoWidth:mix(405,600), photoHeight:mix(373,720), photoX:97*(1-t), photoY:174*(1-t) };
