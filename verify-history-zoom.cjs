@@ -1,8 +1,8 @@
 const assert=require('node:assert/strict');
 const {historyZoomPose:pose,timeline}=require('./script.js');
 const plain=p=>[p.x,p.y,p.width,p.height];
-assert.deepEqual(plain(pose(5,8200,0)),[732,150,600,720]);
-assert.deepEqual(plain(pose(5,9000,1)),plain(pose(6,0,0)));
+assert.deepEqual(plain(pose(5,4600,0)),[732,150,600,720]);
+assert.deepEqual(plain(pose(5,5000,1)),plain(pose(6,0,0)));
 assert.deepEqual(plain(pose(6,1000,1)),plain(pose(7,0,0)));
 assert.deepEqual(plain(pose(7,1000,1)),plain(pose(8,0,0)));
 assert.deepEqual(plain(pose(8,0,0)),[0,0,2064,1020]);
@@ -21,7 +21,7 @@ assert.match(html,/rel="preload" href="assets\/bridge-store-detail.png" as="imag
 console.log('Bridge: no hold or transition gap; next original photo prepositioned and preloaded: PASS');
 
 const {shouldExpandHistoryPhoto,historyCarouselFocus,historyCarouselGeometry}=require('./script.js');
-for(const local of [0,1000,1800,3600,5400,7200,8200,8999]) {
+for(const local of [0,600,1000,2000,3000,4000,4600,4999]) {
  const state=stateAt(segments[5].start+segments[5].entryHold+local,heights);
  assert.equal(shouldExpandHistoryPhoto(state.index,state.transition),false,'Zoom must not override ordered gallery before outgoing transition');
  const focus=historyCarouselFocus(5,local);

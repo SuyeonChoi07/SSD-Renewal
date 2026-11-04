@@ -3,6 +3,9 @@
   'use strict';
   const TRANSITION_SCROLL_PX = 250;
   const HOLD_SCROLL_PX = 1500;
+  const HISTORY_PHOTO_MOVE_PX = 600;
+  const HISTORY_PHOTO_HOLD_PX = 400;
+  const HISTORY_PHOTO_STEP_PX = HISTORY_PHOTO_MOVE_PX + HISTORY_PHOTO_HOLD_PX;
   // Brand: 제목 5248px → 화면 180px. 사진 3635px 중 보이는 폭 1806px를 제외한 거리.
   const BRAND_HALL_PIN = 5248 - 180;
   const BRAND_HALL_SCROLL = 3635 - 1806;
@@ -23,10 +26,10 @@
   function timeline(heights) {
     let start = 0;
     return heights.map((height, index) => {
-      const hold = index === 0 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 5 ? 800 : HOLD_SCROLL_PX;
+      const hold = index === 0 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 5 ? HISTORY_PHOTO_HOLD_PX : HOLD_SCROLL_PX;
       const travel = Math.max(0, height - 1020);
       const entryHold = index === 11 ? 0 : index === 17 ? 1680 : 1000;
-      const motion = index === 2 ? 2800 : index === 3 ? 900 : index === 4 ? 4600 : index === 5 ? 8200 : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
+      const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 1000 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
       const transition = index === heights.length - 1 || index === 6 ? 0 : index === 9 ? 600 : index === 14 ? 700 : index === 15 ? 2050 : index === 13 ? 1400 : index === 17 ? 1020 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 3450 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
@@ -130,8 +133,8 @@
       photoWidth:mix(405,600), photoHeight:mix(373,720), photoX:97*(1-t), photoY:174*(1-t) };
   }
   function historyContentPose(local, transition = 0, order = 0) {
-    const image = ease(clamp(local / 400));
-    const photos = ease(clamp((local - 400 - order * 20) / 300));
+    const image = ease(clamp(local / 240));
+    const photos = ease(clamp((local - 240 - order * 12) / 180));
     const captionIn = ease(clamp(local / 350)), captionOut = ease(clamp(transition));
     return { imageOpacity:image, imageBlur:24*(1-image), photoOpacity:photos, photoX:220*(1-photos),
       captionOpacity:captionIn*(1-captionOut), captionY:32*(1-captionIn)+32*captionOut };
@@ -140,8 +143,8 @@
     if(index<4)return 0;
     if(index>5)return 8;
     const base=index===4?0:3, count=index===4?3:5;
-    const step=Math.min(count,Math.floor(Math.max(0,local)/1800));
-    return base+Math.min(count,step+clamp((local-step*1800)/1000));
+    const step=Math.min(count,Math.floor(Math.max(0,local)/HISTORY_PHOTO_STEP_PX));
+    return base+Math.min(count,step+clamp((local-step*HISTORY_PHOTO_STEP_PX)/HISTORY_PHOTO_MOVE_PX));
   }
   function historyCarouselGeometry(focus, index) {
     const from=Math.min(7,Math.floor(clamp(focus,0,8))), p=clamp(focus-from);
@@ -300,7 +303,7 @@
   carouselPhotos.forEach(photo=>photo.classList.add('history-carousel-photo'));
   const carouselCaption=scenes[3].querySelector('.f04-layer-048');
   function renderHistoryContents(state) {
-    const local=state.index<3?0:state.index===3?state.local:900;
+    const local=state.index<3?0:state.index===3?state.local:540;
     const transition=state.index===5?state.transition:state.index>5?1:0;
     const entrance=historyContentPose(local,transition);
     const focus=historyCarouselFocus(state.index,state.local);
