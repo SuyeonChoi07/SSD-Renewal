@@ -268,6 +268,7 @@
   if (landingAdd) {
     const finishLandingAdd=()=>{
       landingAdd.remove();
+      document.querySelector('.landing-add-ring')?.remove();
       document.documentElement.classList.remove('is-landing-loading');
     };
     if (reduced.matches || window.scrollY > 0 || location.hash && location.hash !== '#landing') finishLandingAdd();
