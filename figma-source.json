@@ -58,7 +58,7 @@
         "749:78"
       ],
       "assetSlots": [
-        "assets/intro-open-hands.png",
+        "assets/intro-hand.mp4",
         "assets/intro-hand-shade.svg",
         "assets/brand-wordmark-white.png"
       ]
@@ -784,11 +784,11 @@
       "source": "Figma get_design_context original asset"
     },
     {
-      "localPath": "assets/intro-open-hands.png",
+      "localPath": "assets/intro-hand.mp4",
       "frames": [
         "Intro"
       ],
-      "source": "Figma get_design_context original asset"
+      "source": "User-supplied hand.mp4; green screen keyed at runtime"
     },
     {
       "localPath": "assets/twiso-front.png",

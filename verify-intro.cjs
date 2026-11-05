@@ -1,5 +1,5 @@
 const assert = require('node:assert/strict');
-const {introPose,introLinePose,timeline,modelScrollAnchors,modelPlacement}=require('./script.js');
+const {introPose,introLinePose,timeline,modelScrollAnchors,modelPlacement,introHandVideoAnchors}=require('./script.js');
 const travel=2040;
 assert.equal(introPose(0,travel).progress,0);
 const end=introPose(travel,travel);
@@ -35,7 +35,17 @@ for(const name of ['tws.glb','tws_w_o.glb']){
   assert.ok(gltf.meshes?.length>0);
 }
 assert.equal(fs.existsSync(__dirname+'/assets/tws-model-kit/tws_w.glb'),false,'Previous alternate model is removed');
-assert.match(css,/#intro \.f02-layer-006 \{ left: 301px;/);
+assert.doesNotMatch(html,/class="f02-layer-006"/);
+assert.match(html,/class="intro-hand-video-stage"/);
+assert.match(html,/data-src="assets\/intro-hand.mp4"/);
+const handAnchors=introHandVideoAnchors(segments);
+assert.equal(handAnchors.first,segments[1].start+segments[1].entryHold+1730);
+assert.equal(handAnchors.second,segments[1].start+segments[1].entryHold+2040);
+assert.equal(handAnchors.reverseStart,segments[2].start);
+assert.ok(handAnchors.third>handAnchors.reverseStart);
+const handTargetProgress=(handAnchors.third-anchors[1])/(anchors[2]-anchors[1]);
+assert.ok(Math.abs(modelPlacement(handTargetProgress).y+.771525)<1e-6);
+assert.ok(Math.abs(modelPlacement(handTargetProgress).x+.131274)<1e-4);
 assert.match(css,/#intro \.f02-layer-037 \{ top: 319px; transform: translateY\(var\(--intro-offset, 0px\)\)/);
 assert.deepEqual(introPose(travel+1500,travel),end,'End pose stays fixed during hold');
 assert.deepEqual(introLinePose(0,0,.20,0,true),{opacity:1,y:0});

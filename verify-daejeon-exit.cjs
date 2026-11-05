@@ -8,8 +8,8 @@ assert.equal(pose(2750).fade,.5,'Double scroll length puts midpoint 700px after 
 assert.equal(pose(3450).fade,1);
 for(const n of [1400,1700,2000])assert.equal(pose(n).fade,0);
 const heights=require('./figma-source.json').frames.map(f=>f.height),segments=timeline(heights);
-assert.equal(segments[8].exitMotion,3450);
-assert.equal(stateAt(segments[8].start+segments[8].entryHold+segments[8].motion+segments[8].hold+3450,heights).transition,0);
+assert.equal(segments[8].length,0);
+assert.equal(stateAt(segments[8].start,heights).index,9);
 console.log('Daejeon reverse text/panel exit, sign alignment first, then photo-to-logo dissolve: PASS');
 
 const {daejeonAlignedCrop}=require('./script.js');

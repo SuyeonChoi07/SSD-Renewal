@@ -4,7 +4,10 @@ assert.equal(headerPose(0,0).width,365.299);
 assert.equal(headerPose(0,1).width,124);
 assert.equal(headerPose(0,1).height,50);
 assert.ok(headerPose(0,.5).width>124&&headerPose(0,.5).width<365.299);
-for(let index=0;index<18;index++)assert.deepEqual(headerPose(index,1),headerPose(index+1,0),'Continuous header at scene boundary');
+for(let index=0;index<18;index++){
+  if(index===7||index===8)continue;
+  assert.deepEqual(headerPose(index,1),headerPose(index===6?9:index+1,0),'Continuous header at scene boundary');
+}
 assert.equal(headerPose(15,0).light,0);
 assert.equal(headerPose(15,1).light,1);
 assert.equal(headerPose(16,1).light,0);

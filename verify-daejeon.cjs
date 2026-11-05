@@ -8,8 +8,6 @@ assert.ok(pose(925,1).textOpacity<pose(925,0).textOpacity,'Line stagger');
 for(let line=0;line<9;line++){assert.equal(pose(1700,line).textOpacity,1);assert.equal(pose(1700,line).textY,0);}
 const heights=require('./figma-source.json').frames.map(f=>f.height);
 const segment=timeline(heights)[8];
-assert.equal(segment.entryHold,400);
-assert.equal(stateAt(segment.start+399,heights).local,0);
-assert.ok(stateAt(segment.start+401,heights).local>0);
-assert.equal(segment.motion,1700);
-console.log('Daejeon panel slide/fade, 300px gap, top-down staggered text: PASS');
+assert.equal(segment.length,0);
+assert.equal(stateAt(segment.start,heights).index,9);
+console.log('Daejeon scene is skipped; retained pose helpers remain deterministic: PASS');

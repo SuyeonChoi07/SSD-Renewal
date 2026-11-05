@@ -29,17 +29,20 @@
   function timeline(heights) {
     let start = 0;
     return heights.map((height, index) => {
+      // bridge_scale_end와 with Daejeon은 건너뛰되 원본 프레임은 HTML에 보존한다.
+      if(index===7||index===8)return {start,entryHold:0,hold:0,travel:0,motion:0,exitMotion:0,transition:0,length:0};
       const hold = index === heights.length - 1 || index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 9 ? HOLD_SCROLL_PX / 4 : index === 10 ? HOLD_SCROLL_PX * .4 : index === 7 || index === 12 || index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
       const travel = index === heights.length - 1 ? 0 : Math.max(0, height - 1020);
       const entryHold = index === heights.length - 1 || index === 6 || index === 7 || index === 11 ? 0 : index === 8 ? 400 : index === 0 ? 500 : index === 14 ? 250 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
-      const transition = index === heights.length - 1 || index === 6 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? WRAPPER_FIRST_OPEN_PX : index === 15 ? WRAPPER_EXIT_PX : index === 13 ? 1400 : index === 16 ? 1020 : index === 17 ? 774 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? WRAPPER_FIRST_OPEN_PX : index === 15 ? WRAPPER_EXIT_PX : index === 13 ? 1400 : index === 16 ? 1020 : index === 17 ? 774 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 3450 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
       return segment;
     });
   }
+  const nextSceneIndex=index=>index===6?9:index+1;
   function stateAt(scrollPx, heights) {
     const segments = timeline(heights);
     let index = segments.findIndex(segment => scrollPx < segment.start + segment.length);
@@ -82,6 +85,22 @@
     const scale=1-.1*t;
     // 캔버스 중앙 기준 배율 변화 뒤에도 모델 중심이 점선 사각형의 중심(1029, 508)에 닿게 한다.
     return {scale,x:-6*t+3*(1-scale),y:-37*t+35*(1-scale)};
+  }
+  function introHandVideoAnchors(segments) {
+    const intro=segments[1],history=segments[2];
+    const modelAnchors=modelScrollAnchors(segments);
+    let low=0,high=1;
+    for(let i=0;i<32;i++){
+      const mid=(low+high)/2;
+      if(modelPlacement(mid).y>-.771525)low=mid;else high=mid;
+    }
+    return {
+      introTravelStart:intro.start+intro.entryHold,
+      first:intro.start+intro.entryHold+1730,
+      second:intro.start+intro.entryHold+2040,
+      reverseStart:history.start,
+      third:modelAnchors[1]+(modelAnchors[2]-modelAnchors[1])*(low+high)/2
+    };
   }
   function brandPose(local,travel=7011) {
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
@@ -172,7 +191,7 @@
   }
   function historyZoomPose(index,local,transition=0) {
     const keys=[{x:732,y:150,width:600,height:720},{x:651,y:-10,width:784,height:1030},{x:391,y:0,width:1582,height:1020},{x:0,y:0,width:2064,height:1020}];
-    const p=index<5?0:index===5?clamp(transition):index===6?1+clamp(local/600):index===7?2+clamp(local/600):3;
+    const p=index<5?0:index===5?clamp(transition):index===6?1+clamp(local/600)+clamp(transition):index===7?2+clamp(local/600):3;
     const a=Math.min(2,Math.floor(p)),t=ease(p-a),from=keys[a],to=keys[a+1];
     return {...Object.fromEntries(Object.keys(from).map(k=>[k,from[k]+(to[k]-from[k])*t])),progress:p};
   }
@@ -238,7 +257,7 @@
     const group = i => i >= 18 ? 4 : i >= 17 ? 3 : i >= 9 ? 2 : i >= 2 ? 1 : 0;
     const light = index===15?wrapperExitPose(progress).fade:mix(index === 16 ? 1 : 0, index + 1 === 16 ? 1 : 0);
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
-      active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(index+1)===i?1:0)) };
+      active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(nextSceneIndex(index))===i?1:0)) };
   }
   if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperOpenPose, wrapperCopyVisible, wrapperCopyOpacity, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
   if (typeof module !== 'undefined') module.exports.contactScrollPose=contactScrollPose;
@@ -247,12 +266,13 @@
   if (typeof module !== 'undefined') module.exports.brandGalleryReveal=brandGalleryReveal;
   if (typeof module !== 'undefined') module.exports.modelScrollAnchors=modelScrollAnchors;
   if (typeof module !== 'undefined') module.exports.modelPlacement=modelPlacement;
+  if (typeof module !== 'undefined') module.exports.introHandVideoAnchors=introHandVideoAnchors;
   if (typeof module !== 'undefined') { module.exports.brandModelScrollAnchors=brandModelScrollAnchors; module.exports.brandModelDrop=brandModelDrop; }
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
   const segments = timeline(heights);
-  window.storyModel={anchors:modelScrollAnchors(segments),placement:modelPlacement,brandAnchors:brandModelScrollAnchors(segments)};
+  window.storyModel={anchors:modelScrollAnchors(segments),placement:modelPlacement,brandAnchors:brandModelScrollAnchors(segments),handVideoAnchors:introHandVideoAnchors(segments)};
   document.querySelectorAll('.scroll-chapter').forEach((chapter, index) => { chapter.style.height = segments[index].length + 'px'; });
   const stage = document.querySelector('.design-stage');
   const introModel=document.querySelector('.intro-model-stage');
@@ -368,7 +388,7 @@
   const historyCommon=[scenes[3].querySelector('.f04-layer-047'),scenes[3].querySelector('.f04-layer-048'),scenes[3].querySelector('.f04-layer-049')];
   function renderHistoryZoom(state) {
     const zoom=historyZoomPose(state.index,state.local,state.transition);
-    const stackOpacity=state.index===5?ease(state.transition):state.index===6?1:state.index===7?1:0;
+    const stackOpacity=state.index===5?ease(state.transition):state.index===6?1-ease(clamp(state.transition*2)):0;
     bridgeStack.style.opacity=stackOpacity;
     bridgeStack.style.visibility=stackOpacity>0?'visible':'hidden';
     bridgeFront.style.opacity=1-ease(clamp(zoom.progress-1));
@@ -418,8 +438,8 @@
     const blend=ease(clamp((pose.fade-.25)/.5));
     daejeon.style.setProperty('--daejeon-bg-opacity',1-blend);
     const next=state.index===9?ease(state.transition):0;
-    daejeonLogo.style.opacity=state.index===8?blend:state.index===9?1-next:0;
-    daejeonLogo.style.visibility=state.index===8&&pose.fade>0||state.index===9?'visible':'hidden';
+    daejeonLogo.style.opacity=state.index===6?ease(clamp((state.transition-.5)*2)):state.index===9?1-next:0;
+    daejeonLogo.style.visibility=state.index===6&&state.transition>.5||state.index===9?'visible':'hidden';
     const rect=daejeonAlignedLogoRect(),target={x:908,y:494,width:279,height:92};
     Object.keys(rect).forEach(key=>daejeonLogo.style.setProperty('--handoff-logo-'+key,(rect[key]+(target[key]-rect[key])*next)+'px'));
   }
@@ -524,7 +544,8 @@
       layer.style.visibility=state.index===18||state.index===17&&state.transition>0?'visible':'hidden';
     });
     scenes.forEach((scene, index) => {
-      let opacity = index === state.index ? weights.outgoing : index === state.index + 1 ? weights.incoming : 0;
+      const incomingIndex=nextSceneIndex(state.index);
+      let opacity = index === state.index ? weights.outgoing : index === incomingIndex ? weights.incoming : 0;
       if(state.index>=3 && state.index<=5) {
         if(index===3)opacity=state.index===5?weights.outgoing:1;
         if(index===4||index===5)opacity=0;
@@ -537,7 +558,7 @@
       const sceneY=state.index===16?(index===16?brandScroll.brandY:index===17?brandScroll.contactY:0):state.index===17?(index===17?contactScroll.brandY:index===18?contactScroll.contactY:0):0;
       scene.style.transform=`translateY(${sceneY}px)`;
       scene.classList.toggle('is-visible', opacity > 0);
-      const logicalCurrent=state.transition>=.5?Math.min(state.index+1,scenes.length-1):state.index;
+      const logicalCurrent=state.transition>=.5?Math.min(incomingIndex,scenes.length-1):state.index;
       const visualCurrent=logicalCurrent>=3&&logicalCurrent<=5?3:logicalCurrent;
       const current=index===visualCurrent&&opacity>0;
       scene.classList.toggle('is-current',current);
