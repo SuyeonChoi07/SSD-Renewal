@@ -30,10 +30,10 @@
     let start = 0;
     return heights.map((height, index) => {
       // 중간 브리지 화면은 건너뛰되 원본 프레임은 HTML에 보존한다.
-      if(index===7||index===8||index===9)return {start,entryHold:0,hold:0,travel:0,motion:0,exitMotion:0,transition:0,length:0};
-      const hold = index === heights.length - 1 || index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 9 ? HOLD_SCROLL_PX / 4 : index === 10 ? HOLD_SCROLL_PX * .4 : index === 7 || index === 12 || index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
+      if(index>=6&&index<=9)return {start,entryHold:0,hold:0,travel:0,motion:0,exitMotion:0,transition:0,length:0};
+      const hold = index === 5 ? 200 : index === heights.length - 1 || index === 0 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 10 ? HOLD_SCROLL_PX * .4 : index === 12 || index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
       const travel = index === heights.length - 1 ? 0 : Math.max(0, height - 1020);
-      const entryHold = index === heights.length - 1 || index === 6 || index === 7 || index === 11 ? 0 : index === 8 ? 400 : index === 0 ? 500 : index === 14 ? 250 : index === 17 ? 1680 : 1000;
+      const entryHold = index === 3 ? 200 : index === heights.length - 1 || index === 11 ? 0 : index === 0 ? 500 : index === 14 ? 250 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
       const transition = index === heights.length - 1 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? WRAPPER_FIRST_OPEN_PX : index === 15 ? WRAPPER_EXIT_PX : index === 13 ? 1400 : index === 16 ? 1020 : index === 17 ? 774 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 3450 : 0;
@@ -42,7 +42,7 @@
       return segment;
     });
   }
-  const nextSceneIndex=index=>index===6?10:index+1;
+  const nextSceneIndex=index=>index===5?10:index+1;
   function stateAt(scrollPx, heights) {
     const segments = timeline(heights);
     let index = segments.findIndex(segment => scrollPx < segment.start + segment.length);
@@ -186,9 +186,7 @@
     const a=at(from),b=at(from+1);
     return Object.fromEntries(Object.keys(a).map(k=>[k,a[k]+(b[k]-a[k])*t]));
   }
-  function shouldExpandHistoryPhoto(index, transition) {
-    return index > 5 || (index === 5 && transition > 0);
-  }
+  function shouldExpandHistoryPhoto() { return false; }
   function historyZoomPose(index,local,transition=0) {
     const keys=[{x:732,y:150,width:600,height:720},{x:651,y:-10,width:784,height:1030},{x:391,y:0,width:1582,height:1020},{x:0,y:0,width:2064,height:1020}];
     const p=index<5?0:index===5?clamp(transition):index===6?1+clamp(local/600)+clamp(transition):index===7?2+clamp(local/600):3;
@@ -383,27 +381,11 @@
     });
   }
   const bridgeStack=document.querySelector('.bridge-photo-stack');
-  const bridgeFront=bridgeStack.querySelector('.f07-layer-005');
-  const lastHistoryImage=carouselPhotos[8];
   const historyCommon=[scenes[3].querySelector('.f04-layer-047'),scenes[3].querySelector('.f04-layer-048'),scenes[3].querySelector('.f04-layer-049')];
-  function renderHistoryZoom(state) {
-    const zoom=historyZoomPose(state.index,state.local,state.transition);
-    const stackOpacity=state.index===5?ease(state.transition):state.index===6?1-ease(clamp(state.transition*2)):0;
-    bridgeStack.style.opacity=stackOpacity;
-    bridgeStack.style.visibility=stackOpacity>0?'visible':'hidden';
-    bridgeFront.style.opacity=1-ease(clamp(zoom.progress-1));
-    Object.entries(zoom).forEach(([key,value])=>stage.style.setProperty('--history-zoom-'+key,value+(key==='progress'?'':'px')));
-    const crops=historyImageCrops(zoom.progress);
-    Object.entries(crops).forEach(([layer,crop])=>Object.entries(crop).forEach(([key,value])=>stage.style.setProperty('--aligned-'+layer+'-'+key,value+'%')));
-    if(shouldExpandHistoryPhoto(state.index,state.transition)) {
-      lastHistoryImage.style.setProperty('--carousel-x',zoom.x+'px');
-      lastHistoryImage.style.setProperty('--carousel-y',(zoom.y-150)+'px');
-      lastHistoryImage.style.setProperty('--carousel-width',zoom.width+'px');
-      lastHistoryImage.style.setProperty('--carousel-height',zoom.height+'px');
-      const fade=1-ease(clamp(zoom.progress));
-      carouselPhotos.slice(0,8).forEach(photo=>photo.style.setProperty('--carousel-opacity',.6*fade));
-      historyCommon.forEach(element=>element.style.setProperty('--zoom-common-opacity',fade));
-    } else historyCommon.forEach(element=>element.style.setProperty('--zoom-common-opacity',1));
+  function renderHistoryZoom() {
+    bridgeStack.style.opacity=0;
+    bridgeStack.style.visibility='hidden';
+    historyCommon.forEach(element=>element.style.setProperty('--zoom-common-opacity',1));
   }
   const daejeon=scenes[8],daejeonPanel=daejeon.querySelector('.f09-layer-008');
   const daejeonLines=Array.from(daejeon.querySelectorAll('.f09-layer-012 .daejeon-line, .f09-layer-009 .daejeon-line'));

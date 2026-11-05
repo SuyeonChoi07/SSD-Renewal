@@ -1,38 +1,21 @@
 const assert=require('node:assert/strict');
-const {historyZoomPose:pose,timeline}=require('./script.js');
-const plain=p=>[p.x,p.y,p.width,p.height];
-assert.deepEqual(plain(pose(5,4600,0)),[732,150,600,720]);
-assert.deepEqual(plain(pose(5,5000,1)),plain(pose(6,0,0)));
-assert.deepEqual(plain(pose(6,600,1)),plain(pose(9,0,0)));
-assert.deepEqual(plain(pose(7,600,1)),plain(pose(8,0,0)));
-assert.deepEqual(plain(pose(8,0,0)),[0,0,2064,1020]);
-for(const index of [6,7])for(let d=60;d<=600;d+=60)assert.ok(pose(index,d).width>=pose(index,d-60).width);
-assert.deepEqual(plain(pose(6,600)),plain(pose(6,2500)),'Zoom endpoint holds without jump');
-console.log('History last photo: continuous zoom geometry through bridges to full Daejeon background: PASS');
-
-const {stateAt}=require('./script.js');
-const heights=require('./figma-source.json').frames.map(f=>f.height),segments=timeline(heights);
-assert.equal(segments[5].hold,0);assert.equal(segments[5].transition,150);
-assert.equal(segments[6].entryHold,0);assert.equal(segments[6].hold,0);assert.equal(segments[6].transition,250);assert.equal(segments[6].length,850);
-assert.equal(segments[7].length,0);assert.equal(segments[8].length,0);
-assert.equal(stateAt(segments[6].start+600,heights).index,6,'Bridge begins its direct transition after the zoom');
-assert.equal(segments[9].length,0);
-assert.equal(stateAt(segments[6].start+850,heights).index,10,'Scenes 7, 8, and 9 are skipped');
-assert.deepEqual(plain(pose(6,850,1)),plain(pose(10,0,0)),'The bridge reaches full frame before scene 10');
-const html=require('node:fs').readFileSync(__dirname+'/index.html','utf8');
-const stack=html.slice(html.indexOf('<div class="bridge-photo-stack"'));
-assert.ok(stack.indexOf('class="f08-layer-005"')<stack.indexOf('class="f07-layer-005"'),'f08 is prepositioned behind f07');
-assert.match(html,/rel="preload" href="assets\/bridge-store-detail.png" as="image"/);
-console.log('Bridge: scene 6 transitions directly to scene 10: PASS');
-
-const {shouldExpandHistoryPhoto,historyCarouselFocus,historyCarouselGeometry}=require('./script.js');
-for(const local of [0,600,1000,2000,3000,4000,4599,4600]) {
- const state=stateAt(segments[5].start+segments[5].entryHold+local,heights);
- assert.equal(shouldExpandHistoryPhoto(state.index,state.transition),false,'Zoom must not override ordered gallery before outgoing transition');
- const focus=historyCarouselFocus(5,local);
- if(focus<8)assert.ok(historyCarouselGeometry(focus,8).x>732,'Last photo stays to the right until its turn');
+const {timeline,stateAt,historyCarouselFocus,historyCarouselGeometry,shouldExpandHistoryPhoto}=require('./script.js');
+const heights=require('./figma-source.json').frames.map(frame=>frame.height);
+const segments=timeline(heights);
+assert.equal(segments[3].entryHold,200);
+const last=segments[5];
+assert.equal(last.motion,4600);
+assert.equal(last.hold,200);
+for(let index=6;index<=9;index++)assert.equal(segments[index].length,0);
+const holdStart=last.start+last.entryHold+last.motion;
+for(const delta of [0,100,199,200]){
+  const state=stateAt(holdStart+delta,heights);
+  assert.equal(state.index,5);
+  assert.equal(state.transition,0);
+  assert.equal(historyCarouselFocus(state.index,state.local),8);
 }
-assert.equal(historyCarouselGeometry(3,3).opacity,1,'Current center photo must not be dimmed');
-assert.equal(shouldExpandHistoryPhoto(5,.01),true);
-assert.equal(shouldExpandHistoryPhoto(6,0),true);
-console.log('Regression: last photo cannot jump into center early or dim current center photo: PASS');
+assert.equal(stateAt(last.start+last.length,heights).index,10);
+for(const index of [5,6,10])assert.equal(shouldExpandHistoryPhoto(index,1),false);
+assert.equal(historyCarouselGeometry(8,8).width,600);
+assert.equal(historyCarouselGeometry(8,8).height,720);
+console.log('History last photo holds at 600x720 for 200px; image expansion is removed: PASS');
