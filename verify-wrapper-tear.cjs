@@ -10,6 +10,7 @@ assert.equal(segments[14].transition,525);
 assert.equal(segments[15].transition,1725);
 assert.equal(segments[14].transition+segments[15].transition,2250);
 assert.equal(segments[15].hold,0);
+assert.equal(segments[15].entryHold,0,'Wrapper continues opening without a pause at scene 15');
 assert.deepEqual(pose(14,1),pose(15,0));
 assert.deepEqual(pose(14,0),{distance:0,progress:0});
 for(let distance=0;distance<=1500;distance+=75){
