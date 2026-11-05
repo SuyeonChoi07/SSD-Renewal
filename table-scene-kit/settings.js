@@ -8,7 +8,7 @@ export const tableSettings = {
   zoomEndAt: 0.6,
   endPitch: 60,
   endOffsetX: -0.125,
-  objectScale: 0.8,
+  objectScale: 0.64,
   liftMultiplier: 4,
   exposure: 0.80,
   environmentIntensity: 0.38,
