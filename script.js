@@ -86,22 +86,6 @@
     // 캔버스 중앙 기준 배율 변화 뒤에도 모델 중심이 점선 사각형의 중심(1029, 508)에 닿게 한다.
     return {scale,x:-6*t+3*(1-scale),y:-37*t+35*(1-scale)};
   }
-  function introHandVideoAnchors(segments) {
-    const intro=segments[1],history=segments[2];
-    const modelAnchors=modelScrollAnchors(segments);
-    let low=0,high=1;
-    for(let i=0;i<32;i++){
-      const mid=(low+high)/2;
-      if(modelPlacement(mid).y>-.771525)low=mid;else high=mid;
-    }
-    return {
-      introTravelStart:intro.start+intro.entryHold,
-      first:intro.start+intro.entryHold+1730,
-      second:intro.start+intro.entryHold+2040,
-      reverseStart:history.start,
-      third:modelAnchors[1]+(modelAnchors[2]-modelAnchors[1])*(low+high)/2
-    };
-  }
   function brandPose(local,travel=7011) {
     const progress=clamp(local,0,travel+BRAND_HALL_SCROLL);
     const horizontal=clamp((progress-BRAND_HALL_PIN)/BRAND_HALL_SCROLL);
@@ -264,13 +248,12 @@
   if (typeof module !== 'undefined') module.exports.brandGalleryReveal=brandGalleryReveal;
   if (typeof module !== 'undefined') module.exports.modelScrollAnchors=modelScrollAnchors;
   if (typeof module !== 'undefined') module.exports.modelPlacement=modelPlacement;
-  if (typeof module !== 'undefined') module.exports.introHandVideoAnchors=introHandVideoAnchors;
   if (typeof module !== 'undefined') { module.exports.brandModelScrollAnchors=brandModelScrollAnchors; module.exports.brandModelDrop=brandModelDrop; }
   if (typeof document === 'undefined') return;
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const heights = scenes.map(scene => Number(scene.dataset.frameHeight));
   const segments = timeline(heights);
-  window.storyModel={anchors:modelScrollAnchors(segments),placement:modelPlacement,brandAnchors:brandModelScrollAnchors(segments),handVideoAnchors:introHandVideoAnchors(segments)};
+  window.storyModel={anchors:modelScrollAnchors(segments),placement:modelPlacement,brandAnchors:brandModelScrollAnchors(segments)};
   document.querySelectorAll('.scroll-chapter').forEach((chapter, index) => { chapter.style.height = segments[index].length + 'px'; });
   const stage = document.querySelector('.design-stage');
   const introModel=document.querySelector('.intro-model-stage');
@@ -447,9 +430,9 @@
   const ourWayCards = Array.from(scenes[16].querySelectorAll('.our-way-card'));
   const OUR_WAY_CARD_REVEAL_PX = 170 / .7;
   function renderOurWayCards(state) {
-    const offset=state.index<16?0:state.index===16?state.offset:segments[16].travel;
+    const offset=state.index<16?0:state.index===16?state.local:segments[16].travel+segments[16].hold;
     ourWayCards.forEach((card,index)=>{
-      const progress=ease(clamp((offset-(138+index*230))/OUR_WAY_CARD_REVEAL_PX));
+      const progress=ease(clamp((offset-(388+index*230))/OUR_WAY_CARD_REVEAL_PX));
       card.style.setProperty('--card-reveal',progress);
       card.style.setProperty('--card-rise',(reduced.matches?0:90*(1-progress))+'px');
     });

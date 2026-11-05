@@ -109,6 +109,39 @@ try {
  for(let i=-5;i<=5;i++)addMullion(span*.055,span*3,i*span*.22,0);
  addMullion(span*3,span*.035,0,span*.18);
  scene.add(windowFrame);
+ // Soft sunlight falls through the spaces between the mullions onto the table.
+ const tableObject=gltf.scene.getObjectByName('Table');
+ if(tableObject){
+ const tableBounds=new THREE.Box3().setFromObject(tableObject);
+ const tableSize=tableBounds.getSize(new THREE.Vector3());
+ const tableCenter=tableBounds.getCenter(new THREE.Vector3());
+ const beamCanvas=document.createElement('canvas');
+ beamCanvas.width=128;beamCanvas.height=256;
+ const beamContext=beamCanvas.getContext('2d');
+ const across=beamContext.createLinearGradient(0,0,128,0);
+ across.addColorStop(0,'rgba(255,230,180,0)');
+ across.addColorStop(.28,'rgba(255,230,180,0.35)');
+ across.addColorStop(.5,'rgba(255,240,205,0.55)');
+ across.addColorStop(.72,'rgba(255,230,180,0.35)');
+ across.addColorStop(1,'rgba(255,230,180,0)');
+ beamContext.fillStyle=across;beamContext.fillRect(0,0,128,256);
+ const along=beamContext.createLinearGradient(0,0,0,256);
+ along.addColorStop(0,'rgba(255,255,255,0)');
+ along.addColorStop(.28,'rgba(255,255,255,1)');
+ along.addColorStop(.72,'rgba(255,255,255,1)');
+ along.addColorStop(1,'rgba(255,255,255,0)');
+ beamContext.globalCompositeOperation='destination-in';
+ beamContext.fillStyle=along;beamContext.fillRect(0,0,128,256);
+ const beamTexture=new THREE.CanvasTexture(beamCanvas);
+ const beamMaterial=new THREE.MeshBasicMaterial({map:beamTexture,transparent:true,opacity:.22,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide});
+ for(let i=0;i<3;i++){
+ const beam=new THREE.Mesh(new THREE.PlaneGeometry(tableSize.x*.17,tableSize.z*.85),beamMaterial);
+ beam.rotation.set(-Math.PI/2,0,Math.PI/5);
+ beam.position.set(tableBounds.min.x+tableSize.x*(.24+i*.26),tableBounds.max.y+span*.002,tableCenter.z);
+ beam.renderOrder=1;
+ scene.add(beam);
+ }
+ }
  // Shadow-only foliage between the window and tabletop, swaying in a light breeze.
  const foliage=new THREE.Group();
  const foliageY=box.max.y+span*.22;

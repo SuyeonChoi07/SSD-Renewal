@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const {timeline}=require('./script.js');
+const heights=require('./figma-source.json').frames.map(frame=>frame.height);
+const scene=timeline(heights)[16];
+const script=fs.readFileSync(__dirname+'/script.js','utf8');
+const duration=170/.7;
+const start=388,lastStart=start+2*230;
+assert.ok(start>138,'First card starts later than before');
+assert.ok(lastStart+duration>scene.travel,'The final card can finish during the end hold');
+assert.ok(lastStart+duration<scene.travel+scene.hold,'All cards finish before the next scene');
+assert.match(script,/state\.index===16\?state\.local:segments\[16\]\.travel\+segments\[16\]\.hold/);
+assert.match(script,/offset-\(388\+index\*230\)/);
+console.log('Our Way cards reveal later and complete during the held view: PASS');

@@ -106,9 +106,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .f02-layer-003 { line-height: 40px; margin-bottom: 0; }
 .f02-layer-004 { line-height: 40px; }
 .f02-layer-005 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 140px; left: calc(50% - 644px); font-style: normal; font-size: 140px; color: #fff; top: 458px; white-space: nowrap; }
-.intro-hand-video-stage { position: absolute; height: 534px; left: 301px; top: calc(2465px - var(--hand-intro-offset, 0px)); width: 1469px; z-index: 5; visibility: hidden; pointer-events: none; }
-.intro-hand-video-source { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-.intro-hand-video-canvas { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.f02-layer-006 { position: absolute; height: 534px; left: 301px; top: 2465px; width: 1469px; z-index: 1; }
+.f02-layer-007 { position: absolute; inset: 0; max-width: none; object-fit: cover; pointer-events: none; width: 100%; height: 100%; }
 .f02-layer-008 { word-break: break-word; position: absolute; font-family: var(--page-font); font-weight: 600; line-height: 0; left: 1354px; font-style: normal; font-size: 30px; color: #fff; top: calc(50% - 22px); letter-spacing: -0.9px; white-space: nowrap; }
 .f02-layer-009 { line-height: 1; margin-bottom: 0; }
 .f02-layer-010 { line-height: 1; margin-bottom: 0; }
