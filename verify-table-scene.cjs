@@ -14,6 +14,9 @@ assert.ok(!html.includes('class="f13-layer-005"')&&!html.includes('class="f13-la
 assert.match(html,/class="table-model-stage"/);
 assert.match(script,/window\.tableSceneTarget=state\.index>=13\?1:0/);
 assert.match(script,/state\.index===13\?weights\.outgoing:0/);
+assert.match(script,/daejeonOverlay\.append\(daejeon\.querySelector\(selector\)\)/);
+assert.match(script,/const local=1700\*\(window\.tableMotionProgress\?\?0\)/);
+assert.match(script,/daejeonDivider\.style\.opacity=pose\.dividerOpacity/);
 assert.match(model,/duration=settings\.durationMs\*Math\.abs\(next-from\)/);
 assert.match(model,/return \{playTo\}/);
 console.log('Table 3D model plays for 1.2 seconds on scene 13 entry: PASS');

@@ -388,30 +388,30 @@
     bridgeStack.style.visibility='hidden';
     historyCommon.forEach(element=>element.style.setProperty('--zoom-common-opacity',1));
   }
-  const daejeon=scenes[8],daejeonPanel=daejeon.querySelector('.f09-layer-008');
-  const daejeonLines=Array.from(daejeon.querySelectorAll('.f09-layer-012 .daejeon-line, .f09-layer-009 .daejeon-line'));
+  const daejeon=scenes[8],daejeonOverlay=document.querySelector('.table-daejeon-overlay');
+  ['.f09-layer-008','.f09-layer-009','.f09-layer-012','.f09-layer-017'].forEach(selector=>daejeonOverlay.append(daejeon.querySelector(selector)));
+  const daejeonPanel=daejeonOverlay.querySelector('.f09-layer-008');
+  const daejeonLines=Array.from(daejeonOverlay.querySelectorAll('.f09-layer-012 .daejeon-line, .f09-layer-009 .daejeon-line'));
   // 본문 위쪽 줄부터 읽고 마지막에 아래쪽 결론 두 줄을 표시합니다.
   daejeonLines.sort((a,b)=>Number(a.closest('.f09-layer-009')!==null)-Number(b.closest('.f09-layer-009')!==null));
-  const daejeonDivider=daejeon.querySelector('.f09-layer-017');
+  const daejeonDivider=daejeonOverlay.querySelector('.f09-layer-017');
   const daejeonLogo=document.querySelector('.daejeon-logo-overlay');
   function renderDaejeon(state) {
-    const local=state.index<8?0:state.index===8?state.local:1700;
+    const local=1700*(window.tableMotionProgress??0);
     const pose=daejeonPose(local);
     daejeonPanel.style.setProperty('--panel-opacity',pose.panelOpacity);
     daejeonPanel.style.setProperty('--panel-x',(reduced.matches?0:pose.panelX)+'px');
-    const elapsed=state.index<8?0:state.index===8?Math.max(0,state.local-segments[8].motion-segments[8].hold):segments[8].exitMotion;
-    const exit=daejeonExitPose(elapsed);
-    daejeonPanel.style.setProperty('--panel-opacity',pose.panelOpacity*exit.panelOpacity);
-    daejeonPanel.style.setProperty('--panel-x',((reduced.matches?0:pose.panelX)+(reduced.matches?0:exit.panelX))+'px');
-    daejeonDivider.style.opacity=pose.dividerOpacity*(1-ease(clamp(elapsed/250)));
+    daejeonDivider.style.opacity=pose.dividerOpacity;
     daejeonLines.forEach((line,index)=>{
       const p=daejeonPose(local,index);
-      const out=daejeonExitPose(elapsed,index,daejeonLines.length);
-      p.textOpacity*=out.textOpacity; p.textY+=out.textY;
       line.style.setProperty('--daejeon-line-opacity',p.textOpacity);
       line.style.setProperty('--daejeon-line-y',(reduced.matches?0:p.textY)+'px');
     });
+    const visible=state.index===13;
+    daejeonOverlay.style.visibility=visible?'visible':'hidden';
+    daejeonOverlay.style.opacity=visible?transitionWeights(13,state.transition).outgoing:0;
   }
+  window.addEventListener('table-scene-motion',()=>renderDaejeon(stateAt(window.scrollY,heights)));
   function renderDaejeonHandoff(state) {
     const elapsed=state.index<8?0:state.index===8?Math.max(0,state.local-segments[8].motion-segments[8].hold):segments[8].exitMotion;
     const pose=daejeonExitPose(elapsed);

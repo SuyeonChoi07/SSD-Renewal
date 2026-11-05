@@ -160,6 +160,7 @@ try {
  camera.quaternion.copy(rotation).multiply(baseRotation);
  if(readout)readout.textContent=(progress===0?'SECTION 01':progress===1?'SECTION 02':'01 → 02')+' · '+zoomPercent+'% · '+pitch.toFixed(1)+'° · X 이동 '+sectionXOffset.toFixed(3);
  render();
+ settings.onProgress?.(progress);
  }
  let motionProgress=0;
  let playbackFrame=0,playbackTarget=0,playing=false;
