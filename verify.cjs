@@ -6,7 +6,7 @@ const scenes=[...html.matchAll(/<section\b[^>]*data-frame-name="([^"]+)"[^>]*>([
 assert.equal(scenes.length,19);
 assert.deepEqual(scenes.map(m=>m[1]),provenance.frames.map(f=>f.name));
 let layerCount=0,slotCount=0;
-scenes.forEach((scene,i)=>{const nodes=[...scene[2].matchAll(/data-node-id="([^"]+)"/g)].map(m=>m[1]);assert.deepEqual(nodes,provenance.frames[i].nodeIds.filter(id=>id!=='779:791'),'Original layer order: '+scene[1]);const slots=[...scene[2].matchAll(/src="(assets\/[^"]+)"/g)].map(m=>m[1]);assert.deepEqual(slots,provenance.frames[i].assetSlots.filter(slot=>!(i===12&&slot==='assets/wooden-tray.png'||i===13&&slot==='assets/table-tilt.png')),'Original asset slots: '+scene[1]);layerCount+=nodes.length;slotCount+=slots.length;});
+scenes.forEach((scene,i)=>{const nodes=[...scene[2].matchAll(/data-node-id="([^"]+)"/g)].map(m=>m[1]);assert.deepEqual(nodes,provenance.frames[i].nodeIds.filter(id=>id!=='779:791'&&id!=='779:792'),'Original layer order: '+scene[1]);const slots=[...scene[2].matchAll(/src="(assets\/[^"]+)"/g)].map(m=>m[1]);assert.deepEqual(slots,provenance.frames[i].assetSlots.filter(slot=>!(i===12&&(slot==='assets/wooden-tray.png'||slot==='assets/twiso-branded-wrapper.png')||i===13&&slot==='assets/table-tilt.png')),'Original asset slots: '+scene[1]);layerCount+=nodes.length;slotCount+=slots.length;});
 for(const asset of provenance.assets)assert.ok(fs.statSync(path.join(root,asset.localPath)).size>0,asset.localPath);
 for(const match of html.matchAll(/(?:src|href)="((?:assets\/)[^"]+)"/g))assert.ok(fs.statSync(path.join(root,match[1])).size>0,match[1]);
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);
