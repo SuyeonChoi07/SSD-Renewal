@@ -10,6 +10,7 @@ export const tableSettings = {
   endOffsetX: -0.125,
   objectScale: 0.8,
   liftMultiplier: 4,
-  exposure: 1.2,
-  light: { ambient: 0.8125, key: 0.75, fill: 0.325, shadowRadius: 7 }
+  exposure: 0.80,
+  environmentIntensity: 0.38,
+  light: { ambient: 0.32, key: 0.45, fill: 0.10, shadowRadius: 2.5 }
 };

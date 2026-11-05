@@ -1,5 +1,6 @@
 import * as THREE from './vendor/three.module.js';
 import { GLTFLoader } from './vendor/GLTFLoader.js';
+import { RoomEnvironment } from './vendor/RoomEnvironment.js';
 import { tableSettings } from './settings.js';
 
 export async function mountTableScene(root, settings = tableSettings) {
@@ -11,9 +12,15 @@ try {
  renderer.toneMapping=THREE.ACESFilmicToneMapping;
  renderer.toneMappingExposure=settings.exposure;
  renderer.shadowMap.enabled=true;
- renderer.shadowMap.type=THREE.VSMShadowMap;
+ renderer.shadowMap.type=THREE.PCFShadowMap;
  view.prepend(renderer.domElement);
  const scene=new THREE.Scene();scene.background=new THREE.Color('#e9e6e0');
+ const pmrem=new THREE.PMREMGenerator(renderer);
+ const room=new RoomEnvironment();
+ const environment=pmrem.fromScene(room);
+ scene.environment=environment.texture;
+ scene.environmentIntensity=settings.environmentIntensity;
+ pmrem.dispose();room.dispose();
  // Warm window sunlight against a softer, cooler ambient sky.
  scene.add(new THREE.HemisphereLight(0xfff4e7,0xa18d76,settings.light.ambient));
  const key=new THREE.DirectionalLight(0xffefd5,settings.light.key);scene.add(key);
@@ -41,16 +48,31 @@ try {
  const bounceHome=bounceGroup.position.clone();
  const bounceBounds=new THREE.Box3().setFromObject(bounceGroup);
  const bounceHeight=Math.max(bounceBounds.getSize(new THREE.Vector3()).y*.9,span*.015)*settings.liftMultiplier;
- // A simple diffuse preview avoids reflection-map preparation and dark metals.
+ // Keep the GLB's original PBR materials and textures.
  gltf.scene.traverse(object=>{if(!object.isMesh)return;
- const convert=material=>new THREE.MeshLambertMaterial({
-  color:material.color?.clone()??new THREE.Color('white'),map:material.map,
-  side:THREE.DoubleSide,transparent:material.transparent,opacity:material.opacity,
-  alphaTest:material.alphaTest,vertexColors:material.vertexColors
- });
- object.material=Array.isArray(object.material)?object.material.map(convert):convert(object.material);
  object.castShadow=true;object.receiveShadow=true;
  });
+ const shadowCanvas=document.createElement('canvas');
+ shadowCanvas.width=shadowCanvas.height=64;
+ const shadowContext=shadowCanvas.getContext('2d');
+ const gradient=shadowContext.createRadialGradient(32,32,0,32,32,32);
+ gradient.addColorStop(0,'rgba(0,0,0,0.65)');
+ gradient.addColorStop(.48,'rgba(0,0,0,0.35)');
+ gradient.addColorStop(1,'rgba(0,0,0,0)');
+ shadowContext.fillStyle=gradient;
+ shadowContext.fillRect(0,0,64,64);
+ const shadowTexture=new THREE.CanvasTexture(shadowCanvas);
+ const contactMaterial=new THREE.MeshBasicMaterial({map:shadowTexture,transparent:true,opacity:.72,depthWrite:false,side:THREE.DoubleSide});
+ const bounceSize=bounceBounds.getSize(new THREE.Vector3());
+ const contactShadow=new THREE.Mesh(new THREE.PlaneGeometry(bounceSize.x*1.45,bounceSize.z*1.45),contactMaterial);
+ contactShadow.rotation.x=-Math.PI/2;
+ const contactCenter=bounceBounds.getCenter(new THREE.Vector3());
+ const floorRay=new THREE.Raycaster(new THREE.Vector3(contactCenter.x,bounceBounds.max.y+span,contactCenter.z),new THREE.Vector3(0,-1,0),0,span*4);
+ const floorObjects=['Tray','Table'].map(name=>gltf.scene.getObjectByName(name)).filter(Boolean);
+ const floorHit=floorRay.intersectObjects(floorObjects,true).find(hit=>hit.point.y<=bounceBounds.min.y+span*.02);
+ contactShadow.position.set(contactCenter.x,(floorHit?.point.y??bounceBounds.min.y-span*.003)+span*.001,contactCenter.z);
+ contactShadow.renderOrder=2;
+ scene.add(contactShadow);
  const camera=new THREE.PerspectiveCamera(45,Math.max(view.clientWidth,1)/Math.max(view.clientHeight,1),1,span*10);
  camera.position.set(center.x,box.max.y+span*2,center.z);
  camera.up.set(0,0,-1);camera.lookAt(center);
@@ -67,14 +89,13 @@ try {
  fill.position.copy(center).add(new THREE.Vector3(span,span,-span));
  key.target.position.copy(center);fill.target.position.copy(center);scene.add(key.target,fill.target);
  key.castShadow=true;
- key.shadow.mapSize.set(1024,1024);
+ key.shadow.mapSize.set(2048,2048);
  key.shadow.camera.left=-span;key.shadow.camera.right=span;
  key.shadow.camera.top=span;key.shadow.camera.bottom=-span;
  key.shadow.camera.near=span*.01;key.shadow.camera.far=span*6;
- key.shadow.normalBias=span*.0015;
- key.shadow.bias=-0.0002;
+ key.shadow.normalBias=span*.00035;
+ key.shadow.bias=-0.00005;
  key.shadow.radius=settings.light.shadowRadius;
- key.shadow.blurSamples=8;
  // Invisible window mullions only block sunlight: no visible geometry above the table.
  const windowFrame=new THREE.Group();
  windowFrame.position.set(center.x,box.max.y+span*.3,center.z);
@@ -145,6 +166,7 @@ try {
  }
  }
  bounceGroup.position.copy(bounceHome);bounceGroup.position.y+=bounceHeight*lift;
+ contactMaterial.opacity=.72*(1-.88*lift);
  const spinProgress=THREE.MathUtils.clamp((progress-.34)/(.94-.34),0,1);
  const spinEase=spinProgress*spinProgress*(3-2*spinProgress);
  bounceGroup.rotation.z=Math.PI*2*spinEase;
