@@ -407,9 +407,10 @@
       line.style.setProperty('--daejeon-line-opacity',p.textOpacity);
       line.style.setProperty('--daejeon-line-y',(reduced.matches?0:p.textY)+'px');
     });
-    const visible=state.index===13;
+    // 13→12 역방향에서는 3D 모델과 함께 문구를 끝까지 되감는다.
+    const visible=state.index===13||state.index===12&&local>0;
     daejeonOverlay.style.visibility=visible?'visible':'hidden';
-    daejeonOverlay.style.opacity=visible?transitionWeights(13,state.transition).outgoing:0;
+    daejeonOverlay.style.opacity=state.index===13?transitionWeights(13,state.transition).outgoing:visible?1:0;
   }
   window.addEventListener('table-scene-motion',()=>renderDaejeon(stateAt(window.scrollY,heights)));
   function renderDaejeonHandoff(state) {

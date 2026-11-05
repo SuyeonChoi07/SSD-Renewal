@@ -16,6 +16,8 @@ assert.match(script,/window\.tableSceneTarget=state\.index>=13\?1:0/);
 assert.match(script,/state\.index===13\?weights\.outgoing:0/);
 assert.match(script,/daejeonOverlay\.append\(daejeon\.querySelector\(selector\)\)/);
 assert.match(script,/const local=1700\*\(window\.tableMotionProgress\?\?0\)/);
+assert.match(script,/state\.index===13\|\|state\.index===12&&local>0/);
+assert.match(script,/state\.index===13\?transitionWeights\(13,state\.transition\)\.outgoing:visible\?1:0/);
 assert.match(script,/daejeonDivider\.style\.opacity=pose\.dividerOpacity/);
 assert.match(model,/duration=settings\.durationMs\*Math\.abs\(next-from\)/);
 assert.match(model,/return \{playTo\}/);
