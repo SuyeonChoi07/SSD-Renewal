@@ -5,7 +5,7 @@ const root=__dirname;
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const script=fs.readFileSync(path.join(root,'script.js'),'utf8');
 const model=fs.readFileSync(path.join(root,'table-scene-kit/table-scene.js'),'utf8');
-const file=fs.readFileSync(path.join(root,'table-scene-kit/table_p.glb'));
+const file=fs.readFileSync(path.join(root,'table-scene-kit/table_pf.glb'));
 assert.equal(file.toString('ascii',0,4),'glTF');
 const json=JSON.parse(file.subarray(20,20+file.readUInt32LE(12)).toString());
 const names=new Set(json.nodes.map(node=>node.name));

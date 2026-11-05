@@ -1,5 +1,5 @@
 export const tableSettings = {
-  modelUrl: new URL('./table_p.glb', import.meta.url).href,
+  modelUrl: new URL('./table_pf.glb', import.meta.url).href,
   cameraPosition: [-0.0743, 20.6247, 0.0487],
   triggerPx: 300,
   durationMs: 1200,
