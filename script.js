@@ -29,8 +29,8 @@
   function timeline(heights) {
     let start = 0;
     return heights.map((height, index) => {
-      // bridge_scale_end와 with Daejeon은 건너뛰되 원본 프레임은 HTML에 보존한다.
-      if(index===7||index===8)return {start,entryHold:0,hold:0,travel:0,motion:0,exitMotion:0,transition:0,length:0};
+      // 중간 브리지 화면은 건너뛰되 원본 프레임은 HTML에 보존한다.
+      if(index===7||index===8||index===9)return {start,entryHold:0,hold:0,travel:0,motion:0,exitMotion:0,transition:0,length:0};
       const hold = index === heights.length - 1 || index === 0 || index === 5 || index === 6 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 9 ? HOLD_SCROLL_PX / 4 : index === 10 ? HOLD_SCROLL_PX * .4 : index === 7 || index === 12 || index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
       const travel = index === heights.length - 1 ? 0 : Math.max(0, height - 1020);
       const entryHold = index === heights.length - 1 || index === 6 || index === 7 || index === 11 ? 0 : index === 8 ? 400 : index === 0 ? 500 : index === 14 ? 250 : index === 17 ? 1680 : 1000;
@@ -42,7 +42,7 @@
       return segment;
     });
   }
-  const nextSceneIndex=index=>index===6?9:index+1;
+  const nextSceneIndex=index=>index===6?10:index+1;
   function stateAt(scrollPx, heights) {
     const segments = timeline(heights);
     let index = segments.findIndex(segment => scrollPx < segment.start + segment.length);
@@ -438,8 +438,9 @@
     const blend=ease(clamp((pose.fade-.25)/.5));
     daejeon.style.setProperty('--daejeon-bg-opacity',1-blend);
     const next=state.index===9?ease(state.transition):0;
-    daejeonLogo.style.opacity=state.index===6?ease(clamp((state.transition-.5)*2)):state.index===9?1-next:0;
-    daejeonLogo.style.visibility=state.index===6&&state.transition>.5||state.index===9?'visible':'hidden';
+    // 씬 10의 자체 로고가 바로 나타나므로 건너뛴 씬 9의 임시 로고를 표시하지 않는다.
+    daejeonLogo.style.opacity=state.index===9?1-next:0;
+    daejeonLogo.style.visibility=state.index===9?'visible':'hidden';
     const rect=daejeonAlignedLogoRect(),target={x:908,y:494,width:279,height:92};
     Object.keys(rect).forEach(key=>daejeonLogo.style.setProperty('--handoff-logo-'+key,(rect[key]+(target[key]-rect[key])*next)+'px'));
   }

@@ -9,5 +9,5 @@ for(let line=0;line<9;line++){assert.equal(pose(1700,line).textOpacity,1);assert
 const heights=require('./figma-source.json').frames.map(f=>f.height);
 const segment=timeline(heights)[8];
 assert.equal(segment.length,0);
-assert.equal(stateAt(segment.start,heights).index,9);
+assert.equal(stateAt(segment.start,heights).index,10);
 console.log('Daejeon scene is skipped; retained pose helpers remain deterministic: PASS');

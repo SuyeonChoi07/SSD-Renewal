@@ -16,13 +16,14 @@ assert.equal(segments[5].hold,0);assert.equal(segments[5].transition,150);
 assert.equal(segments[6].entryHold,0);assert.equal(segments[6].hold,0);assert.equal(segments[6].transition,250);assert.equal(segments[6].length,850);
 assert.equal(segments[7].length,0);assert.equal(segments[8].length,0);
 assert.equal(stateAt(segments[6].start+600,heights).index,6,'Bridge begins its direct transition after the zoom');
-assert.equal(stateAt(segments[6].start+850,heights).index,9,'Scenes 7 and 8 are skipped');
-assert.deepEqual(plain(pose(6,850,1)),plain(pose(9,0,0)),'The bridge reaches full frame before scene 9');
+assert.equal(segments[9].length,0);
+assert.equal(stateAt(segments[6].start+850,heights).index,10,'Scenes 7, 8, and 9 are skipped');
+assert.deepEqual(plain(pose(6,850,1)),plain(pose(10,0,0)),'The bridge reaches full frame before scene 10');
 const html=require('node:fs').readFileSync(__dirname+'/index.html','utf8');
 const stack=html.slice(html.indexOf('<div class="bridge-photo-stack"'));
 assert.ok(stack.indexOf('class="f08-layer-005"')<stack.indexOf('class="f07-layer-005"'),'f08 is prepositioned behind f07');
 assert.match(html,/rel="preload" href="assets\/bridge-store-detail.png" as="image"/);
-console.log('Bridge: scene 6 transitions directly to scene 9: PASS');
+console.log('Bridge: scene 6 transitions directly to scene 10: PASS');
 
 const {shouldExpandHistoryPhoto,historyCarouselFocus,historyCarouselGeometry}=require('./script.js');
 for(const local of [0,600,1000,2000,3000,4000,4599,4600]) {
