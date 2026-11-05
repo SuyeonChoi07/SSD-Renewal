@@ -8,7 +8,7 @@ const room=fs.readFileSync(path.join(root,'table-scene-kit/vendor/RoomEnvironmen
 const glb=fs.readFileSync(path.join(root,'table-scene-kit/table_p.glb'));
 const json=JSON.parse(glb.subarray(20,20+glb.readUInt32LE(12)).toString());
 assert.ok(json.materials.some(material=>material.pbrMetallicRoughness),'GLB contains PBR materials');
-assert.match(settings,/exposure: 0\.80/);
+assert.match(settings,/exposure: 0\.60/);
 assert.match(settings,/environmentIntensity: 0\.38/);
 for(const [name,value] of [['ambient','0.32'],['key','0.45'],['fill','0.10'],['shadowRadius','2.5']])assert.match(settings,new RegExp(name+': '+value.replace('.','\\.')));
 assert.match(scene,/scene\.environment=environment\.texture/);
