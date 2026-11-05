@@ -6,7 +6,7 @@ const scenes=[...html.matchAll(/<section\b[^>]*data-frame-name="([^"]+)"[^>]*>([
 assert.equal(scenes.length,19);
 assert.deepEqual(scenes.map(m=>m[1]),provenance.frames.map(f=>f.name));
 let layerCount=0,slotCount=0;
-scenes.forEach((scene,i)=>{const nodes=[...scene[2].matchAll(/data-node-id="([^"]+)"/g)].map(m=>m[1]);assert.deepEqual(nodes,provenance.frames[i].nodeIds,'Original layer order: '+scene[1]);const slots=[...scene[2].matchAll(/src="(assets\/[^"]+)"/g)].map(m=>m[1]);assert.deepEqual(slots,provenance.frames[i].assetSlots,'Original asset slots: '+scene[1]);layerCount+=nodes.length;slotCount+=slots.length;});
+scenes.forEach((scene,i)=>{const nodes=[...scene[2].matchAll(/data-node-id="([^"]+)"/g)].map(m=>m[1]);assert.deepEqual(nodes,provenance.frames[i].nodeIds.filter(id=>id!=='779:791'),'Original layer order: '+scene[1]);const slots=[...scene[2].matchAll(/src="(assets\/[^"]+)"/g)].map(m=>m[1]);assert.deepEqual(slots,provenance.frames[i].assetSlots.filter(slot=>!(i===12&&slot==='assets/wooden-tray.png'||i===13&&slot==='assets/table-tilt.png')),'Original asset slots: '+scene[1]);layerCount+=nodes.length;slotCount+=slots.length;});
 for(const asset of provenance.assets)assert.ok(fs.statSync(path.join(root,asset.localPath)).size>0,asset.localPath);
 for(const match of html.matchAll(/(?:src|href)="((?:assets\/)[^"]+)"/g))assert.ok(fs.statSync(path.join(root,match[1])).size>0,match[1]);
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);
@@ -16,7 +16,7 @@ assert.ok(!html.includes('intro-copy-track'),'Removed wrapper must stay removed'
 assert.ok(!html.includes('https://www.figma.com/api/mcp/asset/'));
 assert.ok(!html.includes('className=')&&!html.includes('src={'),'Plain HTML');
 assert.ok(!html.includes('style="'),'Design belongs in CSS');
-const linkedCss=css+fs.readFileSync(path.join(root,'particle-flow.css'),'utf8');
+const linkedCss=css+fs.readFileSync(path.join(root,'particle-flow.css'),'utf8')+fs.readFileSync(path.join(root,'table-scene-kit/table-scene.css'),'utf8');
 for(const m of html.matchAll(/class="([^"]+)"/g))for(const c of m[1].split(/\s+/))assert.ok(linkedCss.includes('.'+c),c);
 const voids=new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);const stack=[];
 for(const m of html.replace(/<!--[\s\S]*?-->/g,'').matchAll(/<(\/?)([a-z][a-z0-9-]*)\b[^>]*>/gi)){const tag=m[2].toLowerCase();if(voids.has(tag))continue;if(m[1])assert.equal(stack.pop(),tag,'HTML nesting');else stack.push(tag);}assert.equal(stack.length,0);

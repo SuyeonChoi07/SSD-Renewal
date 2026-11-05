@@ -1,0 +1,17 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const root=__dirname;
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const script=fs.readFileSync(path.join(root,'script.js'),'utf8');
+const model=fs.readFileSync(path.join(root,'table-scene-kit/table-scene.js'),'utf8');
+const file=fs.readFileSync(path.join(root,'table-scene-kit/table_p.glb'));
+assert.equal(file.toString('ascii',0,4),'glTF');
+const json=JSON.parse(file.subarray(20,20+file.readUInt32LE(12)).toString());
+const names=new Set(json.nodes.map(node=>node.name));
+assert.ok(names.has('아이코스피어')&&names.has('봉투'));
+assert.ok(!html.includes('class="f13-layer-005"')&&!html.includes('class="f14-layer-002"'));
+assert.match(html,/class="table-model-stage"/);
+assert.match(script,/state\.index===12\?ease\(state\.transition\):1/);
+assert.match(model,/return \{setProgress\}/);
+console.log('Table 3D model and scene 12 → 13 scroll mapping: PASS');

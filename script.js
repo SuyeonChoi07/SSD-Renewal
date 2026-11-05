@@ -279,6 +279,7 @@
   const contactGradients=Array.from(scenes[18].querySelectorAll('.f19-layer-003, .f19-layer-004'));
   contactGradients.forEach(layer=>stage.append(layer));
   const veil = document.querySelector('.transition-blackout');
+  const tableModelStage=document.querySelector('.table-model-stage');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const landingAdd = document.querySelector('.landing-add');
   if (landingAdd) {
@@ -515,6 +516,12 @@
     scheduled = false;
     const state = stateAt(window.scrollY, heights);
     const weights = transitionWeights(state.index, state.transition);
+    const tableOpacity=state.index===10?weights.incoming:state.index===12||state.index===13?1:0;
+    tableModelStage.style.opacity=tableOpacity;
+    tableModelStage.style.visibility=tableOpacity>0?'visible':'hidden';
+    tableModelStage.dataset.active=String(tableOpacity>0);
+    window.tableSceneProgress=state.index<12?0:state.index===12?ease(state.transition):1;
+    window.dispatchEvent(new Event('table-scene-update'));
     const modelOpacity=state.index===0?weights.incoming:state.index===1?1:state.index===2?1-ease(state.transition):0;
     introModel.dataset.opacity=modelOpacity;
     introModel.style.opacity=modelOpacity;
