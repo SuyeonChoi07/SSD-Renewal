@@ -5,7 +5,7 @@ const root=__dirname;
 const settings=fs.readFileSync(path.join(root,'table-scene-kit/settings.js'),'utf8');
 const scene=fs.readFileSync(path.join(root,'table-scene-kit/table-scene.js'),'utf8');
 const room=fs.readFileSync(path.join(root,'table-scene-kit/vendor/RoomEnvironment.js'),'utf8');
-const glb=fs.readFileSync(path.join(root,'table-scene-kit/table_pf.glb'));
+const glb=fs.readFileSync(path.join(root,'table-scene-kit/table_p.glb'));
 const json=JSON.parse(glb.subarray(20,20+glb.readUInt32LE(12)).toString());
 assert.ok(json.materials.some(material=>material.pbrMetallicRoughness),'GLB contains PBR materials');
 assert.match(settings,/exposure: 0\.80/);
