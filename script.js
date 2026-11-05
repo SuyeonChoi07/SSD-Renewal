@@ -31,7 +31,7 @@
     return heights.map((height, index) => {
       // 중간 브리지 화면은 건너뛰되 원본 프레임은 HTML에 보존한다.
       if(index>=6&&index<=9||index===11)return {start,entryHold:0,hold:0,travel:0,motion:0,exitMotion:0,transition:0,length:0};
-      const hold = index === 5 ? 200 : index === heights.length - 1 || index === 0 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 10 ? HOLD_SCROLL_PX * .4 : index === 12 || index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
+      const hold = index === 5 ? 200 : index === heights.length - 1 || index === 0 || index === 11 || index === 15 ? 0 : index >= 3 && index <= 4 ? HISTORY_PHOTO_HOLD_PX : index === 10 ? HOLD_SCROLL_PX * .4 : index === 12 ? HOLD_SCROLL_PX / 4 : index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
       const travel = index === heights.length - 1 ? 0 : Math.max(0, height - 1020);
       const entryHold = index === 3 ? 200 : index === heights.length - 1 || index === 11 ? 0 : index === 0 ? 500 : index === 14 ? 250 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX-HISTORY_PHOTO_HOLD_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
@@ -520,7 +520,7 @@
     tableModelStage.style.opacity=tableOpacity;
     tableModelStage.style.visibility=tableOpacity>0?'visible':'hidden';
     tableModelStage.dataset.active=String(tableOpacity>0);
-    window.tableSceneProgress=state.index<12?0:state.index===12?ease(state.transition):1;
+    window.tableSceneTarget=state.index>=13?1:0;
     window.dispatchEvent(new Event('table-scene-update'));
     const modelOpacity=state.index===0?weights.incoming:state.index===1?1:state.index===2?1-ease(state.transition):0;
     introModel.dataset.opacity=modelOpacity;

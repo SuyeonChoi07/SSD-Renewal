@@ -15,7 +15,8 @@ for(let i=0;i<heights.length;i++) {
   if(i>=6&&i<=9||i===11){assert.equal(segment.length,0);continue;}
   // Every scene holds its first view before scrolling or motion begins.
   assert.equal(segment.entryHold,i===3?200:i===heights.length-1||i===11?0:i===0?500:i===14?250:i===17?1680:1000);
-  if([7,12,13].includes(i)) assert.equal(segment.hold,750);
+  if([7,13].includes(i)) assert.equal(segment.hold,750);
+  if(i===12) assert.equal(segment.hold,375);
   if(i===5) assert.equal(segment.hold,200);
   if(i===10) assert.equal(segment.hold,600);
   for(const delta of segment.entryHold?[0,Math.min(400,segment.entryHold-1),segment.entryHold-1,segment.entryHold]:[0]){

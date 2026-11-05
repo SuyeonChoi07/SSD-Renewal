@@ -162,11 +162,24 @@ try {
  render();
  }
  let motionProgress=0;
- const setProgress=progress=>{
- const next=THREE.MathUtils.clamp(progress,0,1);
- if(next===motionProgress)return;
- motionProgress=next;
- applyMotion(next);
+ let playbackFrame=0,playbackTarget=0,playing=false;
+ const playTo=target=>{
+ const next=THREE.MathUtils.clamp(target,0,1);
+ if(playing&&playbackTarget===next||!playing&&motionProgress===next)return;
+ cancelAnimationFrame(playbackFrame);
+ const from=motionProgress,duration=settings.durationMs*Math.abs(next-from);
+ playbackTarget=next;
+ if(duration===0){motionProgress=next;playing=false;applyMotion(next);return;}
+ playing=true;
+ const started=performance.now();
+ const tick=now=>{
+ const elapsed=THREE.MathUtils.clamp((now-started)/duration,0,1);
+ motionProgress=from+(next-from)*elapsed;
+ applyMotion(motionProgress);
+ if(elapsed<1)playbackFrame=requestAnimationFrame(tick);
+ else{playing=false;playbackFrame=0;}
+ };
+ playbackFrame=requestAnimationFrame(tick);
  };
  applyMotion(0);
  if(status)status.textContent='';
@@ -186,7 +199,7 @@ try {
  renderer.render(scene,camera);
  }
  requestAnimationFrame(animateFoliage);
- return {setProgress};
+ return {playTo};
 }catch(error){if(status){status.style.color='#b3261e';status.textContent='표시 오류: '+error.message;}console.error(error);}
 
 }
