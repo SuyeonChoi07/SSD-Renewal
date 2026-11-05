@@ -42,7 +42,6 @@ button, [role="button"], a, input, select, textarea {
 }
 *,:before,:after { box-sizing: border-box; border-width: 0; border-style: solid; border-color: currentColor; }
 html { background: #131313; scroll-behavior: auto; scrollbar-width: none; }
-html.is-landing-loading { overflow: hidden; }
 html::-webkit-scrollbar { display: none; }
 body { margin: 0; color: #f8f0e5; font-family: var(--page-font); line-height: normal; }
 p,h1,h2,h3,figure,ul { margin: 0; padding: 0; }
@@ -51,13 +50,6 @@ a { color: inherit; text-decoration: inherit; }
 a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .story-viewport { position: fixed; inset: 0; overflow: hidden; background: #131313; }
 .design-stage { position: absolute; width: 2064px; height: 1020px; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(var(--frame-scale,1)); transform-origin: center; overflow: hidden; isolation: isolate; }
-@property --landing-ring-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
-@property --landing-reveal-radius { syntax: '<length>'; inherits: false; initial-value: 0px; }
-.landing-add { position: absolute; inset: 0; z-index: 300; background: #131313; --landing-reveal-radius: 0px; -webkit-mask-image: radial-gradient(circle at center, transparent 0 var(--landing-reveal-radius), #000 calc(var(--landing-reveal-radius) + 1px)); mask-image: radial-gradient(circle at center, transparent 0 var(--landing-reveal-radius), #000 calc(var(--landing-reveal-radius) + 1px)); animation: landing-add-reveal .55s linear 2.95s forwards; }
-.landing-add-ring { position: absolute; z-index: 301; left: 829px; top: 314px; width: 407px; height: 394px; max-width: none; object-fit: cover; transform-origin: center; --landing-ring-angle: 0deg; -webkit-mask-image: conic-gradient(#000 0deg var(--landing-ring-angle), transparent var(--landing-ring-angle) 360deg); mask-image: conic-gradient(#000 0deg var(--landing-ring-angle), transparent var(--landing-ring-angle) 360deg); animation: landing-ring-draw 2.1s ease-in-out .35s forwards, landing-ring-bloom 1.05s linear 2.45s forwards; pointer-events: none; }
-@keyframes landing-ring-draw { to { --landing-ring-angle: 360deg; } }
-@keyframes landing-ring-bloom { 0% { transform: scale(1); animation-timing-function: ease-out; opacity: 1; } 47.619% { transform: scale(.5); animation-timing-function: linear; opacity: 1; } 100% { transform: scale(6); opacity: 0; } }
-@keyframes landing-add-reveal { to { --landing-reveal-radius: 1200px; } }
 .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; overflow: hidden; }
 .scene.is-visible { visibility: visible; }
 .scene.is-current { pointer-events: auto; }
