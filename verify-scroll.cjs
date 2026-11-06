@@ -17,7 +17,7 @@ for(let i=0;i<heights.length;i++) {
   assert.equal(segment.entryHold,i===3?200:i===4||i===5||i===heights.length-1||i===11||i===15?0:i===0?500:i===14?250:i===17?1680:1000);
   if([7,13].includes(i)) assert.equal(segment.hold,750);
   if(i===12) assert.equal(segment.hold,375);
-  if(i===5) assert.equal(segment.hold,200);
+  if(i===5) assert.equal(segment.hold,400);
   if(i===10) assert.equal(segment.hold,600);
   for(const delta of segment.entryHold?[0,Math.min(400,segment.entryHold-1),segment.entryHold-1,segment.entryHold]:[0]){
     const state=stateAt(segment.start+delta,heights);
