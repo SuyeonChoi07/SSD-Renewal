@@ -551,14 +551,6 @@
     const end = segment.start + segment.length;
     return { start: end - segment.transition, end };
   }
-  function previousTransition(index) {
-    const currentStart = segments[index].start;
-    for (let previous = index - 1; previous >= 0; previous--) {
-      const segment = segments[previous];
-      if (segment.transition && segment.start + segment.length === currentStart) return segment;
-    }
-    return null;
-  }
   function playSceneTransition(segment, forward) {
     if (autoTransition || !segment.transition) return;
     const range = transitionRange(segment);
@@ -595,10 +587,7 @@
     lastScrollY = scrollY;
     if (navigationTargetY !== null && Math.abs(scrollY - navigationTargetY) < 2) navigationTargetY = null;
     if (!autoTransition && navigationTargetY === null && direction) {
-      const current = stateAt(scrollY, heights);
-      const reverseEntry = direction < 0 && scrollY <= segments[current.index].start + segments[current.index].entryHold
-        ? previousTransition(current.index) : null;
-      const segment = reverseEntry || transitionAt(scrollY, direction);
+      const segment = transitionAt(scrollY, direction);
       if (segment) playSceneTransition(segment, direction > 0);
     }
     schedule();
@@ -609,14 +598,6 @@
     const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
     if (!delta) return;
     const scrollY = window.scrollY;
-    const current = stateAt(scrollY, heights);
-    const reverseEntry = delta < 0 && scrollY + delta <= segments[current.index].start + segments[current.index].entryHold
-      ? previousTransition(current.index) : null;
-    if (reverseEntry) {
-      event.preventDefault();
-      playSceneTransition(reverseEntry, false);
-      return;
-    }
     const segment = segments.find(item => {
       if (!item.transition) return false;
       const range = transitionRange(item);
