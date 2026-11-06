@@ -205,11 +205,6 @@ try {
  const hoverPlane=new THREE.Plane(new THREE.Vector3(0,1,0));
  const hoverPoint=new THREE.Vector3();
  const pointer=new THREE.Vector2();
- const breadHoverTarget=new THREE.Vector2();
- const breadHoverOffset=new THREE.Vector2();
- const breadHoverCenter=new THREE.Vector3();
- const breadHoverBounds=new THREE.Box3();
- const resetBreadHover=()=>breadHoverTarget.set(0,0);
  function resetUtensils(){
  for(const utensil of utensils.values()){
  utensil.targetX=utensil.home.x;
@@ -224,20 +219,9 @@ try {
  ray.setFromCamera(pointer,camera);
  const firstHit=ray.intersectObject(gltf.scene,true)[0];
  let selected=firstHit?.object;
- while(selected&&!utensils.has(selected.name)&&selected.name!=='아이코스피어'&&selected.name!=='봉투')selected=selected.parent;
+ while(selected&&!utensils.has(selected.name))selected=selected.parent;
  resetUtensils();
- resetBreadHover();
  if(!selected)return;
- if(selected.name==='아이코스피어'||selected.name==='봉투'){
- breadHoverBounds.setFromObject(bounceGroup).getCenter(breadHoverCenter);
- hoverPlane.constant=-breadHoverCenter.y;
- if(!ray.ray.intersectPlane(hoverPlane,hoverPoint))return;
- const distance=span*(settings.breadHoverDistance??.008);
- breadHoverTarget.set(
-   THREE.MathUtils.clamp((hoverPoint.x-breadHoverCenter.x)/(span*.12),-1,1)*distance,
-   THREE.MathUtils.clamp((hoverPoint.z-breadHoverCenter.z)/(span*.12),-1,1)*distance);
- return;
- }
  const utensil=utensils.get(selected.name);
  hoverPlane.constant=-utensil.center.y;
  if(!ray.ray.intersectPlane(hoverPlane,hoverPoint))return;
@@ -245,8 +229,8 @@ try {
  utensil.targetX=utensil.home.x+THREE.MathUtils.clamp((hoverPoint.x-utensil.center.x)/(span*.12),-1,1)*distance;
  utensil.targetZ=utensil.home.z+THREE.MathUtils.clamp((hoverPoint.z-utensil.center.z)/(span*.12),-1,1)*distance;
  });
- renderer.domElement.addEventListener('pointerleave',()=>{resetUtensils();resetBreadHover();});
- window.addEventListener('blur',()=>{resetUtensils();resetBreadHover();});
+ renderer.domElement.addEventListener('pointerleave',resetUtensils);
+ window.addEventListener('blur',resetUtensils);
  const observer=new ResizeObserver(resize);
  observer.observe(view);
  function easeInOut(t){return t*t*t*(t*(t*6-15)+10);}
@@ -266,8 +250,6 @@ try {
  }
  }
  bounceGroup.position.copy(bounceHome);bounceGroup.position.y+=bounceHeight*lift;
- bounceGroup.position.x+=breadHoverOffset.x;
- bounceGroup.position.z+=breadHoverOffset.y;
  contactMaterial.opacity=.72*(1-.88*lift);
  const spinProgress=THREE.MathUtils.clamp((progress-.34)/(.94-.34),0,1);
  const spinEase=spinProgress*spinProgress*(3-2*spinProgress);
@@ -317,9 +299,6 @@ try {
  utensil.object.position.z=utensil.home.z;
  }
  resetUtensils();
- resetBreadHover();breadHoverOffset.set(0,0);
- bounceGroup.position.x=bounceHome.x;
- bounceGroup.position.z=bounceHome.z;
  return;
  }
  if(now-lastFoliageFrame<33)return;
@@ -328,9 +307,6 @@ try {
  utensil.object.position.x+=(utensil.targetX-utensil.object.position.x)*.22;
  utensil.object.position.z+=(utensil.targetZ-utensil.object.position.z)*.22;
  }
- breadHoverOffset.lerp(breadHoverTarget,.22);
- bounceGroup.position.x=bounceHome.x+breadHoverOffset.x;
- bounceGroup.position.z=bounceHome.z+breadHoverOffset.y;
  const t=now*.001;
  foliage.rotation.y=Math.sin(t*.55)*.055;
  foliage.position.x=center.x+lightShift+Math.sin(t*.7)*span*.003;
