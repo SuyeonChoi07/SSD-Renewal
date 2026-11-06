@@ -28,6 +28,7 @@
   font-style: normal; font-weight: 400; font-display: swap;
   unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7AF, U+D7B0-D7FF;
 }
+@font-face { font-family: 'ChosunCentennial Scroll'; src: url('assets/ChosunCentennial.ttf') format('truetype'); font-style: normal; font-weight: 400; font-display: swap; }
 @font-face {
   font-family: 'Pretendard Korean Full'; src: url('assets/PretendardVariable.woff2') format('woff2');
   font-style: normal; font-weight: 100 900; font-display: swap;
@@ -49,6 +50,9 @@ img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: inherit; }
 a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .story-viewport { position: fixed; inset: 0; overflow: hidden; background: #131313; }
+.scroll-hint { position: fixed; left: 50%; bottom: 24px; z-index: 400; display: flex; align-items: center; gap: 3px; width: max-content; height: 24px; transform: translateX(-50%); color: #f8f0e5; font-family: 'ChosunCentennial Scroll', sans-serif; font-size: 12px; font-weight: 400; line-height: normal; white-space: nowrap; pointer-events: none; }
+.scroll-hint .light-korean-number { font-weight: 400; }
+.scroll-hint img { display: block; width: 24px; height: 24px; max-width: none; flex: none; }
 .cursor-glow { position: fixed; inset: 0; z-index: 500; width: 100%; height: 100%; pointer-events: none; }
 .design-stage { position: absolute; width: 2064px; height: 1020px; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(var(--frame-scale,1)); transform-origin: center; overflow: hidden; isolation: isolate; }
 .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; overflow: hidden; }
