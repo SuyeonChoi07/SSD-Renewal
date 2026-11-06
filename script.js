@@ -425,6 +425,7 @@
       const progress=ease(clamp((offset-(388+index*230))/OUR_WAY_CARD_REVEAL_PX));
       card.style.setProperty('--card-reveal',progress);
       card.style.setProperty('--card-rise',(reduced.matches?0:90*(1-progress))+'px');
+      card.style.setProperty('--card-flip',(reduced.matches?0:180*(1-progress))+'deg');
     });
   }
   const brand=scenes[17];

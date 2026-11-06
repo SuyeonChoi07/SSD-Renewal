@@ -636,8 +636,12 @@ html.landing-entry-pending .scroll-hint { filter: opacity(0); }
 .f17-layer-003 { line-height: normal; margin-bottom: 0; }
 .f17-layer-004 { line-height: normal; }
 .f17-layer-005 { position: absolute; display: flex; gap: 30px; left: 50%; top: 1158px; width: max-content; transform: translateX(-50%); }
-.our-way-card { box-sizing: border-box; position: relative; flex: 0 0 auto; aspect-ratio: 3 / 4; height: 530px; background: #fff; color: #834627; --korean-weight: 400; opacity: var(--card-reveal, 0); transform: translateY(var(--card-rise, 90px)); transition: background-color .35s ease-in-out, color .35s ease-in-out; }
-.our-way-card:hover { background-color: #834627; color: #fff; }
+.our-way-card { box-sizing: border-box; position: relative; flex: 0 0 auto; aspect-ratio: 3 / 4; height: 530px; --korean-weight: 400; opacity: var(--card-reveal, 0); transform: translateY(var(--card-rise, 90px)); perspective: 1200px; }
+.our-way-card-flip { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateY(var(--card-flip, 180deg)); }
+.our-way-card-front, .our-way-card-back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.our-way-card-front { background: #fff; color: #834627; transition: background-color .35s ease-in-out, color .35s ease-in-out; }
+.our-way-card-back { background: #834627; transform: rotateY(180deg); }
+.our-way-card:hover .our-way-card-front { background: #834627; color: #fff; }
 .our-way-card-content { position: absolute; top: 0; left: 0; width: 450px; height: 600px; transform: scale(.8833333333); transform-origin: top left; }
 .our-way-card-title, .our-way-card-subtitle, .our-way-card-description, .our-way-card-link { position: absolute; left: 40px; margin: 0; }
 .our-way-card-title { top: 149px; font-family: Pretendard, sans-serif; font-size: 40px; font-weight: 700; line-height: 1.2; }
