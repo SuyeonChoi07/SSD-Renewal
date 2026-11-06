@@ -1089,7 +1089,7 @@ html.landing-entry-pending .scroll-hint { filter: opacity(0); }
 #brand .f18-layer-124 { transform: translateX(var(--brand-gallery-x, 0px)); will-change: transform; z-index: 2; pointer-events: auto; }
 #brand .f18-layer-124 > div, #brand .f18-layer-130, #brand .f18-layer-135 { overflow: hidden; }
 #brand .f18-layer-124 img { translate: var(--brand-gallery-reveal-x, -100%) 0; will-change: translate; }
-#brand .f18-layer-124 > div img { scale: 1; transition: scale .7s ease-in-out; transform-origin: center; }
+#brand .f18-layer-124 > div img { scale: 1; transition: scale .3s ease-in-out; transform-origin: center; }
 #brand .f18-layer-124 > div:hover img { scale: 1.05; }
 #brand .f18-layer-005, #brand .f18-layer-137 { z-index: 2; }
 #brand .f18-layer-013 > [data-name="cell"] { opacity: var(--brand-cell-opacity, .5); }
