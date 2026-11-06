@@ -735,4 +735,13 @@
   });
   resize();
   if (location.hash) navigate(location.hash, false);
+  const landingEntry=document.documentElement;
+  if(window.scrollY<landingTransitionStart && (!location.hash || location.hash==='#landing') && !reduced.matches) {
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      landingEntry.classList.remove('landing-entry-pending');
+      setTimeout(()=>landingEntry.classList.remove('landing-entry-running'),1200);
+    }));
+  } else {
+    landingEntry.classList.remove('landing-entry-pending','landing-entry-running');
+  }
 })();
