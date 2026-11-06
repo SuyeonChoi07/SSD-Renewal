@@ -14,7 +14,7 @@ for(let i=0;i<heights.length;i++) {
   const segment=segments[i];
   if(i>=6&&i<=9||i===11){assert.equal(segment.length,0);continue;}
   // Every scene holds its first view before scrolling or motion begins.
-  assert.equal(segment.entryHold,i===3?200:i===heights.length-1||i===11||i===15?0:i===0?500:i===14?250:i===17?1680:1000);
+  assert.equal(segment.entryHold,i===3?200:i===4||i===5||i===heights.length-1||i===11||i===15?0:i===0?500:i===14?250:i===17?1680:1000);
   if([7,13].includes(i)) assert.equal(segment.hold,750);
   if(i===12) assert.equal(segment.hold,375);
   if(i===5) assert.equal(segment.hold,200);
@@ -29,7 +29,7 @@ for(let i=0;i<heights.length;i++) {
     assert.equal(stateAt(contentStart+segment.travel+(i===17?segment.motion:0),heights).offset,segment.travel);
   }
   // Once the end is reached, both position and opacity stay fixed for 1500px.
-  for(const delta of segment.hold ? [0,1,Math.min(500,segment.hold),segment.hold-1,segment.hold] : []) {
+  for(const delta of segment.hold ? [0,1,Math.min(500,segment.hold-1),segment.hold-1,...(segment.transition?[segment.hold]:[])] : []) {
     const state=stateAt(contentStart+segment.travel+segment.motion+delta,heights);
     assert.equal(state.index,i);
     assert.equal(state.offset,segment.travel,'Keep end position: '+source.frames[i].name);
