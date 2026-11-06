@@ -242,7 +242,11 @@
     return { width: mix(index === 0 ? 365.299 : 124, 124), height: mix(index === 0 ? 147 : 50, 50), light,
       active: Array.from({length:5},(_,i) => mix(group(index)===i?1:0, group(nextSceneIndex(index))===i?1:0)) };
   }
-  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperOpenPose, wrapperCopyVisible, wrapperCopyOpacity, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
+  function scrollHintPose(index, progress) {
+    const t=ease(clamp(progress));
+    return { dark:index===15?t:index===16?1-t:0, opacity:index<17?1:index===17?1-t:0 };
+  }
+  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, scrollHintPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperOpenPose, wrapperCopyVisible, wrapperCopyOpacity, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
   if (typeof module !== 'undefined') module.exports.contactScrollPose=contactScrollPose;
   if (typeof module !== 'undefined') module.exports.brandCharacterOpacity=brandCharacterOpacity;
   if (typeof module !== 'undefined') module.exports.brandCellOpacity=brandCellOpacity;
@@ -263,6 +267,7 @@
   const contactGradients=Array.from(scenes[18].querySelectorAll('.f19-layer-003, .f19-layer-004'));
   contactGradients.forEach(layer=>stage.append(layer));
   const veil = document.querySelector('.transition-blackout');
+  const scrollHint = document.querySelector('.scroll-hint');
   const tableModelStage=document.querySelector('.table-model-stage');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const intro = scenes[1];
@@ -502,6 +507,11 @@
     introModel.style.visibility=modelOpacity>0?'visible':'hidden';
     veil.style.opacity = weights.black;
     renderHeader(state);
+    const hintPose=scrollHintPose(state.index,state.transition);
+    scrollHint.style.color=`rgb(${[248,240,229].map(value=>Math.round(value+(19-value)*hintPose.dark)).join(', ')})`;
+    scrollHint.style.opacity=hintPose.opacity;
+    scrollHint.style.visibility=hintPose.opacity>0?'visible':'hidden';
+    scrollHint.setAttribute('aria-hidden',String(hintPose.opacity===0));
     const brandScroll=contactScrollPose(state.index===16?state.transition:state.index>16?1:0);
     const contactScroll=contactScrollPose(state.index===17?state.transition:state.index>17?1:0);
     contactGradients.forEach(layer=>{

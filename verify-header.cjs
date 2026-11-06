@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');
-const {headerPose}=require('./script.js');
+const {headerPose,scrollHintPose}=require('./script.js');
 assert.equal(headerPose(0,0).width,365.299);
 assert.equal(headerPose(0,1).width,124);
 assert.equal(headerPose(0,1).height,50);
@@ -13,6 +13,11 @@ assert.equal(headerPose(15,1).light,1);
 assert.equal(headerPose(16,1).light,0);
 assert.equal(headerPose(17,0).active[3],1);
 assert.equal(headerPose(18,0).active[4],1);
+assert.deepEqual(scrollHintPose(15,0),{dark:0,opacity:1});
+assert.deepEqual(scrollHintPose(15,1),scrollHintPose(16,0));
+assert.deepEqual(scrollHintPose(16,1),scrollHintPose(17,0));
+assert.deepEqual(scrollHintPose(17,1),scrollHintPose(18,0));
+assert.deepEqual(scrollHintPose(18,0),{dark:0,opacity:0});
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
 assert.equal((html.match(/class="persistent-header"/g)||[]).length,1);
 assert.match(html,/<a class="f10-layer-024"/,'Central wordmark stays visible');

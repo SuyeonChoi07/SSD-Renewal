@@ -52,7 +52,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .story-viewport { position: fixed; inset: 0; overflow: hidden; background: #131313; }
 .scroll-hint { position: absolute; left: 50%; bottom: 24px; z-index: 400; display: flex; align-items: center; gap: 3px; width: max-content; height: 24px; transform: translateX(-50%); color: #f8f0e5; font-family: 'ChosunCentennial Scroll', sans-serif; font-size: 12px; font-weight: 400; line-height: normal; white-space: nowrap; pointer-events: none; }
 .scroll-hint .light-korean-number { font-weight: 400; }
-.scroll-hint img { display: block; width: 24px; height: 24px; max-width: none; flex: none; }
+.scroll-hint-icon { display: block; width: 24px; height: 24px; flex: none; background: currentColor; -webkit-mask: url('assets/scroll-down-circle.svg') center / 24px 24px no-repeat; mask: url('assets/scroll-down-circle.svg') center / 24px 24px no-repeat; }
 .cursor-glow { position: fixed; inset: 0; z-index: 500; width: 100%; height: 100%; pointer-events: none; }
 .design-stage { position: absolute; width: 2064px; height: 1020px; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(var(--frame-scale,1)); transform-origin: center; overflow: hidden; isolation: isolate; }
 .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; pointer-events: none; overflow: hidden; }
