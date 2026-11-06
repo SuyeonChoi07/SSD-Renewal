@@ -4,6 +4,7 @@
   const TRANSITION_SCROLL_PX = 250;
   const HOLD_SCROLL_PX = 1500;
   const HISTORY_PHOTO_MOVE_PX = 600;
+  const HISTORY_PHOTO_FIRST_MOVE_PX = HISTORY_PHOTO_MOVE_PX * 2;
   const HISTORY_PHOTO_STEP_PX = HISTORY_PHOTO_MOVE_PX;
   const WRAPPER_FIRST_OPEN_PX = 525;
   const WRAPPER_OPEN_PX = 1500;
@@ -33,7 +34,7 @@
       const hold = index === 3 || index === 4 || index === 5 || index === heights.length - 1 || index === 0 || index === 11 || index === 15 ? 0 : index === 10 ? HOLD_SCROLL_PX * .4 : index === 12 ? HOLD_SCROLL_PX / 4 : index === 13 || index === 14 ? HOLD_SCROLL_PX / 2 : HOLD_SCROLL_PX;
       const travel = index === heights.length - 1 ? 0 : Math.max(0, height - 1020);
       const entryHold = index === 3 ? 200 : index === 4 || index === 5 || index === heights.length - 1 || index === 11 || index === 15 ? 0 : index === 0 || index === 12 ? 500 : index === 14 ? 250 : index === 17 ? 1680 : 1000;
-      const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? 3*HISTORY_PHOTO_STEP_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
+      const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? HISTORY_PHOTO_FIRST_MOVE_PX+2*HISTORY_PHOTO_STEP_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
       const transition = index === heights.length - 1 || index === 3 || index === 4 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? WRAPPER_FIRST_OPEN_PX : index === 15 ? WRAPPER_EXIT_PX : index === 13 ? 1400 : index === 16 ? 1020 : index === 17 ? 774 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 3450 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
@@ -115,6 +116,11 @@
     if(centerVh>=.4&&centerVh<=.6)return 1;
     return .5+.5*ease(centerVh<.4?(centerVh-.3)/.1:(.7-centerVh)/.1);
   }
+  function brandPhotoScale(centerVh) {
+    if(centerVh<=.5)return 1;
+    if(centerVh>=.7)return .6;
+    return .6+.4*ease(clamp((.7-centerVh)/.2));
+  }
   function brandGalleryReveal(topVh) {
     if(topVh>=.85)return 0;
     if(topVh<=.45)return 1;
@@ -153,9 +159,11 @@
   function historyCarouselFocus(index, local) {
     if(index<4)return 0;
     if(index>5)return 8;
-    const base=index===4?0:3, count=index===4?3:5;
-    const step=Math.min(count,Math.floor(Math.max(0,local)/HISTORY_PHOTO_STEP_PX));
-    return base+Math.min(count,step+clamp((local-step*HISTORY_PHOTO_STEP_PX)/HISTORY_PHOTO_MOVE_PX));
+    const first=index===4?HISTORY_PHOTO_FIRST_MOVE_PX:HISTORY_PHOTO_MOVE_PX;
+    const count=index===4?3:5;
+    const elapsed=Math.max(0,local);
+    if(elapsed<first)return (index===4?0:3)+clamp(elapsed/first);
+    return (index===4?1:4)+Math.min(count-1,(elapsed-first)/HISTORY_PHOTO_STEP_PX);
   }
   function historyCarouselGeometry(focus, index) {
     const from=Math.min(7,Math.floor(clamp(focus,0,8))), p=clamp(focus-from);
@@ -249,6 +257,7 @@
   if (typeof module !== 'undefined') module.exports.contactScrollPose=contactScrollPose;
   if (typeof module !== 'undefined') module.exports.brandCharacterOpacity=brandCharacterOpacity;
   if (typeof module !== 'undefined') module.exports.brandCellOpacity=brandCellOpacity;
+  if (typeof module !== 'undefined') module.exports.brandPhotoScale=brandPhotoScale;
   if (typeof module !== 'undefined') module.exports.brandGalleryReveal=brandGalleryReveal;
   if (typeof module !== 'undefined') module.exports.modelScrollAnchors=modelScrollAnchors;
   if (typeof module !== 'undefined') module.exports.modelPlacement=modelPlacement;
@@ -423,6 +432,7 @@
   brand.append(brandModel);
   const brandGallery=brand.querySelector('.f18-layer-124');
   const brandCells=Array.from(brand.querySelector('.f18-layer-013').children);
+  const brandPhotos=brandCells.map(cell=>cell.querySelector('[data-name="photo"]'));
   const brandCopy=brand.querySelector('.f18-layer-006');
   const brandTextGroups=[brand.querySelector('.f18-layer-002'),brandCopy].map(container=>{
     const paragraphs=Array.from(container.querySelectorAll('p:not(.f18-layer-009)'));
@@ -461,6 +471,10 @@
         return brandCellOpacity((rect.top+rect.height/2)/innerHeight);
       });
       brandCells.forEach((cell,index)=>cell.style.setProperty('--brand-cell-opacity',opacities[index]));
+      brandPhotos.forEach(photo=>{
+        const rect=photo.getBoundingClientRect();
+        photo.style.setProperty('--brand-photo-scale',brandPhotoScale((rect.top+rect.height/2)/innerHeight));
+      });
       brandGallery.style.setProperty('--brand-gallery-reveal-x',(-100*(1-reveal))+'%');
     }
   }
@@ -598,22 +612,20 @@
   }
   function historyPhotoTarget(state, forward) {
     if(state.index===3) {
-      if(forward && state.local>=segments[3].motion)return segments[4].start+HISTORY_PHOTO_MOVE_PX;
+      if(forward && state.local>=segments[3].motion)return segments[4].start+HISTORY_PHOTO_FIRST_MOVE_PX;
       return null;
     }
     if(state.index!==4 && state.index!==5)return null;
     const count=state.index===4?3:5;
-    const step=Math.floor(Math.max(0,state.local)/HISTORY_PHOTO_STEP_PX);
-    const phase=state.local-step*HISTORY_PHOTO_STEP_PX;
-    if(step>=count)return null;
+    const first=state.index===4?HISTORY_PHOTO_FIRST_MOVE_PX:HISTORY_PHOTO_MOVE_PX;
+    const boundaries=Array.from({length:count+1},(_,step)=>step===0?0:first+(step-1)*HISTORY_PHOTO_STEP_PX);
     if(forward) {
-      return segments[state.index].start+(step+1)*HISTORY_PHOTO_STEP_PX;
+      const next=boundaries.find(boundary=>boundary>state.local);
+      return next===undefined?null:segments[state.index].start+next;
     }
-    if(phase===0) {
-      if(step===0)return state.index===5?segments[4].start+2*HISTORY_PHOTO_STEP_PX:null;
-      return segments[state.index].start+(step-1)*HISTORY_PHOTO_STEP_PX;
-    }
-    return segments[state.index].start+step*HISTORY_PHOTO_STEP_PX;
+    const previous=boundaries.filter(boundary=>boundary<state.local-1);
+    if(previous.length)return segments[state.index].start+previous.at(-1);
+    return state.index===5?segments[4].start+HISTORY_PHOTO_FIRST_MOVE_PX+HISTORY_PHOTO_STEP_PX:null;
   }
   function playHistoryPhotoTransition(target) {
     if(historyPhotoTransitionActive)return;

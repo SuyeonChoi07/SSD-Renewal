@@ -93,6 +93,14 @@ for(let i=31;i<40;i++)assert.ok(cellOpacity(i/100)>cellOpacity((i-1)/100));
 for(let i=61;i<=70;i++)assert.ok(cellOpacity(i/100)<cellOpacity((i-1)/100));
 console.log('Brand cells: 50% outside 30–70vh; eased ramps at 30–40/60–70vh; 100% across 40–60vh: PASS');
 
+const {brandPhotoScale:photoScale}=require('./script.js');
+assert.equal(photoScale(.7),.6);
+assert.ok(Math.abs(photoScale(.6)-.8)<1e-6);
+assert.equal(photoScale(.5),1);
+assert.equal(photoScale(.3),1);
+for(let i=51;i<=70;i++)assert.ok(photoScale(i/100)<photoScale((i-1)/100));
+assert.match(css,/#brand \.f18-layer-013 \[data-name="cell"\] > \[data-name="photo"\] \{ scale: var\(--brand-photo-scale, \.6\)/);
+
 const {brandGalleryReveal:reveal}=require('./script.js');
 for(const top of [2,1,.85])assert.equal(reveal(top),0);
 for(const top of [.45,.4,0,-1])assert.equal(reveal(top),1);

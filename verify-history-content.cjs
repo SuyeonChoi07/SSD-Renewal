@@ -11,7 +11,7 @@ for(let i=0;i<8;i++){const done=historyContentPose(540,0,i);assert.equal(done.ph
 assert.equal(historyContentPose(540,0).captionY,0);assert.equal(historyContentPose(540,0).captionOpacity,1);
 assert.equal(historyContentPose(540,1).captionY,32);assert.equal(historyContentPose(540,1).captionOpacity,0);
 const segments=timeline(heights);
-for(const [index,motion] of [[3,540],[4,1800],[5,3000]]){assert.equal(segments[index].motion,motion);assert.equal(segments[index].hold,0);assert.equal(stateAt(segments[index].start+segments[index].entryHold+motion,heights).transition,0);}
+for(const [index,motion] of [[3,540],[4,2400],[5,3000]]){assert.equal(segments[index].motion,motion);assert.equal(segments[index].hold,0);assert.equal(stateAt(segments[index].start+segments[index].entryHold+motion,heights).transition,0);}
 assert.equal(segments[3].transition,0);
 assert.equal(segments[4].transition,0);
 assert.equal(segments[4].entryHold,0);

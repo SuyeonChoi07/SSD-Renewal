@@ -1091,6 +1091,7 @@ html.landing-entry-pending .scroll-hint { filter: opacity(0); }
 #brand .f18-layer-124 img { translate: var(--brand-gallery-reveal-x, -100%) 0; will-change: translate; }
 #brand .f18-layer-005, #brand .f18-layer-137 { z-index: 2; }
 #brand .f18-layer-013 > [data-name="cell"] { opacity: var(--brand-cell-opacity, .5); }
+#brand .f18-layer-013 [data-name="cell"] > [data-name="photo"] { scale: var(--brand-photo-scale, .6); transform-origin: center; }
 
 /* Contact의 원본 상단 그라데이션은 본문 스크롤과 독립된 고정 레이어. */
 .design-stage > .f19-layer-003, .design-stage > .f19-layer-004 { top: 0; z-index: 80; visibility: hidden; pointer-events: none; }
