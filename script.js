@@ -295,20 +295,7 @@
   const historyBread = historyScene.querySelector('[data-node-id="749:88"]');
   const historyTitle = historyScene.querySelector('[data-node-id="749:87"]');
   const historyTitleParts=Array.from(historyTitle.querySelectorAll('.history-title-part'));
-  const historyTitleTargets=[{x:400,y:260},{x:1285,y:600}];
-  let historyTitleOffsets=[{x:0,y:0},{x:0,y:0}];
-  function measureHistoryTitleParts() {
-    const previousFontSize=historyTitle.style.fontSize;
-    historyTitle.style.fontSize='180px';
-    const naturalLeft=1032-historyTitle.offsetWidth/2;
-    historyTitleOffsets=historyTitleParts.map((part,index)=>({
-      x:historyTitleTargets[index].x-naturalLeft-part.offsetLeft,
-      y:historyTitleTargets[index].y-377-part.offsetTop
-    }));
-    historyTitle.style.fontSize=previousFontSize;
-  }
-  measureHistoryTitleParts();
-  document.fonts?.ready.then(measureHistoryTitleParts);
+  const historyTitleOffsets=[{x:-180,y:-117},{x:400,y:223}];
   const historyOutline = historyScene.querySelector('[data-node-id="749:89"]');
   function renderHistory(state) {
     const arrival = state.index < 1 ? 0 : state.index === 1 ? state.transition : 1;
