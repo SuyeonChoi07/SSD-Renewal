@@ -180,6 +180,41 @@ try {
  ray.setFromCamera(new THREE.Vector2(0,0),camera);
  const hit=ray.intersectObject(gltf.scene,true)[0];
  if(hit)pivot.copy(hit.point);
+ const utensils=new Map(['Spoon','Knife','Fork'].map(name=>{
+ const object=gltf.scene.getObjectByName(name);
+ if(!object)throw Error('모델에서 '+name+' 오브젝트를 찾을 수 없습니다.');
+ const center=new THREE.Box3().setFromObject(object).getCenter(new THREE.Vector3());
+ return [name,{object,center,home:object.position.clone(),targetX:object.position.x,targetZ:object.position.z}];
+ }));
+ const hoverPlane=new THREE.Plane(new THREE.Vector3(0,1,0));
+ const hoverPoint=new THREE.Vector3();
+ const pointer=new THREE.Vector2();
+ function resetUtensils(){
+ for(const utensil of utensils.values()){
+ utensil.targetX=utensil.home.x;
+ utensil.targetZ=utensil.home.z;
+ }
+ }
+ renderer.domElement.addEventListener('pointermove',event=>{
+ if(root.dataset.active!=='true')return;
+ const bounds=renderer.domElement.getBoundingClientRect();
+ pointer.set((event.clientX-bounds.left)/bounds.width*2-1,-(event.clientY-bounds.top)/bounds.height*2+1);
+ camera.updateMatrixWorld();
+ ray.setFromCamera(pointer,camera);
+ const firstHit=ray.intersectObject(gltf.scene,true)[0];
+ let selected=firstHit?.object;
+ while(selected&&!utensils.has(selected.name))selected=selected.parent;
+ resetUtensils();
+ if(!selected)return;
+ const utensil=utensils.get(selected.name);
+ hoverPlane.constant=-utensil.center.y;
+ if(!ray.ray.intersectPlane(hoverPlane,hoverPoint))return;
+ const distance=span*(settings.utensilHoverDistance??.008);
+ utensil.targetX=utensil.home.x+THREE.MathUtils.clamp((hoverPoint.x-utensil.center.x)/(span*.12),-1,1)*distance;
+ utensil.targetZ=utensil.home.z+THREE.MathUtils.clamp((hoverPoint.z-utensil.center.z)/(span*.12),-1,1)*distance;
+ });
+ renderer.domElement.addEventListener('pointerleave',resetUtensils);
+ window.addEventListener('blur',resetUtensils);
  const observer=new ResizeObserver(resize);
  observer.observe(view);
  function easeInOut(t){return t*t*t*(t*(t*6-15)+10);}
@@ -242,8 +277,20 @@ try {
  let lastFoliageFrame=0;
  function animateFoliage(now){
  requestAnimationFrame(animateFoliage);
- if(document.hidden||root.dataset.active!=='true'||now-lastFoliageFrame<33)return;
+ if(document.hidden||root.dataset.active!=='true'){
+ for(const utensil of utensils.values()){
+ utensil.object.position.x=utensil.home.x;
+ utensil.object.position.z=utensil.home.z;
+ }
+ resetUtensils();
+ return;
+ }
+ if(now-lastFoliageFrame<33)return;
  lastFoliageFrame=now;
+ for(const utensil of utensils.values()){
+ utensil.object.position.x+=(utensil.targetX-utensil.object.position.x)*.22;
+ utensil.object.position.z+=(utensil.targetZ-utensil.object.position.z)*.22;
+ }
  const t=now*.001;
  foliage.rotation.y=Math.sin(t*.55)*.055;
  foliage.position.x=center.x+lightShift+Math.sin(t*.7)*span*.003;

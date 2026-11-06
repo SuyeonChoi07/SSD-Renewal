@@ -9,6 +9,7 @@ export const tableSettings = {
   endPitch: 60,
   endOffsetX: -0.125,
   objectScale: 0.8,
+  utensilHoverDistance: 0.008,
   liftMultiplier: 4,
   exposure: 0.60,
   environmentIntensity: 0.38,
