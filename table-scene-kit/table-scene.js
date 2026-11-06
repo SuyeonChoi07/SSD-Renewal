@@ -96,21 +96,40 @@ try {
  key.shadow.normalBias=span*.00035;
  key.shadow.bias=-0.00005;
  key.shadow.radius=settings.light.shadowRadius;
- // Invisible window mullions only block sunlight: no visible geometry above the table.
- const windowFrame=new THREE.Group();
- windowFrame.position.set(center.x,box.max.y+span*.3,center.z);
- windowFrame.rotation.y=Math.PI/5;
- const blockerMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide,colorWrite:false,depthWrite:false});
- function addMullion(width,depth,x,z){
- const slat=new THREE.Mesh(new THREE.PlaneGeometry(width,depth),blockerMaterial);
- slat.rotation.x=-Math.PI/2;slat.position.set(x,0,z);
- slat.castShadow=true;windowFrame.add(slat);
+ // An arched window projects its light and mullion shadows onto the model.
+ const windowCanvas=document.createElement('canvas');
+ windowCanvas.width=windowCanvas.height=512;
+ const windowContext=windowCanvas.getContext('2d');
+ windowContext.fillStyle='#080808';windowContext.fillRect(0,0,512,512);
+ function traceWindow(){
+   windowContext.beginPath();
+   windowContext.moveTo(96,472);windowContext.lineTo(416,472);
+   windowContext.lineTo(416,192);
+   windowContext.bezierCurveTo(416,95,345,40,256,40);
+   windowContext.bezierCurveTo(167,40,96,95,96,192);
+   windowContext.closePath();
  }
- for(let i=-5;i<=5;i++)addMullion(span*.055,span*3,i*span*.22,0);
- addMullion(span*3,span*.035,0,span*.18);
- scene.add(windowFrame);
- // A broad, soft sunbeam passes through the window frame and lights the food and table.
- const daylight=new THREE.SpotLight(0xfff4df,settings.light.window,span*5,Math.PI/4,.9,1);
+ windowContext.save();
+ windowContext.shadowColor='#ffffff';windowContext.shadowBlur=15;
+ windowContext.fillStyle='#fffaf0';traceWindow();windowContext.fill();
+ windowContext.restore();
+ windowContext.save();traceWindow();windowContext.clip();
+ windowContext.strokeStyle='rgba(18,18,18,.85)';windowContext.lineWidth=8;
+ for(const x of [176,256,336]){
+   windowContext.beginPath();windowContext.moveTo(x,472);windowContext.lineTo(x,70);windowContext.stroke();
+ }
+ for(const y of [240,320,400]){
+   windowContext.beginPath();windowContext.moveTo(96,y);windowContext.lineTo(416,y);windowContext.stroke();
+ }
+ windowContext.beginPath();windowContext.arc(256,194,90,Math.PI,0);windowContext.stroke();
+ windowContext.restore();
+ windowContext.strokeStyle='rgba(18,18,18,.8)';windowContext.lineWidth=11;
+ traceWindow();windowContext.stroke();
+ const windowTexture=new THREE.CanvasTexture(windowCanvas);
+ windowTexture.colorSpace=THREE.SRGBColorSpace;
+ const blockerMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide,colorWrite:false,depthWrite:false});
+ const daylight=new THREE.SpotLight(0xfff4df,settings.light.window,span*5,Math.PI/6,.7,1);
+ daylight.map=windowTexture;
  daylight.position.copy(center).add(new THREE.Vector3(span*.65,span*1.6,-span*.7));
  daylight.target.position.set(center.x,box.max.y,center.z);
  daylight.castShadow=true;
@@ -128,32 +147,6 @@ try {
  const tablePullDirection=Math.sign(camera.position.z-tableCenter.z)||1;
  tableObject.position.z+=tableSize.x*.27*tablePullDirection;
  tableBounds.setFromObject(tableObject).getCenter(tableCenter);
- const beamCanvas=document.createElement('canvas');
- beamCanvas.width=128;beamCanvas.height=256;
- const beamContext=beamCanvas.getContext('2d');
- const across=beamContext.createLinearGradient(0,0,128,0);
- across.addColorStop(0,'rgba(255,230,180,0)');
- across.addColorStop(.28,'rgba(255,230,180,0.35)');
- across.addColorStop(.5,'rgba(255,240,205,0.55)');
- across.addColorStop(.72,'rgba(255,230,180,0.35)');
- across.addColorStop(1,'rgba(255,230,180,0)');
- beamContext.fillStyle=across;beamContext.fillRect(0,0,128,256);
- const along=beamContext.createLinearGradient(0,0,0,256);
- along.addColorStop(0,'rgba(255,255,255,0)');
- along.addColorStop(.28,'rgba(255,255,255,1)');
- along.addColorStop(.72,'rgba(255,255,255,1)');
- along.addColorStop(1,'rgba(255,255,255,0)');
- beamContext.globalCompositeOperation='destination-in';
- beamContext.fillStyle=along;beamContext.fillRect(0,0,128,256);
- const beamTexture=new THREE.CanvasTexture(beamCanvas);
- const beamMaterial=new THREE.MeshBasicMaterial({map:beamTexture,transparent:true,opacity:.22,depthWrite:false,blending:THREE.AdditiveBlending,side:THREE.DoubleSide});
- for(let i=0;i<3;i++){
- const beam=new THREE.Mesh(new THREE.PlaneGeometry(tableSize.x*.17,tableSize.z*.85),beamMaterial);
- beam.rotation.set(-Math.PI/2,0,Math.PI/5);
- beam.position.set(tableBounds.min.x+tableSize.x*(.24+i*.26),tableBounds.max.y+span*.002,tableCenter.z);
- beam.renderOrder=1;
- scene.add(beam);
- }
  }
  // Shadow-only foliage between the window and tabletop, swaying in a light breeze.
  const foliage=new THREE.Group();
