@@ -206,20 +206,20 @@ export function createModelExperience({ container, sections, getScrollPositions 
         const activeModel = alternateModel.visible ? alternateModel : originalModel;
         const hit = raycaster.intersectObject(activeModel, true)[0];
         if (hit) {
-          // 축 고리가 아닌 실제 모델 표면에 호버할 때만 최대 6° 기울입니다.
+          // 축 고리가 아닌 실제 모델 표면에 호버할 때만 X·Z축으로 최대 10° 기울입니다.
           hoverBounds.setFromObject(activeModel);
           hoverBounds.getCenter(hoverCenter);
           hoverBounds.getSize(hoverSize);
           const x = THREE.MathUtils.clamp((hit.point.x - hoverCenter.x) / Math.max(hoverSize.x / 2, .001), -1, 1);
           const y = THREE.MathUtils.clamp((hit.point.y - hoverCenter.y) / Math.max(hoverSize.y / 2, .001), -1, 1);
-          const strength = THREE.MathUtils.degToRad(6);
+          const strength = THREE.MathUtils.degToRad(10);
           hoverTarget.set(-y * strength, x * strength);
         }
       }
       const blend = 1 - Math.exp(-8 * delta);
       hoverRig.rotation.x = THREE.MathUtils.lerp(hoverRig.rotation.x, hoverTarget.x, blend);
-      hoverRig.rotation.y = THREE.MathUtils.lerp(hoverRig.rotation.y, hoverTarget.y, blend);
-      hoverRig.rotation.z = 0;
+      hoverRig.rotation.y = 0;
+      hoverRig.rotation.z = THREE.MathUtils.lerp(hoverRig.rotation.z, hoverTarget.y, blend);
     }
     // 고정된 모델 중심을 기준으로 조명을 배치합니다.
     const azimuth = THREE.MathUtils.degToRad(lighting.azimuth);
