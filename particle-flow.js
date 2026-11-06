@@ -1,7 +1,7 @@
 /* Particle Flow — 외부 의존성 없는 Canvas 효과. 일반 script 또는 ESM 어댑터로 사용. */
 (function(global){
 'use strict';
-const defaults=Object.freeze({count:1500,width:800,peakWidth:1000,color:'#f48621',pointerRadius:700,pointerForce:45,maxDpr:2});
+const defaults=Object.freeze({count:1500,width:800,peakWidth:1000,color:'#F8F0E5',pointerRadius:700,pointerForce:45,maxDpr:2});
 function createParticleFlow(target,config={}){
   const host=typeof target==='string'?document.querySelector(target):target;
   if(!host||!host.appendChild)throw new Error('파티클을 넣을 컨테이너를 지정하세요.');
