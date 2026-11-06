@@ -115,9 +115,9 @@ try {
  const tableBounds=new THREE.Box3().setFromObject(tableObject);
  const tableSize=tableBounds.getSize(new THREE.Vector3());
  const tableCenter=tableBounds.getCenter(new THREE.Vector3());
- const cameraPull=tableSize.x*.5;
- camera.position.addScaledVector(camera.getWorldDirection(new THREE.Vector3()),cameraPull);
- orbitBase.copy(camera.position);
+ const tablePullDirection=Math.sign(camera.position.z-tableCenter.z)||1;
+ tableObject.position.z+=tableSize.x*.5*tablePullDirection;
+ tableBounds.setFromObject(tableObject).getCenter(tableCenter);
  const beamCanvas=document.createElement('canvas');
  beamCanvas.width=128;beamCanvas.height=256;
  const beamContext=beamCanvas.getContext('2d');
