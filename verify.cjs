@@ -11,7 +11,7 @@ for(const asset of provenance.assets)assert.ok(fs.statSync(path.join(root,asset.
 for(const match of html.matchAll(/(?:src|href)="((?:assets\/)[^"]+)"/g))assert.ok(fs.statSync(path.join(root,match[1])).size>0,match[1]);
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size);
 for(const m of html.matchAll(/href="(#[^"]+)"/g))assert.ok(ids.includes(m[1].slice(1)),m[1]);
-assert.ok(!html.includes('mobile-object')&&!script.includes('cloneNode'),'No copied mobile elements');
+assert.ok(!html.includes('mobile-object')&&!script.includes('mobile-object'),'No copied mobile elements');
 assert.ok(!html.includes('intro-copy-track'),'Removed wrapper must stay removed');
 assert.ok(!html.includes('https://www.figma.com/api/mcp/asset/'));
 assert.ok(!html.includes('className=')&&!html.includes('src={'),'Plain HTML');

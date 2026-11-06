@@ -738,9 +738,39 @@
   if (location.hash) navigate(location.hash, false);
   const landingEntry=document.documentElement;
   if(window.scrollY<landingTransitionStart && (!location.hash || location.hash==='#landing') && !reduced.matches) {
+    const landingFrame=scenes[0].querySelector('.frame-art');
+    const seal=landingFrame.querySelector('.f01-layer-024');
+    const strips=document.createElement('div');
+    strips.className='landing-entry-slices';
+    strips.setAttribute('aria-hidden','true');
+    for(let index=0;index<8;index++){
+      const strip=document.createElement('div');
+      strip.className='landing-entry-slice';
+      strip.style.left=(index*12.5)+'%';
+      const content=document.createElement('div');
+      content.className='landing-entry-slice-content';
+      content.style.setProperty('--slice-index',index);
+      const sceneCopy=document.createElement('div');
+      sceneCopy.className='landing-entry-slice-scene';
+      sceneCopy.style.left=`-${index*258}px`;
+      const frame=landingFrame.cloneNode(true);
+      frame.querySelector('.f01-layer-024').remove();
+      sceneCopy.append(frame,header.cloneNode(true),scrollHint.cloneNode(true));
+      content.append(sceneCopy);
+      strip.append(content);
+      strips.append(strip);
+    }
+    const sealOverlay=seal.cloneNode(true);
+    sealOverlay.classList.add('landing-entry-seal');
+    sealOverlay.setAttribute('aria-hidden','true');
+    stage.append(strips,sealOverlay);
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
       landingEntry.classList.remove('landing-entry-pending');
-      setTimeout(()=>landingEntry.classList.remove('landing-entry-running'),1200);
+      setTimeout(()=>{
+        landingEntry.classList.remove('landing-entry-running');
+        strips.remove();
+        sealOverlay.remove();
+      },1200);
     }));
   } else {
     landingEntry.classList.remove('landing-entry-pending','landing-entry-running');
