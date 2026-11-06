@@ -564,6 +564,7 @@
   const contactTransitionStart = segments[17].start + segments[17].length - segments[17].transition;
   let landingTransitionActive = false;
   let contactTransitionActive = false;
+  let historyPhotoTransitionActive = false;
   let lastLandingScrollY = window.scrollY;
   let lastScrollInputAt = 0;
   let navigationTargetY = null;
@@ -609,20 +610,62 @@
     }
     requestAnimationFrame(step);
   }
+  function historyPhotoTarget(state, forward) {
+    if(state.index===3) {
+      if(forward && state.local>=segments[3].motion)return segments[4].start+HISTORY_PHOTO_MOVE_PX;
+      return null;
+    }
+    if(state.index!==4 && state.index!==5)return null;
+    const count=state.index===4?3:5;
+    const step=Math.floor(Math.max(0,state.local)/HISTORY_PHOTO_STEP_PX);
+    const phase=state.local-step*HISTORY_PHOTO_STEP_PX;
+    if(step>=count)return null;
+    if(forward) {
+      if(phase<HISTORY_PHOTO_MOVE_PX)return null;
+      if(step===count-1)return state.index===4?segments[5].start+HISTORY_PHOTO_MOVE_PX:null;
+      return segments[state.index].start+(step+1)*HISTORY_PHOTO_STEP_PX+HISTORY_PHOTO_MOVE_PX;
+    }
+    if(phase<HISTORY_PHOTO_MOVE_PX)return null;
+    return segments[state.index].start+step*HISTORY_PHOTO_STEP_PX;
+  }
+  function playHistoryPhotoTransition(target) {
+    if(historyPhotoTransitionActive)return;
+    historyPhotoTransitionActive=true;
+    const from=window.scrollY;
+    const duration=reduced.matches?0:1000;
+    const started=performance.now();
+    function step(now) {
+      const progress=duration?clamp((now-started)/duration):1;
+      window.scrollTo({top:from+(target-from)*ease(progress),behavior:'instant'});
+      schedule();
+      if(progress<1)requestAnimationFrame(step);
+      else {
+        lastLandingScrollY=window.scrollY;
+        historyPhotoTransitionActive=false;
+      }
+    }
+    requestAnimationFrame(step);
+  }
   function handleScroll() {
     const currentY = window.scrollY;
     if (navigationTargetY !== null) {
       if (Math.abs(currentY - navigationTargetY) < 2) navigationTargetY = null;
-    } else if (!landingTransitionActive && !contactTransitionActive && performance.now() - lastScrollInputAt < 500) {
+    } else if (!landingTransitionActive && !contactTransitionActive && !historyPhotoTransitionActive && performance.now() - lastScrollInputAt < 500) {
       if (currentY > lastLandingScrollY && currentY > 0 && currentY < introStart) playLandingTransition(true);
       else if (currentY < lastLandingScrollY && currentY < introStart && lastLandingScrollY >= landingTransitionStart) playLandingTransition(false);
       else if(currentY>lastLandingScrollY && currentY>=contactTransitionStart && currentY<document.documentElement.scrollHeight-innerHeight)playContactTransition(true);
+      else {
+        const forward=currentY>lastLandingScrollY;
+        const target=historyPhotoTarget(stateAt(lastLandingScrollY,heights),forward)
+          ??historyPhotoTarget(stateAt(currentY,heights),forward);
+        if(target!==null && currentY!==lastLandingScrollY)playHistoryPhotoTransition(target);
+      }
     }
     lastLandingScrollY = currentY;
     schedule();
   }
   window.addEventListener('wheel', event => {
-    if (landingTransitionActive || contactTransitionActive) { event.preventDefault(); return; }
+    if (landingTransitionActive || contactTransitionActive || historyPhotoTransitionActive) { event.preventDefault(); return; }
     navigationTargetY = null;
     lastScrollInputAt = performance.now();
     if (event.deltaY > 0 && window.scrollY < introStart) {
@@ -637,12 +680,18 @@
     } else if(event.deltaY<0 && window.scrollY>contactTransitionStart && window.scrollY>=document.documentElement.scrollHeight-innerHeight-1) {
       event.preventDefault();
       playContactTransition(false);
+    } else {
+      const target=historyPhotoTarget(stateAt(window.scrollY,heights),event.deltaY>0);
+      if(event.deltaY!==0 && target!==null) {
+        event.preventDefault();
+        playHistoryPhotoTransition(target);
+      }
     }
   }, { passive: false });
   window.addEventListener('touchstart', () => { lastScrollInputAt = performance.now(); }, { passive: true });
   window.addEventListener('touchmove', event => {
     lastScrollInputAt = performance.now();
-    if (landingTransitionActive || contactTransitionActive) event.preventDefault();
+    if (landingTransitionActive || contactTransitionActive || historyPhotoTransitionActive) event.preventDefault();
   }, { passive: false });
   window.addEventListener('keydown', event => {
     if (['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(event.key)) lastScrollInputAt = performance.now();
