@@ -1086,7 +1086,7 @@ html.landing-entry-pending .scroll-hint { filter: opacity(0); }
 .brand-model-stage { position: absolute; inset: 0; width: 2064px; height: 1020px; z-index: 0; pointer-events: none; will-change: transform; }
 .brand-model-stage canvas { display: block; width: 100%; height: 100%; pointer-events: auto; }
 .brand-model-stage:not([data-status="ready"]) canvas { visibility: hidden; }
-#brand .f18-layer-124 { transform: translateX(var(--brand-gallery-x, 0px)); will-change: transform; z-index: 2; }
+#brand .f18-layer-124 { transform: translateX(var(--brand-gallery-x, 0px)); will-change: transform; z-index: 2; pointer-events: auto; }
 #brand .f18-layer-124 > div, #brand .f18-layer-130, #brand .f18-layer-135 { overflow: hidden; }
 #brand .f18-layer-124 img { translate: var(--brand-gallery-reveal-x, -100%) 0; will-change: translate; }
 #brand .f18-layer-124 > div img { scale: 1; transition: scale .7s ease-in-out; transform-origin: center; }
