@@ -21,7 +21,7 @@ assert.match(script,/state\.index===13\?transitionWeights\(13,state\.transition\
 assert.match(script,/daejeonDivider\.style\.opacity=pose\.dividerOpacity/);
 assert.match(model,/duration=settings\.durationMs\*Math\.abs\(next-from\)/);
 assert.match(model,/const tablePullDirection=Math\.sign\(camera\.position\.z-tableCenter\.z\)\|\|1/);
-assert.match(model,/tableObject\.position\.z\+=tableSize\.x\*\.5\*tablePullDirection/);
+assert.match(model,/tableObject\.position\.z\+=tableSize\.x\*\.2\*tablePullDirection/);
 assert.doesNotMatch(model,/camera\.position\.addScaledVector/);
 assert.match(model,/selected\.name==='아이코스피어'\|\|selected\.name==='봉투'/);
 assert.match(model,/breadHoverOffset\.lerp\(breadHoverTarget,\.22\)/);

@@ -116,7 +116,7 @@ try {
  const tableSize=tableBounds.getSize(new THREE.Vector3());
  const tableCenter=tableBounds.getCenter(new THREE.Vector3());
  const tablePullDirection=Math.sign(camera.position.z-tableCenter.z)||1;
- tableObject.position.z+=tableSize.x*.5*tablePullDirection;
+ tableObject.position.z+=tableSize.x*.2*tablePullDirection;
  tableBounds.setFromObject(tableObject).getCenter(tableCenter);
  const beamCanvas=document.createElement('canvas');
  beamCanvas.width=128;beamCanvas.height=256;
