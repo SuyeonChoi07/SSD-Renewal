@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');
-const {headerPose,scrollHintPose}=require('./script.js');
+const {headerPose,scrollHintPose,wrapperExitPose}=require('./script.js');
 assert.equal(headerPose(0,0).width,365.299);
 assert.equal(headerPose(0,1).width,124);
 assert.equal(headerPose(0,1).height,50);
@@ -14,6 +14,10 @@ assert.equal(headerPose(16,1).light,0);
 assert.equal(headerPose(17,0).active[3],1);
 assert.equal(headerPose(18,0).active[4],1);
 assert.deepEqual(scrollHintPose(15,0),{dark:0,opacity:1});
+for(const elapsed of [0,975,1200,1475,1600,1725]){
+  assert.equal(scrollHintPose(15,elapsed/1725).dark,wrapperExitPose(elapsed/1725).fade,
+    'Scroll hint color changes only during the 15→16 scene crossfade');
+}
 assert.deepEqual(scrollHintPose(15,1),scrollHintPose(16,0));
 assert.deepEqual(scrollHintPose(16,1),scrollHintPose(17,0));
 assert.deepEqual(scrollHintPose(17,1),scrollHintPose(18,0));

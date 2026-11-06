@@ -242,9 +242,10 @@
   }
   function scrollHintPose(index, progress) {
     const t=ease(clamp(progress));
-    return { dark:index===15?t:index===16?1-t:0, opacity:index<17?1:index===17?1-t:0 };
+    return { dark:index===15?wrapperExitPose(progress).fade:index===16?1-t:0,
+      opacity:index<17?1:index===17?1-t:0 };
   }
-  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, scrollHintPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperOpenPose, wrapperCopyVisible, wrapperCopyOpacity, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
+  if (typeof module !== 'undefined') module.exports = { ease, HOLD_SCROLL_PX, TRANSITION_SCROLL_PX, timeline, stateAt, transitionWeights, introPose, introLinePose, headerPose, scrollHintPose, historyPose, historyExitPose, historyContentPose, historyCarouselFocus, historyCarouselGeometry, historyZoomPose, shouldExpandHistoryPhoto, historyImageCrops, daejeonPose, daejeonExitPose, daejeonAlignedCrop, daejeonAlignedLogoRect, wrapperOpenPose, wrapperExitPose, wrapperCopyVisible, wrapperCopyOpacity, brandPose, BRAND_HALL_PIN, BRAND_HALL_SCROLL };
   if (typeof module !== 'undefined') module.exports.contactScrollPose=contactScrollPose;
   if (typeof module !== 'undefined') module.exports.brandCharacterOpacity=brandCharacterOpacity;
   if (typeof module !== 'undefined') module.exports.brandCellOpacity=brandCellOpacity;
