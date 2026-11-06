@@ -109,6 +109,16 @@ try {
  for(let i=-5;i<=5;i++)addMullion(span*.055,span*3,i*span*.22,0);
  addMullion(span*3,span*.035,0,span*.18);
  scene.add(windowFrame);
+ // A broad, soft sunbeam passes through the window frame and lights the food and table.
+ const daylight=new THREE.SpotLight(0xfff4df,settings.light.window,span*5,Math.PI/4,.9,1);
+ daylight.position.copy(center).add(new THREE.Vector3(span*.65,span*1.6,-span*.7));
+ daylight.target.position.set(center.x,box.max.y,center.z);
+ daylight.castShadow=true;
+ daylight.shadow.mapSize.set(1024,1024);
+ daylight.shadow.bias=-0.00005;
+ daylight.shadow.normalBias=span*.00035;
+ daylight.shadow.radius=3;
+ scene.add(daylight,daylight.target);
  // Soft sunlight falls through the spaces between the mullions onto the table.
  const tableObject=gltf.scene.getObjectByName('Table');
  if(tableObject){

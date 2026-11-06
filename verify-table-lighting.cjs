@@ -10,7 +10,7 @@ const json=JSON.parse(glb.subarray(20,20+glb.readUInt32LE(12)).toString());
 assert.ok(json.materials.some(material=>material.pbrMetallicRoughness),'GLB contains PBR materials');
 assert.match(settings,/exposure: 0\.60/);
 assert.match(settings,/environmentIntensity: 0\.38/);
-for(const [name,value] of [['ambient','0.32'],['key','0.45'],['fill','0.10'],['shadowRadius','2.5']])assert.match(settings,new RegExp(name+': '+value.replace('.','\\.')));
+for(const [name,value] of [['ambient','0.32'],['key','0.45'],['fill','0.10'],['window','0.18'],['shadowRadius','2.5']])assert.match(settings,new RegExp(name+': '+value.replace('.','\\.')));
 assert.match(scene,/scene\.environment=environment\.texture/);
 assert.match(scene,/scene\.environmentIntensity=settings\.environmentIntensity/);
 assert.match(room,/from '\.\/three\.module\.js'/);
@@ -24,6 +24,9 @@ for(const [stop,alpha] of [['0','0.65'],['.48','0.35'],['1','0']])assert.ok(scen
 assert.match(scene,/bounceSize\.x\*1\.45,bounceSize\.z\*1\.45/);
 assert.match(scene,/contactMaterial\.opacity=\.72\*\(1-\.88\*lift\)/);
 assert.match(scene,/scene\.add\(windowFrame\)/);
+assert.match(scene,/new THREE\.SpotLight\(0xfff4df,settings\.light\.window/);
+assert.match(scene,/daylight\.castShadow=true/);
+assert.match(scene,/scene\.add\(daylight,daylight\.target\)/);
 assert.match(scene,/beamContext\.globalCompositeOperation='destination-in'/);
 assert.match(scene,/blending:THREE\.AdditiveBlending/);
 assert.match(scene,/tableBounds\.max\.y\+span\*\.002/);
