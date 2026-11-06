@@ -36,6 +36,7 @@ let width=0,height=0,length=0,points=[],particles=[],elapsed=0,last=0;
 const spreadNormal={x:0,y:1};
 const motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
 let paused=motionQuery.matches;
+const trailSeconds=5;
 const pointer={x:0,y:0,active:false};
 const random=(min,max)=>min+Math.random()*(max-min);
 function sampleNormal(mean,sigma,min,max){
@@ -137,7 +138,14 @@ function render(timestamp){
   raf=null;
   const dt=last?Math.min((timestamp-last)/1000,.05):0;last=timestamp;
   const step=paused?0:dt;if(!paused)elapsed+=step;
-  ctx.clearRect(0,0,width,height);
+  // Keep each particle's path visible for roughly five seconds, then fade it away.
+  if(step){
+    ctx.save();
+    ctx.globalCompositeOperation='destination-out';
+    ctx.fillStyle=`rgba(0,0,0,${1-Math.exp(-Math.log(20)*step/trailSeconds)})`;
+    ctx.fillRect(0,0,width,height);
+    ctx.restore();
+  }
   if(showPath){
     ctx.save();ctx.strokeStyle='#83c7b75c';ctx.lineWidth=1;ctx.setLineDash([5,8]);
     ctx.stroke(new Path2D(path.getAttribute('d')));ctx.restore();
@@ -196,7 +204,7 @@ function render(timestamp){
   rebuildPath();createParticles();schedule();
   return {
     pause(){setPaused(true)},resume(){setPaused(false)},
-    reset(){elapsed=0;last=0;pointer.active=false;createParticles();schedule();},
+    reset(){elapsed=0;last=0;pointer.active=false;ctx.clearRect(0,0,width,height);createParticles();schedule();},
     setShowPath(value){showPath=Boolean(value);schedule();},
     destroy(){if(destroyed)return;destroyed=true;if(raf!==null)cancelAnimationFrame(raf);if(observer)observer.disconnect();removers.forEach(remove=>remove());canvas.remove();svg.remove();if(ownsPosition)host.style.position=oldPosition;},
     get paused(){return paused;},get config(){return {...options};}
