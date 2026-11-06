@@ -14,7 +14,7 @@ try {
  renderer.shadowMap.enabled=true;
  renderer.shadowMap.type=THREE.PCFShadowMap;
  view.prepend(renderer.domElement);
- const scene=new THREE.Scene();scene.background=new THREE.Color('#7E5B40');
+ const scene=new THREE.Scene();scene.background=new THREE.Color('#FFE385');
  const pmrem=new THREE.PMREMGenerator(renderer);
  const room=new RoomEnvironment();
  const environment=pmrem.fromScene(room);
