@@ -494,6 +494,7 @@
   function render() {
     scheduled = false;
     const state = stateAt(window.scrollY, heights);
+    const contactEnd=Math.max(0,document.documentElement.scrollHeight-innerHeight);
     const weights = transitionWeights(state.index, state.transition);
     const tableOpacity=state.index===10?weights.incoming:state.index===12?1:state.index===13?weights.outgoing:0;
     tableModelStage.style.opacity=tableOpacity;
@@ -507,7 +508,11 @@
     introModel.style.visibility=modelOpacity>0?'visible':'hidden';
     veil.style.opacity = weights.black;
     renderHeader(state);
-    const hintPose=scrollHintPose(state.index,state.transition);
+    const hintProgress=state.index===17
+      ?clamp((window.scrollY-contactTransitionStart)/Math.max(1,contactEnd-contactTransitionStart))
+      :state.transition;
+    const hintPose=scrollHintPose(state.index,hintProgress);
+    if(window.scrollY>=contactEnd-1)hintPose.opacity=0;
     scrollHint.style.color=`rgb(${[248,240,229].map(value=>Math.round(value+(19-value)*hintPose.dark)).join(', ')})`;
     scrollHint.style.opacity=hintPose.opacity;
     scrollHint.style.visibility=hintPose.opacity>0?'visible':'hidden';
@@ -556,7 +561,9 @@
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }
   const landingTransitionStart = segments[0].start + segments[0].length - segments[0].transition;
   const introStart = segments[1].start;
+  const contactTransitionStart = segments[17].start + segments[17].length - segments[17].transition;
   let landingTransitionActive = false;
+  let contactTransitionActive = false;
   let lastLandingScrollY = window.scrollY;
   let lastScrollInputAt = 0;
   let navigationTargetY = null;
@@ -581,19 +588,41 @@
     }
     requestAnimationFrame(step);
   }
+  function playContactTransition(forward) {
+    if(contactTransitionActive)return;
+    const end=Math.max(contactTransitionStart,document.documentElement.scrollHeight-innerHeight);
+    if(end<=contactTransitionStart)return;
+    contactTransitionActive=true;
+    const from=clamp(window.scrollY,contactTransitionStart,end);
+    const to=forward?end:contactTransitionStart;
+    const duration=reduced.matches?0:1000;
+    const started=performance.now();
+    function step(now) {
+      const progress=duration?clamp((now-started)/duration):1;
+      window.scrollTo({top:from+(to-from)*ease(progress),behavior:'instant'});
+      schedule();
+      if(progress<1)requestAnimationFrame(step);
+      else {
+        lastLandingScrollY=window.scrollY;
+        contactTransitionActive=false;
+      }
+    }
+    requestAnimationFrame(step);
+  }
   function handleScroll() {
     const currentY = window.scrollY;
     if (navigationTargetY !== null) {
       if (Math.abs(currentY - navigationTargetY) < 2) navigationTargetY = null;
-    } else if (!landingTransitionActive && performance.now() - lastScrollInputAt < 500) {
+    } else if (!landingTransitionActive && !contactTransitionActive && performance.now() - lastScrollInputAt < 500) {
       if (currentY > lastLandingScrollY && currentY > 0 && currentY < introStart) playLandingTransition(true);
       else if (currentY < lastLandingScrollY && currentY < introStart && lastLandingScrollY >= landingTransitionStart) playLandingTransition(false);
+      else if(currentY>lastLandingScrollY && currentY>=contactTransitionStart && currentY<document.documentElement.scrollHeight-innerHeight)playContactTransition(true);
     }
     lastLandingScrollY = currentY;
     schedule();
   }
   window.addEventListener('wheel', event => {
-    if (landingTransitionActive) { event.preventDefault(); return; }
+    if (landingTransitionActive || contactTransitionActive) { event.preventDefault(); return; }
     navigationTargetY = null;
     lastScrollInputAt = performance.now();
     if (event.deltaY > 0 && window.scrollY < introStart) {
@@ -602,12 +631,18 @@
     } else if (event.deltaY < 0 && window.scrollY >= landingTransitionStart && window.scrollY <= introStart + segments[1].entryHold) {
       event.preventDefault();
       playLandingTransition(false);
+    } else if(event.deltaY>0 && window.scrollY>=contactTransitionStart-1 && window.scrollY<document.documentElement.scrollHeight-innerHeight-1) {
+      event.preventDefault();
+      playContactTransition(true);
+    } else if(event.deltaY<0 && window.scrollY>contactTransitionStart && window.scrollY>=document.documentElement.scrollHeight-innerHeight-1) {
+      event.preventDefault();
+      playContactTransition(false);
     }
   }, { passive: false });
   window.addEventListener('touchstart', () => { lastScrollInputAt = performance.now(); }, { passive: true });
   window.addEventListener('touchmove', event => {
     lastScrollInputAt = performance.now();
-    if (landingTransitionActive) event.preventDefault();
+    if (landingTransitionActive || contactTransitionActive) event.preventDefault();
   }, { passive: false });
   window.addEventListener('keydown', event => {
     if (['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(event.key)) lastScrollInputAt = performance.now();
