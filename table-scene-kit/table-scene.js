@@ -96,6 +96,16 @@ try {
  key.shadow.normalBias=span*.00035;
  key.shadow.bias=-0.00005;
  key.shadow.radius=settings.light.shadowRadius;
+ // Approximate 4000K neutral-warm ceiling light directly above the bread and wrapper.
+ const ceilingLight=new THREE.SpotLight(0xffcea6,settings.light.ceiling,span*5,Math.PI/4,.9,1);
+ ceilingLight.position.set(contactCenter.x,box.max.y+span*2,contactCenter.z);
+ ceilingLight.target.position.copy(contactCenter);
+ ceilingLight.castShadow=true;
+ ceilingLight.shadow.mapSize.set(1024,1024);
+ ceilingLight.shadow.bias=-0.00005;
+ ceilingLight.shadow.normalBias=span*.00035;
+ ceilingLight.shadow.radius=3;
+ scene.add(ceilingLight,ceilingLight.target);
  // An arched window projects its light and mullion shadows onto the model.
  const windowCanvas=document.createElement('canvas');
  windowCanvas.width=windowCanvas.height=512;
