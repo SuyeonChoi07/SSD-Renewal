@@ -543,6 +543,73 @@
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }
+  const SCENE_TRANSITION_MS = 1000;
+  let autoTransition = null;
+  let lastScrollY = window.scrollY;
+  let navigationTargetY = null;
+  function transitionRange(segment) {
+    const end = segment.start + segment.length;
+    return { start: end - segment.transition, end };
+  }
+  function playSceneTransition(segment, forward) {
+    if (autoTransition || !segment.transition) return;
+    const range = transitionRange(segment);
+    const from = forward ? range.start : range.end;
+    const to = forward ? range.end : range.start;
+    const duration = reduced.matches ? 0 : SCENE_TRANSITION_MS;
+    autoTransition = { segment, forward };
+    window.scrollTo({ top: from, behavior: 'instant' });
+    lastScrollY = from;
+    schedule();
+    const started = performance.now();
+    function step(now) {
+      const progress = duration ? clamp((now - started) / duration) : 1;
+      const position = from + (to - from) * ease(progress);
+      window.scrollTo({ top: position, behavior: 'instant' });
+      schedule();
+      if (progress < 1) requestAnimationFrame(step);
+      else {
+        autoTransition = null;
+        lastScrollY = to;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+  function transitionAt(scrollY, direction) {
+    if (direction > 0) {
+      return segments.find(segment => segment.transition && scrollY >= transitionRange(segment).start && scrollY < transitionRange(segment).end);
+    }
+    return segments.find(segment => segment.transition && scrollY > transitionRange(segment).start && scrollY <= transitionRange(segment).end);
+  }
+  function handleScroll() {
+    const scrollY = window.scrollY;
+    const direction = Math.sign(scrollY - lastScrollY);
+    lastScrollY = scrollY;
+    if (navigationTargetY !== null && Math.abs(scrollY - navigationTargetY) < 2) navigationTargetY = null;
+    if (!autoTransition && navigationTargetY === null && direction) {
+      const segment = transitionAt(scrollY, direction);
+      if (segment) playSceneTransition(segment, direction > 0);
+    }
+    schedule();
+  }
+  window.addEventListener('wheel', event => {
+    if (autoTransition) { event.preventDefault(); return; }
+    navigationTargetY = null;
+    const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
+    if (!delta) return;
+    const scrollY = window.scrollY;
+    const segment = segments.find(item => {
+      if (!item.transition) return false;
+      const range = transitionRange(item);
+      return delta > 0
+        ? scrollY <= range.start && scrollY + delta >= range.start || scrollY > range.start && scrollY < range.end
+        : scrollY >= range.end && scrollY + delta <= range.end || scrollY > range.start && scrollY < range.end;
+    });
+    if (segment) {
+      event.preventDefault();
+      playSceneTransition(segment, delta > 0);
+    }
+  }, { passive: false });
   function resize() {
     // 원본 비율을 유지하며 작은 화면에서도 동일한 레이어만 표시합니다.
     stage.style.setProperty('--frame-scale', Math.min(innerWidth / 2064, innerHeight / 1020));
@@ -552,10 +619,11 @@
     const target = scenes.find(scene => `#${scene.id}` === hash);
     if (!target) return;
     if (push) history.pushState(null, '', hash);
-    window.scrollTo({ top: segments[Number(target.dataset.scene)].start, behavior: reduced.matches ? 'instant' : 'smooth' });
+    navigationTargetY = segments[Number(target.dataset.scene)].start;
+    window.scrollTo({ top: navigationTargetY, behavior: reduced.matches ? 'instant' : 'smooth' });
   }
   document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener('click', event => { event.preventDefault(); navigate(link.getAttribute('href')); }));
-  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', resize);
   window.addEventListener('popstate', () => navigate(location.hash || '#landing', false));
   // 숫자는 200, 한글은 폰트별 지정 굵기로 표시하고 영문 굵기는 유지합니다.
