@@ -544,6 +544,64 @@
     stage.dataset.currentFrame = scenes[state.index].dataset.frameName;
   }
   function schedule() { if (!scheduled) { scheduled = true; requestAnimationFrame(render); } }
+  const landingTransitionStart = segments[0].start + segments[0].length - segments[0].transition;
+  const introStart = segments[1].start;
+  let landingTransitionActive = false;
+  let lastLandingScrollY = window.scrollY;
+  let lastScrollInputAt = 0;
+  let navigationTargetY = null;
+  function playLandingTransition(forward) {
+    if (landingTransitionActive) return;
+    landingTransitionActive = true;
+    const from = forward ? Math.max(window.scrollY, landingTransitionStart) : clamp(window.scrollY, landingTransitionStart, introStart);
+    const to = forward ? introStart : landingTransitionStart;
+    const duration = reduced.matches ? 0 : 1000;
+    window.scrollTo({ top: from, behavior: 'instant' });
+    const started = performance.now();
+    function step(now) {
+      const progress = duration ? clamp((now - started) / duration) : 1;
+      window.scrollTo({ top: from + (to - from) * ease(progress), behavior: 'instant' });
+      schedule();
+      if (progress < 1) requestAnimationFrame(step);
+      else {
+        if (!forward) window.scrollTo({ top: segments[0].start, behavior: 'instant' });
+        lastLandingScrollY = window.scrollY;
+        landingTransitionActive = false;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+  function handleScroll() {
+    const currentY = window.scrollY;
+    if (navigationTargetY !== null) {
+      if (Math.abs(currentY - navigationTargetY) < 2) navigationTargetY = null;
+    } else if (!landingTransitionActive && performance.now() - lastScrollInputAt < 500) {
+      if (currentY > lastLandingScrollY && currentY > 0 && currentY < introStart) playLandingTransition(true);
+      else if (currentY < lastLandingScrollY && currentY < introStart && lastLandingScrollY >= landingTransitionStart) playLandingTransition(false);
+    }
+    lastLandingScrollY = currentY;
+    schedule();
+  }
+  window.addEventListener('wheel', event => {
+    if (landingTransitionActive) { event.preventDefault(); return; }
+    navigationTargetY = null;
+    lastScrollInputAt = performance.now();
+    if (event.deltaY > 0 && window.scrollY < introStart) {
+      event.preventDefault();
+      playLandingTransition(true);
+    } else if (event.deltaY < 0 && window.scrollY >= landingTransitionStart && window.scrollY <= introStart + segments[1].entryHold) {
+      event.preventDefault();
+      playLandingTransition(false);
+    }
+  }, { passive: false });
+  window.addEventListener('touchstart', () => { lastScrollInputAt = performance.now(); }, { passive: true });
+  window.addEventListener('touchmove', event => {
+    lastScrollInputAt = performance.now();
+    if (landingTransitionActive) event.preventDefault();
+  }, { passive: false });
+  window.addEventListener('keydown', event => {
+    if (['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(event.key)) lastScrollInputAt = performance.now();
+  });
   function resize() {
     // 원본 비율을 유지하며 작은 화면에서도 동일한 레이어만 표시합니다.
     stage.style.setProperty('--frame-scale', Math.min(innerWidth / 2064, innerHeight / 1020));
@@ -553,10 +611,11 @@
     const target = scenes.find(scene => `#${scene.id}` === hash);
     if (!target) return;
     if (push) history.pushState(null, '', hash);
-    window.scrollTo({ top: segments[Number(target.dataset.scene)].start, behavior: reduced.matches ? 'instant' : 'smooth' });
+    navigationTargetY = segments[Number(target.dataset.scene)].start;
+    window.scrollTo({ top: navigationTargetY, behavior: reduced.matches ? 'instant' : 'smooth' });
   }
   document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener('click', event => { event.preventDefault(); navigate(link.getAttribute('href')); }));
-  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', resize);
   window.addEventListener('popstate', () => navigate(location.hash || '#landing', false));
   // 숫자는 200, 한글은 폰트별 지정 굵기로 표시하고 영문 굵기는 유지합니다.
