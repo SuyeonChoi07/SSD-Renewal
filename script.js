@@ -35,7 +35,7 @@
       const travel = index === heights.length - 1 ? 0 : Math.max(0, height - 1020);
       const entryHold = index === 3 ? 200 : index === 4 || index === 5 || index === heights.length - 1 || index === 11 || index === 15 ? 0 : index === 0 || index === 12 ? 500 : index === 14 ? 250 : index === 17 ? 1680 : 1000;
       const motion = index === 2 ? 2800 : index === 3 ? 540 : index === 4 ? HISTORY_PHOTO_FIRST_MOVE_PX+2*HISTORY_PHOTO_STEP_PX : index === 5 ? 5*HISTORY_PHOTO_STEP_PX : index === 6 || index === 7 ? 600 : index === 8 ? 1700 : index === 17 ? BRAND_HALL_SCROLL : 0;
-      const transition = index === heights.length - 1 || index === 3 || index === 4 ? 0 : index === 5 ? 150 : index === 9 ? 600 : index === 14 ? WRAPPER_FIRST_OPEN_PX : index === 15 ? WRAPPER_EXIT_PX : index === 13 ? 1400 : index === 16 ? 1020 : index === 17 ? 774 : TRANSITION_SCROLL_PX;
+      const transition = index === heights.length - 1 || index === 3 || index === 4 ? 0 : index === 5 ? 600 : index === 9 ? 600 : index === 14 ? WRAPPER_FIRST_OPEN_PX : index === 15 ? WRAPPER_EXIT_PX : index === 13 ? 1400 : index === 16 ? 1020 : index === 17 ? 774 : TRANSITION_SCROLL_PX;
       const exitMotion = index === 8 ? 3450 : 0;
       const segment = { start, entryHold, hold, travel, motion, exitMotion, transition, length: entryHold + hold + travel + motion + exitMotion + transition };
       start += segment.length;
@@ -526,14 +526,16 @@
       const incomingIndex=nextSceneIndex(state.index);
       let opacity = index === state.index ? weights.outgoing : index === incomingIndex ? weights.incoming : 0;
       if(state.index>=3 && state.index<=5) {
-        if(index===3)opacity=state.index===5?weights.outgoing:1;
+        if(index===3)opacity=state.index===5?1-ease(state.transition):1;
         if(index===4||index===5)opacity=0;
+        if(state.index===5&&index===10)opacity=1;
       }
       if(state.index===14){
         if(index===state.index)opacity=1;
         if(index===state.index+1)opacity=0;
       }
       scene.style.opacity = opacity;
+      scene.style.zIndex=state.index===5&&index===3?'2':state.index===5&&index===10?'1':'';
       const sceneY=state.index===16?(index===16?brandScroll.brandY:index===17?brandScroll.contactY:0):state.index===17?(index===17?contactScroll.brandY:index===18?contactScroll.contactY:0):0;
       scene.style.transform=`translateY(${sceneY}px)`;
       scene.classList.toggle('is-visible', opacity > 0);
