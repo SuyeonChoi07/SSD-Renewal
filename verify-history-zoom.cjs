@@ -4,18 +4,15 @@ const heights=require('./figma-source.json').frames.map(frame=>frame.height);
 const segments=timeline(heights);
 assert.equal(segments[3].entryHold,200);
 const last=segments[5];
-assert.equal(last.motion,4600);
-assert.equal(last.hold,400);
+assert.equal(last.motion,3000);
+assert.equal(last.hold,0);
 for(let index=6;index<=9;index++)assert.equal(segments[index].length,0);
-const holdStart=last.start+last.entryHold+last.motion;
-for(const delta of [0,100,399,400]){
-  const state=stateAt(holdStart+delta,heights);
-  assert.equal(state.index,5);
-  assert.equal(state.transition,0);
-  assert.equal(historyCarouselFocus(state.index,state.local),8);
-}
+const transitionStart=last.start+last.entryHold+last.motion;
+assert.equal(stateAt(transitionStart,heights).index,5);
+assert.equal(stateAt(transitionStart,heights).transition,0);
+assert.equal(historyCarouselFocus(5,last.motion),8);
 assert.equal(stateAt(last.start+last.length,heights).index,10);
 for(const index of [5,6,10])assert.equal(shouldExpandHistoryPhoto(index,1),false);
 assert.equal(historyCarouselGeometry(8,8).width,600);
 assert.equal(historyCarouselGeometry(8,8).height,720);
-console.log('History last photo holds at 600x720 for 400px; image expansion is removed: PASS');
+console.log('History last photo enters the next scene without a hold; image expansion is removed: PASS');
