@@ -422,7 +422,7 @@
   function renderOurWayCards(state) {
     const offset=state.index<16?0:state.index===16?state.local:segments[16].travel+segments[16].hold;
     ourWayCards.forEach((card,index)=>{
-      const progress=ease(clamp((offset-(388+index*230))/OUR_WAY_CARD_REVEAL_PX));
+      const progress=ease(clamp((offset-(538+index*230))/OUR_WAY_CARD_REVEAL_PX));
       card.style.setProperty('--card-reveal',progress);
       card.style.setProperty('--card-rise',(reduced.matches?0:90*(1-progress))+'px');
     });
