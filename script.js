@@ -633,7 +633,7 @@
     if(historyPhotoTransitionActive)return;
     historyPhotoTransitionActive=true;
     const from=window.scrollY;
-    const duration=reduced.matches?0:700;
+    const duration=reduced.matches?0:500;
     const started=performance.now();
     function step(now) {
       const progress=duration?clamp((now-started)/duration):1;
